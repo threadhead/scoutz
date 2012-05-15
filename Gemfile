@@ -1,11 +1,23 @@
 source 'https://rubygems.org'
 
+ruby '1.9.3'
 gem 'rails', '3.2.3'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'pg'
+
+gem 'thin'
+
+gem 'devise'
+gem 'haml'
+gem 'cancan'
+gem 'state_machine'
+gem 'carrierwave'
+gem 'fog'
+gem 'mini_magick'
 
 
 # Gems used only for assets and not required
@@ -21,6 +33,32 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
+group :development, :test do
+	gem 'rspec-rails'
+	gem 'ffi'
+	gem 'capybara'
+
+  gem 'powder', :require => false
+  gem 'hirb', :require => false
+  gem 'wirble', :require => false
+  gem 'heroku', :require => false
+  gem 'foreman', :require => false
+end
+
+group :test do
+	gem 'shoulda-matchers'
+	gem 'factory_girl_rails'
+	gem 'spork-rails'
+	gem 'rb-fsevent'
+	gem 'growl'
+	gem 'guard'
+	gem 'guard-rspec'
+	gem 'guard-spork'
+
+	gem 'database_cleaner'
+	gem 'capybara-webkit'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

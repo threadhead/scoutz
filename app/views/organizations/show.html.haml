@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Type:
+  = @organization.type
+%p
+  %b Unit number:
+  = @organization.unit_number
+%p
+  %b City:
+  = @organization.city
+%p
+  %b State:
+  = @organization.state
+%p
+  %b Time zone:
+  = @organization.time_zone
+
+= link_to 'Edit', edit_organization_path(@organization)
+\|
+= link_to 'Back', organizations_path

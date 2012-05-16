@@ -35,6 +35,7 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+	gem 'haml-rails'
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'

@@ -1,0 +1,27 @@
+%h1 Listing organizations
+
+%table
+  %tr
+    %th Type
+    %th Unit number
+    %th City
+    %th State
+    %th Time zone
+    %th
+    %th
+    %th
+
+  - @organizations.each do |organization|
+    %tr
+      %td= organization.type
+      %td= organization.unit_number
+      %td= organization.city
+      %td= organization.state
+      %td= organization.time_zone
+      %td= link_to 'Show', organization
+      %td= link_to 'Edit', edit_organization_path(organization)
+      %td= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete
+
+%br
+
+= link_to 'New Organization', new_organization_path

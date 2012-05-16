@@ -18,6 +18,18 @@ Spork.prefork do
   require 'capybara/rspec'
   require 'shoulda/matchers/integrations/rspec'
 
+  # load "#{Rails.root}/db/schema.rb"
+  # load_schema = lambda {  
+  #     # use db agnostic schema by default 
+  #     ActiveRecord::Schema.verbose = false 
+  #     load "#{Rails.root.to_s}/db/schema.rb"   
+    
+  #     # if you use seeds uncomment next line  
+  #     # load "#{Rails.root.to_s}/db/seeds.rb"  
+  #     # ActiveRecord::Migrator.up('db/migrate') # use migrations  
+  #   }  
+  #   silence_stream(STDOUT, &load_schema) 
+
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -66,6 +78,17 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
+  load_schema = lambda {  
+      ActiveRecord::Schema.verbose = false
+      # use db agnostic schema by default  
+      load "#{Rails.root.to_s}/db/schema.rb"   
+    
+      # if you use seeds uncomment next line  
+      # load "#{Rails.root.to_s}/db/seeds.rb"  
+      # ActiveRecord::Migrator.up('db/migrate') # use migrations  
+    }  
+    silence_stream(STDOUT, &load_schema)
+
   FactoryGirl.reload
 
   # FactoryGirl.definition_file_paths = [File.join(Rails.root, 'spec', 'factories')]

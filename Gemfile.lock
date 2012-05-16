@@ -249,6 +249,7 @@ DEPENDENCIES
   pg
   powder
   rails (= 3.2.3)
+  rake
   rb-fsevent
   rspec-rails
   sass-rails (~> 3.2.3)

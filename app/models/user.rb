@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  # attr_accessible :title, :body
+  attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code
 
   validates_presence_of :first_name, :last_name
 
@@ -32,4 +32,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :organizations
   has_many :phones
   has_many :notifiers
+
+  before_save :ensure_authentication_token
 end

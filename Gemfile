@@ -50,15 +50,17 @@ end
 group :test do
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
+	gem 'ffaker'
 	gem 'spork-rails'
 	gem 'rb-fsevent'
 	gem 'growl'
+
 	gem 'guard'
-	gem 'guard-rspec'
 	gem 'guard-spork'
+	gem 'guard-rspec'
 
 	gem 'database_cleaner'
-	gem 'capybara-webkit'
+	# gem 'capybara-webkit'
 end
 
 # To use ActiveModel has_secure_password

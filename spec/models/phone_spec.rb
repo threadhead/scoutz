@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe Phone do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should belong_to(:user) }
+  it { should validate_presence_of(:kind) }
+  it { should validate_presence_of(:number) }
 end

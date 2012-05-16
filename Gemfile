@@ -48,6 +48,7 @@ group :development, :test do
 end
 
 group :test do
+	gem 'rake' # for travis-ci
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
 	gem 'ffaker'

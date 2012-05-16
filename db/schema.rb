@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(:version => 20120516061330) do
   add_index "notifiers", ["user_id"], :name => "index_notifiers_on_user_id"
 
   create_table "organizations", :force => true do |t|
-    t.string   "type"
+    t.string   "unit_type"
     t.string   "unit_number"
     t.string   "city"
     t.string   "state"

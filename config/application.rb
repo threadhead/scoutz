@@ -55,5 +55,15 @@ module Scoutz
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Override layout for devise controllers
+    config.to_prepare do
+      Devise::SessionsController.layout 'dialog_dark_modal'
+      Devise::RegistrationsController.layout 'dialog_dark_modal'
+      Devise::ConfirmationsController.layout 'dialog_dark_modal'
+      Devise::UnlocksController.layout 'dialog_dark_modal'
+      Devise::PasswordsController.layout 'dialog_dark_modal'
+    end
+
   end
 end

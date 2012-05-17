@@ -1,25 +1,24 @@
-= form_for @organization do |f|
-  -if @organization.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@organization.errors.count, "error")} prohibited this organization from being saved:"
-      %ul
-        - @organization.errors.full_messages.each do |msg|
-          %li= msg
-
-  .field
-    = f.label :type
-    = f.text_field :type
-  .field
-    = f.label :unit_number
-    = f.text_field :unit_number
-  .field
-    = f.label :city
-    = f.text_field :city
-  .field
-    = f.label :state
-    = f.text_field :state
-  .field
-    = f.label :time_zone
-    = f.text_field :time_zone
-  .actions
-    = f.submit 'Save'
+= form_for @organization, :html => { :class => 'form-horizontal' } do |f|
+  .control-group
+    = f.label :unit_type, :class => 'control-label'
+    .controls
+      = f.text_field :unit_type, :class => 'text_field'
+  .control-group
+    = f.label :unit_number, :class => 'control-label'
+    .controls
+      = f.text_field :unit_number, :class => 'text_field'
+  .control-group
+    = f.label :city, :class => 'control-label'
+    .controls
+      = f.text_field :city, :class => 'text_field'
+  .control-group
+    = f.label :state, :class => 'control-label'
+    .controls
+      = f.text_field :state, :class => 'text_field'
+  .control-group
+    = f.label :time_zone, :class => 'control-label'
+    .controls
+      = f.text_field :time_zone, :class => 'text_field'
+  .form-actions
+    = f.submit nil, :class => 'btn btn-primary'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), organizations_path, :class => 'btn'

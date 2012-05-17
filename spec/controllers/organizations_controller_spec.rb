@@ -24,7 +24,7 @@ describe OrganizationsController do
   # Organization. As you add validations to Organization, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {unit_type: "Cub Scout", unit_number: "134", city: "Scottsdale", state: "Arizona", time_zone: "Arizona"}
+    FactoryGirl.attributes_for(:organization)
   end
   
   # This should return the minimal set of values that should be in the session

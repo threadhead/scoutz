@@ -1,21 +1,28 @@
-%p#notice= notice
+- model_class = @organization.class
+%h1=t '.title', :default => model_class.model_name.human
 
 %p
-  %b Type:
-  = @organization.type
+  %strong= model_class.human_attribute_name(:unit_type) + ':'
+  %br
+  = @organization.unit_type
 %p
-  %b Unit number:
+  %strong= model_class.human_attribute_name(:unit_number) + ':'
+  %br
   = @organization.unit_number
 %p
-  %b City:
+  %strong= model_class.human_attribute_name(:city) + ':'
+  %br
   = @organization.city
 %p
-  %b State:
+  %strong= model_class.human_attribute_name(:state) + ':'
+  %br
   = @organization.state
 %p
-  %b Time zone:
+  %strong= model_class.human_attribute_name(:time_zone) + ':'
+  %br
   = @organization.time_zone
 
-= link_to 'Edit', edit_organization_path(@organization)
-\|
-= link_to 'Back', organizations_path
+.form-actions
+  = link_to t('.back', :default => t("helpers.links.back")), organizations_path, :class => 'btn'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_organization_path(@organization), :class => 'btn'
+  = link_to t('.destroy', :default => t("helpers.links.destroy")), organization_path(@organization), :method => "delete", :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-danger'

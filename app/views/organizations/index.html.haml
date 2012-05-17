@@ -1,27 +1,28 @@
-%h1 Listing organizations
-
-%table
-  %tr
-    %th Type
-    %th Unit number
-    %th City
-    %th State
-    %th Time zone
-    %th
-    %th
-    %th
-
-  - @organizations.each do |organization|
+- model_class = Organization.new.class
+%h1=t '.title', :default => model_class.model_name.human.pluralize
+%table.table.table-striped
+  %thead
     %tr
-      %td= organization.type
-      %td= organization.unit_number
-      %td= organization.city
-      %td= organization.state
-      %td= organization.time_zone
-      %td= link_to 'Show', organization
-      %td= link_to 'Edit', edit_organization_path(organization)
-      %td= link_to 'Destroy', organization, :confirm => 'Are you sure?', :method => :delete
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:unit_type)
+      %th= model_class.human_attribute_name(:unit_number)
+      %th= model_class.human_attribute_name(:city)
+      %th= model_class.human_attribute_name(:state)
+      %th= model_class.human_attribute_name(:time_zone)
+      %th= model_class.human_attribute_name(:created_at)
+      %th=t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @organizations.each do |organization|
+      %tr
+        %td= link_to organization.id, organization_path(organization)
+        %td= organization.unit_type
+        %td= organization.unit_number
+        %td= organization.city
+        %td= organization.state
+        %td= organization.time_zone
+        %td=l organization.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_organization_path(organization), :class => 'btn btn-mini'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), organization_path(organization), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
 
-%br
-
-= link_to 'New Organization', new_organization_path
+= link_to t('.new', :default => t("helpers.links.new")), new_organization_path, :class => 'btn btn-primary'

@@ -9,7 +9,6 @@
       %th= model_class.human_attribute_name(:city)
       %th= model_class.human_attribute_name(:state)
       %th= model_class.human_attribute_name(:time_zone)
-      %th= model_class.human_attribute_name(:created_at)
       %th=t '.actions', :default => t("helpers.actions")
   %tbody
     - @organizations.each do |organization|
@@ -20,7 +19,6 @@
         %td= organization.city
         %td= organization.state
         %td= organization.time_zone
-        %td=l organization.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_organization_path(organization), :class => 'btn btn-mini'
           = link_to t('.destroy', :default => t("helpers.links.destroy")), organization_path(organization), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'

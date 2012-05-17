@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "organizations/show" do
   before(:each) do
     @organization = assign(:organization, stub_model(Organization,
-      :type => "Type",
+      :unit_type => "Unit Type",
       :unit_number => "Unit Number",
       :city => "City",
       :state => "State",
@@ -14,7 +14,7 @@ describe "organizations/show" do
   it "renders attributes in <p>" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Type/)
+    rendered.should match(/Unit Type/)
     rendered.should match(/Unit Number/)
     rendered.should match(/City/)
     rendered.should match(/State/)

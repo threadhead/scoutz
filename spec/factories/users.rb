@@ -2,7 +2,7 @@ FactoryGirl.define do
   
   factory :user do
     email               {Faker::Internet.email}
-    password            "sekrit"
+    password            "sekritsekrit"
 
     first_name          {Faker::Name.first_name}
     last_name           {Faker::Name.last_name}
@@ -10,7 +10,5 @@ FactoryGirl.define do
     city                {Faker::AddressUS.city}
     state               {Faker::AddressUS.state}
     zip_code            {Faker::AddressUS.zip_code}
-    
-    # association                 :organization
   end
 end

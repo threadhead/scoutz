@@ -11,7 +11,7 @@ guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' }, :test_unit => false do
 end
 
 
-guard 'rspec', :all_on_start => false, :all_after_pass => false, :cli => "--color --format nested --fail-fast --drb" do
+guard 'rspec', :all_on_start => false, :all_after_pass => true, :cli => "--color --format nested --fail-fast --drb" do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')  { "spec" }

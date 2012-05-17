@@ -14,12 +14,12 @@
     %link(href="images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72")
     %link(href="images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114")
 
-  %body
+  %body.dialog-dark
     .container
-
       .row
-        .span6.offset3
-          = yield
+        .span6
+          .modal
+            = yield
     
       %footer
         %p &copy; Karl Smith 2012

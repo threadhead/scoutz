@@ -1,25 +1,27 @@
-%h2 Sign in
+.modal-header
+  %h2 Sign in
 
-= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal' }) do |f|
+.modal-body
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal' }) do |f|
 
-  .control-group
-    = f.label :email, :class => 'control-label'
-    .controls
-      = f.email_field :email, :class => 'text_field'
+    .control-group
+      = f.label :email, :class => 'control-label'
+      .controls
+        = f.email_field :email, :class => 'text_field'
 
-  .control-group
-    = f.label :password, :class => 'control-label'
-    .controls
-      = f.password_field :password, :class => 'text_field'
+    .control-group
+      = f.label :password, :class => 'control-label'
+      .controls
+        = f.password_field :password, :class => 'text_field'
 
-  - if devise_mapping.rememberable?
+    - if devise_mapping.rememberable?
+      .control-group
+        .controls
+          = f.label :remember_me, :class => 'checkbox' do
+            = f.check_box :remember_me
+            remember me
     .control-group
       .controls
-        = f.label :remember_me, :class => 'checkbox' do
-          = f.check_box :remember_me
-          remember me
-
-
-  .form-actions= f.submit "Sign in", :class => 'btn btn-primary'
-  
-= render :partial => "devise/shared/links"
+        = f.submit "Sign in", :class => 'btn btn-primary'
+.modal-footer
+  = render :partial => "devise/shared/links"

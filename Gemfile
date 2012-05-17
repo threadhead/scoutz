@@ -12,6 +12,7 @@ gem 'pg'
 gem 'thin'
 
 gem 'devise'
+# gem 'devise-async'
 gem 'haml'
 gem 'cancan'
 gem 'state_machine'

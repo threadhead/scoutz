@@ -63,6 +63,7 @@ module Scoutz
       Devise::ConfirmationsController.layout 'dialog_dark_modal'
       Devise::UnlocksController.layout 'dialog_dark_modal'
       Devise::PasswordsController.layout 'dialog_dark_modal'
+      # Devise::Mailer.layout "email" # email.haml or email.erb
     end
 
   end

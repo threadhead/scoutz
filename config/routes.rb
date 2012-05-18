@@ -1,4 +1,6 @@
 Scoutz::Application.routes.draw do
+  resources :events
+
   resources :organizations
 
   devise_for :users

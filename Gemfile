@@ -31,6 +31,7 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'twitter-bootstrap-rails'
+  gem 'compass-rails'
 end
 
 gem 'jquery-rails'
@@ -41,6 +42,7 @@ group :development, :test do
 	gem 'ffi'
 	gem 'capybara'
 
+	# this ensures gems used in development are installed, comment out if you don't want them
   gem 'powder', :require => false
   gem 'hirb', :require => false
   gem 'wirble', :require => false

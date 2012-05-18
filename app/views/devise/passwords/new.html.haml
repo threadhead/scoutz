@@ -1,14 +1,21 @@
-%h2 Forgot your password?
+.modal-header
+	%h2 Forgot your password?
 
-= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+.modal-body
+	= render :partial => 'layouts/flash', :locals => {:flash => flash}
 
-  = devise_error_messages!
+	= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :class => 'form-horizontal' }) do |f|
 
-  %div
-    = f.label :email
-    %br
-    = f.email_field :email
+		= #devise_error_messages!
 
-  %div= f.submit "Send me reset password instructions"
-  
-= render :partial => "devise/shared/links"
+		.control-group
+			= f.label :email, :class => 'control-label'
+			.controls
+				= f.email_field :email, :class => 'text_field'
+
+		.control-group
+			.controls
+				= f.submit "Send me reset password instructions", :class => 'btn btn-primary'
+
+.modal-footer
+	= render :partial => "devise/shared/links"

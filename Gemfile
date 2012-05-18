@@ -41,13 +41,6 @@ group :development, :test do
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
-
-	# this ensures gems used in development are installed, comment out if you don't want them
-  gem 'powder', :require => false
-  gem 'hirb', :require => false
-  gem 'wirble', :require => false
-  gem 'heroku', :require => false
-  gem 'foreman', :require => false
 end
 
 group :test do

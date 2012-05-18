@@ -19,6 +19,7 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'fog'
 gem 'mini_magick'
+# gem "queue_classic"
 
 # Gems used only for assets and not required
 # in production environments by default.

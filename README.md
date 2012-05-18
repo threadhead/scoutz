@@ -1,6 +1,6 @@
 # scoutz
 
-Scouting (as in BSA) Management Tool. For ub Scouts, Boy Scouts, Venturing Crews, Girl Scouts, Service Units, Order of the Arrow, Sea Scouts Ships. Manage rosters, adults and children, group events with notifications, and more.
+A Scouting (as in [BSA](http://www.scouting.org)) Management Tool. Suitable for Cub Scouts, Boy Scouts, Venturing Crews, Girl Scouts, Service Units, Order of the Arrow, Sea Scouts Ships. Manage rosters, adults and children, group events with notifications, and more.
 
 [![Build Status](https://secure.travis-ci.org/threadhead/scoutz.png)](http://travis-ci.org/threadhead/scoutz)
 
@@ -11,18 +11,37 @@ Documentation
 
 Install it, play with it, let me know what you think.
 
-Coming: `scoutz` will be hosted on a live site, freely available to the interweb's cosmonauts.
+API? You betcha! Any registered user can access a `scoutz` application and perform all actions they are authorized to perform in the html version.
+
+Mobile? That too. But mobile will have to take a seat in the back of the bus for a while.
+
+Coming: `scoutz` will be hosted on a real live site, freely available to the interweb's cosmonauts.
 
 
 Getting Started
 ---------------
 
-It is assumed you have created and served a Rails application prior. If you have not, the official [Ruby on Rails Guides](http://guides.rubyonrails.org/) would be a good place to start learning more.
+It is assumed you have created and served a Rails application before. If you have not, the official [Ruby on Rails Guides](http://guides.rubyonrails.org/) would be a good place to start learning more.
 
 Please note that `scoutz` was written with the intention of being hosted on [Heroku](http://www.heroku.com). This includes:
 
 * Assets hosted on a CDN, like [Amazon S3](http://aws.amazon.com/s3/)
 * Served using [thin](https://github.com/macournoyer/thin)
+* All assets will be precompiled and *not* committed to the repository (except manifest.yml)
+
+
+Technologies
+------------
+
+Some of the gems `scoutz` is using:
+
+* Compass and SASS - for sanity
+* Twitter Bootstrap - via twitter-bootstrap-rails gem
+* Devise - authentication
+* Cancan - authorization
+* Carrierwave - uploads
+* queue_classic - bucking the trend with this one
+
 
 
 Contributing

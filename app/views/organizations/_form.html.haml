@@ -14,7 +14,7 @@
   .control-group
     = f.label :state, :class => 'control-label'
     .controls
-      = f.select :state, Carmen::Country.coded('US').subregions.map(&:name)
+      = f.subregion_select :state, 'US'
   .control-group
     = f.label :time_zone, :class => 'control-label'
     .controls

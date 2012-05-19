@@ -5,4 +5,7 @@ class Organization < ActiveRecord::Base
 
   validates_presence_of :unit_type, :unit_number, :time_zone, :state, :city
 
+  def self.unit_types
+  	['Cub Scouts', 'Boy Scouts', 'Ventureing Crew', 'Girl Scouts', 'Service Unit', 'Fire Service Explorer Post', 'Order of the Arrow', 'Sea Scout Ship']
+  end
 end

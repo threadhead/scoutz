@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516061330) do
+ActiveRecord::Schema.define(:version => 20120518144424) do
 
   create_table "notifiers", :force => true do |t|
     t.integer  "user_id"
@@ -50,6 +50,16 @@ ActiveRecord::Schema.define(:version => 20120516061330) do
   end
 
   add_index "phones", ["user_id"], :name => "index_phones_on_user_id"
+
+  create_table "sub_units", :force => true do |t|
+    t.integer  "organization_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+  end
+
+  add_index "sub_units", ["organization_id"], :name => "index_sub_units_on_organization_id"
 
   create_table "user_relationships", :force => true do |t|
     t.integer "parent_id"

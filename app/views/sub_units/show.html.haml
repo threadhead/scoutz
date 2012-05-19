@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Organization:
+  = @sub_unit.organization_id
+%p
+  %b Name:
+  = @sub_unit.name
+%p
+  %b Description:
+  = @sub_unit.description
+
+= link_to 'Edit', edit_sub_unit_path(@sub_unit)
+\|
+= link_to 'Back', sub_units_path

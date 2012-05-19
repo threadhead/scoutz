@@ -1,4 +1,6 @@
 Scoutz::Application.routes.draw do
+  resources :sub_units
+
   resources :organizations
 
   devise_for :users

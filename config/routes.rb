@@ -1,9 +1,18 @@
 Scoutz::Application.routes.draw do
   resources :sub_units
-
   resources :organizations
-
   devise_for :users
+
+  get "page/landing"
+  get "page/terms_of_service"
+  get "page/privacy"
+  get "page/contact"
+  get "page/about"
+
+  get "sign_up/import"
+  get "sign_up/user"
+  get "sign_up/unit"
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

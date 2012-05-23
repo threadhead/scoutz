@@ -5,6 +5,7 @@ guard 'spork', :rspec_env => { 'RAILS_ENV' => 'test' }, :test_unit => false do
   watch(%r{^config/initializers/.+\.rb$})
   watch('Gemfile')
   watch('Gemfile.lock')
+  watch(%r{^lib/.+\.rb$})
   watch('spec/spec_helper.rb') { :rspec }
   #watch('test/test_helper.rb') { :test_unit }
   #watch(%r{features/support/}) { :cucumber }

@@ -21,6 +21,7 @@ gem 'fog'
 gem 'mini_magick'
 # gem "queue_classic"
 gem 'carmen-rails'
+gem 'exception_notification'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -43,6 +44,7 @@ group :development, :test do
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
+	gem 'sextant'
 end
 
 group :test do

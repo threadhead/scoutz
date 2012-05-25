@@ -40,7 +40,9 @@ Some of the gems `scoutz` is using:
 * Devise - authentication
 * Cancan - authorization
 * Carrierwave - uploads
-* queue_classic - bucking the trend with this one
+* delayed_job - the ole' standby
+* sextant - will be in rails 4, let the goodness roll for 3.X
+* exception_notification - hard to beat free excpetion emails
 
 
 

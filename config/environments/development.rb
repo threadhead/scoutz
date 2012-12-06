@@ -36,12 +36,12 @@ Scoutz::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => 'scoutz.dev' }
-  
+
   # shows sql in console
   # ActiveRecord::Base.logger = Logger.new(STDOUT)
-  
-  
-  config.action_mailer.delivery_method = :smtp  
+
+
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 => 587,
@@ -50,4 +50,14 @@ Scoutz::Application.configure do
     :password             => ENV['LAZERWIZ_GMAIL_PASSWORD'],
     :authentication       => 'plain',
     :enable_starttls_auto => true  }
+
+  config.middleware.insert_before(
+      Rack::Lock, Rack::LiveReload,
+      :min_delay => 500,
+      :max_delay => 10000,
+      :port => 35729,
+      :host => 'localhost',
+      :ignore => [ %r{dont/modify\.html$} ]
+    )
+
 end

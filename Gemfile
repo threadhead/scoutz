@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
 ruby '1.9.3'
-gem 'rails', '3.2.5'
+gem 'rails', '3.2.9'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 gem 'thin'
 
@@ -32,6 +32,9 @@ group :assets do
   # gem 'therubyracer', :platform => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
+  gem 'less-rails'
+
   gem 'twitter-bootstrap-rails'
   gem 'compass-rails'
 end
@@ -39,11 +42,19 @@ end
 gem 'jquery-rails'
 
 group :development, :test do
+  # gem 'quiet_assets'
 	gem 'haml-rails'
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
 end
+
+group :development do
+  gem 'guard-livereload'
+  gem 'rack-livereload'
+  gem 'sextant'
+end
+
 
 group :test do
 	gem 'rake' # for travis-ci
@@ -52,14 +63,18 @@ group :test do
 	gem 'ffaker'
 	gem 'spork-rails'
 	gem 'rb-fsevent'
-	gem 'growl'
+	gem 'terminal-notifier-guard'
 
 	gem 'guard'
 	gem 'guard-spork'
 	gem 'guard-rspec'
+  gem 'rspec-nc'
 
 	gem 'database_cleaner'
 	gem 'capybara-webkit'
+
+  gem 'simplecov', '>= 0.4.0', require: false
+  gem 'simplecov-rcov', require: false
 end
 
 # To use ActiveModel has_secure_password

@@ -1,31 +1,25 @@
-.modal-header
-  %h2 Sign up
+.row-fluid
+  .span12
+    %h2 Welcome to Scoutz!
 
-.modal-body
-  = render :partial => 'layouts/flash', :locals => {:flash => flash}
+.row-fluid
+  .span4.offset1
+    .well.well-large
+      %h4 Transfer from Scoutlander.com
+      %p We will quickly transfer all your adults, scouts, and events right from Scoutlander into Scoutz. All you need in an <em>administrators</em> email address and password. The transfer will take several minutes, you will receive a notification when it is complete.
+      %p Go ahead, it's easy!
 
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :class => 'form-horizontal' }) do |f|
 
-    = #devise_error_messages!
+  .span4.offset1
+    .well.well-large
+      %h4 Setup Your New Unit
+      = form_for @organization, url: new_organization_path do |f|
+        = f.select :unit_type, Organization.unit_types
 
-    .control-group
-      = f.label :email, :class => 'control-label'
-      .controls
-        = f.email_field :email, :class => 'text_field'
+        = f.label :unit_number, :class => 'control-label'
+        = f.text_field :unit_number, :class => 'text_field input-small', placeholder: 'unit number'
+        %span{:class => 'help-inline'} ex. 134, 603, 15
 
-    .control-group
-      = f.label :password, :class => 'control-label'
-      .controls
-        = f.password_field :password, :class => 'text_field'
+        %p= f.submit 'Start My Unit', :class => 'btn btn-primary'
 
-    .control-group
-      = f.label :password_confirmation, :class => 'control-label'
-      .controls
-        = f.password_field :password_confirmation, :class => 'text_field'
-  
-    .control-group
-      .controls
-        = f.submit "Sign up", :class => 'btn btn-primary'
-        
-.modal-footer
-  = render :partial => "devise/shared/links"
+

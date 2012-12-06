@@ -4,14 +4,12 @@
     = render partial: 'layouts/head'
     = yield :head
 
-  %body
+  %body.body-modal
     .container-fluid
-      .row-fluid
-        .span12
+      .row
+        .span6.offset3
           = yield
 
-    - #cache('application/footer') do
-    = render partial: 'layouts/footer'
     /
       Javascripts
       \==================================================

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120518144424) do
+ActiveRecord::Schema.define(:version => 20121206204601) do
 
   create_table "notifiers", :force => true do |t|
     t.integer  "user_id"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120518144424) do
     t.date     "birth"
     t.string   "leadership_role"
     t.string   "role"
+    t.string   "time_zone"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true

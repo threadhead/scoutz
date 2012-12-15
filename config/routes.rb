@@ -1,5 +1,6 @@
 Scoutz::Application.routes.draw do
 
+
   resources :sub_units
   resources :organizations
   post 'organizations/new' => 'organizations#new'
@@ -15,6 +16,7 @@ Scoutz::Application.routes.draw do
   get "sign_up/user"
   get "sign_up/unit"
 
+  resources :after_signup
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

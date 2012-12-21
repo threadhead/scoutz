@@ -24,7 +24,7 @@
   .span4.offset1
     .well.well-large
       %h4 Setup Your New Unit
-      = form_for @organization, url: new_organization_path do |f|
+      = form_for @organization, url: sign_up_new_unit_path do |f|
         = f.select :unit_type, Organization.unit_types
 
         = f.label :unit_number, :class => 'control-label'

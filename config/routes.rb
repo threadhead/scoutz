@@ -14,9 +14,12 @@ Scoutz::Application.routes.draw do
 
   get "sign_up/import"
   get "sign_up/user"
-  get "sign_up/unit"
+  post "sign_up/new_unit"
+  post "sign_up/create_unit"
+  get "sign_up/new_sub_unit"
+  post "sign_up/create_sub_unit"
 
-  resources :after_signup
+  # resources :after_signup
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

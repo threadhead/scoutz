@@ -54,6 +54,7 @@ group :development do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'sextant'
+  gem "letter_opener"
 end
 
 

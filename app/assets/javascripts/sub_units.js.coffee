@@ -4,10 +4,10 @@
 
 jQuery ->
   $('.remove-sub-unit').click ->
-    remove_sub_unit(this)
+    remove_sub_unit(@)
 
   $('.add-sub-unit-button').click ->
-    add_sub_unit(this)
+    add_sub_unit(@)
 
   $('select#organization_unit_type').change ->
     unit_type = $(@).val()
@@ -31,11 +31,11 @@ jQuery ->
     # remove duplicate form values
     uniqueNames = []
     $.each($('.controls.sub-unit input[type=text]'), (i, el) ->
-        if $.inArray($(this).val(), uniqueNames) == -1
-          uniqueNames.push($(this).val())
+        if $.inArray($(@).val(), uniqueNames) == -1
+          uniqueNames.push($(@).val())
         else
-          $(this).parent().find('input[type=hidden]').val("true")
+          $(@).parent().find('input[type=hidden]').val("true")
       )
     # alert uniqueNames
-    # alert $(this).parent()
-    $(this).closest('form').submit()
+    # alert $(@).parent()
+    $(@).closest('form').submit()

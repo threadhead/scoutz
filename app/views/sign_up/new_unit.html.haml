@@ -42,6 +42,7 @@
 
         .control-group.add-sub-unit
           .controls
+            %span{:class => 'help-block'} ex. Den 1, Dragons,
             = link_to '#', class: 'btn btn-primary add-sub-unit-button' do
               add a
               %span.unit-type.unit-type= @organization.sub_unit_type

@@ -3,6 +3,7 @@ require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
 
+BCrypt::Engine::DEFAULT_COST = 1
 ENV["RAILS_ENV"] ||= 'test'
 
 Spork.prefork do
@@ -19,16 +20,16 @@ Spork.prefork do
   require 'shoulda/matchers/integrations/rspec'
 
   # load "#{Rails.root}/db/schema.rb"
-  # load_schema = lambda {  
-  #     # use db agnostic schema by default 
-  #     ActiveRecord::Schema.verbose = false 
-  #     load "#{Rails.root.to_s}/db/schema.rb"   
-    
-  #     # if you use seeds uncomment next line  
-  #     # load "#{Rails.root.to_s}/db/seeds.rb"  
-  #     # ActiveRecord::Migrator.up('db/migrate') # use migrations  
-  #   }  
-  #   silence_stream(STDOUT, &load_schema) 
+  # load_schema = lambda {
+  #     # use db agnostic schema by default
+  #     ActiveRecord::Schema.verbose = false
+  #     load "#{Rails.root.to_s}/db/schema.rb"
+
+  #     # if you use seeds uncomment next line
+  #     # load "#{Rails.root.to_s}/db/seeds.rb"
+  #     # ActiveRecord::Migrator.up('db/migrate') # use migrations
+  #   }
+  #   silence_stream(STDOUT, &load_schema)
 
 
   # Requires supporting ruby files with custom matchers and macros, etc,
@@ -42,7 +43,7 @@ Spork.prefork do
     # config.include RequestMacros
     # config.include ViewMacros, :type => :view
 
-    
+
     # ## Mock Framework
     #
     # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -78,22 +79,22 @@ end
 
 Spork.each_run do
   # This code will be run each time you run your specs.
-  load_schema = lambda {  
+  load_schema = lambda {
       ActiveRecord::Schema.verbose = false
-      # use db agnostic schema by default  
-      load "#{Rails.root.to_s}/db/schema.rb"   
-    
-      # if you use seeds uncomment next line  
-      # load "#{Rails.root.to_s}/db/seeds.rb"  
-      # ActiveRecord::Migrator.up('db/migrate') # use migrations  
-    }  
+      # use db agnostic schema by default
+      load "#{Rails.root.to_s}/db/schema.rb"
+
+      # if you use seeds uncomment next line
+      # load "#{Rails.root.to_s}/db/seeds.rb"
+      # ActiveRecord::Migrator.up('db/migrate') # use migrations
+    }
     silence_stream(STDOUT, &load_schema)
 
   FactoryGirl.reload
 
   # FactoryGirl.definition_file_paths = [File.join(Rails.root, 'spec', 'factories')]
   # FactoryGirl.find_definitions
-  
+
   # temp fix for rspec run times
   # $rspec_start_time = Time.now
 

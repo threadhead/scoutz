@@ -13,6 +13,7 @@ class SignUpController < ApplicationController
   def create_unit
     @organization = Organization.new(params[:organization])
     if @organization.save
+      current_user.organizations << @organization
       redirect_to sign_up_new_sub_unit_path, notice: 'Organization was successfully created.'
     else
       render :new_unit

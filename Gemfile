@@ -56,6 +56,8 @@ group :development do
   gem 'rack-livereload'
   gem 'sextant'
   gem "letter_opener"
+  gem 'wirble', require: false
+  gem 'hirb', require: false
 end
 
 

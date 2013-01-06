@@ -51,6 +51,7 @@ group :development, :test do
 end
 
 group :development do
+  # gem 'meta_request'
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'sextant'
@@ -74,6 +75,7 @@ group :test do
 
 	gem 'database_cleaner'
 	gem 'capybara-webkit'
+  gem 'capybara-screenshot'
 
   gem 'simplecov', '>= 0.4.0', require: false
   gem 'simplecov-rcov', require: false

@@ -17,6 +17,7 @@ Spork.prefork do
   # require 'rspec/autorun'
   require 'capybara/rails'
   require 'capybara/rspec'
+  require 'capybara-screenshot/rspec'
   require 'shoulda/matchers/integrations/rspec'
 
   # load "#{Rails.root}/db/schema.rb"

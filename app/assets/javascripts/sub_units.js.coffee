@@ -1,21 +1,32 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-
 jQuery ->
-  $('.remove-sub-unit').click ->
-    remove_sub_unit(@)
+  $('.well.sub-units').on('click', 'a.remove-sub-unit-button', ->
+      removeSubUnit(@)
+    )
 
   $('.add-sub-unit-button').click ->
-    add_sub_unit(@)
+    addSubUnit(@)
 
-  $('select#organization_unit_type').change ->
-    unit_type = $(@).val()
+  setSubUnitDisplay = (unit_type) ->
     sub_unit_type = JSON.parse(window.unit_types)[unit_type]
     $('.unit-type').text(sub_unit_type)
     $('.unit-type-plural').text(sub_unit_type + "s")
+    unit_type_dash = unit_type.replace(/\s/g, '-').toLowerCase()
+    # alert unit_type_dash
+    $('span.sub-unit-type').hide()
+    $('span.sub-unit-type#' + unit_type_dash).show()
 
-  add_sub_unit = (link) ->
+
+  if $('span.sub-unit-type.help-block').length
+    $('span.sub-unit-type').hide()
+    $('span.sub-unit-type').removeClass('hidden')
+    setSubUnitDisplay( $('select#organization_unit_type').val() )
+
+  $('select#organization_unit_type').change ->
+    unit_type = $(@).val()
+    setSubUnitDisplay( unit_type )
+
+
+  addSubUnit = (link) ->
     new_sub_unit = $(".hidden#new-sub-unit-fields").html()
     new_id = new Date().getTime()
     regexp = new RegExp("new_sub_unit", "g")
@@ -23,7 +34,7 @@ jQuery ->
     $(link).closest('.add-sub-unit').prev().find('input[type=text]').focus()
 
 
-  remove_sub_unit = (link) ->
+  removeSubUnit = (link) ->
     $(link).prev("input[type=hidden]").val("1")
     $(link).closest(".control-group").hide()
 

@@ -16,13 +16,13 @@ class Organization < ActiveRecord::Base
   SUB_UNIT_TYPES = {
     'Cub Scouts' => 'Den',
     'Boy Scouts' => 'Patrol',
-    'Venturing Crew' => 'Crew',
+    'Venturing Crew' => 'Team',
     'Girl Scouts' => 'Patrol',
-    'Service Unit' => 'Unit',
-    'Fire Service Explorer Post' => 'Post',
-    'Order of the Arrow' => 'Order',
-    'Sea Scout Ship' => 'Crew'
+    'Order of the Arrow' => 'Patrol'
   }
+    # 'Service Unit' => 'Unit',
+    # 'Fire Service Explorer Post' => 'Post',
+    # 'Sea Scout Ship' => 'Crew'
 
   def self.unit_types
     SUB_UNIT_TYPES.keys

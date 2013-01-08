@@ -3,7 +3,7 @@ jQuery ->
       removeSubUnit(@)
     )
 
-  $('.add-sub-unit-button').click ->
+  $('a.add-sub-unit-button').click ->
     addSubUnit(@)
 
   setSubUnitDisplay = (unit_type) ->

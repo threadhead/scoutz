@@ -2,11 +2,12 @@
   .control-group
     = f.label :unit_type, :class => 'control-label'
     .controls
-      = f.text_field :unit_type, :class => 'text_field'
+      = f.select :unit_type, Organization.unit_types
   .control-group
     = f.label :unit_number, :class => 'control-label'
     .controls
       = f.text_field :unit_number, :class => 'text_field'
+      %span{:class => 'help-inline'} ex. 134, 603, 15
   .control-group
     = f.label :city, :class => 'control-label'
     .controls
@@ -14,11 +15,11 @@
   .control-group
     = f.label :state, :class => 'control-label'
     .controls
-      = f.text_field :state, :class => 'text_field'
+      = f.subregion_select :state, 'US'
   .control-group
     = f.label :time_zone, :class => 'control-label'
     .controls
-      = f.text_field :time_zone, :class => 'text_field'
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
   .form-actions
-    = f.submit nil, :class => 'btn btn-primary'
+    = f.submit 'Save', :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), organizations_path, :class => 'btn'

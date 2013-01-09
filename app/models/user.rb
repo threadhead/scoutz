@@ -34,4 +34,8 @@ class User < ActiveRecord::Base
   has_many :notifiers
 
   before_save :ensure_authentication_token
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

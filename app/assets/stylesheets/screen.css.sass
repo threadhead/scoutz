@@ -1,7 +1,50 @@
-/*
-  Welcome to Compass.
-  In this file you should write your main styles. (or centralize your imports)
-  Import this file using the following HTML or equivalent:
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+@import "compass/css3"
 
-// @import compass/reset
+
+footer
+  background: #333
+  color: #bbb
+  padding: 16px 0px 16px
+  margin-top: 20px
+
+.monospace
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace
+
+.dark_background
+  background: #222
+
+.centered
+  text-align: center
+
+.right-justified
+  text-align: right
+
+
+.modal-style
+  background-color: white
+  border: 1px solid #999
+  border: 1px solid rgba(0, 0, 0, 0.3)
+  @include border-radius(6px)
+  @include single-box-shadow(rgba(0, 0, 0, 0.3), 2px, 5px)
+
+.modal-body-tall
+  overflow-y: visible
+  max-height: none
+
+body.body-modal
+  background-color: grey
+
+
+.error.help-block, .error.help-inline
+  color: #b94a48
+
+.field_with_errors
+  display: inline
+  &> label, .help-block, .help-inline
+    color: #b94a48
+  & .checkbox, .radio, input, select, textarea
+    color: #b94a48
+    border-color: #b94a48
+  & .checkbox:focus, .radio:focus, input:focus, select:focus, textarea:focus
+    border-color: #b94a48
+    +box-shadow(0, 0, 6px, #d59392)

@@ -2,7 +2,7 @@ require 'rubygems'
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
-
+require 'bcrypt'
 BCrypt::Engine::DEFAULT_COST = 1
 ENV["RAILS_ENV"] ||= 'test'
 

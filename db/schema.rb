@@ -11,7 +11,47 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206204601) do
+ActiveRecord::Schema.define(:version => 20130109184935) do
+
+  create_table "events", :force => true do |t|
+    t.integer  "organization_id"
+    t.string   "kind"
+    t.string   "name"
+    t.integer  "user_id"
+    t.boolean  "send_reminders",    :default => true
+    t.string   "notifier_type"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.boolean  "signup_required",   :default => false
+    t.datetime "signup_deadline"
+    t.string   "location_name"
+    t.string   "location_address1"
+    t.string   "location_address2"
+    t.string   "location_city"
+    t.string   "location_state"
+    t.string   "location_zip_code"
+    t.string   "location_map_url"
+    t.string   "attire"
+    t.text     "message"
+    t.text     "fees"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
+  add_index "events", ["end_at"], :name => "index_events_on_end_at"
+  add_index "events", ["organization_id"], :name => "index_events_on_organization_id"
+  add_index "events", ["signup_deadline"], :name => "index_events_on_signup_deadline"
+  add_index "events", ["signup_required"], :name => "index_events_on_signup_required"
+  add_index "events", ["start_at"], :name => "index_events_on_start_at"
+  add_index "events", ["user_id"], :name => "index_events_on_user_id"
+
+  create_table "events_users", :force => true do |t|
+    t.integer "event_id"
+    t.integer "user_id"
+  end
+
+  add_index "events_users", ["event_id"], :name => "index_events_users_on_event_id"
+  add_index "events_users", ["user_id"], :name => "index_events_users_on_user_id"
 
   create_table "notifiers", :force => true do |t|
     t.integer  "user_id"

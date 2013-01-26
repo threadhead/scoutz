@@ -1,6 +1,8 @@
 class Organization < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :sub_units, dependent: :destroy
+  has_many :events, dependent: :destroy
+
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
   attr_accessible :city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes
@@ -12,6 +14,25 @@ class Organization < ActiveRecord::Base
   #   sub_units
   # end
 
+  def name
+    "#{unit_type.singularize} #{unit_number}"
+  end
+
+
+  def event_kinds
+    case unit_type
+    when 'Cub Scouts'
+      ['Pack Event', 'Den Event', 'Leader Event']
+    when 'Boy Scouts'
+      ['Troop Event', 'Patrol Event', 'Leader Event']
+    when 'Venturing Crew'
+      ['Crew Event', 'Leader Event']
+    when 'Girl Scouts'
+      ['Troop Event', 'Patrol Event', 'Leader Event']
+    when 'Order of the Arrow'
+      ['Lodge Event', 'Patrol Event', 'Leader Event']
+    end
+  end
 
   SUB_UNIT_TYPES = {
     'Cub Scouts' => 'Den',

@@ -3,7 +3,7 @@ Scoutz::Application.routes.draw do
   resources :sub_units
   resources :organizations
   post 'organizations/new' => 'organizations#new'
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, controllers: {registrations: "registrations"}
 
   get "page/landing"
   get "page/terms_of_service"

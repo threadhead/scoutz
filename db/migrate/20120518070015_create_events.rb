@@ -7,8 +7,8 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :user_id
       t.boolean :send_reminders, :default => true
       t.string :notifier_type
-      t.datetime :start
-      t.datetime :end
+      t.datetime :start_at
+      t.datetime :end_at
       t.boolean :signup_required, :default => false
       t.datetime :signup_deadline
       t.string :location_name
@@ -27,8 +27,8 @@ class CreateEvents < ActiveRecord::Migration
 
     add_index :events, :organization_id
     add_index :events, :user_id
-    add_index :events, :start
-    add_index :events, :end
+    add_index :events, :start_at
+    add_index :events, :end_at
     add_index :events, :signup_required
     add_index :events, :signup_deadline
 

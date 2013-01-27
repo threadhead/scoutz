@@ -19,7 +19,7 @@
         .control-group
           = f.label :email, :class => 'control-label'
           .controls
-            = f.email_field :email, :class => 'text_field'
+            = f.email_field :email, :class => 'text_field', autofocus: true
 
         .control-group
           = f.label :password, :class => 'control-label'
@@ -30,7 +30,7 @@
           .control-group
             .controls
               = f.label :remember_me, :class => 'checkbox' do
-                = f.check_box :remember_me
+                = f.check_box :remember_me, checked: true
                 remember me
 
         .control-group

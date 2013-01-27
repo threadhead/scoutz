@@ -8,8 +8,6 @@
       %a.brand(href="/") Scoutz
       .container.nav-collapse
         %ul.nav
-          %li= link_to "Link 1", "/path1"
-          %li= link_to "Link 2", "/path2"
-          %li= link_to "Link 3", "/path3"
-        - if current_user
-          = select_tag("My Units", options_from_collection_for_select(current_user.organizations, :id, :unit_number))
+          - if current_user
+            %li= link_to 'Sign out', destroy_user_session_path
+            %li= #select_tag("My Units", options_from_collection_for_select(current_user.organizations, :id, :unit_number))

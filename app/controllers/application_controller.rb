@@ -4,9 +4,8 @@ class ApplicationController < ActionController::Base
   private
   def auth_and_time_zone
     authenticate_user!
-    # set_current_user
     Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
-    @controller_namespace = current_user.role
+    @organizations = current_user.organizations if current_user
   end
 
 end

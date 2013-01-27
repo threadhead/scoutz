@@ -20,10 +20,10 @@
   = @event.notifier_type
 %p
   %b Start:
-  = @event.start
+  = @event.start_at
 %p
   %b End:
-  = @event.end
+  = @event.end_at
 %p
   %b Signup required:
   = @event.signup_required
@@ -55,6 +55,6 @@
   %b Attire:
   = @event.attire
 
-= link_to 'Edit', edit_event_path(@event)
+= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary'
 \|
-= link_to 'Back', events_path
+= link_to 'Back', events_path, class: 'btn'

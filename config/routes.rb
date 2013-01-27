@@ -1,7 +1,11 @@
 Scoutz::Application.routes.draw do
+  get "dashboard/index"
+
   resources :events
   resources :sub_units
-  resources :organizations
+  resources :organizations do
+    resources :events
+  end
   post 'organizations/new' => 'organizations#new'
   devise_for :users, controllers: {registrations: "registrations"}
 
@@ -69,7 +73,7 @@ Scoutz::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'page#landing'
+  root :to => 'dashboard#index'
 
   # See how all your routes lay out with "rake routes"
 

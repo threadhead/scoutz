@@ -1,67 +1,63 @@
-= form_for @event, :html => { :class => 'form-horizontal' } do |f|
+= form_for @event, html: { class: 'form-horizontal' } do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
-  %fieldset
-    %legend Info
-    .control-group
-      = f.label :kind, class: 'control-label'
-      .controls
-        = f.select :kind, @organization.event_kinds
+  .page-header
+    %h2
+      - if action == 'New'
+        #{action} Event for
+        = f.collection_select :organization_id, current_user.organizations, :id, :name
+      - else
+        Edit Event for #{@organization.name}
 
-    .control-group
-      = f.label :name, class: 'control-label'
-      .controls
-        = f.text_field :name, class: 'span8'
+  .control-group
+    = f.label :kind, 'info', class: 'control-label'
+    .controls
+      = f.text_field :name, class: 'span8', placeholder: 'event name', autofocus: true
+      = f.select :kind, @organization.event_kinds, {}, {class: 'span3'}
 
-  %fieldset
-    %legend Notifications
-    .control-group
-      = f.label :send_reminders, class: 'control-label'
-      .controls
-        = f.check_box :send_reminders
+  .control-group
+    = f.label :start_at, 'Starts', class: 'control-label'
+    .controls
+      = f.text_field :start_at, class: 'datetime-picker span4', value: @event.start_at.to_formatted_s(:datetimepicker)
+      &nbsp;to&nbsp;
+      = f.text_field :end_at, class: 'datetime-picker span4', value: @event.end_at.to_formatted_s(:datetimepicker)
 
-    .control-group
-      = f.label :notifier_type, class: 'control-label'
-      .controls
-        = f.text_field :notifier_type
+  .control-group
+    =# f.label :send_reminders, 'notifications', class: 'control-label'
+    .controls
+      %table
+        %tr
+          %td.span5
+            = f.label :send_reminders, class: 'checkbox' do
+              = f.check_box :send_reminders
+              send reminder
+          %td
+            = f.text_field :notifier_type, placeholder: 'notificaiton type'
 
-  %fieldset
-    %legend Date and Time
-    .control-group
-      = f.label :start_at, 'Starts', class: 'control-label'
-      .controls
-        = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_formatted_s(:datetimepicker)
 
-    .control-group
-      = f.label :end_at, 'Ends', class: 'control-label'
-      .controls
-        = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_formatted_s(:datetimepicker)
+  .control-group
+    = f.label :signup_required, 'RSVP', class: 'control-label'
+    .controls
+      %table
+        %tr
+          %td.span6
+            = f.label :signup_required, class: 'checkbox' do
+              = f.check_box :signup_required
+              require signup, deadline:
+          %td= f.text_field :signup_deadline, class: 'datetime-picker', value: @event.signup_deadline.to_formatted_s(:datetimepicker)
 
-  %fieldset
-    %legend What to Wear
-    .control-group
-      = f.label :attire, class: 'control-label'
-      .controls
-        = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span6'
+  .control-group
+    = f.label :attire, class: 'control-label'
+    .controls
+      = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span6'
 
-  %fieldset
-    %legend RSVP
-    .control-group
-      = f.label :signup_required, class: 'control-label'
-      .controls
-        = f.check_box :signup_required
-
-    .control-group
-      = f.label :signup_deadline, class: 'control-label'
-      .controls
-        = f.text_field :signup_deadline, class: 'datetime-picker', value: @event.signup_deadline.to_formatted_s(:datetimepicker)
 
   %fieldset
     %legend Location
     .control-group
       = f.label :location_name, 'Name', class: 'control-label'
       .controls
-        = f.text_field :location_name
+        = f.text_field :location_name, class: 'span8'
 
     .control-group
       = f.label :location_address1, 'Address 1', class: 'control-label'
@@ -85,5 +81,14 @@
       .controls
         = f.text_field :location_map_url, class: 'span10', placeholder: 'http://maps.google.com'
 
-  .actions
-    = f.submit 'Save'
+  %fieldset
+    %legend Details
+    .control-group
+      = f.label :message, class: 'control-label'
+      .controls
+        = f.text_area :message, class: 'span10'
+
+  .form-actions
+    = f.submit class: 'btn btn-primary'
+    = link_to 'Cancel', events_path, class: 'btn'
+

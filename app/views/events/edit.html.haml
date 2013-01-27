@@ -1,7 +1,6 @@
-%h1 Editing event
+/ .page-header
+/   %h2 Edit Event for #{@organization.name}
 
-= render 'form'
-
-= link_to 'Show', @event
-\|
-= link_to 'Back', events_path
+.row-fluid
+  .span12
+    = render partial: "form", locals: {action: 'Edit'}

@@ -41,7 +41,7 @@ group :assets do
   gem 'compass-rails'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
 
 group :development, :test do
   # gem 'quiet_assets'

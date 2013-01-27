@@ -1,0 +1,20 @@
+.row-fluid
+  .span12
+    %h2 What's Happening
+
+- @organizations.each do |organization|
+  .row-fluid
+    .well.span12{class: unit_well(organization)}
+      %p.xlarge
+        %strong #{organization.name} Upcoming Events
+      - events = organization.events.by_start.all
+      - if events.size == 0
+        %p
+          No scheduled events. Would you like to
+          = link_to 'add an event', new_event_path(organization_id: organization.id)
+          ?
+      - else
+        - events.each do |event|
+          %p
+            = link_to event do
+              ="#{event.start_at.to_s(:short_ampm)} - #{event.name}"

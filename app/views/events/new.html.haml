@@ -1,5 +1,6 @@
-%h1 New Event for #{@organization.name}
+/ .page-header
+/   %h2 New Event for #{@organization.name}
 
-= render 'form'
-
-= link_to 'Back', events_path
+.row-fluid
+  .span12
+    = render partial: "form", locals: {action: 'New'}

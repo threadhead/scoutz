@@ -1,53 +1,37 @@
-%h1 Listing events
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        = link_to(new_event_path, class: "btn btn-success") do
+          %i.icon-plus
+          new event
 
-%table
-  %tr
-    %th Organization
-    %th Kind
-    %th Name
-    %th User
-    %th Send reminders
-    %th Notifier type
-    %th Start
-    %th End
-    %th Signup required
-    %th Signup deadline
-    %th Location name
-    %th Location address1
-    %th Location address2
-    %th Location city
-    %th Location state
-    %th Location zip code
-    %th Location map url
-    %th Attire
-    %th
-    %th
-    %th
+      %h2 #{@organization.name} Events
 
-  - @events.each do |event|
-    %tr
-      %td= event.organization_id
-      %td= event.kind
-      %td= event.name
-      %td= event.user_id
-      %td= event.send_reminders
-      %td= event.notifier_type
-      %td= event.start
-      %td= event.end
-      %td= event.signup_required
-      %td= event.signup_deadline
-      %td= event.location_name
-      %td= event.location_address1
-      %td= event.location_address2
-      %td= event.location_city
-      %td= event.location_state
-      %td= event.location_zip_code
-      %td= event.location_map_url
-      %td= event.attire
-      %td= link_to 'Show', event
-      %td= link_to 'Edit', edit_event_path(event)
-      %td= link_to 'Destroy', event, :confirm => 'Are you sure?', :method => :delete
 
-%br
+.row-fluid
+  .span12
+    %table.table
+      %tr
+        %th Kind
+        %th Name
+        %th Start
+        %th End
+        %th Signup required
+        %th Signup deadline
 
-= link_to 'New Event', new_event_path
+      - @events.each do |event|
+        %tr
+          %td= event.kind
+          %td= event.name
+          %td= event.start_at.to_s(:short_ampm)
+          %td= event.end_at.to_s(:short_ampm)
+          %td= event.signup_required
+          %td= event.signup_deadline.to_s(:short_ampm)
+          %td= link_to 'Show', event
+          %td= link_to 'Edit', edit_event_path(event)
+          %td= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete
+
+.row-fluid
+  .span12
+    #calendar

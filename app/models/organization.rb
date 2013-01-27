@@ -15,7 +15,7 @@ class Organization < ActiveRecord::Base
   # end
 
   def name
-    "#{unit_type.singularize} #{unit_number}"
+    "#{unit_type.singularize} #{UNIT_TYPES[unit_type]} #{unit_number}"
   end
 
 
@@ -33,6 +33,14 @@ class Organization < ActiveRecord::Base
       ['Lodge Event', 'Patrol Event', 'Leader Event']
     end
   end
+
+  UNIT_TYPES = {
+    'Cub Scouts' => 'Pack',
+    'Boy Scouts' => 'Troop',
+    'Venturing Crew' => 'Crew',
+    'Girl Scouts' => 'Troop',
+    'Order of the Arrow' => 'Troop'
+  }
 
   SUB_UNIT_TYPES = {
     'Cub Scouts' => 'Den',

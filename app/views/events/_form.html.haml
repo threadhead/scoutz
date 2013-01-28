@@ -3,8 +3,8 @@
 
   .page-header
     %h2
-      - if action == 'New'
-        #{action} Event for
+      - if controller.action_name == 'new'
+        #{controller.action_name.titleize} Event for
         = f.collection_select :organization_id, current_user.organizations, :id, :name
       - else
         Edit Event for #{@organization.name}
@@ -18,9 +18,15 @@
   .control-group
     = f.label :start_at, 'Starts', class: 'control-label'
     .controls
-      = f.text_field :start_at, class: 'datetime-picker span4', value: @event.start_at.to_formatted_s(:datetimepicker)
+      .input-append
+        = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_formatted_s(:datetimepicker)
+        %span.add-on
+          %i.icon-calendar
       &nbsp;to&nbsp;
-      = f.text_field :end_at, class: 'datetime-picker span4', value: @event.end_at.to_formatted_s(:datetimepicker)
+      .input-append
+        = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_formatted_s(:datetimepicker)
+        %span.add-on
+          %i.icon-calendar
 
   .control-group
     =# f.label :send_reminders, 'notifications', class: 'control-label'
@@ -36,20 +42,18 @@
 
 
   .control-group
-    = f.label :signup_required, 'RSVP', class: 'control-label'
+    = f.label :signup_required, 'Require signup', class: 'control-label'
     .controls
-      %table
-        %tr
-          %td.span6
-            = f.label :signup_required, class: 'checkbox' do
-              = f.check_box :signup_required
-              require signup, deadline:
-          %td= f.text_field :signup_deadline, class: 'datetime-picker', value: @event.signup_deadline.to_formatted_s(:datetimepicker)
+      .input-prepend.input-append
+        %span.add-on{style: 'line-height: 3px'}= f.check_box :signup_required
+        = f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' #, value: @event.signup_deadline.to_formatted_s(:datetimepicker)
+        %span.add-on
+          %i.icon-calendar
 
   .control-group
     = f.label :attire, class: 'control-label'
     .controls
-      = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span6'
+      = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span5'
 
 
   %fieldset
@@ -72,8 +76,8 @@
     .control-group
       = f.label :location_city, 'City, State, Zip', class: 'control-label'
       .controls
-        = f.text_field :location_city, class: 'span3', placeholder: 'city'
-        = f.text_field :location_state, class: 'span3', placeholder: 'state'
+        = f.text_field :location_city, class: 'span4', placeholder: 'city'
+        = f.text_field :location_state, class: 'span2', placeholder: 'state'
         = f.text_field :location_zip_code, class: 'span2', placeholder: 'zip code'
 
     .control-group
@@ -86,7 +90,7 @@
     .control-group
       = f.label :message, class: 'control-label'
       .controls
-        = f.text_area :message, class: 'span10'
+        = f.text_area :message, class: 'span10', rows: 10
 
   .form-actions
     = f.submit class: 'btn btn-primary'

@@ -18,7 +18,6 @@
         %th Start
         %th End
         %th Signup required
-        %th Signup deadline
 
       - @events.each do |event|
         %tr
@@ -27,7 +26,6 @@
           %td= event.start_at.to_s(:short_ampm)
           %td= event.end_at.to_s(:short_ampm)
           %td= event.signup_required
-          %td= event.signup_deadline.to_s(:short_ampm)
           %td= link_to 'Show', event
           %td= link_to 'Edit', edit_event_path(event)
           %td= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete

@@ -9,4 +9,8 @@ module DashboardHelper
       ''
     end
   end
+
+  def show_more_amount(all_events, current_events)
+    (all_events - current_events) < 5 ? (all_events - current_events) : 5
+  end
 end

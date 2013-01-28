@@ -17,7 +17,7 @@ class EventsController < ApplicationController
 
   def new
     @organization = params[:organization_id] ? Organization.find(params[:organization_id]) : Organization.first
-    @event = Event.new(start_at: Time.zone.now, end_at: Time.zone.now, signup_deadline: Time.zone.now)
+    @event = Event.new(start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
   end
 
   def edit

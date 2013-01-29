@@ -1,9 +1,15 @@
 Scoutz::Application.routes.draw do
+  get "events/index"
+
   get "dashboard_list" => "dashboard_list#index"
   get "dashboard_calendar" => "dashboard_calendar#index"
   get "dashboard/index" => "dashboard_list#index"
 
-  resources :events
+  resources :events do
+    collection do
+      get 'calendar'
+    end
+  end
   resources :sub_units
   resources :organizations do
     resources :events

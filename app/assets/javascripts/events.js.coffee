@@ -11,6 +11,7 @@ jQuery ->
       center: '',
       right: 'today prev,next month,basicWeek,agendaWeek'
       },
-    events: '/events.json'
+    events: '/events.json',
+    theme: false
 
     })

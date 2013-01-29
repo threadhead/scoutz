@@ -2,7 +2,7 @@ class EventsController < ApplicationController
   before_filter :auth_and_time_zone
 
   def index
-    event_finders
+    # event_finders
     # if params[:organization_id]
     #   @organization = Organization.find(params[:organization_id])
     #   @events = @organization.events.by_start
@@ -10,10 +10,24 @@ class EventsController < ApplicationController
     #   @events = @events.joins(organization: :users).where(users: {id: current_user.id}).by_start
     # end
     # @events = @events.time_range(params[:start], params[:end]) if (params[:start] && params[:end])
+    if params[:organization_id]
+      @limit = (params[:limit] || 5).to_i
+      @organization = current_user.organizations.where(id: params[:organization_id]).first
+    else
+      @events = Event.joins(organization: :users).where(users: {id: current_user.id}).by_start
+      @events = @events.time_range(params[:start], params[:end]) if (params[:start] && params[:end])
+    end
+
     respond_to do |format|
       format.html
       format.json { render json: @events }
+      format.js
     end
+  end
+
+  def calendar
+    calendar_events(params)
+    render json: @events
   end
 
   def show

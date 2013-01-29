@@ -1,5 +1,7 @@
 Scoutz::Application.routes.draw do
-  get "dashboard/index"
+  get "dashboard_list" => "dashboard_list#index"
+  get "dashboard_calendar" => "dashboard_calendar#index"
+  get "dashboard/index" => "dashboard_list#index"
 
   resources :events
   resources :sub_units
@@ -73,7 +75,7 @@ Scoutz::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'dashboard#index'
+  root :to => 'dashboard_list#index'
 
   # See how all your routes lay out with "rake routes"
 

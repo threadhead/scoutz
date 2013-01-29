@@ -13,6 +13,10 @@ class Event < ActiveRecord::Base
     order('start_at ASC')
   end
 
+  def self.from_today
+    where('start_at >= ?', Time.now.beginning_of_day)
+  end
+
   def as_json(options = {})
     {
       :id => self.id,

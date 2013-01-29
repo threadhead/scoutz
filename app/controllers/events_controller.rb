@@ -2,9 +2,14 @@ class EventsController < ApplicationController
   before_filter :auth_and_time_zone
 
   def index
-    @organization = Organization.first
-    @events = @organization.events.by_start
-    @events = @events.time_range(params[:start], params[:end]) if params[:start] && params[:end]
+    event_finders
+    # if params[:organization_id]
+    #   @organization = Organization.find(params[:organization_id])
+    #   @events = @organization.events.by_start
+    # else
+    #   @events = @events.joins(organization: :users).where(users: {id: current_user.id}).by_start
+    # end
+    # @events = @events.time_range(params[:start], params[:end]) if (params[:start] && params[:end])
     respond_to do |format|
       format.html
       format.json { render json: @events }

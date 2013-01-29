@@ -4,7 +4,8 @@ class DashboardController < ApplicationController
 
   def index
     authorize! :dashboard, :index
-    @limit = params[:limit] ? params[:limit].to_i : 5
-    @organization = Organization.find(params[:organization_id]) if params[:organization_id]
+    event_finders
+    # @limit = params[:limit] ? params[:limit].to_i : 5
+    # @organization = Organization.find(params[:organization_id]) if params[:organization_id]
   end
 end

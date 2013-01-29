@@ -17,4 +17,4 @@
             ="#{event.start_at.to_s(:short_ampm)} - #{event.name}"
 
       - if all_events_count > events.size
-        %em=link_to "show #{show_more_amount(all_events_count, events.size)} more...", dashboard_index_path(organization_id: organization.id, limit: limit+5), remote: true, class: 'btn btn-mini'
+        %em=link_to "show #{show_more_amount(all_events_count, events.size)} more...", dashboard_list_path(organization_id: organization.id, limit: limit+5), remote: true, class: 'btn btn-mini'

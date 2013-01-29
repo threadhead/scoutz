@@ -12,6 +12,7 @@ jQuery ->
       right: 'today prev,next month,basicWeek,agendaWeek'
       },
     events: '/events.json',
-    theme: false
+    theme: false,
+    height: 300
 
     })

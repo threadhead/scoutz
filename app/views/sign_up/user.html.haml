@@ -1,0 +1,59 @@
+.row-fluid
+  .span12
+    %h2 Welcome to Scoutz!
+
+.row-fluid
+  .span4.offset1
+    .well.well-large
+      %h4 Transfer from Scoutlander.com
+      %p We can transfer all your adults, scouts, and events right from Scoutlander into Scoutz. All you need in an <em>administrator's</em> email address and password.
+      %p
+        %strong Go ahead, it's easy!
+
+      .pull-right
+        %button.btn.btn-mini{type: 'button', 'data-toggle' => 'modal', 'data-target' => '#import-more-info'}
+          %i.icon-info-sign
+          info...
+
+      = form_tag '#' do
+        = text_field_tag :sl_admin_email, nil, placeholder: 'admin email'
+        = text_field_tag :sl_admin_password, nil, placeholder: 'admin password'
+        %p= submit_tag 'Import', class: 'btn btn-primary'
+
+
+  .span4.offset1
+    .well.well-large
+      %h4 Setup Your New Unit
+      = form_for @organization, url: sign_up_new_unit_path do |f|
+        = f.select :unit_type, Organization.unit_types
+
+        = f.label :unit_number, :class => 'control-label'
+        = f.text_field :unit_number, :class => 'text_field input-small', placeholder: 'unit number'
+        %span{:class => 'help-inline'} ex. 134, 603, 15
+
+        %p= f.submit 'Start My Unit', :class => 'btn btn-primary'
+
+
+.modal.hide.fade#import-more-info
+  .modal-header
+    %h3
+      Importing from Scoutlander
+      %small how does it work?
+  .modal-body
+    %p Importing from Scoutlander takes place in the background, while you do other things. If Scoutz runs into an error, we will notify you. When the import is done, you will receive an email detailing your successful tansfer.
+    %p Because we can not import passwords, you will be given the option of sending emails to all your adults and youth, instructing them how to start using Scoutz.
+    %p We can import the following:
+    %ul
+      %li Adults (all, but no passwords)
+      %li Youth (all, but no passwords)
+      %li Events
+
+    %p What we can not import:
+    %ul
+      %li Private site pages
+      %li Pictures
+      %li Knowledge base documents
+      %li Past send emails
+
+  .modal-footer
+    = link_to 'Close', '#', class: 'btn', data: { dismiss: 'modal' }

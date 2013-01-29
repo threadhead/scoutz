@@ -1,0 +1,98 @@
+= form_for @event, html: { class: 'form-horizontal' } do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
+
+  .page-header
+    %h2
+      - if controller.action_name == 'new'
+        #{controller.action_name.titleize} Event for
+        = f.collection_select :organization_id, current_user.organizations, :id, :name
+      - else
+        Edit Event for #{@organization.name}
+
+  .control-group
+    = f.label :kind, 'info', class: 'control-label'
+    .controls
+      = f.text_field :name, class: 'span8', placeholder: 'event name', autofocus: true
+      = f.select :kind, @organization.event_kinds, {}, {class: 'span3'}
+
+  .control-group
+    = f.label :start_at, 'Starts', class: 'control-label'
+    .controls
+      .input-append
+        = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_formatted_s(:datetimepicker)
+        %span.add-on
+          %i.icon-calendar
+      &nbsp;to&nbsp;
+      .input-append
+        = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_formatted_s(:datetimepicker)
+        %span.add-on
+          %i.icon-calendar
+
+  .control-group
+    =# f.label :send_reminders, 'notifications', class: 'control-label'
+    .controls
+      %table
+        %tr
+          %td.span5
+            = f.label :send_reminders, class: 'checkbox' do
+              = f.check_box :send_reminders
+              send reminder
+          %td
+            = f.text_field :notifier_type, placeholder: 'notificaiton type'
+
+
+  .control-group
+    = f.label :signup_required, 'Require signup', class: 'control-label'
+    .controls
+      .input-prepend.input-append
+        %span.add-on{style: 'line-height: 3px'}= f.check_box :signup_required
+        = f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' #, value: @event.signup_deadline.to_formatted_s(:datetimepicker)
+        %span.add-on
+          %i.icon-calendar
+
+  .control-group
+    = f.label :attire, class: 'control-label'
+    .controls
+      = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span5'
+
+
+  %fieldset
+    %legend Location
+    .control-group
+      = f.label :location_name, 'Name', class: 'control-label'
+      .controls
+        = f.text_field :location_name, class: 'span8'
+
+    .control-group
+      = f.label :location_address1, 'Address 1', class: 'control-label'
+      .controls
+        = f.text_field :location_address1
+
+    .control-group
+      = f.label :location_address2, 'Address 2', class: 'control-label'
+      .controls
+        = f.text_field :location_address2
+
+    .control-group
+      = f.label :location_city, 'City, State, Zip', class: 'control-label'
+      .controls
+        = f.text_field :location_city, class: 'span4', placeholder: 'city'
+        = f.text_field :location_state, class: 'span2', placeholder: 'state'
+        = f.text_field :location_zip_code, class: 'span2', placeholder: 'zip code'
+
+    .control-group
+      = f.label :location_map_url, 'Map Link', class: 'control-label'
+      .controls
+        = f.text_field :location_map_url, class: 'span10', placeholder: 'http://maps.google.com'
+
+  %fieldset
+    %legend Details
+    .control-group
+      = f.label :message, class: 'control-label'
+      .controls
+        = f.text_area :message, class: 'span10', rows: 10
+
+  .form-actions
+    = f.submit class: 'btn btn-primary'
+    = link_to 'Cancel', events_path, class: 'btn'
+

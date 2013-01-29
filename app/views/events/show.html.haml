@@ -1,0 +1,60 @@
+%p#notice= notice
+
+%p
+  %b Organization:
+  = @event.organization_id
+%p
+  %b Kind:
+  = @event.kind
+%p
+  %b Name:
+  = @event.name
+%p
+  %b User:
+  = @event.user_id
+%p
+  %b Send reminders:
+  = @event.send_reminders
+%p
+  %b Notifier type:
+  = @event.notifier_type
+%p
+  %b Start:
+  = @event.start_at
+%p
+  %b End:
+  = @event.end_at
+%p
+  %b Signup required:
+  = @event.signup_required
+%p
+  %b Signup deadline:
+  = @event.signup_deadline
+%p
+  %b Location name:
+  = @event.location_name
+%p
+  %b Location address1:
+  = @event.location_address1
+%p
+  %b Location address2:
+  = @event.location_address2
+%p
+  %b Location city:
+  = @event.location_city
+%p
+  %b Location state:
+  = @event.location_state
+%p
+  %b Location zip code:
+  = @event.location_zip_code
+%p
+  %b Location map url:
+  = @event.location_map_url
+%p
+  %b Attire:
+  = @event.attire
+
+= link_to 'Edit', edit_event_path(@event), class: 'btn btn-primary'
+\|
+= link_to 'Back', events_path, class: 'btn'

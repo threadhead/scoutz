@@ -31,7 +31,12 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :organizations
   has_many :phones
-  has_many :notifiers
+  has_many :notifiers, dependent: :destroy
+  has_and_belongs_to_many :events
 
   before_save :ensure_authentication_token
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end

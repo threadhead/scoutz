@@ -1,0 +1,5 @@
+= render partial: 'dashboard/calendar_list'
+
+- @organizations.each do |organization|
+  %div{id: "organization-events-#{organization.id}"}
+    = render partial: 'events/event_list', locals: {organization: organization, limit: @limit}

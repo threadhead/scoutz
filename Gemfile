@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
 ruby '1.9.3'
-gem 'rails', '3.2.3'
+gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 gem 'thin'
 
@@ -21,7 +21,8 @@ gem 'fog'
 gem 'mini_magick'
 # gem "queue_classic"
 gem 'carmen-rails'
-gem 'exception_notification'
+gem 'wicked'
+gem 'slodown'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,19 +34,34 @@ group :assets do
   # gem 'therubyracer', :platform => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
+  gem 'less-rails'
+
   gem 'twitter-bootstrap-rails'
   gem 'compass-rails'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
 
 group :development, :test do
+  # gem 'quiet_assets'
 	gem 'haml-rails'
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
 	gem 'sextant'
 end
+
+group :development do
+  # gem 'meta_request'
+  gem 'guard-livereload'
+  gem 'rack-livereload'
+  gem 'sextant'
+  gem "letter_opener"
+  gem 'wirble', require: false
+  gem 'hirb', require: false
+end
+
 
 group :test do
 	gem 'rake' # for travis-ci
@@ -54,14 +70,19 @@ group :test do
 	gem 'ffaker'
 	gem 'spork-rails'
 	gem 'rb-fsevent'
-	gem 'growl'
+	gem 'terminal-notifier-guard'
 
 	gem 'guard'
 	gem 'guard-spork'
 	gem 'guard-rspec'
+  gem 'rspec-nc'
 
 	gem 'database_cleaner'
 	gem 'capybara-webkit'
+  gem 'capybara-screenshot'
+
+  gem 'simplecov', '>= 0.4.0', require: false
+  gem 'simplecov-rcov', require: false
 end
 
 # To use ActiveModel has_secure_password

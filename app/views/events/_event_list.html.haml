@@ -1,0 +1,20 @@
+- all_events_count = organization.events.count
+- events = organization.events.from_today.by_start.limit(limit).all
+
+.row-fluid
+  .well.span6{class: unit_well(organization)}
+    %p.xlarge
+      %strong #{organization.name} Upcoming Events
+    - if events.size == 0
+      %p
+        No future events. Would you like to
+        = link_to 'add an event', new_event_path(organization_id: organization.id)
+        ?
+    - else
+      - events.each do |event|
+        %p
+          = link_to event do
+            ="#{event.start_at.to_s(:short_ampm)} - #{event.name}"
+
+      - if all_events_count > events.size
+        %em=link_to "show #{show_more_amount(all_events_count, events.size)} more...", organization_events_path(organization, limit: limit+5), remote: true, class: 'btn btn-mini'

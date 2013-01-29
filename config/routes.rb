@@ -1,9 +1,36 @@
 Scoutz::Application.routes.draw do
+  get "events/index"
+
+  get "dashboard_list" => "dashboard_list#index"
+  get "dashboard_calendar" => "dashboard_calendar#index"
+  get "dashboard/index" => "dashboard_list#index"
+
+  resources :events do
+    collection do
+      get 'calendar'
+    end
+  end
   resources :sub_units
+  resources :organizations do
+    resources :events
+  end
+  post 'organizations/new' => 'organizations#new'
+  devise_for :users, controllers: {registrations: "registrations"}
 
-  resources :organizations
+  get "page/landing"
+  get "page/terms_of_service"
+  get "page/privacy"
+  get "page/contact"
+  get "page/about"
 
-  devise_for :users
+  get "sign_up/import"
+  get "sign_up/user"
+  post "sign_up/new_unit"
+  post "sign_up/create_unit"
+  get "sign_up/new_sub_unit"
+  post "sign_up/create_sub_unit"
+
+  # resources :after_signup
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -54,7 +81,7 @@ Scoutz::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  root :to => 'dashboard_list#index'
 
   # See how all your routes lay out with "rake routes"
 

@@ -1,31 +1,41 @@
-.modal-header
-  %h2 Sign in
+.span6
+  .modal-style
+    .modal-header
+      %h2 New?
 
-.modal-body
-  = render :partial => 'layouts/flash', :locals => {:flash => flash}
-  
-  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal' }) do |f|
+    .modal-body
+      = link_to "Sign Up Today!", new_user_registration_path, :class => 'btn btn-primary btn-large'
 
-    .control-group
-      = f.label :email, :class => 'control-label'
-      .controls
-        = f.email_field :email, :class => 'text_field'
+.span6
+  .modal-style
+    .modal-header
+      %h2 Returning?
 
-    .control-group
-      = f.label :password, :class => 'control-label'
-      .controls
-        = f.password_field :password, :class => 'text_field'
+    .modal-body
+      = render :partial => 'layouts/flash', :locals => {:flash => flash}
 
-    - if devise_mapping.rememberable?
-      .control-group
-        .controls
-          = f.label :remember_me, :class => 'checkbox' do
-            = f.check_box :remember_me
-            remember me
+      = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :class => 'form-horizontal' }) do |f|
 
-    .control-group
-      .controls
-        = f.submit "Sign in", :class => 'btn btn-primary'
-        
-.modal-footer
-  = render :partial => "devise/shared/links"
+        .control-group
+          = f.label :email, :class => 'control-label'
+          .controls
+            = f.email_field :email, :class => 'text_field', autofocus: true
+
+        .control-group
+          = f.label :password, :class => 'control-label'
+          .controls
+            = f.password_field :password, :class => 'text_field'
+
+        - if devise_mapping.rememberable?
+          .control-group
+            .controls
+              = f.label :remember_me, :class => 'checkbox' do
+                = f.check_box :remember_me, checked: true
+                remember me
+
+        .control-group
+          .controls
+            = f.submit "Sign in", :class => 'btn btn-primary'
+
+    .modal-footer
+      = render :partial => "devise/shared/links"

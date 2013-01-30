@@ -15,8 +15,8 @@
       = f.text_field :name, class: 'span8', placeholder: 'event name', autofocus: true
       = f.select :kind, @organization.event_kinds, {}, {class: 'span3'}
       - @organization.sub_units.order('name ASC').each do |sub_unit|
-        = f.label :sub_unit do
-          = f.check_box :sub_unit
+        = f.label :sub_unit, class: 'checkbox' do
+          = check_box_tag :sub_unit
           = sub_unit.name
 
   .control-group

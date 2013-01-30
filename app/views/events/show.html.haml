@@ -50,16 +50,16 @@
           %td
             %strong Location
           %td
-            %address
-              #{@event.location_name}
-              %br
-              #{@event.location_address1}
-              %br
-              #{@event.location_address2}
-              %br
-              #{@event.location_city}, #{@event.location_state} #{@event.location_zip_code}
-              %br
-              = link_to @event.location_map_url
+            %address= location_show(@event)
+            / #{@event.location_name}
+            / %br
+            / #{@event.location_address1}
+            / %br
+            / #{@event.location_address2}
+            / %br
+            / #{city_state_zip(@event)}
+            / %br
+            / = link_to @event.location_map_url
 
           %tr
             %td &nbsp;

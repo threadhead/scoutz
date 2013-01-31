@@ -1,9 +1,14 @@
 class Event < ActiveRecord::Base
   belongs_to :organization
   has_and_belongs_to_many :users
+  acts_as_gmappable
 
   attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :organization_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_id, :message
 
+  def gmaps4rails_address
+    #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
+    "#{self.location_address1}, #{self.location_city}, #{self.location_state}"
+  end
 
   def self.time_range(start_time, end_time)
     where('start_at >= ? AND end_at <= ?', Event.format_time(start_time), Event.format_time(end_time))

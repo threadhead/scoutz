@@ -51,6 +51,7 @@
             %strong Location
           %td
             %address= location_show(@event)
+            = gmaps4rails(@event.to_gmaps4rails)
 
           %tr
             %td &nbsp;

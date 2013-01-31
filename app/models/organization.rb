@@ -2,7 +2,8 @@ class Organization < ActiveRecord::Base
   has_and_belongs_to_many :users
   has_many :sub_units, dependent: :destroy
   has_many :events, dependent: :destroy
-
+  has_many :pictures, as: :assetable
+  has_many :attachment_files, as: :assetable
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
   attr_accessible :city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes

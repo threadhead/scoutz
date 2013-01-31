@@ -6,6 +6,11 @@ class Event < ActiveRecord::Base
   attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :organization_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_id, :message
 
 
+  before_save :sanitize_message
+  def sanitize_message
+    self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
+  end
+
   def full_address
     "#{location_address1} #{}"
   end

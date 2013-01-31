@@ -91,10 +91,7 @@
 
   %fieldset
     %legend Details
-    .control-group
-      = f.label :message, class: 'control-label'
-      .controls
-        = f.text_area :message, class: 'span10', rows: 10
+    = f.cktext_area :message, class: 'span10 ckeditor'
 
   .form-actions
     = f.submit class: 'btn btn-primary'

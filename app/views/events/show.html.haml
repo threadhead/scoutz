@@ -51,16 +51,7 @@
             %strong Location
           %td
             %address= location_show(@event)
-            / #{@event.location_name}
-            / %br
-            / #{@event.location_address1}
-            / %br
-            / #{@event.location_address2}
-            / %br
-            / #{city_state_zip(@event)}
-            / %br
-            / = link_to @event.location_map_url
 
           %tr
             %td &nbsp;
-            %td= @event.message
+            %td= @event.message.html_safe

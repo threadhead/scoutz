@@ -16,7 +16,7 @@
       = f.select :kind, @organization.event_kinds, {}, {class: 'span3'}
       - @organization.sub_units.order('name ASC').each do |sub_unit|
         = f.label :sub_unit, class: 'checkbox' do
-          = f.check_box 'event[sub_unit_ids', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id)
+          = check_box_tag 'event[sub_unit_ids]', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id)
           = sub_unit.name
 
   .control-group

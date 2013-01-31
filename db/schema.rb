@@ -48,6 +48,14 @@ ActiveRecord::Schema.define(:version => 20130131013835) do
   add_index "events", ["start_at"], :name => "index_events_on_start_at"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
+  create_table "events_sub_units", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "sub_unit_id"
+  end
+
+  add_index "events_sub_units", ["event_id", "sub_unit_id"], :name => "index_events_sub_units_on_event_id_and_sub_unit_id"
+  add_index "events_sub_units", ["sub_unit_id", "event_id"], :name => "index_events_sub_units_on_sub_unit_id_and_event_id"
+
   create_table "events_users", :force => true do |t|
     t.integer "event_id"
     t.integer "user_id"

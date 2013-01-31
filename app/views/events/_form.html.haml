@@ -14,6 +14,10 @@
     .controls
       = f.text_field :name, class: 'span8', placeholder: 'event name', autofocus: true
       = f.select :kind, @organization.event_kinds, {}, {class: 'span3'}
+      - @organization.sub_units.order('name ASC').each do |sub_unit|
+        = f.label :sub_unit, class: 'checkbox' do
+          = f.check_box 'event[sub_unit_ids', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id)
+          = sub_unit.name
 
   .control-group
     = f.label :start_at, 'Starts', class: 'control-label'
@@ -36,9 +40,9 @@
           %td.span5
             = f.label :send_reminders, class: 'checkbox' do
               = f.check_box :send_reminders
-              send reminder
-          %td
-            = f.text_field :notifier_type, placeholder: 'notificaiton type'
+              send reminder 48 hours before event start
+          / %td
+          /   = f.text_field :notifier_type, placeholder: 'notificaiton type'
 
 
   .control-group
@@ -83,14 +87,11 @@
     .control-group
       = f.label :location_map_url, 'Map Link', class: 'control-label'
       .controls
-        = f.text_field :location_map_url, class: 'span10', placeholder: 'http://maps.google.com'
+        = f.url_field :location_map_url, class: 'span10', placeholder: 'http://maps.google.com'
 
   %fieldset
     %legend Details
-    .control-group
-      = f.label :message, class: 'control-label'
-      .controls
-        = f.text_area :message, class: 'span10', rows: 10
+    = f.text_area :message, class: 'span10 ckeditor'
 
   .form-actions
     = f.submit class: 'btn btn-primary'

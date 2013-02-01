@@ -2,24 +2,28 @@
   .span12
     .page-header
       .pull-right
-        = link_to(edit_event_path(@event), class: 'btn') do
-          %i.icon-edit
-          change
+        - if @event.users.where(id: current_user).count > 0
+          = link_to(edit_event_path(@event), class: 'btn') do
+            %i.icon-edit
+            change
         = link_to(new_event_path, class: "btn btn-success") do
           %i.icon-plus
           new event
 
-      %h2 #{@event.name} - #{@event.organization.name}
+      %h2 #{@event.name}
 
 
 .row-fluid
   .span8
+    %em.xxlarge= @event.organization.name
     .text-xlarge
       %table.table
         %tr
           %td
             %strong Kind
-          %td= @event.kind
+          %td
+            = @event.kind
+            = " - #{event_kind_sub_units(@event)}" if @event.sub_unit_kind?
 
         %tr
           %td

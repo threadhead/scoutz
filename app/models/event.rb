@@ -11,6 +11,10 @@ class Event < ActiveRecord::Base
     "#{self.location_address1}, #{self.location_city}, #{self.location_state}"
   end
 
+  def sub_unit_kind?
+    self.kind =~ /Den|Patrol/
+  end
+
   def self.time_range(start_time, end_time)
     where('start_at >= ? AND end_at <= ?', Event.format_time(start_time), Event.format_time(end_time))
   end

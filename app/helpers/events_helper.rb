@@ -8,13 +8,17 @@ module EventsHelper
   end
 
   def event_kind_details(event)
-    case event.kind
-    when 'Den Event', 'Patrol Event'
-      event.sub_units.map(&:name).join(',')
+    if event.sub_unit_kind?
+      event_kind_sub_units(event)
     else
       event.kind
     end
   end
+
+  def event_kind_sub_units(event)
+    event.sub_units.map(&:name).join(', ')
+  end
+
 
   def location_show(event)
     sanitize(event.location_name) + add_break(event.location_name) +

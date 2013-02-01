@@ -16,3 +16,10 @@ jQuery ->
     height: 300
 
     })
+
+  $("select#event_kind").change ->
+    subUnitRegex = /Den|Lodge/
+    if $(@).val().match subUnitRegex
+      $("#sub-unit-list").collapse("show")
+    else
+      $("#sub-unit-list").collapse("hide")

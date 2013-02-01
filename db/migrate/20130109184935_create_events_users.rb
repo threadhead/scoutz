@@ -4,7 +4,7 @@ class CreateEventsUsers < ActiveRecord::Migration
       t.integer :event_id
       t.integer :user_id
     end
-    add_index :events_users, :event_id
-    add_index :events_users, :user_id
+    add_index :events_users, [:event_id, :user_id]
+    add_index :events_users, [:user_id, :event_id]
   end
 end

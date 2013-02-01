@@ -9,5 +9,5 @@
       .container.nav-collapse
         %ul.nav
           - if current_user
-            %li= link_to 'Sign out', destroy_user_session_path
+            %li= link_to 'Sign out', destroy_user_session_path, method: :delete
             %li= #select_tag("My Units", options_from_collection_for_select(current_user.organizations, :id, :unit_number))

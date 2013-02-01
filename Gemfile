@@ -23,6 +23,7 @@ gem 'mini_magick'
 gem 'carmen-rails'
 gem 'wicked'
 gem 'slodown'
+gem 'gmaps4rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

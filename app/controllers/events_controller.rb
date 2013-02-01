@@ -37,11 +37,13 @@ class EventsController < ApplicationController
   def new
     @organization = params[:organization_id] ? Organization.find(params[:organization_id]) : Organization.first
     @event = Event.new(start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
+    @sub_unit_ids = []
   end
 
   def edit
     @event = Event.find(params[:id])
     @organization = @event.organization
+    @sub_unit_ids = @event.sub_unit_ids
   end
 
   def create
@@ -52,6 +54,7 @@ class EventsController < ApplicationController
     if @event.save
       redirect_to events_url, notice: 'Event was successfully created.'
     else
+      @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :new
     end
   end
@@ -62,6 +65,7 @@ class EventsController < ApplicationController
     if @event.update_attributes(params[:event])
       redirect_to events_url, notice: 'Event was successfully updated.'
     else
+      @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :edit
     end
   end
@@ -77,4 +81,13 @@ class EventsController < ApplicationController
     def set_tz
       Time.zone = "Arizona"
     end
+
+    def sub_unit_ids(params)
+      if params
+        params.map{|id| id.to_i}
+      else
+        []
+      end
+    end
+
 end

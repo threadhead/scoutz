@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109184935) do
+ActiveRecord::Schema.define(:version => 20130131013835) do
 
   create_table "events", :force => true do |t|
     t.integer  "organization_id"
@@ -36,6 +36,9 @@ ActiveRecord::Schema.define(:version => 20130109184935) do
     t.text     "fees"
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.boolean  "gmaps"
   end
 
   add_index "events", ["end_at"], :name => "index_events_on_end_at"
@@ -45,13 +48,21 @@ ActiveRecord::Schema.define(:version => 20130109184935) do
   add_index "events", ["start_at"], :name => "index_events_on_start_at"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
+  create_table "events_sub_units", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "sub_unit_id"
+  end
+
+  add_index "events_sub_units", ["event_id", "sub_unit_id"], :name => "index_events_sub_units_on_event_id_and_sub_unit_id"
+  add_index "events_sub_units", ["sub_unit_id", "event_id"], :name => "index_events_sub_units_on_sub_unit_id_and_event_id"
+
   create_table "events_users", :force => true do |t|
     t.integer "event_id"
     t.integer "user_id"
   end
 
-  add_index "events_users", ["event_id"], :name => "index_events_users_on_event_id"
-  add_index "events_users", ["user_id"], :name => "index_events_users_on_user_id"
+  add_index "events_users", ["event_id", "user_id"], :name => "index_events_users_on_event_id_and_user_id"
+  add_index "events_users", ["user_id", "event_id"], :name => "index_events_users_on_user_id_and_event_id"
 
   create_table "notifiers", :force => true do |t|
     t.integer  "user_id"
@@ -78,8 +89,8 @@ ActiveRecord::Schema.define(:version => 20130109184935) do
     t.integer "user_id"
   end
 
-  add_index "organizations_users", ["organization_id"], :name => "index_organizations_users_on_organization_id"
-  add_index "organizations_users", ["user_id"], :name => "index_organizations_users_on_user_id"
+  add_index "organizations_users", ["organization_id", "user_id"], :name => "index_organizations_users_on_organization_id_and_user_id"
+  add_index "organizations_users", ["user_id", "organization_id"], :name => "index_organizations_users_on_user_id_and_organization_id"
 
   create_table "phones", :force => true do |t|
     t.integer  "user_id"
@@ -106,8 +117,8 @@ ActiveRecord::Schema.define(:version => 20130109184935) do
     t.integer "child_id"
   end
 
-  add_index "user_relationships", ["child_id"], :name => "index_user_relationships_on_child_id"
-  add_index "user_relationships", ["parent_id"], :name => "index_user_relationships_on_parent_id"
+  add_index "user_relationships", ["child_id", "parent_id"], :name => "index_user_relationships_on_child_id_and_parent_id"
+  add_index "user_relationships", ["parent_id", "child_id"], :name => "index_user_relationships_on_parent_id_and_child_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131013835) do
+ActiveRecord::Schema.define(:version => 20130201042026) do
 
   create_table "events", :force => true do |t|
     t.integer  "organization_id"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20130131013835) do
     t.string   "leadership_role"
     t.string   "role"
     t.string   "time_zone"
+    t.string   "type"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -159,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20130131013835) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
+  add_index "users", ["type"], :name => "index_users_on_type"
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
 end

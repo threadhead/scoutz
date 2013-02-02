@@ -43,6 +43,7 @@ Spork.prefork do
     # config.include ModelMacros, :type => :model
     # config.include RequestMacros
     # config.include ViewMacros, :type => :view
+    config.include Gmaps4railsHelpers
 
 
     # ## Mock Framework

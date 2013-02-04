@@ -10,7 +10,13 @@ organization1 = Organization.create(unit_type: 'Cub Scouts', unit_number: '134',
 organization2 = Organization.create(unit_type: 'Boy Scouts', unit_number: '603', city: 'Scottsdale', state: 'AZ', time_zone: 'Arizona')
 
 user1 = User.create(email: 'threadhead@gmail.com', password: 'pack1134', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona')
+scout1 = User.create(email: 'none@aol.com', password: '12345678', first_name: 'Aydan', last_name: 'Smith', time_zone: 'Arizona')
+scout2 = User.create(email: 'none1@aol.com', password: '12345678', first_name: 'Aydan', last_name: 'Smith', time_zone: 'Arizona')
+user1.scouts << [scout1, scout2]
+
 user2 = User.create(email: 'rob@robmadden.com', password: 'pack1134', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona')
+scout3 = User.create(email: 'none2@aol.com', password: '12345678', first_name: 'Matthew', last_name: 'Madden', time_zone: 'Arizona')
+user2.scouts << scout3
 
 user1.organizations << organization1
 user1.organizations << organization2

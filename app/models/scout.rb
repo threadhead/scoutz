@@ -1,0 +1,2 @@
+class Scout < User
+end

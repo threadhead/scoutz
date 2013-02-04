@@ -1,10 +1,10 @@
 class CreateUserRelationships < ActiveRecord::Migration
   def change
     create_table :user_relationships do |t|
-      t.references :parent
-      t.references :child
+      t.references :adult
+      t.references :scout
     end
-    add_index :user_relationships, [:parent_id, :child_id]
-    add_index :user_relationships, [:child_id, :parent_id]
+    add_index :user_relationships, [:adult_id, :scout_id]
+    add_index :user_relationships, [:scout_id, :adult_id]
   end
 end

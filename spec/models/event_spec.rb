@@ -7,6 +7,11 @@ describe Event do
   it { should have_and_belong_to_many(:users) }
   it { should have_and_belong_to_many(:sub_units) }
 
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:start_at) }
+  it { should validate_presence_of(:end_at) }
+
+
   it 'creates valid event' do
     FactoryGirl.build(:event).should be_valid
   end

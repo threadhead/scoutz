@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131013835) do
+ActiveRecord::Schema.define(:version => 20130201042026) do
 
   create_table "events", :force => true do |t|
     t.integer  "organization_id"
@@ -113,12 +113,12 @@ ActiveRecord::Schema.define(:version => 20130131013835) do
   add_index "sub_units", ["organization_id"], :name => "index_sub_units_on_organization_id"
 
   create_table "user_relationships", :force => true do |t|
-    t.integer "parent_id"
-    t.integer "child_id"
+    t.integer "adult_id"
+    t.integer "scout_id"
   end
 
-  add_index "user_relationships", ["child_id", "parent_id"], :name => "index_user_relationships_on_child_id_and_parent_id"
-  add_index "user_relationships", ["parent_id", "child_id"], :name => "index_user_relationships_on_parent_id_and_child_id"
+  add_index "user_relationships", ["adult_id", "scout_id"], :name => "index_user_relationships_on_adult_id_and_scout_id"
+  add_index "user_relationships", ["scout_id", "adult_id"], :name => "index_user_relationships_on_scout_id_and_adult_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20130131013835) do
     t.string   "leadership_role"
     t.string   "role"
     t.string   "time_zone"
+    t.string   "type"
   end
 
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
@@ -159,6 +160,7 @@ ActiveRecord::Schema.define(:version => 20130131013835) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
+  add_index "users", ["type"], :name => "index_users_on_type"
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
 
 end

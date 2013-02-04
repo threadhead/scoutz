@@ -12,21 +12,21 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name
 
-  has_many     :parent_child_relationships,
+  has_many     :adult_scout_relationships,
                :class_name            => "UserRelationship",
-               :foreign_key           => :child_id,
+               :foreign_key           => :scout_id,
                :dependent             => :destroy
-  has_many     :parents,
-               :through               => :parent_child_relationships,
-               :source                => :parent
+  has_many     :adults,
+               :through               => :adult_scout_relationships,
+               :source                => :adult
 
-  has_many     :child_parent_relationships,
+  has_many     :scout_adult_relationships,
                :class_name            => "UserRelationship",
-               :foreign_key           => :parent_id,
+               :foreign_key           => :adult_id,
                :dependent             => :destroy
-  has_many     :children,
-               :through               => :child_parent_relationships,
-               :source                => :child
+  has_many     :scouts,
+               :through               => :scout_adult_relationships,
+               :source                => :scout
 
 
   has_and_belongs_to_many :organizations

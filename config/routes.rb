@@ -16,6 +16,7 @@ Scoutz::Application.routes.draw do
   resources :sub_units
   resources :organizations do
     resources :events
+    resources :scouts
   end
   post 'organizations/new' => 'organizations#new'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}

@@ -58,7 +58,7 @@ class ScoutsController < ApplicationController
     end
 
     def set_organization
-      @organization = current_user.organizations.where(id: params[:organization_id])
+      @organization = current_user.organizations.where(id: params[:organization_id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

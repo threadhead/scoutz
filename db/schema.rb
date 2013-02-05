@@ -121,8 +121,8 @@ ActiveRecord::Schema.define(:version => 20130201042026) do
   add_index "user_relationships", ["scout_id", "adult_id"], :name => "index_user_relationships_on_scout_id_and_adult_id"
 
   create_table "users", :force => true do |t|
-    t.string   "email",                  :default => "", :null => false
-    t.string   "encrypted_password",     :default => "", :null => false
+    t.string   "email",                  :default => ""
+    t.string   "encrypted_password",     :default => ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20130201042026) do
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["encrypted_password"], :name => "index_users_on_encrypted_password"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
   add_index "users", ["type"], :name => "index_users_on_type"

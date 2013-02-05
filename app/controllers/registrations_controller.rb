@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   layout 'modals'
+
   def new
     super
   end

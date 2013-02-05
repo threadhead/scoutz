@@ -6,6 +6,7 @@ FactoryGirl.define do
   factory :user do
     email               { FactoryGirl.generate(:user_email)}
     password            "sekritsekrit"
+    confirmed_at        { 1.day.ago }
 
     first_name          "Karl"
     last_name           "Smith"

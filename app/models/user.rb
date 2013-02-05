@@ -14,10 +14,11 @@ class User < ActiveRecord::Base
 
   before_validation :strip_password_if_empty
   def strip_password_if_empty
+    self.email = nil if email.blank?
     if email.blank? || password.blank?
-      # puts 'setting password/confirmation to nil'
-      password = nil
-      password_confirmation = nil
+      self.password = nil
+      self.password_confirmation = nil
+      self.skip_confirmation!
     end
   end
 

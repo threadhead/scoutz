@@ -81,6 +81,18 @@ describe User do
     describe 'unsucessful when password/confimation do not match' do
       it { User.new(last_name: 'smith', first_name: 'karl', email: 'threadhead@gmail.com', password: 'asdfasdf', password_confirmation: 'fdafdasss').should_not be_valid }
     end
+
+    it 'blank email is saved as nil' do
+      user = FactoryGirl.create(:user, email: '')
+      user.reload
+      user.email.should be_nil
+    end
+
+    it 'allows users users with the same f/l name, if no email' do
+      user = FactoryGirl.create(:user)
+      FactoryGirl.create(:user, first_name: user.first_name, last_name: user.last_name)
+      User.where(first_name: user.first_name, last_name: user.last_name).count.should eq(2)
+    end
   end
 
   context 'updating' do

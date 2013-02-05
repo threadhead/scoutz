@@ -36,7 +36,7 @@
             %strong Organizer
           %td
             - @event.users.each do |user|
-              = link_to user.full_name, user
+              = link_to user.full_name, user_path(user.id)
 
         %tr
           %td

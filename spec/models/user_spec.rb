@@ -41,4 +41,56 @@ describe User do
   	end
   end
 
+  context 'creating' do
+    describe 'successful when email is blank' do
+      # it 'email nil' do
+      #   u = FactoryGirl.build(:user, email: '')
+      #   u.valid?
+      #   puts u.errors.inspect
+      # end
+      it { FactoryGirl.build(:user, email: '').should be_valid }
+      it { FactoryGirl.build(:user, email: nil).should be_valid }
+    end
+
+    # describe 'password is set to nil of email is blank' do
+      # it { FactoryGirl.create(:user, email: '').encrypted_password.should eq(nil) }
+    # end
+
+    it 'email must be unique if not blank' do
+      user1 = FactoryGirl.create(:user)
+      FactoryGirl.build(:user, email: user1.email).should_not be_valid
+    end
+
+    it 'can have multiple users with no email' do
+      user1 = FactoryGirl.create(:user, email: '')
+      FactoryGirl.build(:user, email: '').should be_valid
+    end
+
+    describe 'successful when password is blank' do
+      it { FactoryGirl.build(:user, password: '').should be_valid }
+      it { FactoryGirl.build(:user, password: nil).should be_valid }
+    end
+
+    describe 'successful when email and password are blank' do
+      it { FactoryGirl.build(:user, email: '', password: '').should be_valid }
+      it { FactoryGirl.build(:user, email: nil, password: '').should be_valid }
+      it { FactoryGirl.build(:user, email: '', password: nil).should be_valid }
+      it { FactoryGirl.build(:user, email: nil, password: nil).should be_valid }
+    end
+
+    describe 'unsucessful when password/confimation do not match' do
+      it { User.new(last_name: 'smith', first_name: 'karl', email: 'threadhead@gmail.com', password: 'asdfasdf', password_confirmation: 'fdafdasss').should_not be_valid }
+    end
+  end
+
+  context 'updating' do
+    it 'can update email address' do
+      user1 = FactoryGirl.create(:user)
+      user1.skip_reconfirmation!
+      user1.update_attributes(email: 'joe_something@yahool.net')
+      user1.reload
+      user1.email.should eq('joe_something@yahool.net')
+    end
+  end
+
 end

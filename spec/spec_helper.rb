@@ -60,7 +60,35 @@ Spork.prefork do
     # If you're not using ActiveRecord, or you'd prefer not to run each of your
     # examples within a transaction, remove the following line or assign false
     # instead of true.
-    config.use_transactional_fixtures = true
+    config.use_transactional_fixtures = false
+
+    config.before(:each) do
+      if Capybara.current_driver == :rack_test
+        DatabaseCleaner.strategy = :transaction
+      else
+        DatabaseCleaner.strategy = :truncation
+      end
+
+      DatabaseCleaner.start
+    end
+
+    config.after(:each) do
+      DatabaseCleaner.clean
+    end
+
+    config.before(:all) do
+      ActiveRecord::Base.observers.disable(:all)
+
+      User.delete_all
+      Organization.delete_all
+      SubUnit.delete_all
+      Event.delete_all
+      Phone.delete_all
+      UserRelationship.delete_all
+    end
+
+
+
 
     # If true, the base class of anonymous controllers will be inferred
     # automatically. This will be the default behavior in future versions of
@@ -70,7 +98,7 @@ Spork.prefork do
 
     #some rspec configs
     config.treat_symbols_as_metadata_keys_with_true_values = true
-    config.filter_run_including :focus => true
+    config.filter_run_including focus: true
     config.run_all_when_everything_filtered = true
 
   end

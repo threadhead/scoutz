@@ -9,8 +9,8 @@
 organization1 = Organization.create(unit_type: 'Cub Scouts', unit_number: '134', city: 'Cave Creek', state: 'AZ', time_zone: 'Arizona')
 organization2 = Organization.create(unit_type: 'Boy Scouts', unit_number: '603', city: 'Scottsdale', state: 'AZ', time_zone: 'Arizona')
 
-user1 = User.create(email: 'threadhead@gmail.com', password: 'pack1134', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona')
-user2 = User.create(email: 'rob@robmadden.com', password: 'pack1134', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona')
+user1 = User.create({email: 'threadhead@gmail.com', password: 'pack1134', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
+user2 = User.create({email: 'rob@robmadden.com', password: 'pack1134', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
 
 user1.organizations << organization1
 user1.organizations << organization2

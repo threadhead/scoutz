@@ -1,0 +1,80 @@
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        - #if @user.users.where(id: current_user).count > 0
+        = link_to(edit_organization_scout_path(@user), class: 'btn') do
+          %i.icon-edit
+          change
+
+        = link_to(new_organization_scout_path(@organization), class: "btn btn-success") do
+          %i.icon-plus
+          new scout
+
+      %h2 #{@user.full_name}
+
+
+.row-fluid
+  .span8
+    .text-xlarge
+      %table.table
+        %tr
+          %td
+            %strong Name
+          %td
+            = @user.full_name
+
+        %tr
+          %td
+            %strong Rank
+          %td
+            = @user.role
+
+        %tr
+          %td
+            %strong= @user.sub_unit.organization.sub_unit_type
+          %td
+            = @user.sub_unit.name
+
+        / %tr
+        /   %td
+        /     %strong Times
+        /   %td #{@event.start_at.to_s(:short_ampm)} - #{@event.start_at.to_s(:short_ampm)}
+
+        / %tr
+        /   %td
+        /     %strong Organizer
+        /   %td
+        /     - @event.users.each do |user|
+        /       = link_to user.full_name, user_path(user.id)
+
+        / %tr
+        /   %td
+        /     %strong RSVP
+        /   %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
+
+        / %tr
+        /   %td
+        /     %strong Reminders?
+        /   %td #{@event.send_reminders ? 'Yes' : 'No'}
+
+        /   %tr
+        /     %td
+        /       %strong Attire
+        /     %td= @event.attire
+
+        / %tr
+        /   %td
+        /     %strong Location
+        /   %td
+        /     %address= location_show(@event)
+        /     - if @event.location_map_url.blank?
+        /       = gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
+        /       = #gmaps4rails(@event.to_gmaps4rails)
+        /     - else
+        /       .iframe-rwd
+        /         %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+        /   %tr
+        /     %td &nbsp;
+        /     %td= @event.message.html_safe

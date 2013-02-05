@@ -61,17 +61,17 @@ describe Organization do
   describe '.sub_unit_type' do
     it 'returns Troop for Boy Scouts' do
       organization = FactoryGirl.build(:organization, unit_type: 'Boy Scouts')
-      organization.sub_unit_type.should eq('Patrol')
+      organization.sub_unit_name.should eq('Patrol')
     end
 
     it 'returns Pack for Cub Scouts' do
       organization = FactoryGirl.build(:organization, unit_type: 'Cub Scouts')
-      organization.sub_unit_type.should eq('Den')
+      organization.sub_unit_name.should eq('Den')
     end
   end
 
   describe 'Organiztion.unit_types' do
-    it 'returns all unti types' do
+    it 'returns all unit types' do
       Organization.unit_types.should eq(['Cub Scouts', 'Boy Scouts', 'Venturing Crew', 'Girl Scouts', 'Order of the Arrow'])
     end
   end

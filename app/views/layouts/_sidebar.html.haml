@@ -1,4 +1,7 @@
 .well.sidebar-nav
   %ul.nav.nav-list
     %li.nav-header Pack 134
-    %li= link_to 'Scouts', organization_scouts_path(Organization.find_by_unit_number('134'))
+    - org = Organization.find_by_unit_number('134')
+    - if org
+      %li= link_to 'Scouts', organization_scouts_path(org)
+      %li= link_to 'Adults', organization_adults_path(org)

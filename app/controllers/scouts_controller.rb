@@ -3,7 +3,7 @@ class ScoutsController < ApplicationController
   before_filter :set_organization
 
   def index
-    @users = @organization.scouts
+    @users = @organization.scouts.includes(:sub_unit).by_name_lf
   end
 
   def show

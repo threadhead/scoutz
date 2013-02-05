@@ -71,6 +71,15 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  def name_lf
+    "#{last_name}, #{first_name}"
+  end
+
+  ## scopes
+  def self.by_name_lf
+    order('"users"."last_name" ASC, "users"."first_name" ASC')
+  end
+
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb
     # Checks whether a password is needed or not. For validations only.

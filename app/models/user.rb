@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
   has_many :phones
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events
+  belongs_to :sub_unit
 
   before_save :ensure_authentication_token
 

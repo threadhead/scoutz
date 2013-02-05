@@ -1,4 +1,6 @@
 Scoutz::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
+  get "events/index"
 
   get "dashboard_list" => "dashboard_list#index"
   get "dashboard_calendar" => "dashboard_calendar#index"

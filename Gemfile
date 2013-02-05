@@ -22,7 +22,9 @@ gem 'mini_magick'
 # gem "queue_classic"
 gem 'carmen-rails'
 gem 'wicked'
-gem 'slodown'
+# gem 'slodown'
+gem 'sanitize'
+gem 'ckeditor'
 gem 'gmaps4rails'
 
 # Gems used only for assets and not required
@@ -43,6 +45,7 @@ group :assets do
 end
 
 gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
+gem 'jquery-rails-cdn'
 
 group :development, :test do
   # gem 'quiet_assets'

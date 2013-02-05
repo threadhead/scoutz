@@ -22,6 +22,9 @@ user2.scouts << scout3
 user1.organizations << organization1
 user1.organizations << organization2
 user2.organizations << organization1
+scout1.organizations << organization1
+scout2.organizations << organization2
+scout3.organizations << organization1
 
 6.times do |idx|
   su = SubUnit.create(name: "Den #{idx+1}")

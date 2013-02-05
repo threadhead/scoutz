@@ -1,5 +1,8 @@
 class Organization < ActiveRecord::Base
   has_and_belongs_to_many :users
+  # has_many :scouts, through: :users
+  # has_many :adults, through: :users
+  # has_many :scouts, through: :users, source: :scouts
   has_many :sub_units, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :pictures, as: :assetable
@@ -21,6 +24,14 @@ class Organization < ActiveRecord::Base
 
   def name_short
     "#{UNIT_TYPES_SHORT[unit_type]} #{UNIT_TYPES[unit_type]} #{unit_number}"
+  end
+
+  def scouts
+    self.users.where(type: 'Scout')
+  end
+
+  def adults
+    self.users.where(type: 'Adult')
   end
 
 

@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Organization do
   it { should have_and_belong_to_many(:users) }
+  it { should have_many(:sub_units) }
+  it { should have_many(:events) }
 
   it { should validate_presence_of(:unit_type) }
   it { should validate_presence_of(:unit_number) }
@@ -28,6 +30,50 @@ describe Organization do
   		user.organizations.count.should eq(2)
   		user.organizations.first.id.should eq(organization1.id)
   	end
+  end
+
+  describe '.name' do
+    before { @organization = FactoryGirl.build(:organization) }
+    subject { @organization }
+
+    it { subject.name.should eq('Cub Scout Pack 134') }
+  end
+
+  describe '.name_short' do
+    before { @organization = FactoryGirl.build(:organization) }
+    subject { @organization }
+
+    it { subject.name_short.should eq('CS Pack 134') }
+  end
+
+  describe '.event_kinds' do
+    it 'Cub Scout events' do
+      organization = FactoryGirl.build(:organization, unit_type: 'Cub Scouts')
+      organization.event_kinds.should eq(['Pack Event', 'Den Event', 'Leader Event'])
+    end
+
+    it 'Cub Scout events' do
+      organization = FactoryGirl.build(:organization, unit_type: 'Boy Scouts')
+      organization.event_kinds.should eq(['Troop Event', 'Patrol Event', 'Leader Event'])
+    end
+  end
+
+  describe '.sub_unit_type' do
+    it 'returns Troop for Boy Scouts' do
+      organization = FactoryGirl.build(:organization, unit_type: 'Boy Scouts')
+      organization.sub_unit_type.should eq('Patrol')
+    end
+
+    it 'returns Pack for Cub Scouts' do
+      organization = FactoryGirl.build(:organization, unit_type: 'Cub Scouts')
+      organization.sub_unit_type.should eq('Den')
+    end
+  end
+
+  describe 'Organiztion.unit_types' do
+    it 'returns all unti types' do
+      Organization.unit_types.should eq(['Cub Scouts', 'Boy Scouts', 'Venturing Crew', 'Girl Scouts', 'Order of the Arrow'])
+    end
   end
 
 end

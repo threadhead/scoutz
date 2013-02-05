@@ -19,6 +19,10 @@ class Organization < ActiveRecord::Base
     "#{unit_type.singularize} #{UNIT_TYPES[unit_type]} #{unit_number}"
   end
 
+  def name_short
+    "#{UNIT_TYPES_SHORT[unit_type]} #{UNIT_TYPES[unit_type]} #{unit_number}"
+  end
+
 
   def event_kinds
     case unit_type
@@ -41,6 +45,14 @@ class Organization < ActiveRecord::Base
     'Venturing Crew' => 'Crew',
     'Girl Scouts' => 'Troop',
     'Order of the Arrow' => 'Troop'
+  }
+
+  UNIT_TYPES_SHORT = {
+    'Cub Scouts' => 'CS',
+    'Boy Scouts' => 'BS',
+    'Venturing Crew' => 'VC',
+    'Girl Scouts' => 'GS',
+    'Order of the Arrow' => 'OA'
   }
 
   SUB_UNIT_TYPES = {

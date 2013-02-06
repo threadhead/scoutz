@@ -36,3 +36,8 @@
       %ul.unstyled
         - @organization.scout_rank_count.each do |rank|
           %li= "#{rank[0] || '<none>'} : #{rank[1]}"
+
+      %strong #{@organization.sub_unit_name} Count
+      %ul.unstyled
+        - @organization.scout_sub_unit_count.each do |sub_unit|
+          %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

@@ -21,9 +21,10 @@
       = f.select :rank, @organization.ranks, include_blank: true
 
   .control-group
-    = f.label :leadership_position, class: 'control-label'
+    = f.label :leadership_position, 'Leadership positions', class: 'control-label'
     .controls
-      = f.select :leadership_position, @organization.scout_leadership_positions, include_blank: true
+      %p= f.select :leadership_position, @organization.scout_leadership_positions, include_blank: true
+      = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
 
   .control-group
     = f.label :birth, 'Birthday', class: 'control-label'

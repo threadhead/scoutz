@@ -1,13 +1,6 @@
 .well.sidebar-nav
   %ul.nav.nav-list
-    %li.nav-header Pack 134
-    - org = Organization.find_by_unit_number('134')
-    - if org
-      %li= link_to 'Scouts', organization_scouts_path(org)
-      %li= link_to 'Adults', organization_adults_path(org)
-
-    %li.nav-header Troop 603
-    - org = Organization.find_by_unit_number('603')
-    - if org
-      %li= link_to 'Scouts', organization_scouts_path(org)
-      %li= link_to 'Adults', organization_adults_path(org)
+    - @organizations.each do |organization|
+      %li.nav-header= organization.name_unit
+      %li= link_to 'Scouts', organization_scouts_path(organization)
+      %li= link_to 'Adults', organization_adults_path(organization)

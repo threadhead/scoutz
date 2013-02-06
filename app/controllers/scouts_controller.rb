@@ -1,4 +1,5 @@
 class ScoutsController < ApplicationController
+  before_filter :auth_and_time_zone
   before_filter :set_user, only: [:show, :edit, :update, :destroy]
   before_filter :set_organization
 

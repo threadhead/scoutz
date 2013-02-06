@@ -42,6 +42,10 @@ class Organization < ActiveRecord::Base
     self.scouts.group(:rank).count
   end
 
+  def scout_sub_unit_count
+    self.scouts.joins(:sub_unit).group('"sub_units"."name"').count
+  end
+
   def unit_type_to_sym
     @unit_type_to_sym ||= unit_type.gsub(/ /, '').underscore.to_sym
   end

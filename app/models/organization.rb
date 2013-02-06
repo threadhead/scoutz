@@ -70,6 +70,10 @@ class Organization < ActiveRecord::Base
     @scout_leadership_positions ||= AppConstants.unit_types[unit_type_to_sym][:scout_leadership_positions]
   end
 
+  def adult_leadership_positions
+    @adult_leadership_positions ||= AppConstants.unit_types[unit_type_to_sym][:adult_leadership_positions]
+  end
+
   def event_kinds
     AppConstants.unit_types[unit_type_to_sym][:event_types]
   end

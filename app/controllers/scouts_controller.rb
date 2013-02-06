@@ -11,7 +11,7 @@ class ScoutsController < ApplicationController
   end
 
   def new
-    @user = Scout.new(birth: 10.years.ago)
+    @user = Scout.new
   end
 
   def edit

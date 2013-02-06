@@ -19,11 +19,15 @@ class Organization < ActiveRecord::Base
   # end
 
   def name
-    "#{unit_type.singularize} #{UNIT_TYPES[unit_type]} #{unit_number}"
+    "#{unit_type.singularize} #{unit_type_title} #{unit_number}"
   end
 
   def name_short
-    "#{UNIT_TYPES_SHORT[unit_type]} #{UNIT_TYPES[unit_type]} #{unit_number}"
+    "#{unit_type_short} #{unit_type_title} #{unit_number}"
+  end
+
+  def name_unit
+    "#{unit_type_title} #{unit_number}"
   end
 
   def scouts
@@ -34,58 +38,71 @@ class Organization < ActiveRecord::Base
     self.users.where(type: 'Adult')
   end
 
-
-  def event_kinds
-    case unit_type
-    when 'Cub Scouts'
-      ['Pack Event', 'Den Event', 'Leader Event']
-    when 'Boy Scouts'
-      ['Troop Event', 'Patrol Event', 'Leader Event']
-    when 'Venturing Crew'
-      ['Crew Event', 'Leader Event']
-    when 'Girl Scouts'
-      ['Troop Event', 'Patrol Event', 'Leader Event']
-    when 'Order of the Arrow'
-      ['Lodge Event', 'Patrol Event', 'Leader Event']
-    end
+  def scout_rank_count
+    self.scouts.group(:rank).count
   end
 
-  UNIT_TYPES = {
-    'Cub Scouts' => 'Pack',
-    'Boy Scouts' => 'Troop',
-    'Venturing Crew' => 'Crew',
-    'Girl Scouts' => 'Troop',
-    'Order of the Arrow' => 'Troop'
-  }
+  def scout_sub_unit_count
+    self.scouts.joins(:sub_unit).group('"sub_units"."name"').count
+  end
 
-  UNIT_TYPES_SHORT = {
-    'Cub Scouts' => 'CS',
-    'Boy Scouts' => 'BS',
-    'Venturing Crew' => 'VC',
-    'Girl Scouts' => 'GS',
-    'Order of the Arrow' => 'OA'
-  }
+  def unit_type_to_sym
+    @unit_type_to_sym ||= unit_type.gsub(/ /, '').underscore.to_sym
+  end
 
-  SUB_UNIT_TYPES = {
-    'Cub Scouts' => 'Den',
-    'Boy Scouts' => 'Patrol',
-    'Venturing Crew' => 'Team',
-    'Girl Scouts' => 'Patrol',
-    'Order of the Arrow' => 'Patrol'
-  }
+  def unit_type_short
+    @unit_type_short ||= AppConstants.unit_types[unit_type_to_sym][:short_name]
+  end
+
+  def unit_type_title
+    @unit_type_title ||= AppConstants.unit_types[unit_type_to_sym][:title]
+  end
+
+  def sub_unit_name
+    @sub_unit_name ||= AppConstants.unit_types[unit_type_to_sym][:sub_unit_name]
+  end
+
+  def ranks
+    @ranks ||= AppConstants.unit_types[unit_type_to_sym][:ranks]
+  end
+
+  def scout_leadership_positions
+    @scout_leadership_positions ||= AppConstants.unit_types[unit_type_to_sym][:scout_leadership_positions]
+  end
+
+  def event_kinds
+    AppConstants.unit_types[unit_type_to_sym][:event_types]
+  end
+
+  # UNIT_TYPES = {
+  #   'Cub Scouts' => 'Pack',
+  #   'Boy Scouts' => 'Troop',
+  #   'Venturing Crew' => 'Crew',
+  #   'Girl Scouts' => 'Troop',
+  #   'Order of the Arrow' => 'Troop'
+  # }
+
+  # UNIT_TYPES_SHORT = {
+  #   'Cub Scouts' => 'CS',
+  #   'Boy Scouts' => 'BS',
+  #   'Venturing Crew' => 'VC',
+  #   'Girl Scouts' => 'GS',
+  #   'Order of the Arrow' => 'OA'
+  # }
+
+  # SUB_UNIT_TYPES = {
+  #   'Cub Scouts' => 'Den',
+  #   'Boy Scouts' => 'Patrol',
+  #   'Venturing Crew' => 'Team',
+  #   'Girl Scouts' => 'Patrol',
+  #   'Order of the Arrow' => 'Patrol'
+  # }
     # 'Service Unit' => 'Unit',
     # 'Fire Service Explorer Post' => 'Post',
     # 'Sea Scout Ship' => 'Crew'
 
   def self.unit_types
-    SUB_UNIT_TYPES.keys
-  end
-
-  def self.sub_unit_type(organization_type)
-    SUB_UNIT_TYPES[organization_type.to_s]
-  end
-
-  def sub_unit_type
-    SUB_UNIT_TYPES[unit_type]
+    @@unit_types ||= AppConstants.unit_types.keys.map { |e| AppConstants.unit_types[e][:name] }
+    # SUB_UNIT_TYPES.keys
   end
 end

@@ -1,6 +1,6 @@
 module EventsHelper
   def city_state_zip(event)
-    "#{event.location_city}#{event.location_city.blank? ? '' : ', '}#{event.location_city} #{event.location_zip_code}".strip
+    "#{event.location_city}#{event.location_city.blank? ? '' : ', '}#{event.location_state} #{event.location_zip_code}".strip
   end
 
   def event_list_name(event)

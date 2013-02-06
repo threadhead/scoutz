@@ -1,6 +1,6 @@
-/ .well.sidebar-nav
-/   %ul.nav.nav-list
-/     %li.nav-header Sidebar
-/     %li= link_to "Link 1", "/path1"
-/     %li= link_to "Link 2", "/path2"
-/     %li= link_to "Link 3", "/path3"
+.well.sidebar-nav
+  %ul.nav.nav-list
+    - @organizations.each do |organization|
+      %li.nav-header= organization.name_unit
+      %li= link_to 'Scouts', organization_scouts_path(organization)
+      %li= link_to 'Adults', organization_adults_path(organization)

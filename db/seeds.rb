@@ -12,7 +12,7 @@ organization2 = Organization.create(unit_type: 'Boy Scouts', unit_number: '603',
 
 user1 = Adult.create({email: 'threadhead@gmail.com', password: 'pack1134', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
 scout1 = Scout.create(first_name: 'Aydan', last_name: 'Smith', time_zone: 'Arizona')
-scout2 = Scout.create(email: 'bennett9918@gmail.com', first_name: 'Bennett', last_name: 'Smith', time_zone: 'Arizona')
+scout2 = Scout.create(email: 'bennett9918@gmail.com', first_name: 'Bennett', last_name: 'Smith', time_zone: 'Arizona', rank: 'Tenderfoot', leadership_position: 'Chaplain Aide')
 user1.scouts << [scout1, scout2]
 
 user2 = Adult.create({email: 'rob@robmadden.com', password: 'pack1134', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)

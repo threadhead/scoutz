@@ -1,0 +1,120 @@
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        - #if @user.users.where(id: current_user).count > 0
+        = link_to(organization_scouts_path(@organization), class: 'btn') do
+          %i.icon-large.icon-reply
+          #{@organization.name_unit} scouts
+
+        = link_to(edit_organization_scout_path(@organization, @user), class: 'btn') do
+          %i.icon-large.icon-edit
+          change
+
+        .btn-group
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
+            %li
+              = link_to(organization_scout_path(@user), method: :delete, confirm: 'Are you sure?', class: "") do
+                %i.icon-trash.icon-large
+                destroy #{@user.first_name}
+
+            %li
+              = link_to(new_organization_scout_path(@organization), class: "") do
+                %i.icon-large.icon-plus
+                new scout
+
+      %h2 Scout: #{@user.full_name}
+
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+
+.row-fluid
+  .span8
+    .text-xlarge
+      %table.table
+        %tr
+          %td
+            / %strong= @user.sub_unit.organization.unit_type_title
+            %strong Unit
+          %td
+            = @user.sub_unit.organization.name
+
+        %tr
+          %td
+            %strong Rank
+          %td
+            = @user.rank
+
+        %tr
+          %td
+            %strong Position
+          %td
+            = @user.leadership_position
+
+        %tr
+          %td
+            %strong= @user.sub_unit.organization.sub_unit_name
+          %td
+            = @user.sub_unit.name
+
+        %tr
+          %td
+            %strong Birthday
+          %td= birthdate_and_years_old(@user)
+
+        %tr
+          %td
+            %strong Parents
+          %td
+            = scout_adults_link_list(@organization, @user)
+
+        %tr
+          %td
+            %strong Address
+          %td
+            %address= user_address_show(@user)
+
+        / %tr
+        /   %td
+        /     %strong Times
+        /   %td #{@event.start_at.to_s(:short_ampm)} - #{@event.start_at.to_s(:short_ampm)}
+
+        / %tr
+        /   %td
+        /     %strong Organizer
+        /   %td
+        /     - @event.users.each do |user|
+        /       = link_to user.full_name, user_path(user.id)
+
+        / %tr
+        /   %td
+        /     %strong RSVP
+        /   %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
+
+        / %tr
+        /   %td
+        /     %strong Reminders?
+        /   %td #{@event.send_reminders ? 'Yes' : 'No'}
+
+        /   %tr
+        /     %td
+        /       %strong Attire
+        /     %td= @event.attire
+
+        / %tr
+        /   %td
+        /     %strong Location
+        /   %td
+        /     %address= location_show(@event)
+        /     - if @event.location_map_url.blank?
+        /       = gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
+        /       = #gmaps4rails(@event.to_gmaps4rails)
+        /     - else
+        /       .iframe-rwd
+        /         %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+        /   %tr
+        /     %td &nbsp;
+        /     %td= @event.message.html_safe

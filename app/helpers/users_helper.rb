@@ -12,4 +12,16 @@ module UsersHelper
       "#{user.birth.to_s(:long)} (#{user.age} years old)"
     end
   end
+
+  def user_city_state_zip(user)
+    "#{user.city}#{user.city.blank? ? '' : ', '}#{user.state} #{user.zip_code}".strip
+  end
+
+
+  def user_address_show(user)
+    sanitize(user.address1) + add_break(user.address1) +
+    sanitize(user.address2) + add_break(user.address2) +
+    sanitize(user_city_state_zip(user)) + add_break(user_city_state_zip(user))
+  end
+
 end

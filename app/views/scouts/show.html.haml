@@ -70,6 +70,12 @@
           %td
             = scout_adults_link_list(@organization, @user)
 
+        %tr
+          %td
+            %strong Address
+          %td
+            %address= user_address_show(@user)
+
         / %tr
         /   %td
         /     %strong Times

@@ -1,0 +1,60 @@
+= form_for @user, url: organization_adult_path(@organization, @user), html: { class: 'form-horizontal' } do |f|
+  .control-group
+    = f.label :organization, class: 'control-label'
+    .controls
+      .text-xlarge= @organization.name
+
+  .control-group
+    = f.label :name, class: 'control-label'
+    .controls
+      = f.text_field :first_name, class: 'text_field', placeholder: 'first name'
+      = f.text_field :last_name, class: 'text_field', placeholder: 'last name'
+
+  .control-group
+    = f.label :leadership_position, 'Leadership positions', class: 'control-label'
+    .controls
+      %p= f.select :leadership_position, @organization.adult_leadership_positions, include_blank: true
+      = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
+
+  .control-group
+    = f.label :birth, 'Birthday', class: 'control-label'
+    .controls
+      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'span2'
+
+  %fieldset
+    %legend Notifications
+    .control-group
+      = f.label :email, class: 'control-label'
+      .controls
+        = f.email_field :email, class: 'span5'
+
+    .control-group
+      .controls
+        = f.label :send_reminders, class: 'checkbox' do
+          = f.check_box :send_reminders
+          send reminder before event deadlines and start times
+
+
+  %fieldset
+    %legend Address
+    .control-group
+      = f.label :address1, class: 'control-label'
+      .controls
+        = f.text_field :address1, class: 'span6'
+
+    .control-group
+      = f.label :address2, class: 'control-label'
+      .controls
+        = f.text_field :address2, class: 'span6'
+
+    .control-group
+      = f.label :city, 'City, State, Zip', class: 'control-label'
+      .controls
+        = f.text_field :city, class: 'span4', placeholder: 'city'
+        = f.text_field :state, class: 'span1', placeholder: 'state'
+        = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
+
+
+  .form-actions
+    = f.submit class: 'btn btn-primary'
+    = link_to 'Cancel', organization_adults_path, class: 'btn'

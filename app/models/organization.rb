@@ -26,12 +26,20 @@ class Organization < ActiveRecord::Base
     "#{unit_type_short} #{unit_type_title} #{unit_number}"
   end
 
+  def name_unit
+    "#{unit_type_title} #{unit_number}"
+  end
+
   def scouts
     self.users.where(type: 'Scout')
   end
 
   def adults
     self.users.where(type: 'Adult')
+  end
+
+  def scout_rank_count
+    self.scouts.group(:rank).count
   end
 
   def unit_type_to_sym
@@ -48,6 +56,14 @@ class Organization < ActiveRecord::Base
 
   def sub_unit_name
     @sub_unit_name ||= AppConstants.unit_types[unit_type_to_sym][:sub_unit_name]
+  end
+
+  def ranks
+    @ranks ||= AppConstants.unit_types[unit_type_to_sym][:ranks]
+  end
+
+  def scout_leadership_positions
+    @scout_leadership_positions ||= AppConstants.unit_types[unit_type_to_sym][:scout_leadership_positions]
   end
 
   def event_kinds

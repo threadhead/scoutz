@@ -3,16 +3,32 @@
     .page-header
       .pull-right
         - #if @user.users.where(id: current_user).count > 0
-        = link_to(edit_organization_scout_path(@user), class: 'btn') do
-          %i.icon-edit
+        = link_to(organization_scouts_path(@organization), class: 'btn') do
+          %i.icon-large.icon-reply
+          #{@organization.name_unit} scouts
+
+        = link_to(edit_organization_scout_path(@organization, @user), class: 'btn') do
+          %i.icon-large.icon-edit
           change
 
-        = link_to(new_organization_scout_path(@organization), class: "btn btn-success") do
-          %i.icon-plus
-          new scout
+        .btn-group
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
+            %li
+              = link_to(organization_scout_path(@user), method: :delete, confirm: 'Are you sure?', class: "") do
+                %i.icon-trash.icon-large
+                destroy #{@user.first_name}
 
-      %h2 #{@user.full_name}
+            %li
+              = link_to(new_organization_scout_path(@organization), class: "") do
+                %i.icon-large.icon-plus
+                new scout
 
+      %h2 Scout: #{@user.full_name}
+
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
 .row-fluid
   .span8
@@ -20,21 +36,39 @@
       %table.table
         %tr
           %td
-            %strong Name
+            / %strong= @user.sub_unit.organization.unit_type_title
+            %strong Unit
           %td
-            = @user.full_name
+            = @user.sub_unit.organization.name
 
         %tr
           %td
             %strong Rank
           %td
-            = @user.role
+            = @user.rank
 
         %tr
           %td
-            %strong= @user.sub_unit.organization.sub_unit_type
+            %strong Position
+          %td
+            = @user.leadership_position
+
+        %tr
+          %td
+            %strong= @user.sub_unit.organization.sub_unit_name
           %td
             = @user.sub_unit.name
+
+        %tr
+          %td
+            %strong Birthday
+          %td= birthdate_and_years_old(@user)
+
+        %tr
+          %td
+            %strong Parents
+          %td
+            = scout_adults_link_list(@organization, @user)
 
         / %tr
         /   %td

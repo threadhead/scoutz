@@ -10,7 +10,7 @@ class ScoutsController < ApplicationController
   end
 
   def new
-    @user = Scout.new
+    @user = Scout.new(birth: 10.years.ago)
   end
 
   def edit
@@ -22,7 +22,7 @@ class ScoutsController < ApplicationController
     respond_to do |format|
       if @user.save
         @organization.users << @user
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to organization_scout_path(@organization, @user), notice: 'Scout was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -33,8 +33,8 @@ class ScoutsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+      if @user.update_attributes(user_params)
+        format.html { redirect_to organization_scout_path(@organization, @user), notice: 'Scout was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

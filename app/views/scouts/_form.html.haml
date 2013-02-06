@@ -1,25 +1,55 @@
-= form_for @user, html: { class: 'form-horizontal' } do |f|
+= form_for @user, url: organization_scout_path(@organization, @user), html: { class: 'form-horizontal' } do |f|
   .control-group
     = f.label :organization, class: 'control-label'
     .controls
-      = @organization.name
+      .text-xlarge= @organization.name
+
   .control-group
-    = f.label :unit_number, class: 'control-label'
+    = f.label :sub_unit_id, @organization.sub_unit_name ,class: 'control-label'
     .controls
-      = f.text_field :unit_number, class: 'text_field'
-      %span{class: 'help-inline'} ex. 134, 603, 15
+      = f.collection_select :sub_unit_id, @organization.sub_units, :id, :name
+
   .control-group
-    = f.label :city, class: 'control-label'
+    = f.label :name, class: 'control-label'
     .controls
-      = f.text_field :city, class: 'text_field'
+      = f.text_field :first_name, class: 'text_field', placeholder: 'first name'
+      = f.text_field :last_name, class: 'text_field', placeholder: 'last name'
+
   .control-group
-    = f.label :state, class: 'control-label'
+    = f.label :rank, class: 'control-label'
     .controls
-      = f.subregion_select :state, 'US'
+      = f.select :rank, @organization.ranks, include_blank: true
+
   .control-group
-    = f.label :time_zone, class: 'control-label'
+    = f.label :leadership_position, class: 'control-label'
     .controls
-      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+      = f.select :leadership_position, @organization.scout_leadership_positions, include_blank: true
+
+  .control-group
+    = f.label :birth, 'Birthday', class: 'control-label'
+    .controls
+      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'span2'
+
+  %fieldset
+    %legend Address
+    .control-group
+      = f.label :address1, class: 'control-label'
+      .controls
+        = f.text_field :address1, class: 'span6'
+
+    .control-group
+      = f.label :address2, class: 'control-label'
+      .controls
+        = f.text_field :address2, class: 'span6'
+
+    .control-group
+      = f.label :city, 'City, State, Zip', class: 'control-label'
+      .controls
+        = f.text_field :city, class: 'span4', placeholder: 'city'
+        = f.text_field :state, class: 'span1', placeholder: 'state'
+        = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
+
+
   .form-actions
-    = f.submit 'Save', class: 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), organizations_path, class: 'btn'
+    = f.submit class: 'btn btn-primary'
+    = link_to 'Cancel', organization_scouts_path, class: 'btn'

@@ -1,6 +1,6 @@
 .well.sidebar-nav
   %ul.nav.nav-list
-    - @organizations.each do |organization|
-      %li.nav-header= organization.name_unit
-      %li= link_to 'Scouts', organization_scouts_path(organization)
-      %li= link_to 'Adults', organization_adults_path(organization)
+    - @units.each do |unit|
+      %li.nav-header= unit.name_unit
+      %li= link_to 'Scouts', unit_scouts_path(unit)
+      %li= link_to 'Adults', unit_adults_path(unit)

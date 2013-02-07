@@ -12,11 +12,11 @@ class Ckeditor::Asset < ActiveRecord::Base
       }
 
 
-  before_save :set_organization_id
+  before_save :set_unit_id
 
-  def set_organization_id
-    # self.organization_id = assetable.try(:organization_id)
-    self.organization_id = Organization.first.id
+  def set_unit_id
+    # self.unit_id = assetable.try(:unit_id)
+    self.unit_id = Unit.first.id
   end
 
 end

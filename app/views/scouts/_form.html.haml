@@ -1,13 +1,13 @@
-= form_for @user, url: organization_scouts_path(@organization), html: { class: 'form-horizontal' } do |f|
+= form_for @user, url: unit_scouts_path(@unit), html: { class: 'form-horizontal' } do |f|
   .control-group
-    = f.label :organization, class: 'control-label'
+    = f.label :unit, class: 'control-label'
     .controls
-      .text-xlarge= @organization.name
+      .text-xlarge= @unit.name
 
   .control-group
-    = f.label :sub_unit_id, @organization.sub_unit_name ,class: 'control-label'
+    = f.label :sub_unit_id, @unit.sub_unit_name ,class: 'control-label'
     .controls
-      = f.collection_select :sub_unit_id, @organization.sub_units, :id, :name
+      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name
 
   .control-group
     = f.label :name, class: 'control-label'
@@ -18,12 +18,12 @@
   .control-group
     = f.label :rank, class: 'control-label'
     .controls
-      = f.select :rank, @organization.ranks, include_blank: true
+      = f.select :rank, @unit.ranks, include_blank: true
 
   .control-group
     = f.label :leadership_position, 'Leadership positions', class: 'control-label'
     .controls
-      %p= f.select :leadership_position, @organization.scout_leadership_positions, include_blank: true
+      %p= f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true
       = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
 
   .control-group
@@ -55,10 +55,10 @@
     .control-group
       = label_tag :adult_ids, 'Parents', class: 'control-label'
       .controls
-        = f.collection_select :adult_ids, @organization.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
+        = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 
   .form-actions
     = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', organization_scouts_path, class: 'btn'
+    = link_to 'Cancel', unit_scouts_path, class: 'btn'

@@ -7,9 +7,9 @@
         %h2
           - if controller.action_name == 'new'
             #{controller.action_name.titleize} Event for
-            = f.collection_select :organization_id, current_user.organizations, :id, :name
+            = f.collection_select :unit_id, current_user.units, :id, :name
           - else
-            Edit Event for #{@organization.name}
+            Edit Event for #{@unit.name}
 
   .row-fluid
     .span9
@@ -89,10 +89,10 @@
             = f.url_field :location_map_url, class: 'span12', placeholder: 'http://maps.google.com'
 
     .span3
-      %p= f.select :kind, @organization.event_kinds, {}, {class: 'span10'}
+      %p= f.select :kind, @unit.event_kinds, {}, {class: 'span10'}
       #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
         .well.well-small.span9
-          - @organization.sub_units.order('name ASC').each do |sub_unit|
+          - @unit.sub_units.order('name ASC').each do |sub_unit|
             = f.label :sub_unit, class: 'checkbox' do
               = check_box_tag 'event[sub_unit_ids][]', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id)
               = sub_unit.name

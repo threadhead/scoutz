@@ -1,22 +1,22 @@
 module UsersHelper
-  def organization_adults_link_list(organization, users)
-    users.map { |user| link_to(user.full_name, organization_adult_path(organization, user)) }.join(', ').html_safe
+  def unit_adults_link_list(unit, users)
+    users.map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
   end
 
-  def organization_scouts_link_list(organization, users)
-    users.map { |user| link_to(user.full_name, organization_scout_path(organization, user)) }.join(', ').html_safe
+  def unit_scouts_link_list(unit, users)
+    users.map { |user| link_to(user.full_name, unit_scout_path(unit, user)) }.join(', ').html_safe
   end
 
-  def scout_adults_link_list(organization, scout)
-    scout.organization_adults(organization).map { |user| link_to(user.full_name, organization_adult_path(organization, user)) }.join(', ').html_safe
+  def scout_adults_link_list(unit, scout)
+    scout.unit_adults(unit).map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
   end
 
-  def adult_scouts_link_list(organization, adult)
-    adult.organization_scouts(organization).map { |user| link_to(user.full_name, organization_scout_path(organization, user)) }.join(', ').html_safe
+  def adult_scouts_link_list(unit, adult)
+    adult.unit_scouts(unit).map { |user| link_to(user.full_name, unit_scout_path(unit, user)) }.join(', ').html_safe
   end
 
-  def adult_sub_units_list(organization, adult)
-    adult.sub_units(organization).map(&:name).join(', ')
+  def adult_sub_units_list(unit, adult)
+    adult.sub_units(unit).map(&:name).join(', ')
   end
 
 

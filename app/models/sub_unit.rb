@@ -1,7 +1,7 @@
 class SubUnit < ActiveRecord::Base
-  attr_accessible :description, :name, :organization_id
+  attr_accessible :description, :name, :unit_id
 
-  belongs_to :organization
+  belongs_to :unit
   has_and_belongs_to_many :events
   # has_many :users
   has_many :scouts
@@ -9,7 +9,7 @@ class SubUnit < ActiveRecord::Base
 
   # validates :name,
   #           presence: true,
-  #           uniqueness: { scope: :organization_id, case_sensitive: false }
+  #           uniqueness: { scope: :unit_id, case_sensitive: false }
 
   # validates_uniqueness_of :name
 

@@ -4,12 +4,12 @@
 #   before(:each) do
 #     assign(:sub_units, [
 #       stub_model(SubUnit,
-#         :organization_id => 1,
+#         :unit_id => 1,
 #         :name => "Name",
 #         :description => "MyText"
 #       ),
 #       stub_model(SubUnit,
-#         :organization_id => 1,
+#         :unit_id => 1,
 #         :name => "Name",
 #         :description => "MyText"
 #       )

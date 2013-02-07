@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Event do
   before { stub_geocoding }
 
-  it { should belong_to(:organization) }
+  it { should belong_to(:unit) }
   it { should have_and_belong_to_many(:users) }
   it { should have_and_belong_to_many(:sub_units) }
 

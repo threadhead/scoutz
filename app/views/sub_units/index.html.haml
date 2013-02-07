@@ -2,7 +2,7 @@
 
 %table
   %tr
-    %th Organization
+    %th Unit
     %th Name
     %th Description
     %th
@@ -11,7 +11,7 @@
 
   - @sub_units.each do |sub_unit|
     %tr
-      %td= sub_unit.organization_id
+      %td= sub_unit.unit_id
       %td= sub_unit.name
       %td= sub_unit.description
       %td= link_to 'Show', sub_unit

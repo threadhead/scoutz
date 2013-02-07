@@ -3,7 +3,7 @@
 # describe "events/new" do
 #   before(:each) do
 #     assign(:event, stub_model(Event,
-#       :organization_id => 1,
+#       :unit_id => 1,
 #       :kind => "MyString",
 #       :name => "MyString",
 #       :user_id => 1,
@@ -26,7 +26,7 @@
 
 #     # Run the generator again with the --webrat flag if you want to use webrat matchers
 #     assert_select "form", :action => events_path, :method => "post" do
-#       assert_select "input#event_organization_id", :name => "event[organization_id]"
+#       assert_select "input#event_unit_id", :name => "event[unit_id]"
 #       assert_select "input#event_kind", :name => "event[kind]"
 #       assert_select "input#event_name", :name => "event[name]"
 #       assert_select "input#event_user_id", :name => "event[user_id]"

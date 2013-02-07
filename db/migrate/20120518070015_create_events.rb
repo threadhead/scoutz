@@ -1,7 +1,7 @@
 class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
-      t.integer :organization_id
+      t.integer :unit_id
       t.string :kind
       t.string :name
       t.integer :user_id
@@ -25,7 +25,7 @@ class CreateEvents < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :events, :organization_id
+    add_index :events, :unit_id
     add_index :events, :user_id
     add_index :events, :start_at
     add_index :events, :end_at

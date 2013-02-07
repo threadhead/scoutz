@@ -1,8 +1,8 @@
 # require 'spec_helper'
 
-# describe "organizations/show" do
+# describe "units/show" do
 #   before(:each) do
-#     @organization = assign(:organization, stub_model(Organization,
+#     @unit = assign(:unit, stub_model(Unit,
 #       :unit_type => "Unit Type",
 #       :unit_number => "Unit Number",
 #       :city => "City",

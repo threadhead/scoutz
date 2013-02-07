@@ -1,8 +1,8 @@
-= form_for @user, url: organization_adults_path(@organization), html: { class: 'form-horizontal' } do |f|
+= form_for @user, url: unit_adults_path(@unit), html: { class: 'form-horizontal' } do |f|
   .control-group
-    = f.label :organization, class: 'control-label'
+    = f.label :unit, class: 'control-label'
     .controls
-      .text-xlarge= @organization.name
+      .text-xlarge= @unit.name
 
   .control-group
     = f.label :name, class: 'control-label'
@@ -13,7 +13,7 @@
   .control-group
     = f.label :leadership_position, 'Leadership positions', class: 'control-label'
     .controls
-      %p= f.select :leadership_position, @organization.adult_leadership_positions, include_blank: true
+      %p= f.select :leadership_position, @unit.adult_leadership_positions, include_blank: true
       = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
 
   .control-group
@@ -59,10 +59,10 @@
     .control-group
       = label_tag :scout_ids, 'Scouts', class: 'control-label'
       .controls
-        = f.collection_select :scout_ids, @organization.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
+        = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 
   .form-actions
     = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', organization_adults_path, class: 'btn'
+    = link_to 'Cancel', unit_adults_path, class: 'btn'

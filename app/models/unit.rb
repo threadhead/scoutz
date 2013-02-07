@@ -1,4 +1,4 @@
-class Organization < ActiveRecord::Base
+class Unit < ActiveRecord::Base
   has_and_belongs_to_many :users
   # has_many :scouts, through: :users
   # has_many :adults, through: :users

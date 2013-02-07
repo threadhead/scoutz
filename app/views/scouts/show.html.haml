@@ -3,11 +3,11 @@
     .page-header
       .pull-right
         - #if @user.users.where(id: current_user).count > 0
-        = link_to(organization_scouts_path(@organization), class: 'btn') do
+        = link_to(unit_scouts_path(@unit), class: 'btn') do
           %i.icon-large.icon-reply
-          #{@organization.name_unit} scouts
+          #{@unit.name_unit} scouts
 
-        = link_to(edit_organization_scout_path(@organization, @user), class: 'btn') do
+        = link_to(edit_unit_scout_path(@unit, @user), class: 'btn') do
           %i.icon-large.icon-edit
           change
 
@@ -17,12 +17,12 @@
             %span.caret
           %ul.dropdown-menu.pull-right
             %li
-              = link_to(organization_scout_path(@user), method: :delete, confirm: 'Are you sure?', class: "") do
+              = link_to(unit_scout_path(@user), method: :delete, confirm: 'Are you sure?', class: "") do
                 %i.icon-trash.icon-large
                 destroy #{@user.first_name}
 
             %li
-              = link_to(new_organization_scout_path(@organization), class: "") do
+              = link_to(new_unit_scout_path(@unit), class: "") do
                 %i.icon-large.icon-plus
                 new scout
 
@@ -36,10 +36,10 @@
       %table.table
         %tr
           %td
-            / %strong= @user.sub_unit.organization.unit_type_title
+            / %strong= @user.sub_unit.unit.unit_type_title
             %strong Unit
           %td
-            = @user.sub_unit.try(:organization).try(:name)
+            = @user.sub_unit.try(:unit).try(:name)
 
         %tr
           %td
@@ -55,7 +55,7 @@
 
         %tr
           %td
-            %strong= @user.sub_unit.try(:organization).try(:sub_unit_name)
+            %strong= @user.sub_unit.try(:unit).try(:sub_unit_name)
           %td
             = @user.sub_unit.try(:name)
 
@@ -68,7 +68,7 @@
           %td
             %strong Parents
           %td
-            = scout_adults_link_list(@organization, @user)
+            = scout_adults_link_list(@unit, @user)
 
         %tr
           %td

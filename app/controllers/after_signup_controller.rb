@@ -5,7 +5,7 @@ class AfterSignupController < ApplicationController
 
   def show
     @user = current_user
-    @organization = nil
+    @unit = nil
     render_wizard
   end
 
@@ -18,9 +18,9 @@ class AfterSignupController < ApplicationController
       render_wizard @user
 
     when :unit_info
-      @organization = Organization.find(params[:organization][:id])
-      @organization.attributes(params[:organization])
-      render_wizard @organization
+      @unit = Unit.find(params[:unit][:id])
+      @unit.attributes(params[:unit])
+      render_wizard @unit
     end
   end
 end

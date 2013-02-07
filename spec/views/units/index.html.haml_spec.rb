@@ -1,16 +1,16 @@
 # require 'spec_helper'
 
-# describe "organizations/index" do
+# describe "units/index" do
 #   before(:each) do
-#     assign(:organizations, [
-#       stub_model(Organization,
+#     assign(:units, [
+#       stub_model(Unit,
 #         :unit_type => "Unit Type",
 #         :unit_number => "Unit Number",
 #         :city => "City",
 #         :state => "State",
 #         :time_zone => "Time Zone"
 #       ),
-#       stub_model(Organization,
+#       stub_model(Unit,
 #         :unit_type => "Unit Type",
 #         :unit_number => "Unit Number",
 #         :city => "City",
@@ -20,7 +20,7 @@
 #     ])
 #   end
 
-#   it "renders a list of organizations" do
+#   it "renders a list of units" do
 #     render
 #     # Run the generator again with the --webrat flag if you want to use webrat matchers
 #     assert_select "tr>td", :text => "Unit Type".to_s, :count => 2

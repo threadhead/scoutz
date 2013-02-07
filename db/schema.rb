@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
   end
 
   add_index "events", ["end_at"], :name => "index_events_on_end_at"
-  add_index "events", ["unit_id"], :name => "index_events_on_unit_id"
   add_index "events", ["signup_deadline"], :name => "index_events_on_signup_deadline"
   add_index "events", ["signup_required"], :name => "index_events_on_signup_required"
   add_index "events", ["start_at"], :name => "index_events_on_start_at"
+  add_index "events", ["unit_id"], :name => "index_events_on_unit_id"
   add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "events_sub_units", :id => false, :force => true do |t|
@@ -91,6 +91,26 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
 
   add_index "notifiers", ["user_id"], :name => "index_notifiers_on_user_id"
 
+  create_table "phones", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "kind"
+    t.string   "number"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "phones", ["user_id"], :name => "index_phones_on_user_id"
+
+  create_table "sub_units", :force => true do |t|
+    t.integer  "unit_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "sub_units", ["unit_id"], :name => "index_sub_units_on_unit_id"
+
   create_table "units", :force => true do |t|
     t.string   "unit_type"
     t.string   "unit_number"
@@ -108,26 +128,6 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
 
   add_index "units_users", ["unit_id", "user_id"], :name => "index_units_users_on_unit_id_and_user_id"
   add_index "units_users", ["user_id", "unit_id"], :name => "index_units_users_on_user_id_and_unit_id"
-
-  create_table "phones", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "kind"
-    t.string   "number"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "phones", ["user_id"], :name => "index_phones_on_user_id"
-
-  create_table "sub_units", :force => true do |t|
-    t.integer  "unit_id"
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "sub_units", ["unit_id"], :name => "index_sub_units_on_unit_id"
 
   create_table "user_relationships", :force => true do |t|
     t.integer "adult_id"

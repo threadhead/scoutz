@@ -3,7 +3,7 @@ class EmailMessage < ActiveRecord::Base
 
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
-
+  has_many :email_attachments, dependent: :destory
   has_and_belongs_to_many :events
   has_and_belongs_to_many :users
 

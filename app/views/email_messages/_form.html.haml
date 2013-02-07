@@ -1,13 +1,12 @@
-= form_for @email_message, url: unit_email_messages_path(@unit) do |f|
+= form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true} do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
   %fieldset
     %legend Send to
-    %br
     .row-fluid
-      .span6
-        = f.select :send_to_unit, [["Everyone in #{@unit.name}", 1], ["Selected #{@unit.sub_unit_name.pluralize}", 2], ["Selected Adults/Scouts", 3]], {}, {class: 'span8'}
-      .span6
+      .span5.offset1
+        = f.select :send_to_option, EmailMessage.send_to_options(@unit), {}, {class: 'span8'}
+      .span5.offset1
         #email-sub-unit-list{class: @email_message.send_to_sub_units ? '' : 'collapse' }
           .well.well-small
             - @unit.sub_units.order('name ASC').each do |sub_unit|
@@ -15,26 +14,35 @@
                 = check_box_tag 'email_message[sub_unit_ids][]', sub_unit.id, @email_message.sub_unit_ids.include?(sub_unit.id)
                 = sub_unit.name
 
+        #email-send-to-users-list{class: 'collapse'}
+          .well.well-small
+            = f.collection_select :user_ids, @unit.users.with_email.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 100%;"}
 
   %fieldset
     %legend Events
-    %br
-    Selected events will have links at the bottom of the message
-    .well.email-message-events
-      - @unit.events.from_today.by_start.each do |event|
-        = f.label :event_ids, class: 'checkbox' do
-          = check_box_tag 'email_message[event_ids][]', event.id
-          = event_list_name(event)
+    .row-fluid
+      .span11.offset1
+        %p Selected events will have links at the bottom of the message
+        .well.email-message-events
+          - @unit.events.from_today.by_start.each do |event|
+            = f.label :event_ids, class: 'checkbox' do
+              = check_box_tag 'email_message[event_ids][]', event.id
+              = event_list_name(event)
 
 
   %fieldset
     %legend Attachments
+    .row-fluid
+      .span11.offset1
+        %strong Attach up to 5 files, total size should not exceed 2MB
+        = f.fields_for :email_attachments do |f_attachment|
+          %p= f_attachment.file_field :attachment
+        .help-block alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf ppt txt csv
 
   %fieldset
     %legend Message
     .row-fluid
-      .span10.offset2
-        %br
+      .span11.offset1
         %p from: #{current_user.email}
         %p= f.text_field :subject, class: 'span12', placeholder: 'subject'
         %p= f.text_area :message, class: 'span12 ckeditor', placeholder: 'your message - style, add pictures, and links'

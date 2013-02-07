@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207050501) do
+ActiveRecord::Schema.define(:version => 20130207194410) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -30,6 +30,18 @@ ActiveRecord::Schema.define(:version => 20130207050501) do
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
 
+  create_table "email_attachments", :force => true do |t|
+    t.integer  "email_message_id"
+    t.string   "attachment"
+    t.integer  "file_size"
+    t.string   "content_type"
+    t.string   "original_file_name"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "email_attachments", ["email_message_id"], :name => "index_email_attachments_on_email_message_id"
+
   create_table "email_messages", :force => true do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
@@ -38,9 +50,10 @@ ActiveRecord::Schema.define(:version => 20130207050501) do
     t.datetime "sent_at"
     t.boolean  "send_to_unit",      :default => true
     t.boolean  "send_to_sub_units", :default => false
-    t.string   "sub_unit_ids",      :default => "'---\n- 0\n'"
-    t.datetime "created_at",                                    :null => false
-    t.datetime "updated_at",                                    :null => false
+    t.string   "sub_unit_ids",      :default => "'"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.string   "send_to_option"
   end
 
   add_index "email_messages", ["sent_at"], :name => "index_email_messages_on_sent_at"

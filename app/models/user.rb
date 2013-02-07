@@ -100,6 +100,10 @@ class User < ActiveRecord::Base
     order('"users"."last_name" ASC, "users"."first_name" ASC')
   end
 
+  def self.with_email
+    where('"users"."email" IS NOT NULL')
+  end
+
 
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb

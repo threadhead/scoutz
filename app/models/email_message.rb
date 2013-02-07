@@ -3,11 +3,12 @@ class EmailMessage < ActiveRecord::Base
 
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
-  has_many :email_attachments, dependent: :destory
+  has_many :email_attachments, dependent: :destroy
   has_and_belongs_to_many :events
   has_and_belongs_to_many :users
+  accepts_nested_attributes_for :email_attachments, allow_destroy: true
 
-  attr_accessible :message, :subject, :user_id, :send_to_unit, :send_to_sub_units, :sub_unit_ids, :event_ids
+  attr_accessible :message, :subject, :user_id, :send_to_unit, :send_to_sub_units, :sub_unit_ids, :event_ids, :email_attachments_attributes, :user_ids, :send_to_option
 
   validates :message, presence: true
   validates :subject, presence: true
@@ -21,6 +22,15 @@ class EmailMessage < ActiveRecord::Base
     else
       self.sub_unit_ids = Array.new
     end
+  end
+
+
+  def self.send_to_options(unit)
+    [
+      ["Everyone in #{unit.name}", '1'],
+      ["Selected #{unit.sub_unit_name.pluralize}", '2'],
+      ["Selected Adults/Scouts", '3']
+    ]
   end
 
 

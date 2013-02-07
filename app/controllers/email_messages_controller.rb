@@ -13,6 +13,7 @@ class EmailMessagesController < ApplicationController
 
   def new
     @email_message = EmailMessage.new
+    5.times { @email_message.email_attachments.build }
   end
 
   def edit

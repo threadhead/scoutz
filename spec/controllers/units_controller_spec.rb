@@ -18,7 +18,7 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe OrganizationsController do
+describe UnitsController do
 
   # This should return the minimal set of attributes required to create a valid
   # Organization. As you add validations to Organization, be sure to
@@ -26,7 +26,7 @@ describe OrganizationsController do
   def valid_attributes
     FactoryGirl.attributes_for(:organization)
   end
-  
+
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # OrganizationsController. Be sure to keep this updated too.

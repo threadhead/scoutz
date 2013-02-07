@@ -39,7 +39,7 @@
             / %strong= @user.sub_unit.organization.unit_type_title
             %strong Unit
           %td
-            = @user.sub_unit.organization.name
+            = @user.sub_unit.try(:organization).try(:name)
 
         %tr
           %td
@@ -55,9 +55,9 @@
 
         %tr
           %td
-            %strong= @user.sub_unit.organization.sub_unit_name
+            %strong= @user.sub_unit.try(:organization).try(:sub_unit_name)
           %td
-            = @user.sub_unit.name
+            = @user.sub_unit.try(:name)
 
         %tr
           %td

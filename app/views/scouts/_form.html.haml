@@ -1,4 +1,4 @@
-= form_for @user, url: organization_scout_path(@organization, @user), html: { class: 'form-horizontal' } do |f|
+= form_for @user, url: organization_scouts_path(@organization), html: { class: 'form-horizontal' } do |f|
   .control-group
     = f.label :organization, class: 'control-label'
     .controls
@@ -49,6 +49,14 @@
         = f.text_field :city, class: 'span4', placeholder: 'city'
         = f.text_field :state, class: 'span1', placeholder: 'state'
         = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
+
+  %fieldset
+    %legend Parents (adults)
+    .control-group
+      = label_tag :adult_ids, 'Parents', class: 'control-label'
+      .controls
+        = f.collection_select :adult_ids, @organization.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
+        .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 
   .form-actions

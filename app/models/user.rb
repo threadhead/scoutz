@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
   attr_accessible :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders
+  attr_accessible :adult_ids, :scout_ids
 
   validates_presence_of :first_name, :last_name
 
@@ -68,6 +69,10 @@ class User < ActiveRecord::Base
 
   before_save :ensure_authentication_token
 
+  def name
+    full_name
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
@@ -77,8 +82,10 @@ class User < ActiveRecord::Base
   end
 
   def age
-    now = Time.now.utc.to_date
-    now.year - birth.year - ((now.month > birth.month || (now.month == birth.month && now.day >= birth.day)) ? 0 : 1)
+    if birth
+      now = Time.now.utc.to_date
+      now.year - birth.year - ((now.month > birth.month || (now.month == birth.month && now.day >= birth.day)) ? 0 : 1)
+    end
   end
 
   ## scopes

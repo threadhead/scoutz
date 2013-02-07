@@ -39,11 +39,11 @@ class Organization < ActiveRecord::Base
   end
 
   def scout_rank_count
-    self.scouts.group(:rank).count
+    @scout_rank_count ||= self.scouts.group(:rank).count
   end
 
   def scout_sub_unit_count
-    self.scouts.joins(:sub_unit).group('"sub_units"."name"').count
+    @scout_sub_unit_count ||= self.scouts.joins(:sub_unit).group('"sub_units"."name"').count
   end
 
   def unit_type_to_sym
@@ -68,6 +68,10 @@ class Organization < ActiveRecord::Base
 
   def scout_leadership_positions
     @scout_leadership_positions ||= AppConstants.unit_types[unit_type_to_sym][:scout_leadership_positions]
+  end
+
+  def adult_leadership_positions
+    @adult_leadership_positions ||= AppConstants.unit_types[unit_type_to_sym][:adult_leadership_positions]
   end
 
   def event_kinds

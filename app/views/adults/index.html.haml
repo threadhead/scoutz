@@ -1,0 +1,38 @@
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        = link_to(new_organization_adult_path(@organization), class: "btn btn-success") do
+          %i.icon-plus
+          new adult
+
+      %h2 Adults in #{@organization.name}
+
+
+.row-fluid
+  .span9
+    %table.table
+      %tr
+        %th Name
+        %th= @organization.sub_unit_name
+        %th Leadership
+        %th Scouts
+
+      - @users.each do |adult|
+        %tr
+          %td= link_to adult.name_lf, organization_adult_path(@organization, adult)
+          %td= adult_sub_units_list(@organization, adult)
+          %td= adult.leadership_position
+          %td= organization_scouts_link_list(@organization, adult.organization_scouts(@organization))
+
+  .span3
+    / .well.well-boys
+    /   %strong Rank Count
+    /   %ul.unstyled
+    /     - @organization.scout_rank_count.each do |rank|
+    /       %li= "#{rank[0] || '<none>'} : #{rank[1]}"
+
+    /   %strong #{@organization.sub_unit_name} Count
+    /   %ul.unstyled
+    /     - @organization.scout_sub_unit_count.each do |sub_unit|
+    /       %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

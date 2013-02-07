@@ -156,8 +156,8 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.string   "authentication_token"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                        :null => false
+    t.datetime "updated_at",                                        :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "address1"
@@ -172,7 +172,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
     t.string   "type"
     t.integer  "sub_unit_id"
     t.string   "rank"
-    t.boolean  "send_reminders"
+    t.boolean  "send_reminders",                  :default => true
     t.datetime "deactivated_at"
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
   add_index "users", ["deactivated_at"], :name => "index_users_on_deactivated_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["encrypted_password"], :name => "index_users_on_encrypted_password"
+  add_index "users", ["rank"], :name => "index_users_on_rank"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
   add_index "users", ["send_reminders"], :name => "index_users_on_send_reminders"

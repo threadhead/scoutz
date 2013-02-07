@@ -16,6 +16,7 @@
         %th Name
         %th= @organization.sub_unit_name
         %th Rank
+        %th Age
         %th Adults
 
       - @users.each do |scout|
@@ -23,8 +24,9 @@
           %td= link_to scout.name_lf, organization_scout_path(@organization, scout)
           %td= scout.sub_unit.try(:name)
           %td= scout.rank
-          %td
-            = organization_adults_link_list(@organization, scout.adults)
+          %td= scout.age
+          %td= organization_adults_link_list(@organization, scout.adults)
+
           / %td
           = #link_to 'Show', organization_scout_path(@organization, scout), class: 'btn btn-mini'
           = #link_to 'Edit', edit_organization_scout_path(@organization, scout), class: 'btn btn-mini'
@@ -34,8 +36,8 @@
     .well.well-boys
       %strong Rank Count
       %ul.unstyled
-        - @organization.scout_rank_count.each do |rank|
-          %li= "#{rank[0] || '<none>'} : #{rank[1]}"
+        - @organization.ranks.each do |rank|
+          %li= "#{rank} : #{@organization.scout_rank_count[rank]}"
 
       %strong #{@organization.sub_unit_name} Count
       %ul.unstyled

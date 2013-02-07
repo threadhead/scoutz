@@ -1,13 +1,8 @@
-= form_for @user, url: organization_scouts_path(@organization), html: { class: 'form-horizontal' } do |f|
+= form_for @user, url: organization_adults_path(@organization), html: { class: 'form-horizontal' } do |f|
   .control-group
     = f.label :organization, class: 'control-label'
     .controls
       .text-xlarge= @organization.name
-
-  .control-group
-    = f.label :sub_unit_id, @organization.sub_unit_name ,class: 'control-label'
-    .controls
-      = f.collection_select :sub_unit_id, @organization.sub_units, :id, :name
 
   .control-group
     = f.label :name, class: 'control-label'
@@ -16,20 +11,29 @@
       = f.text_field :last_name, class: 'text_field', placeholder: 'last name'
 
   .control-group
-    = f.label :rank, class: 'control-label'
-    .controls
-      = f.select :rank, @organization.ranks, include_blank: true
-
-  .control-group
     = f.label :leadership_position, 'Leadership positions', class: 'control-label'
     .controls
-      %p= f.select :leadership_position, @organization.scout_leadership_positions, include_blank: true
+      %p= f.select :leadership_position, @organization.adult_leadership_positions, include_blank: true
       = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
 
   .control-group
     = f.label :birth, 'Birthday', class: 'control-label'
     .controls
       = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'span2'
+
+  %fieldset
+    %legend Notifications
+    .control-group
+      = f.label :email, class: 'control-label'
+      .controls
+        = f.email_field :email, class: 'span5'
+
+    .control-group
+      .controls
+        = f.label :send_reminders, class: 'checkbox' do
+          = f.check_box :send_reminders
+          send reminder before event deadlines and start times
+
 
   %fieldset
     %legend Address
@@ -51,14 +55,14 @@
         = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
 
   %fieldset
-    %legend Parents (adults)
+    %legend Scouts
     .control-group
-      = label_tag :adult_ids, 'Parents', class: 'control-label'
+      = label_tag :scout_ids, 'Scouts', class: 'control-label'
       .controls
-        = f.collection_select :adult_ids, @organization.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
+        = f.collection_select :scout_ids, @organization.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 
   .form-actions
     = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', organization_scouts_path, class: 'btn'
+    = link_to 'Cancel', organization_adults_path, class: 'btn'

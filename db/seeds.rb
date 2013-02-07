@@ -79,7 +79,7 @@ end
   userX.organizations << organization1
 
   ['Joey', 'Biff'].each do |scout|
-    scoutX = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(organization1), birth: (rand(5*365)+2555).days.ago)
+    scoutX = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(organization1), birth: rand(7*365..11*365).days.ago)
     log_item(scoutX, 4)
 
     scoutX.organizations << organization1
@@ -99,7 +99,7 @@ end
   userX.organizations << organization2
 
   ['Chip', 'Mudd'].each do |scout|
-    scoutX = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(organization2), birth: (rand(7*365)+4015).days.ago)
+    scoutX = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(organization2), birth: rand(11*365..17*365).days.ago)
     log_item(scoutX, 4)
 
     scoutX.organizations << organization2
@@ -114,8 +114,8 @@ end
 
 # Cub Scout pack events
 ['USS Midway Museum', 'Movie Night - Friday the 13th', 'Yummie Pie Eating', 'Masters of Disguise', 'Spring Campout - Payson'].each do |ename|
-  date = (rand(30)+3).days.from_now
-  event = Event.create(name: ename, kind: 'Pack Event', start_at: date, end_at: date.end_of_day, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
+  date = rand(3..90).days.from_now
+  event = Event.create(name: ename, kind: 'Pack Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
   log_item(event, 8)
 
   organization1.events << event
@@ -125,8 +125,8 @@ end
 
 # Cub Scout den events
 ['Den Meeting', 'Swimming Badge', 'Readyman Pin'].each do |ename|
-  date = (rand(3..30)).days.from_now
-  event = Event.create(name: ename, kind: 'Den Event', start_at: date, end_at: date.end_of_day, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
+  date = rand(3..90).days.from_now
+  event = Event.create(name: ename, kind: 'Den Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
   log_item(event, 8)
 
   organization1.events << event
@@ -137,8 +137,8 @@ end
 
 # Boy Scout troop events
 ['Camp Raymond', 'Move Night - Beasts of the Southern Wild', 'Watch Mold Grow', 'The Art of Making Mud Pies', 'Backpack - The Pacific Coast Trail'].each do |ename|
-  date = (rand(30)+3).days.from_now
-  event = Event.create(name: ename, kind: 'Troop Event', start_at: date, end_at: date.end_of_day, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
+  date = rand(3..90).days.from_now
+  event = Event.create(name: ename, kind: 'Troop Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
   log_item(event, 8)
 
   organization2.events << event

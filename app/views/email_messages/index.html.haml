@@ -1,0 +1,23 @@
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        = link_to(new_unit_email_message_path(@unit), class: "btn btn-success") do
+          %i.icon-plus
+          new message
+
+      %h2 Email Messages
+
+.row-fluid
+  .span9
+    %table.table
+      %thead
+        %th User
+        %th Subject
+        %th Sent at
+
+      - @email_messages.each do |email_message|
+        %tr
+          %td= email_message.user_id
+          %td= email_message.subject
+          %td= email_message.sent_at

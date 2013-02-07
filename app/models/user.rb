@@ -66,6 +66,7 @@ class User < ActiveRecord::Base
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events
   belongs_to :sub_unit
+  has_many :email_messages
 
   before_save :ensure_authentication_token
 

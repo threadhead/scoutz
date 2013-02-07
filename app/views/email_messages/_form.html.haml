@@ -1,0 +1,44 @@
+= form_for @email_message, url: unit_email_messages_path(@unit) do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
+
+  %fieldset
+    %legend Send to
+    %br
+    .row-fluid
+      .span6
+        = f.select :send_to_unit, [["Everyone in #{@unit.name}", 1], ["Selected #{@unit.sub_unit_name.pluralize}", 2], ["Selected Adults/Scouts", 3]], {}, {class: 'span8'}
+      .span6
+        #email-sub-unit-list{class: @email_message.send_to_sub_units ? '' : 'collapse' }
+          .well.well-small
+            - @unit.sub_units.order('name ASC').each do |sub_unit|
+              = f.label :sub_unit, class: 'checkbox' do
+                = check_box_tag 'email_message[sub_unit_ids][]', sub_unit.id, @email_message.sub_unit_ids.include?(sub_unit.id)
+                = sub_unit.name
+
+
+  %fieldset
+    %legend Events
+    %br
+    Selected events will have links at the bottom of the message
+    .well.email-message-events
+      - @unit.events.from_today.by_start.each do |event|
+        = f.label :event_ids, class: 'checkbox' do
+          = check_box_tag 'email_message[event_ids][]', event.id
+          = event_list_name(event)
+
+
+  %fieldset
+    %legend Attachments
+
+  %fieldset
+    %legend Message
+    .row-fluid
+      .span10.offset2
+        %br
+        %p from: #{current_user.email}
+        %p= f.text_field :subject, class: 'span12', placeholder: 'subject'
+        %p= f.text_area :message, class: 'span12 ckeditor', placeholder: 'your message - style, add pictures, and links'
+
+  .form-actions
+    = f.submit class: 'btn btn-primary'
+    = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn'

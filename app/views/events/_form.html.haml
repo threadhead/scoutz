@@ -49,7 +49,7 @@
         .controls
           .input-prepend.input-append
             %span.add-on{style: 'line-height: 3px'}= f.check_box :signup_required
-            = f.text_field :signup_deadline, class: 'datetime-picker span7', placeholder: 'deadline' , value: @event.signup_deadline.to_s(:datetimepicker)
+            = f.text_field :signup_deadline, class: 'datetime-picker span7', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker)
             %span.add-on
               %i.icon-calendar
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205172804) do
+ActiveRecord::Schema.define(:version => 20130207050501) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -29,6 +29,39 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+
+  create_table "email_messages", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "unit_id"
+    t.text     "message"
+    t.string   "subject"
+    t.datetime "sent_at"
+    t.boolean  "send_to_unit",      :default => true
+    t.boolean  "send_to_sub_units", :default => false
+    t.string   "sub_unit_ids",      :default => "'---\n- 0\n'"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+  end
+
+  add_index "email_messages", ["sent_at"], :name => "index_email_messages_on_sent_at"
+  add_index "email_messages", ["unit_id"], :name => "index_email_messages_on_unit_id"
+  add_index "email_messages", ["user_id"], :name => "index_email_messages_on_user_id"
+
+  create_table "email_messages_events", :id => false, :force => true do |t|
+    t.integer "email_message_id"
+    t.integer "event_id"
+  end
+
+  add_index "email_messages_events", ["email_message_id", "event_id"], :name => "index_email_messages_events_on_email_message_id_and_event_id"
+  add_index "email_messages_events", ["event_id", "email_message_id"], :name => "index_email_messages_events_on_event_id_and_email_message_id"
+
+  create_table "email_messages_users", :id => false, :force => true do |t|
+    t.integer "email_message_id"
+    t.integer "user_id"
+  end
+
+  add_index "email_messages_users", ["email_message_id", "user_id"], :name => "index_email_messages_users_on_email_message_id_and_user_id"
+  add_index "email_messages_users", ["user_id", "email_message_id"], :name => "index_email_messages_users_on_user_id_and_email_message_id"
 
   create_table "events", :force => true do |t|
     t.integer  "unit_id"
@@ -73,7 +106,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
   add_index "events_sub_units", ["event_id", "sub_unit_id"], :name => "index_events_sub_units_on_event_id_and_sub_unit_id"
   add_index "events_sub_units", ["sub_unit_id", "event_id"], :name => "index_events_sub_units_on_sub_unit_id_and_event_id"
 
-  create_table "events_users", :force => true do |t|
+  create_table "events_users", :id => false, :force => true do |t|
     t.integer "event_id"
     t.integer "user_id"
   end
@@ -121,7 +154,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "units_users", :force => true do |t|
+  create_table "units_users", :id => false, :force => true do |t|
     t.integer "unit_id"
     t.integer "user_id"
   end
@@ -129,7 +162,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
   add_index "units_users", ["unit_id", "user_id"], :name => "index_units_users_on_unit_id_and_user_id"
   add_index "units_users", ["user_id", "unit_id"], :name => "index_units_users_on_user_id_and_unit_id"
 
-  create_table "user_relationships", :force => true do |t|
+  create_table "user_relationships", :id => false, :force => true do |t|
     t.integer "adult_id"
     t.integer "scout_id"
   end

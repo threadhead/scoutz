@@ -4,7 +4,7 @@
 #   before(:each) do
 #     assign(:events, [
 #       stub_model(Event,
-#         :organization_id => 1,
+#         :unit_id => 1,
 #         :kind => "Kind",
 #         :name => "Name",
 #         :user_id => 2,
@@ -21,7 +21,7 @@
 #         :attire => "Attire"
 #       ),
 #       stub_model(Event,
-#         :organization_id => 1,
+#         :unit_id => 1,
 #         :kind => "Kind",
 #         :name => "Name",
 #         :user_id => 2,

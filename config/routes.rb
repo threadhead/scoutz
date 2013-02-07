@@ -14,13 +14,13 @@ Scoutz::Application.routes.draw do
   end
 
   resources :sub_units
-  resources :organizations do
+  resources :units do
     resources :events
     resources :scouts
     resources :adults
   end
 
-  post 'organizations/new' => 'organizations#new'
+  post 'units/new' => 'units#new'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   resources :users
 

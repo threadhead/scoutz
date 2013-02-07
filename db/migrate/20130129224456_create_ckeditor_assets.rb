@@ -1,7 +1,7 @@
 class CreateCkeditorAssets < ActiveRecord::Migration
   def change
     create_table :ckeditor_assets do |t|
-      t.references :organization
+      t.references :unit
       t.string  :data_file_name, :null => false
       t.string  :data_content_type
       t.integer :data_file_size

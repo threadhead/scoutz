@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
                :source                => :scout
 
 
-  has_and_belongs_to_many :organizations
+  has_and_belongs_to_many :units
   has_many :phones
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events
@@ -73,9 +73,9 @@ class User < ActiveRecord::Base
     full_name
   end
 
-  # def scout_ids(organization=nil)
+  # def scout_ids(unit=nil)
   #   scouts = self.scouts.select('"users"."id"')
-  #   scouts = scouts.joins(:organizations).where(organizations: {id: organization}) if organization
+  #   scouts = scouts.joins(:units).where(units: {id: unit}) if unit
   #   return scouts.to_a
   # end
 

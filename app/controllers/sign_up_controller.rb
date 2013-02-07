@@ -2,19 +2,19 @@ class SignUpController < ApplicationController
 	layout 'full_width_fluid'
 
   def user
-    @organization = Organization.new
+    @unit = Unit.new
   end
 
   def new_unit
-    @organization = Organization.new(params[:organization])
-    @organization.sub_units.build
+    @unit = Unit.new(params[:unit])
+    @unit.sub_units.build
   end
 
   def create_unit
-    @organization = Organization.new(params[:organization])
-    if @organization.save
-      current_user.organizations << @organization
-      redirect_to sign_up_new_sub_unit_path, notice: 'Organization was successfully created.'
+    @unit = Unit.new(params[:unit])
+    if @unit.save
+      current_user.units << @unit
+      redirect_to sign_up_new_sub_unit_path, notice: 'Unit was successfully created.'
     else
       render :new_unit
     end

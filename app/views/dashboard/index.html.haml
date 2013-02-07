@@ -2,22 +2,22 @@
   .span12
     %h2 What's Happening
 
-- @organizations.each do |organization|
-  %div{id: "organization-events-#{organization.id}"}
-    = render partial: 'event_list', locals: {organization: organization, limit: @limit}
+- @units.each do |unit|
+  %div{id: "unit-events-#{unit.id}"}
+    = render partial: 'event_list', locals: {unit: unit, limit: @limit}
     / .row-fluid
-    /   .well.span12{class: unit_well(organization)}
+    /   .well.span12{class: unit_well(unit)}
     /     %p.xlarge
-    /       %strong #{organization.name} Upcoming Events
-    /     - events = organization.events.by_start.all
+    /       %strong #{unit.name} Upcoming Events
+    /     - events = unit.events.by_start.all
     /     - if events.size == 0
     /       %p
     /         No scheduled events. Would you like to
-    /         = link_to 'add an event', new_event_path(organization_id: organization.id)
+    /         = link_to 'add an event', new_event_path(unit_id: unit.id)
     /         ?
     /     - else
     /       - events.each do |event|
     /         %p
     /           = link_to event do
     /             ="#{event.start_at.to_s(:short_ampm)} - #{event.name}"
-    /     =link_to 'show more...', dashboard_index_path(organization_id: organization.id, limit: 5), remote: true
+    /     =link_to 'show more...', dashboard_index_path(unit_id: unit.id, limit: 5), remote: true

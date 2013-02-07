@@ -1,10 +1,10 @@
-class CreateOrganizationsUsers < ActiveRecord::Migration
+class CreateUnitsUsers < ActiveRecord::Migration
   def change
-    create_table :organizations_users do |t|
-      t.references :organization
+    create_table :units_users do |t|
+      t.references :unit
       t.references :user
     end
-    add_index :organizations_users, [:organization_id, :user_id]
-    add_index :organizations_users, [:user_id, :organization_id]
+    add_index :units_users, [:unit_id, :user_id]
+    add_index :units_users, [:user_id, :unit_id]
   end
 end

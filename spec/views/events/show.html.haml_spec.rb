@@ -3,7 +3,7 @@
 # describe "events/show" do
 #   before(:each) do
 #     @event = assign(:event, stub_model(Event,
-#       :organization_id => 1,
+#       :unit_id => 1,
 #       :kind => "Kind",
 #       :name => "Name",
 #       :user_id => 2,

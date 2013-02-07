@@ -2,11 +2,11 @@
   .span12
     .page-header
       .pull-right
-        = link_to(new_organization_scout_path(@organization), class: "btn btn-success") do
+        = link_to(new_unit_scout_path(@unit), class: "btn btn-success") do
           %i.icon-plus
           new scout
 
-      %h2 Scouts in #{@organization.name}
+      %h2 Scouts in #{@unit.name}
 
 
 .row-fluid
@@ -14,32 +14,32 @@
     %table.table
       %tr
         %th Name
-        %th= @organization.sub_unit_name
+        %th= @unit.sub_unit_name
         %th Rank
         %th Age
         %th Adults
 
       - @users.each do |scout|
         %tr
-          %td= link_to scout.name_lf, organization_scout_path(@organization, scout)
+          %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
           %td= scout.sub_unit.try(:name)
           %td= scout.rank
           %td= scout.age
-          %td= organization_adults_link_list(@organization, scout.adults)
+          %td= unit_adults_link_list(@unit, scout.adults)
 
           / %td
-          = #link_to 'Show', organization_scout_path(@organization, scout), class: 'btn btn-mini'
-          = #link_to 'Edit', edit_organization_scout_path(@organization, scout), class: 'btn btn-mini'
-          = #link_to 'Destroy', organization_scout_path(@organization, scout), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini'
+          = #link_to 'Show', unit_scout_path(@unit, scout), class: 'btn btn-mini'
+          = #link_to 'Edit', edit_unit_scout_path(@unit, scout), class: 'btn btn-mini'
+          = #link_to 'Destroy', unit_scout_path(@unit, scout), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini'
 
   .span3
     .well.well-boys
       %strong Rank Count
       %ul.unstyled
-        - @organization.ranks.each do |rank|
-          %li= "#{rank} : #{@organization.scout_rank_count[rank]}"
+        - @unit.ranks.each do |rank|
+          %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
 
-      %strong #{@organization.sub_unit_name} Count
+      %strong #{@unit.sub_unit_name} Count
       %ul.unstyled
-        - @organization.scout_sub_unit_count.each do |sub_unit|
+        - @unit.scout_sub_unit_count.each do |sub_unit|
           %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

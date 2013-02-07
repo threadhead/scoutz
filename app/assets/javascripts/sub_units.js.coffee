@@ -19,9 +19,9 @@ jQuery ->
   if $('span.sub-unit-type.help-block').length
     $('span.sub-unit-type').hide()
     $('span.sub-unit-type').removeClass('hidden')
-    setSubUnitDisplay( $('select#organization_unit_type').val() )
+    setSubUnitDisplay( $('select#unit_unit_type').val() )
 
-  $('select#organization_unit_type').change ->
+  $('select#unit_unit_type').change ->
     unit_type = $(@).val()
     setSubUnitDisplay( unit_type )
 

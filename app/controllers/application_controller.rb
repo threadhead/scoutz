@@ -6,24 +6,24 @@ class ApplicationController < ActionController::Base
   def auth_and_time_zone
     authenticate_user!
     Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
-    @organizations = current_user.organizations if current_user
+    @units = current_user.units if current_user
   end
 
-  # def organization_events_index(params)
+  # def unit_events_index(params)
   #   @limit = (params[:limit] || 5).to_i
-  #   @organization = current_user.organizations.where(id: params[:organization_id]).first
-  #   @events = @organization.events.from_today.by_start
+  #   @unit = current_user.units.where(id: params[:unit_id]).first
+  #   @events = @unit.events.from_today.by_start
   #   @all_events_count = @events.count
   #   @events = @events.limit(@limit).all
   # end
 
   # def calender_events(params)
-  #   if params[:organization_ids]
-  #     @organizations = Organization.where(id: params[:organization_ids].split(","))
+  #   if params[:unit_ids]
+  #     @units = Unit.where(id: params[:unit_ids].split(","))
   #   # else
-  #   #   @organizations = current_user.organizations
+  #   #   @units = current_user.units
   #   end
-  #   @events = Event.joins(:organization).where(organizations: {id: @organizations})
+  #   @events = Event.joins(:unit).where(units: {id: @units})
   #   @events = @events.time_range(params[:start], params[:end]) if params[:start] && params[:end]
   # end
 
@@ -31,22 +31,22 @@ class ApplicationController < ActionController::Base
   # def event_finders
   #   @limit = (params[:limit] || 5).to_i
 
-  #   # if params[:organization_id]
-  #   #   @organizations = Organization.where(id: params[:organization_id])
+  #   # if params[:unit_id]
+  #   #   @units = Unit.where(id: params[:unit_id])
   #   # end
 
   #   # @org_events = Hash.new
-  #   # @organizations.each do |organization|
+  #   # @units.each do |unit|
 
   #   #   @org_events.merge(org_events)
   #   # end
 
 
-  #   if params[:organization_id]
-  #     @organization = Organization.find(params[:organization_id])
-  #     @events = @organization.events.by_start
+  #   if params[:unit_id]
+  #     @unit = Unit.find(params[:unit_id])
+  #     @events = @unit.events.by_start
   #   else
-  #     @events = Event.joins(organization: :users).where(users: {id: current_user.id}).by_start
+  #     @events = Event.joins(unit: :users).where(users: {id: current_user.id}).by_start
   #   end
 
   #   if params[:start] && params[:end]

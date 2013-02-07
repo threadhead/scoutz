@@ -79,7 +79,7 @@ Spork.prefork do
       ActiveRecord::Base.observers.disable(:all)
 
       User.delete_all
-      Organization.delete_all
+      Unit.delete_all
       SubUnit.delete_all
       Event.delete_all
       Phone.delete_all

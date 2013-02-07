@@ -1,10 +1,10 @@
 class ScoutsController < ApplicationController
   before_filter :auth_and_time_zone
   before_filter :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :set_organization
+  before_filter :set_unit
 
   def index
-    @users = @organization.scouts.includes(:sub_unit).by_name_lf
+    @users = @unit.scouts.includes(:sub_unit).by_name_lf
   end
 
   def show
@@ -22,8 +22,8 @@ class ScoutsController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        @organization.users << @user
-        format.html { redirect_to organization_scout_path(@organization, @user), notice: 'Scout was successfully created.' }
+        @unit.users << @user
+        format.html { redirect_to unit_scout_path(@unit, @user), notice: 'Scout was successfully created.' }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -35,7 +35,7 @@ class ScoutsController < ApplicationController
   def update
     respond_to do |format|
       if @user.update_attributes(user_params)
-        format.html { redirect_to organization_scout_path(@organization, @user), notice: 'Scout was successfully updated.' }
+        format.html { redirect_to unit_scout_path(@unit, @user), notice: 'Scout was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -58,8 +58,8 @@ class ScoutsController < ApplicationController
       @user = Scout.find(params[:id])
     end
 
-    def set_organization
-      @organization = current_user.organizations.where(id: params[:organization_id]).first
+    def set_unit
+      @unit = current_user.units.where(id: params[:unit_id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

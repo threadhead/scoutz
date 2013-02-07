@@ -3,7 +3,7 @@
 # describe "sub_units/show" do
 #   before(:each) do
 #     @sub_unit = assign(:sub_unit, stub_model(SubUnit,
-#       :organization_id => 1,
+#       :unit_id => 1,
 #       :name => "Name",
 #       :description => "MyText"
 #     ))

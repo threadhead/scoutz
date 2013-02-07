@@ -1,6 +1,6 @@
-class CreateOrganizations < ActiveRecord::Migration
+class CreateUnits < ActiveRecord::Migration
   def change
-    create_table :organizations do |t|
+    create_table :units do |t|
       t.string :unit_type
       t.string :unit_number
       t.string :city

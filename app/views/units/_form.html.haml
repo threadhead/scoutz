@@ -1,8 +1,8 @@
-= form_for @organization, html: { class: 'form-horizontal' } do |f|
+= form_for @unit, html: { class: 'form-horizontal' } do |f|
   .control-group
     = f.label :unit_type, class: 'control-label'
     .controls
-      = f.select :unit_type, Organization.unit_types
+      = f.select :unit_type, Unit.unit_types
   .control-group
     = f.label :unit_number, class: 'control-label'
     .controls
@@ -22,4 +22,4 @@
       = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
   .form-actions
     = f.submit 'Save', class: 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), organizations_path, class: 'btn'
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn'

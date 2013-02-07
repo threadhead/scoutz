@@ -6,6 +6,6 @@ class DashboardController < ApplicationController
     authorize! :dashboard, :index
     # event_finders
     # @limit = params[:limit] ? params[:limit].to_i : 5
-    # @organization = Organization.find(params[:organization_id]) if params[:organization_id]
+    # @unit = Unit.find(params[:unit_id]) if params[:unit_id]
   end
 end

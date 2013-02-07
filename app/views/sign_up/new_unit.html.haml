@@ -1,4 +1,4 @@
-= form_for @organization, url: sign_up_create_unit_path, :html => { class: 'form-horizontal' } do |f|
+= form_for @unit, url: sign_up_create_unit_path, :html => { class: 'form-horizontal' } do |f|
   .row-fluid
     .span6
       .well
@@ -7,7 +7,7 @@
         .control-group
           = f.label :unit_type, class: 'control-label'
           .controls
-            = f.select :unit_type, Organization.unit_types
+            = f.select :unit_type, Unit.unit_types
         .control-group
           = f.label :unit_number, class: 'control-label'
           .controls
@@ -30,7 +30,7 @@
       .well.sub-units
         %h2
           Add some
-          %span.unit-type-plural= @organization.sub_unit_type.pluralize
+          %span.unit-type-plural= @unit.sub_unit_type.pluralize
 
         = f.fields_for :sub_units do |f_sub|
           .control-group
@@ -50,7 +50,7 @@
             %br
             = link_to '#', class: 'btn btn-primary add-sub-unit-button' do
               add a
-              %span.unit-type= @organization.sub_unit_type
+              %span.unit-type= @unit.sub_unit_type
 
           #new-sub-unit-fields.hidden
             = f.fields_for :sub_units, SubUnit.new, child_index: 'new_sub_unit' do |f_sub|
@@ -64,7 +64,7 @@
   .row-fluid
     .span12.centered
       = link_to 'Create My Unit', '#', class: 'btn btn-primary create-my-unit'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), organizations_path, class: 'btn'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn'
 
 :javascript
-  window.unit_types = "#{j Organization::SUB_UNIT_TYPES.to_json}";
+  window.unit_types = "#{j Unit::SUB_UNIT_TYPES.to_json}";

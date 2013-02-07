@@ -1,75 +1,75 @@
 class UnitsController < ApplicationController
-  # GET /organizations
-  # GET /organizations.json
+  # GET /units
+  # GET /units.json
   def index
-    @organizations = Organization.all
+    @units = Unit.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @organizations }
+      format.json { render json: @units }
     end
   end
 
-  # GET /organizations/1
-  # GET /organizations/1.json
+  # GET /units/1
+  # GET /units/1.json
   def show
-    @organization = Organization.find(params[:id])
+    @unit = Unit.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @organization }
+      format.json { render json: @unit }
     end
   end
 
   def new
-    @organization = Organization.new(params[:organization])
+    @unit = Unit.new(params[:unit])
   end
 
-  # GET /organizations/1/edit
+  # GET /units/1/edit
   def edit
-    @organization = Organization.find(params[:id])
+    @unit = Unit.find(params[:id])
   end
 
-  # POST /organizations
-  # POST /organizations.json
+  # POST /units
+  # POST /units.json
   def create
-    @organization = Organization.new(params[:organization])
+    @unit = Unit.new(params[:unit])
 
     respond_to do |format|
-      if @organization.save
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
-        format.json { render json: @organization, status: :created, location: @organization }
+      if @unit.save
+        format.html { redirect_to @unit, notice: 'Unit was successfully created.' }
+        format.json { render json: @unit, status: :created, location: @unit }
       else
         format.html { render action: "new" }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
+        format.json { render json: @unit.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /organizations/1
-  # PUT /organizations/1.json
+  # PUT /units/1
+  # PUT /units/1.json
   def update
-    @organization = Organization.find(params[:id])
+    @unit = Unit.find(params[:id])
 
     respond_to do |format|
-      if @organization.update_attributes(params[:organization])
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
+      if @unit.update_attributes(params[:unit])
+        format.html { redirect_to @unit, notice: 'Unit was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
+        format.json { render json: @unit.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /organizations/1
-  # DELETE /organizations/1.json
+  # DELETE /units/1
+  # DELETE /units/1.json
   def destroy
-    @organization = Organization.find(params[:id])
-    @organization.destroy
+    @unit = Unit.find(params[:id])
+    @unit.destroy
 
     respond_to do |format|
-      format.html { redirect_to organizations_url }
+      format.html { redirect_to units_url }
       format.json { head :no_content }
     end
   end

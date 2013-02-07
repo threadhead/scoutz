@@ -1,8 +1,8 @@
 # require 'spec_helper'
 
-# describe "organizations/edit" do
+# describe "units/edit" do
 #   before(:each) do
-#     @organization = assign(:organization, stub_model(Organization,
+#     @unit = assign(:unit, stub_model(Unit,
 #       :unit_type => "Cub Scouts",
 #       :unit_number => "MyString",
 #       :city => "MyString",
@@ -11,16 +11,16 @@
 #     ))
 #   end
 
-#   it "renders the edit organization form" do
+#   it "renders the edit unit form" do
 #     render
 
 #     # Run the generator again with the --webrat flag if you want to use webrat matchers
-#     assert_select "form", :action => organizations_path(@organization), :method => "post" do
-#       assert_select "select#organization_unit_type", :name => "organization[unit_type]"
-#       assert_select "input#organization_unit_number", :name => "organization[unit_number]"
-#       assert_select "input#organization_city", :name => "organization[city]"
-#       assert_select "select#organization_state", :name => "organization[state]"
-#       assert_select "select#organization_time_zone", :name => "organization[time_zone]"
+#     assert_select "form", :action => units_path(@unit), :method => "post" do
+#       assert_select "select#unit_unit_type", :name => "unit[unit_type]"
+#       assert_select "input#unit_unit_number", :name => "unit[unit_number]"
+#       assert_select "input#unit_city", :name => "unit[city]"
+#       assert_select "select#unit_state", :name => "unit[state]"
+#       assert_select "select#unit_time_zone", :name => "unit[time_zone]"
 #     end
 #   end
 # end

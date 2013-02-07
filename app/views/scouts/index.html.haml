@@ -25,8 +25,8 @@
           %td= scout.sub_unit.try(:name)
           %td= scout.rank
           %td= scout.age
-          %td
-            = organization_adults_link_list(@organization, scout.adults)
+          %td= organization_adults_link_list(@organization, scout.adults)
+
           / %td
           = #link_to 'Show', organization_scout_path(@organization, scout), class: 'btn btn-mini'
           = #link_to 'Edit', edit_organization_scout_path(@organization, scout), class: 'btn btn-mini'

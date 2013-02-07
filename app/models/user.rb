@@ -73,6 +73,12 @@ class User < ActiveRecord::Base
     full_name
   end
 
+  # def scout_ids(organization=nil)
+  #   scouts = self.scouts.select('"users"."id"')
+  #   scouts = scouts.joins(:organizations).where(organizations: {id: organization}) if organization
+  #   return scouts.to_a
+  # end
+
   def full_name
     "#{first_name} #{last_name}"
   end

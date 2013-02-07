@@ -8,12 +8,17 @@ module UsersHelper
   end
 
   def scout_adults_link_list(organization, scout)
-    scout.adults.map { |user| link_to(user.full_name, organization_adult_path(organization, user)) }.join(', ').html_safe
+    scout.organization_adults(organization).map { |user| link_to(user.full_name, organization_adult_path(organization, user)) }.join(', ').html_safe
   end
 
   def adult_scouts_link_list(organization, adult)
     adult.organization_scouts(organization).map { |user| link_to(user.full_name, organization_scout_path(organization, user)) }.join(', ').html_safe
   end
+
+  def adult_sub_units_list(organization, adult)
+    adult.sub_units(organization).map(&:name).join(', ')
+  end
+
 
   def birthdate_and_years_old(user)
     if user.birth

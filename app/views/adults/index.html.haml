@@ -14,14 +14,16 @@
     %table.table
       %tr
         %th Name
+        %th= @organization.sub_unit_name
         %th Leadership
         %th Scouts
 
       - @users.each do |adult|
         %tr
           %td= link_to adult.name_lf, organization_adult_path(@organization, adult)
+          %td= adult_sub_units_list(@organization, adult)
           %td= adult.leadership_position
-          %td= organization_scouts_link_list(@organization, adult.scouts)
+          %td= organization_scouts_link_list(@organization, adult.organization_scouts(@organization))
 
   .span3
     / .well.well-boys

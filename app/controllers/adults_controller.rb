@@ -23,7 +23,7 @@ class AdultsController < ApplicationController
     respond_to do |format|
       if @user.save
         @organization.users << @user
-        format.html { redirect_to organization_adult_path(@organization, @user), notice: 'Adult was successfully created.' }
+        format.html { redirect_to organization_adult_path(@organization, @user), notice: "#{@user.full_name} was successfully created." }
         format.json { render action: 'show', status: :created, location: @user }
       else
         format.html { render action: 'new' }
@@ -35,7 +35,7 @@ class AdultsController < ApplicationController
   def update
     respond_to do |format|
       if @user.update_attributes(user_params)
-        format.html { redirect_to organization_adult_path(@organization, @user), notice: 'Adult was successfully updated.' }
+        format.html { redirect_to organization_adult_path(@organization, @user), notice: "#{@user.full_name} was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

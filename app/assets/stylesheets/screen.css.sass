@@ -1,4 +1,9 @@
 @import "compass/css3"
+// .navbar .navbar-inner
+//   padding-left: 20px
+
+.well.sidebar-nav
+  padding: 8px 0px
 
 
 div.text-large, p.large, p large, i.large, span.large, strong.large, em.large
@@ -79,6 +84,12 @@ body.body-modal
   background-color: #f4f1ed
   border-color: #cccbe3
 
+.well-thin
+  margin-top: 6px
+  margin-bottom: 12px
+  padding: 6px
+
+
 .input-append-start-end
   width: 220px
   display: inline-block
@@ -103,3 +114,31 @@ body.body-modal
   left: 0
   width: 100%
   height: 100%
+
+.email-message-events
+  border: 2px solid #ccc
+  padding-top: 12px
+  padding-bottom: 12px
+  height: 140px
+  overflow-y: scroll
+
+.text-grey
+  color: grey
+
+.show-message
+  margin-top: 6px
+  padding: 3px
+  border: 1px solid #ddd
+  @include border-radius(3px)
+  @include single-box-shadow(rgba(0, 0, 0, 0.2), 2px, 2px)
+
+
+smaller
+  font-size: 70%
+  line-height: .8em
+
+legend
+  margin-bottom: 0px
+legend + *
+  -webkit-margin-top-collapse : separate
+  margin-top                  : 20px

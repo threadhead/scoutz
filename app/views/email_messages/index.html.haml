@@ -1,0 +1,36 @@
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        = link_to(new_unit_email_message_path(@unit), class: "btn btn-success") do
+          %i.icon-plus
+          new message
+
+      %h2 My Sent Messages
+      %blockquote
+        %h3= @unit.name_unit
+
+.row-fluid
+  .span12
+    %table.table
+      %thead
+        %th Sent at
+        %th Subject
+        %th From
+        %th Recipients
+        %th Actions
+
+      - @email_messages.each do |email_message|
+        %tr
+          %td
+            - if email_message.sent_at
+              = email_message.sent_at.to_s(:short_ampm)
+            - else
+              %em pending
+          %td
+            = link_to email_message.subject, unit_email_message_path(@unit, email_message)
+            - if email_message.has_attachments?
+              %i.icon-paper-clip
+          %td= email_message.sender.email
+          %td= email_message.send_to
+          %td= link_to 'view', unit_email_message_path(@unit, email_message), class: 'btn btn-mini'

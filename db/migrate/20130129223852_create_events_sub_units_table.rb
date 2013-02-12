@@ -1,6 +1,6 @@
 class CreateEventsSubUnitsTable < ActiveRecord::Migration
   def change
-    create_table :events_sub_units, :id => false do |t|
+    create_table :events_sub_units, id: false do |t|
       t.references :event
       t.references :sub_unit
     end

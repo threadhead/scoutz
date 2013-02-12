@@ -1,4 +1,6 @@
 = form_for @user, url: unit_scouts_path(@unit), html: { class: 'form-horizontal' } do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+
   .control-group
     = f.label :unit, class: 'control-label'
     .controls
@@ -61,4 +63,4 @@
 
   .form-actions
     = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', unit_scouts_path, class: 'btn'
+    = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn'

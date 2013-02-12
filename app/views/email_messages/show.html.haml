@@ -1,0 +1,69 @@
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        = link_to(unit_email_messages_path(@unit), class: 'btn') do
+          %i.icon-large.icon-reply
+          sent emails
+
+        = link_to(new_unit_email_message_path(@unit), class: 'btn btn-success') do
+          %i.icon-large.icon-plus
+          new email blast
+
+      %h2 Email Message
+
+.row-fluid
+  .span12
+    .text-xlarge
+      %table.table
+        %tr
+          %td
+            %strong Subject
+          %td= @email_message.subject
+
+        %tr
+          %td
+            %strong From
+          %td= @email_message.sender.name_email
+
+        %tr
+          %td
+            %strong Recipients
+          %td
+            = @email_message.send_to
+            %span.badge= @email_message.send_to_count
+            - case @email_message.send_to_option
+              - when 2
+                %br
+                %small
+                  %em= @email_message.sub_units.map(&:name).join(', ')
+              - when 3
+                %br
+                %small
+                  %em= @email_message.recipients.map(&:name_email).join(', ')
+
+        %tr
+          %td
+            %strong Events
+          %td
+            - if @email_message.events.size > 0
+              - @email_message.events.each do |event|
+                %p= link_to event_list_name(event), unit_event_path(@unit, event)
+            - else
+              %em none selected
+
+        %tr
+          %td
+            %strong Attachments
+          %td
+            - @email_message.email_attachments.each do |email_attachment|
+              = link_to email_attachment.original_file_name, email_attachment.attachment.url, target: '_blank'
+              %br
+
+        %tr
+          %td
+            %strong Message
+          %td
+            .show-message= @email_message.message.html_safe
+
+

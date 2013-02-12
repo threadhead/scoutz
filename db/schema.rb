@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130205172804) do
+ActiveRecord::Schema.define(:version => 20130212205420) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -29,6 +29,52 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], :name => "idx_ckeditor_assetable"
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], :name => "idx_ckeditor_assetable_type"
+
+  create_table "email_attachments", :force => true do |t|
+    t.integer  "email_message_id"
+    t.string   "attachment"
+    t.integer  "file_size"
+    t.string   "content_type"
+    t.string   "original_file_name"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "email_attachments", ["email_message_id"], :name => "index_email_attachments_on_email_message_id"
+
+  create_table "email_messages", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "unit_id"
+    t.text     "message"
+    t.string   "subject"
+    t.datetime "sent_at"
+    t.string   "sub_unit_ids",   :default => "'"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "send_to_option", :default => 1
+    t.string   "id_token"
+  end
+
+  add_index "email_messages", ["id_token"], :name => "index_email_messages_on_id_token"
+  add_index "email_messages", ["sent_at"], :name => "index_email_messages_on_sent_at"
+  add_index "email_messages", ["unit_id"], :name => "index_email_messages_on_unit_id"
+  add_index "email_messages", ["user_id"], :name => "index_email_messages_on_user_id"
+
+  create_table "email_messages_events", :id => false, :force => true do |t|
+    t.integer "email_message_id"
+    t.integer "event_id"
+  end
+
+  add_index "email_messages_events", ["email_message_id", "event_id"], :name => "index_email_messages_events_on_email_message_id_and_event_id"
+  add_index "email_messages_events", ["event_id", "email_message_id"], :name => "index_email_messages_events_on_event_id_and_email_message_id"
+
+  create_table "email_messages_users", :id => false, :force => true do |t|
+    t.integer "email_message_id"
+    t.integer "user_id"
+  end
+
+  add_index "email_messages_users", ["email_message_id", "user_id"], :name => "index_email_messages_users_on_email_message_id_and_user_id"
+  add_index "email_messages_users", ["user_id", "email_message_id"], :name => "index_email_messages_users_on_user_id_and_email_message_id"
 
   create_table "events", :force => true do |t|
     t.integer  "unit_id"
@@ -73,7 +119,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
   add_index "events_sub_units", ["event_id", "sub_unit_id"], :name => "index_events_sub_units_on_event_id_and_sub_unit_id"
   add_index "events_sub_units", ["sub_unit_id", "event_id"], :name => "index_events_sub_units_on_sub_unit_id_and_event_id"
 
-  create_table "events_users", :force => true do |t|
+  create_table "events_users", :id => false, :force => true do |t|
     t.integer "event_id"
     t.integer "user_id"
   end
@@ -121,7 +167,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "units_users", :force => true do |t|
+  create_table "units_users", :id => false, :force => true do |t|
     t.integer "unit_id"
     t.integer "user_id"
   end
@@ -129,7 +175,7 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
   add_index "units_users", ["unit_id", "user_id"], :name => "index_units_users_on_unit_id_and_user_id"
   add_index "units_users", ["user_id", "unit_id"], :name => "index_units_users_on_user_id_and_unit_id"
 
-  create_table "user_relationships", :force => true do |t|
+  create_table "user_relationships", :id => false, :force => true do |t|
     t.integer "adult_id"
     t.integer "scout_id"
   end
@@ -178,11 +224,13 @@ ActiveRecord::Schema.define(:version => 20130205172804) do
     t.string   "additional_leadership_positions"
   end
 
+  add_index "users", ["additional_leadership_positions"], :name => "index_users_on_additional_leadership_positions"
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["deactivated_at"], :name => "index_users_on_deactivated_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["encrypted_password"], :name => "index_users_on_encrypted_password"
+  add_index "users", ["leadership_position"], :name => "index_users_on_leadership_position"
   add_index "users", ["rank"], :name => "index_users_on_rank"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"

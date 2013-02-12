@@ -18,6 +18,11 @@ jQuery ->
     })
 
   $("select#event_kind").change ->
+    # switch $(@).val()
+    #   when "3" then $("#sub-unit-list").collapse("show")
+    #   else $("#sub-unit-list").collapse("hide")
+
+
     subUnitRegex = /Den|Lodge/
     if $(@).val().match subUnitRegex
       $("#sub-unit-list").collapse("show")

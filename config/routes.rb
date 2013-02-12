@@ -18,6 +18,7 @@ Scoutz::Application.routes.draw do
     resources :events
     resources :scouts
     resources :adults
+    resources :email_messages
   end
 
   post 'units/new' => 'units#new'

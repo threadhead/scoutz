@@ -66,11 +66,16 @@ class User < ActiveRecord::Base
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events
   belongs_to :sub_unit
+  has_many :email_messages
 
   before_save :ensure_authentication_token
 
   def name
     full_name
+  end
+
+  def name_email
+    "#{full_name} <#{email}>"
   end
 
   # def scout_ids(unit=nil)
@@ -99,6 +104,13 @@ class User < ActiveRecord::Base
     order('"users"."last_name" ASC, "users"."first_name" ASC')
   end
 
+  def self.with_email
+    where('"users"."email" IS NOT NULL')
+  end
+
+  def self.leaders
+    where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL')
+  end
 
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb

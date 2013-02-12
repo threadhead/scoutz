@@ -1,6 +1,6 @@
 class CreateUserRelationships < ActiveRecord::Migration
   def change
-    create_table :user_relationships do |t|
+    create_table :user_relationships, id: false do |t|
       t.references :adult
       t.references :scout
     end

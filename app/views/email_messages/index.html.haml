@@ -14,18 +14,20 @@
   .span12
     %table.table
       %thead
+        %th Sent at
+        %th Subject
         %th From
         %th Recipients
-        %th Subject
-        %th Sent at
+        %th Actions
 
       - @email_messages.each do |email_message|
         %tr
-          %td= email_message.sender.email
-          %td= email_message.send_to
-          %td= email_message.subject
           %td
             - if email_message.sent_at
               = email_message.sent_at.to_s(:short_ampm)
             - else
               %em pending
+          %td= link_to email_message.subject, unit_email_message_path(@unit, email_message)
+          %td= email_message.sender.email
+          %td= email_message.send_to
+          %td= link_to 'view', unit_email_message_path(@unit, email_message), class: 'btn btn-mini'

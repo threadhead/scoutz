@@ -47,15 +47,14 @@ class EmailMessage < ActiveRecord::Base
 
   def send_to_count
     recipients.count
-    case send_to_option
-    when 1
-      self.unit.users.with_email.count
-    when 2
-      self.sub_units.joins(:user)
-    when 3
-      self.users.count
-
-    end
+    # case send_to_option
+    # when 1
+    #   self.unit.users.with_email.count
+    # when 2
+    #   self.sub_units.joins(:user)
+    # when 3
+    #   self.users.with_email.count
+    # end
   end
 
   def recipients

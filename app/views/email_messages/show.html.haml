@@ -54,6 +54,14 @@
 
         %tr
           %td
+            %strong Attachments
+          %td
+            - @email_message.email_attachments.each do |email_attachment|
+              = link_to email_attachment.original_file_name, email_attachment.attachment.url, target: '_blank'
+              %br
+
+        %tr
+          %td
             %strong Message
           %td
             .show-message= @email_message.message.html_safe

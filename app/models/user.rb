@@ -108,6 +108,9 @@ class User < ActiveRecord::Base
     where('"users"."email" IS NOT NULL')
   end
 
+  def self.leaders
+    where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL')
+  end
 
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb

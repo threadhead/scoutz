@@ -23,6 +23,9 @@ class EmailMessage < ActiveRecord::Base
     errors.add(:base, "You must select at least 1 adult or scout recipient") if user_ids.empty?
   end
 
+  before_save :ensure_id_token
+
+
   # the default: Array.new for serialized columns does not work
   # this is the workaround
   def sub_unit_ids
@@ -39,8 +42,10 @@ class EmailMessage < ActiveRecord::Base
     when 1
       "Everyone in #{to_unit.name}"
     when 2
-      "Selected #{to_unit.sub_unit_name.pluralize}"
+      "All #{to_unit.name} Leaders"
     when 3
+      "Selected #{to_unit.sub_unit_name.pluralize}"
+    when 4
       "Selected Adults/Scouts"
     end
   end
@@ -51,7 +56,7 @@ class EmailMessage < ActiveRecord::Base
 
 
   def send_to_count
-    recipients.count
+    recipients ? recipients.count : 0
   end
 
   def recipients
@@ -59,13 +64,17 @@ class EmailMessage < ActiveRecord::Base
     when 1
       self.unit.users.with_email
     when 2
+      self.unit.users.leaders.with_email
+    when 3
       su_users = []
       sub_units.each { |su| su_users << su.users_with_emails }
       su_users.flatten
       # Scout.with_email.joins(:sub_unit).where(sub_units: {id: sub_unit_ids}) +
       # Adult.with_email.joins(:sub_unit).where(sub_units: {id: sub_unit_ids})
-    when 3
+    when 4
       self.users.with_email
+    else
+      []
     end
   end
 
@@ -73,24 +82,29 @@ class EmailMessage < ActiveRecord::Base
     SubUnit.where(id: sub_unit_ids)
   end
 
-  def send_to_sub_units?
-    send_to_option == 2
-  end
-
   def send_to_unit?
     send_to_option == 1
   end
 
-  def send_to_users?
+  def send_to_leaders?
+    send_to_option == 2
+  end
+
+  def send_to_sub_units?
     send_to_option == 3
+  end
+
+  def send_to_users?
+    send_to_option == 4
   end
 
 
   def self.send_to_options(unit)
     [
       ["Everyone in #{unit.name}", 1],
-      ["Selected #{unit.sub_unit_name.pluralize}", 2],
-      ["Selected Adults/Scouts", 3]
+      ["#{unit.name} Leaders", 2],
+      ["Selected #{unit.sub_unit_name.pluralize}", 3],
+      ["Selected Adults/Scouts", 4]
     ]
   end
 
@@ -104,4 +118,21 @@ class EmailMessage < ActiveRecord::Base
   def self.by_updated_at
     order('"email_messages"."updated_at" DESC')
   end
+
+  private
+
+    def ensure_id_token
+      self.id_token = valid_token
+    end
+
+    def valid_token
+      loop do
+        rand_token = generate_token
+        break rand_token unless EmailMessage.where(id_token: rand_token).first
+      end
+    end
+
+    def generate_token
+      SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
+    end
 end

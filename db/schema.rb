@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207211029) do
+ActiveRecord::Schema.define(:version => 20130212205420) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -52,8 +52,10 @@ ActiveRecord::Schema.define(:version => 20130207211029) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
     t.integer  "send_to_option", :default => 1
+    t.string   "id_token"
   end
 
+  add_index "email_messages", ["id_token"], :name => "index_email_messages_on_id_token"
   add_index "email_messages", ["sent_at"], :name => "index_email_messages_on_sent_at"
   add_index "email_messages", ["unit_id"], :name => "index_email_messages_on_unit_id"
   add_index "email_messages", ["user_id"], :name => "index_email_messages_on_user_id"
@@ -222,11 +224,13 @@ ActiveRecord::Schema.define(:version => 20130207211029) do
     t.string   "additional_leadership_positions"
   end
 
+  add_index "users", ["additional_leadership_positions"], :name => "index_users_on_additional_leadership_positions"
   add_index "users", ["authentication_token"], :name => "index_users_on_authentication_token", :unique => true
   add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["deactivated_at"], :name => "index_users_on_deactivated_at"
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["encrypted_password"], :name => "index_users_on_encrypted_password"
+  add_index "users", ["leadership_position"], :name => "index_users_on_leadership_position"
   add_index "users", ["rank"], :name => "index_users_on_rank"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"

@@ -48,7 +48,7 @@
           %td
             - if @email_message.events.size > 0
               - @email_message.events.each do |event|
-                = event_list_name(event)
+                %p= link_to event_list_name(event), unit_event_path(@unit, event)
             - else
               %em none selected
 

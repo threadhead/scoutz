@@ -7,6 +7,11 @@
       .span4.offset1
         = f.select :send_to_option, EmailMessage.send_to_options(@unit), {}, {class: 'span12'}
       .span7
+        #email-leaders-list.collapse{ class: ('in' if @email_message.send_to_leaders?) }
+          .well.well-small
+            %h4 #{@unit.name_unit} Leaders
+            %smaller.text-grey= @unit.users.leaders.with_email.by_name_lf.map(&:name_email).join(', ')
+
         #email-sub-unit-list.collapse{ class: ('in' if @email_message.send_to_sub_units?) }
           .well.well-small
             %ul.unstyled

@@ -6,18 +6,26 @@
           %i.icon-plus
           new message
 
-      %h2 Email Messages
+      %h2 My Sent Messages
+      %blockquote
+        %h3= @unit.name_unit
 
 .row-fluid
-  .span9
+  .span12
     %table.table
       %thead
-        %th User
+        %th From
+        %th Recipients
         %th Subject
         %th Sent at
 
       - @email_messages.each do |email_message|
         %tr
-          %td= email_message.user_id
+          %td= email_message.sender.email
+          %td= email_message.send_to
           %td= email_message.subject
-          %td= email_message.sent_at
+          %td
+            - if email_message.sent_at
+              = email_message.sent_at.to_s(:short_ampm)
+            - else
+              %em pending

@@ -25,3 +25,7 @@ jQuery ->
   $("select#email_message_user_ids").select2({
     placeholder: 'Select recipients'
     })
+
+  # $("label.checkbox.sub-unit").tooltip({
+  #   placement: "top"
+  #   })

@@ -5,7 +5,7 @@ class EmailMessagesController < ApplicationController
 
 
   def index
-    @email_messages = current_user.email_messages.by_updated_at
+    @email_messages = EmailMessage.where(unit_id: @unit).where(user_id: current_user).includes(:sender).by_updated_at
   end
 
   def show
@@ -13,14 +13,14 @@ class EmailMessagesController < ApplicationController
 
   def new
     @email_message = EmailMessage.new
-    5.times { @email_message.email_attachments.build }
+    4.times { @email_message.email_attachments.build }
   end
 
   def edit
   end
 
   def create
-    @email_message = EmailMessage.new(email_message_params)
+    @email_message = @unit.email_messages.build(email_message_params)
 
     respond_to do |format|
       if @email_message.save
@@ -29,6 +29,7 @@ class EmailMessagesController < ApplicationController
         format.html { redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully created.' }
         format.json { render json: @email_message, status: :created, location: @email_message }
       else
+        4.times { @email_message.email_attachments.build }
         format.html { render action: "new" }
         format.json { render json: @email_message.errors, status: :unprocessable_entity }
       end
@@ -68,7 +69,19 @@ class EmailMessagesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_message_params
       # params.require(:email_message).permit(:subject, :message)
-      params[:email_message]
+      filter_params(params[:email_message])
+    end
+
+    def filter_params(params)
+      case params[:send_to_option]
+      when "1" # entire unit
+        params.except(:sub_unit_ids, :user_ids)
+      when "2" # selected sub_units
+        params.except(:user_ids)
+      when "3" # selected users
+        params.except(:sub_unit_ids)
+      end
+
     end
 
 end

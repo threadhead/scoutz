@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207194410) do
+ActiveRecord::Schema.define(:version => 20130207211029) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -48,12 +48,10 @@ ActiveRecord::Schema.define(:version => 20130207194410) do
     t.text     "message"
     t.string   "subject"
     t.datetime "sent_at"
-    t.boolean  "send_to_unit",      :default => true
-    t.boolean  "send_to_sub_units", :default => false
-    t.string   "sub_unit_ids",      :default => "'"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.string   "send_to_option"
+    t.string   "sub_unit_ids",   :default => "'"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+    t.integer  "send_to_option", :default => 1
   end
 
   add_index "email_messages", ["sent_at"], :name => "index_email_messages_on_sent_at"

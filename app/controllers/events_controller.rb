@@ -36,7 +36,7 @@ class EventsController < ApplicationController
 
   def new
     @unit = params[:unit_id] ? Unit.find(params[:unit_id]) : Unit.first
-    @event = Event.new(start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
+    @event = Event.new(unit_id: @unit.id, start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
     @sub_unit_ids = []
   end
 
@@ -78,9 +78,9 @@ class EventsController < ApplicationController
   end
 
   private
-    def set_tz
-      Time.zone = "Arizona"
-    end
+    # def set_tz
+    #   Time.zone = "Arizona"
+    # end
 
     def sub_unit_ids(params)
       if params

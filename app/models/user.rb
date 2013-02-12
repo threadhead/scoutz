@@ -74,6 +74,10 @@ class User < ActiveRecord::Base
     full_name
   end
 
+  def name_email
+    "#{full_name} <#{email}>"
+  end
+
   # def scout_ids(unit=nil)
   #   scouts = self.scouts.select('"users"."id"')
   #   scouts = scouts.joins(:units).where(units: {id: unit}) if unit

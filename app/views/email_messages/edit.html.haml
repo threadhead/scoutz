@@ -1,7 +1,5 @@
-%h1 Editing email_message
-
-= render 'form'
-
-= link_to 'Show', @email_message
-\|
-= link_to 'Back', email_messages_path
+.page-header
+  %h2 Edit Email in #{@unit.name}
+.row-fluid
+  .span12
+    = render partial: 'form'

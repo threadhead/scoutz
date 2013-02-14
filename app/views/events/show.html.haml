@@ -16,6 +16,7 @@
 
 .row-fluid
   .span8
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
     %em.xxlarge= @event.unit.name
     .text-xlarge
       %table.table
@@ -60,7 +61,6 @@
             %address= location_show(@event)
             - if @event.location_map_url.blank?
               = gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
-              = #gmaps4rails(@event.to_gmaps4rails)
             - else
               .iframe-rwd
                 %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
@@ -68,3 +68,18 @@
           %tr
             %td &nbsp;
             %td= @event.message.html_safe
+
+          %tr
+            %td
+              %strong Roster
+            %td
+              %table.table-condensed
+                = render partial: 'event_signups/event_roster', collection: @event_rosters
+                - #@event.event_signups.includes(:scout).each do |signup|
+
+
+  .span4
+    - if @event.signup_required && @event.after_signup_deadline?
+      #event-signups-list
+        = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}
+

@@ -99,6 +99,16 @@ class User < ActiveRecord::Base
     end
   end
 
+  def is_a_scout?
+    type == 'Scout'
+  end
+
+  def is_an_adult?
+    type == 'Adult'
+  end
+
+
+
   ## scopes
   def self.by_name_lf
     order('"users"."last_name" ASC, "users"."first_name" ASC')

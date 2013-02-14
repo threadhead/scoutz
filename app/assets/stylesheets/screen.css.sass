@@ -6,6 +6,10 @@
   padding: 8px 0px
 
 
+div.text-small, p.small, p small, i.small, span.small, strong.small, em.small
+  font-size: 12px
+  line-height: 0.8
+
 div.text-large, p.large, p large, i.large, span.large, strong.large, em.large
   font-size: 14px
   line-height: 1
@@ -21,6 +25,27 @@ div.text-xxlarge, p.xxlarge, p xxlarge, i.xxlarge, span.xxlarge, strong.xxlarge,
 div.text-xxxlarge, p.xxxlarge, p xxxlarge, i.xxxlarge, span.xxxlarge, strong.xxxlarge, em.xxxlarge
   font-size: 42px
   line-height: 1.4
+
+.form-condensed
+  font-size: 12px
+  margin-bottom: 1px
+  .control-group
+    margin-bottom: 12px
+    .control-label
+      width: 120px
+    .controls
+      margin-left: 140px
+
+.rotated-name
+  font-size: 22px
+  background-color: #ccc
+  @include transform-origin(bottom, left)
+  @include rotate(90deg)
+  width: 200px
+  padding: 7px
+
+.rotate-name2
+  text-align: middle
 
 .centered
   text-align: center
@@ -89,6 +114,10 @@ body.body-modal
   margin-bottom: 12px
   padding: 6px
 
+.signup-comment
+  font-size: .8em
+  line-height: 1.2em !important
+  width: 50%
 
 .input-append-start-end
   width: 220px
@@ -131,6 +160,19 @@ body.body-modal
   border: 1px solid #ddd
   @include border-radius(3px)
   @include single-box-shadow(rgba(0, 0, 0, 0.2), 2px, 2px)
+
+.btn-xlarge
+  padding: 11px 22px
+  font-size: 25px
+  line-height: normal
+  +border-radius(8px)
+
+.btn-xxlarge
+  padding: 18px 28px
+  font-size: 38px
+  line-height: normal
+  +border-radius(9px)
+
 
 
 smaller

@@ -32,6 +32,8 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @event_signups = @event.user_signups(current_user)
+    @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
   end
 
   def new

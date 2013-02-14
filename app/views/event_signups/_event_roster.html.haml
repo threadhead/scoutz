@@ -1,0 +1,9 @@
+%tr
+  %td= event_roster.scout.name_lf
+  %td.text-grey
+    = "Siblings: #{event_roster.siblings_attending}"
+    %br
+    = "Scout: #{event_roster.scouts_attending}"
+    %br
+    = "Adults: #{event_roster.adults_attending}"
+  %td.signup-comment= event_roster.comment

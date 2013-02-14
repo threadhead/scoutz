@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :unit
+  has_many :event_signups
   has_and_belongs_to_many :users
   has_and_belongs_to_many :sub_units
   acts_as_gmappable process_geocoding: false, validation: false
@@ -36,6 +37,30 @@ class Event < ActiveRecord::Base
     "#{location_address1} #{}"
   end
 
+  def after_signup_deadline?
+    Time.zone.now <= signup_deadline
+  end
+
+  def user_signups(user)
+    user.unit_scouts(self.unit).map do |scout|
+      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id)
+    end
+
+    # signups = if user.is_a_scout?
+    #   self.event_signups.where(scout_id: user.id)
+    # else
+    #   scouts = user.unit_scouts(self.unit)
+    #   self.event_signups.where(scout_id: scouts)
+    # end
+
+    # if signups.empty?
+    #   signups = user.unit_scouts(self.unit).map { |s| EventSignup.new(scout_id: s.id) }
+    # end
+    # signups
+  end
+
+
+  # scopes
   def self.time_range(start_time, end_time)
     where('start_at >= ? AND start_at <= ?', Event.format_time(start_time), Event.format_time(end_time))
   end

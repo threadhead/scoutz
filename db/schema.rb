@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130213150758) do
+ActiveRecord::Schema.define(:version => 20130215010148) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20130213150758) do
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "gmaps"
+    t.integer  "attendee_count",    :default => 0
   end
 
   add_index "events", ["end_at"], :name => "index_events_on_end_at"

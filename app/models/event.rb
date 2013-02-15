@@ -33,6 +33,22 @@ class Event < ActiveRecord::Base
     self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
   end
 
+  after_save :update_attendee_count
+  def update_attendee_count
+    self.update_column(:attendee_count, event_signup_count)
+  end
+
+  def event_signup_count
+    EventSignup.find_by_sql([
+          "SELECT
+           SUM(\"event_signups\".\"scouts_attending\") +
+           SUM(\"event_signups\".\"adults_attending\") +
+           SUM(\"event_signups\".\"siblings_attending\")
+           AS sum_id
+           FROM \"event_signups\"
+           WHERE \"event_signups\".\"event_id\" = ?", self.id]).first.try(:sum_id) || 0
+  end
+
   def full_address
     "#{location_address1} #{}"
   end

@@ -1,5 +1,3 @@
 = render partial: 'dashboard/calendar_list'
 
-- @units.each do |unit|
-  %div{id: "unit-events-#{unit.id}"}
-    = render partial: 'events/event_list', locals: {unit: unit, limit: @limit}
+= render partial: 'events/unit', collection: @units, locals: {limit: @limit}

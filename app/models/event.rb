@@ -1,6 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :unit
-  has_many :event_signups
+  has_many :event_signups, dependent: :destroy
   has_and_belongs_to_many :users
   has_and_belongs_to_many :sub_units
   acts_as_gmappable process_geocoding: false, validation: false

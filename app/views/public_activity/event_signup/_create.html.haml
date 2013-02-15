@@ -1,0 +1,6 @@
+%li
+  %smaller= "#{time_ago_in_words(activity.created_at)} ago"
+  .activity-info
+    = activity_scout_link(activity)
+    signed up for
+    = activity_event_link(activity)

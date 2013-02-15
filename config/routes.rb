@@ -30,6 +30,8 @@ Scoutz::Application.routes.draw do
   post 'units/new' => 'units#new'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   resources :users
+  resources :scouts
+  resources :adults
 
   get "page/landing"
   get "page/terms_of_service"

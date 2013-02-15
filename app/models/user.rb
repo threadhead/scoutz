@@ -110,17 +110,9 @@ class User < ActiveRecord::Base
 
 
   ## scopes
-  def self.by_name_lf
-    order('"users"."last_name" ASC, "users"."first_name" ASC')
-  end
-
-  def self.with_email
-    where('"users"."email" IS NOT NULL')
-  end
-
-  def self.leaders
-    where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL')
-  end
+  scope :by_name_lf, -> { order('"users"."last_name" ASC, "users"."first_name" ASC') }
+  scope :with_email, -> { where('"users"."email" IS NOT NULL') }
+  scope :leaders, -> { where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL') }
 
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb

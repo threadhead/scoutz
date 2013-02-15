@@ -2,13 +2,17 @@
   .span12
     .page-header
       .pull-right
+        = link_to(:back, class: 'btn') do
+          %i.icon-large.icon-reply
+          back
+
         - if @event.users.where(id: current_user).count > 0
           = link_to(edit_event_path(@event), class: 'btn') do
-            %i.icon-edit
+            %i.icon-large.icon-edit
             change
 
         = link_to(new_event_path, class: "btn btn-success") do
-          %i.icon-plus
+          %i.icon-large.icon-plus
           new event
 
       %h2 #{@event.name}
@@ -73,6 +77,8 @@
             %td
               %strong Roster
             %td
+              - unless @event_rosters.empty?
+                %p.right-aligned= link_to "Send email to all attendees", email_attendees_event_path(@event), class: 'btn'
               %table.table-condensed
                 = render partial: 'event_signups/event_roster', collection: @event_rosters
                 - #@event.event_signups.includes(:scout).each do |signup|

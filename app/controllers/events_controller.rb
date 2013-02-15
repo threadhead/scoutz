@@ -1,5 +1,7 @@
 class EventsController < ApplicationController
   before_filter :auth_and_time_zone
+  before_filter :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
+
 
   def index
     # event_finders
@@ -31,7 +33,6 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:id])
     @event_signups = @event.user_signups(current_user)
     @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
   end
@@ -43,7 +44,6 @@ class EventsController < ApplicationController
   end
 
   def edit
-    @event = Event.find(params[:id])
     @unit = @event.unit
     @sub_unit_ids = @event.sub_unit_ids
   end
@@ -62,8 +62,6 @@ class EventsController < ApplicationController
   end
 
   def update
-    @event = Event.find(params[:id])
-
     if @event.update_attributes(params[:event])
       redirect_to events_url, notice: 'Event was successfully updated.'
     else
@@ -73,16 +71,22 @@ class EventsController < ApplicationController
   end
 
   def destroy
-    @event = Event.find(params[:id])
     @event.destroy
 
     redirect_to events_url
   end
 
+  def email_attendees
+    redirect_to new_unit_email_message_path(@event.unit,
+                                            event_ids: @event.id,
+                                            user_ids: @event.event_signup_user_ids.join(',')
+                                            )
+  end
+
   private
-    # def set_tz
-    #   Time.zone = "Arizona"
-    # end
+    def set_event
+      @event = Event.find(params[:id])
+    end
 
     def sub_unit_ids(params)
       if params

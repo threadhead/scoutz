@@ -45,18 +45,17 @@ class Event < ActiveRecord::Base
     user.unit_scouts(self.unit).map do |scout|
       self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id)
     end
+  end
 
-    # signups = if user.is_a_scout?
-    #   self.event_signups.where(scout_id: user.id)
-    # else
-    #   scouts = user.unit_scouts(self.unit)
-    #   self.event_signups.where(scout_id: scouts)
-    # end
+  def event_signup_users
+    scout_ids = self.event_signups.select('"event_signups"."scout_id"').map(&:scout_id)
+    scouts_with_email = Scout.where(id: scout_ids).with_email
+    adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: {scout_id: scout_ids})
+    scouts_with_email + adults_with_email
+  end
 
-    # if signups.empty?
-    #   signups = user.unit_scouts(self.unit).map { |s| EventSignup.new(scout_id: s.id) }
-    # end
-    # signups
+  def event_signup_user_ids
+    event_signup_users.map(&:id)
   end
 
 
@@ -65,14 +64,11 @@ class Event < ActiveRecord::Base
     where('start_at >= ? AND start_at <= ?', Event.format_time(start_time), Event.format_time(end_time))
   end
 
-  def self.by_start
-    order('start_at ASC')
-  end
+  scope :by_start, -> { order('start_at ASC') }
+  scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }
 
-  def self.from_today
-    where('start_at >= ?', Time.zone.now.beginning_of_day)
-  end
 
+  # for calendar.js
   def as_json(options = {})
     {
       :id => self.id,

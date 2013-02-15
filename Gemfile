@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '1.9.3'
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -17,7 +17,7 @@ gem 'haml'
 gem 'cancan'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog'
+gem 'fog', '< 1.9.0'
 gem 'mini_magick'
 # gem "queue_classic"
 gem 'carmen-rails'

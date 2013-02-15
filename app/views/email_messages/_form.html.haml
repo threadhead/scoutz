@@ -34,7 +34,7 @@
         .well.email-message-events
           - @unit.events.from_today.by_start.each do |event|
             = f.label :event_ids, class: 'checkbox' do
-              = check_box_tag 'email_message[event_ids][]', event.id
+              = check_box_tag 'email_message[event_ids][]', event.id, @email_message.event_ids.include?(event.id)
               = event_list_name(event)
 
 

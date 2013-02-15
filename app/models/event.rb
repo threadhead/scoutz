@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   belongs_to :unit
+  has_many :event_signups
   has_and_belongs_to_many :users
   has_and_belongs_to_many :sub_units
   acts_as_gmappable process_geocoding: false, validation: false
@@ -36,18 +37,38 @@ class Event < ActiveRecord::Base
     "#{location_address1} #{}"
   end
 
+  def after_signup_deadline?
+    Time.zone.now <= signup_deadline
+  end
+
+  def user_signups(user)
+    user.unit_scouts(self.unit).map do |scout|
+      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id)
+    end
+  end
+
+  def event_signup_users
+    scout_ids = self.event_signups.select('"event_signups"."scout_id"').map(&:scout_id)
+    scouts_with_email = Scout.where(id: scout_ids).with_email
+    adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: {scout_id: scout_ids})
+    scouts_with_email + adults_with_email
+  end
+
+  def event_signup_user_ids
+    event_signup_users.map(&:id)
+  end
+
+
+  # scopes
   def self.time_range(start_time, end_time)
     where('start_at >= ? AND start_at <= ?', Event.format_time(start_time), Event.format_time(end_time))
   end
 
-  def self.by_start
-    order('start_at ASC')
-  end
+  scope :by_start, -> { order('start_at ASC') }
+  scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }
 
-  def self.from_today
-    where('start_at >= ?', Time.zone.now.beginning_of_day)
-  end
 
+  # for calendar.js
   def as_json(options = {})
     {
       :id => self.id,

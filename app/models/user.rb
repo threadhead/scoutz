@@ -99,18 +99,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def is_a_scout?
+    type == 'Scout'
+  end
+
+  def is_an_adult?
+    type == 'Adult'
+  end
+
+
+
   ## scopes
-  def self.by_name_lf
-    order('"users"."last_name" ASC, "users"."first_name" ASC')
-  end
-
-  def self.with_email
-    where('"users"."email" IS NOT NULL')
-  end
-
-  def self.leaders
-    where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL')
-  end
+  scope :by_name_lf, -> { order('"users"."last_name" ASC, "users"."first_name" ASC') }
+  scope :with_email, -> { where('"users"."email" IS NOT NULL') }
+  scope :leaders, -> { where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL') }
 
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb

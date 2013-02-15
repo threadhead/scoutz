@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Event:
+  = @event_signup.event
+%p
+  %b Scouts:
+  = @event_signup.scouts
+%p
+  %b Adults:
+  = @event_signup.adults
+%p
+  %b Siblings:
+  = @event_signup.siblings
+%p
+  %b Comment:
+  = @event_signup.comment
+
+= link_to 'Edit', edit_event_signup_path(@event_signup)
+\|
+= link_to 'Back', event_signups_path

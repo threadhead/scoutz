@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130212205420) do
+ActiveRecord::Schema.define(:version => 20130213150758) do
 
   create_table "ckeditor_assets", :force => true do |t|
     t.integer  "unit_id"
@@ -75,6 +75,23 @@ ActiveRecord::Schema.define(:version => 20130212205420) do
 
   add_index "email_messages_users", ["email_message_id", "user_id"], :name => "index_email_messages_users_on_email_message_id_and_user_id"
   add_index "email_messages_users", ["user_id", "email_message_id"], :name => "index_email_messages_users_on_user_id_and_email_message_id"
+
+  create_table "event_signups", :force => true do |t|
+    t.integer  "event_id"
+    t.integer  "scout_id"
+    t.integer  "scouts_attending"
+    t.integer  "adults_attending"
+    t.integer  "siblings_attending"
+    t.text     "comment"
+    t.datetime "canceled_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "event_signups", ["adults_attending"], :name => "index_event_signups_on_adults_attending"
+  add_index "event_signups", ["event_id"], :name => "index_event_signups_on_event_id"
+  add_index "event_signups", ["scouts_attending"], :name => "index_event_signups_on_scouts_attending"
+  add_index "event_signups", ["siblings_attending"], :name => "index_event_signups_on_siblings_attending"
 
   create_table "events", :force => true do |t|
     t.integer  "unit_id"

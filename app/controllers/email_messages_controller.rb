@@ -12,7 +12,10 @@ class EmailMessagesController < ApplicationController
   end
 
   def new
-    @email_message = EmailMessage.new
+    options = {}
+    options.merge!({send_to_option: 4, user_ids: params[:user_ids].split(',')}) if params[:user_ids]
+    options.merge!({event_ids: params[:event_ids].split(',')}) if params[:event_ids]
+    @email_message = EmailMessage.new(options)
     4.times { @email_message.email_attachments.build }
   end
 
@@ -74,11 +77,11 @@ class EmailMessagesController < ApplicationController
 
     def filter_params(params)
       case params[:send_to_option]
-      when "1" # entire unit
+      when '1', '2' # entire unit or all leaders
         params.except(:sub_unit_ids, :user_ids)
-      when "2" # selected sub_units
+      when '3' # selected sub_units
         params.except(:user_ids)
-      when "3" # selected users
+      when '4' # selected users
         params.except(:sub_unit_ids)
       end
 

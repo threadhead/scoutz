@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events
   belongs_to :sub_unit
-  has_many :email_messages
+  has_many :email_messages, dependent: :destroy
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me

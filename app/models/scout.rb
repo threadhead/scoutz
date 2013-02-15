@@ -1,5 +1,5 @@
 class Scout < User
-  has_many :event_signups
+  has_many :event_signups, dependent: :destroy
 
   def unit_adults(unit)
     self.adults.joins(:units).where(units: {id: unit})

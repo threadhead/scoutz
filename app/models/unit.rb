@@ -79,35 +79,14 @@ class Unit < ActiveRecord::Base
     AppConstants.unit_types[unit_type_to_sym][:event_types]
   end
 
-  # UNIT_TYPES = {
-  #   'Cub Scouts' => 'Pack',
-  #   'Boy Scouts' => 'Troop',
-  #   'Venturing Crew' => 'Crew',
-  #   'Girl Scouts' => 'Troop',
-  #   'Order of the Arrow' => 'Troop'
-  # }
-
-  # UNIT_TYPES_SHORT = {
-  #   'Cub Scouts' => 'CS',
-  #   'Boy Scouts' => 'BS',
-  #   'Venturing Crew' => 'VC',
-  #   'Girl Scouts' => 'GS',
-  #   'Order of the Arrow' => 'OA'
-  # }
-
-  # SUB_UNIT_TYPES = {
-  #   'Cub Scouts' => 'Den',
-  #   'Boy Scouts' => 'Patrol',
-  #   'Venturing Crew' => 'Team',
-  #   'Girl Scouts' => 'Patrol',
-  #   'Order of the Arrow' => 'Patrol'
-  # }
-    # 'Service Unit' => 'Unit',
-    # 'Fire Service Explorer Post' => 'Post',
-    # 'Sea Scout Ship' => 'Crew'
-
   def self.unit_types
     @@unit_types ||= AppConstants.unit_types.keys.map { |e| AppConstants.unit_types[e][:name] }
     # SUB_UNIT_TYPES.keys
+  end
+
+
+  ## scopes
+  def activities
+    PublicActivity::Activity.where(unit_id: self.id).order('created_at DESC')
   end
 end

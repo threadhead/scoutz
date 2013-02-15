@@ -1,4 +1,6 @@
 class EventSignup < ActiveRecord::Base
+  include PublicActivity::Common
+
   belongs_to :event
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"
 
@@ -15,8 +17,17 @@ class EventSignup < ActiveRecord::Base
     end
   end
 
+  after_save :update_event_attendee_count
+  def update_event_attendee_count
+    self.event.update_attendee_count
+  end
+
   def canceled?
     !canceled_at.nil?
+  end
+
+  def unit
+    self.event.unit
   end
 
   ## scopes

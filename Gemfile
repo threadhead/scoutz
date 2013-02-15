@@ -26,6 +26,7 @@ gem 'wicked'
 gem 'sanitize'
 gem 'ckeditor'
 gem 'gmaps4rails'
+gem 'public_activity'
 
 # Gems used only for assets and not required
 # in production environments by default.

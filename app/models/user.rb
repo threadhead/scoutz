@@ -6,6 +6,13 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :token_authenticatable, :confirmable, :lockable, :timeoutable
 
+  has_and_belongs_to_many :units
+  has_many :phones
+  has_many :notifiers, dependent: :destroy
+  has_and_belongs_to_many :events
+  belongs_to :sub_unit
+  has_many :email_messages
+
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
@@ -61,12 +68,6 @@ class User < ActiveRecord::Base
                :source                => :scout
 
 
-  has_and_belongs_to_many :units
-  has_many :phones
-  has_many :notifiers, dependent: :destroy
-  has_and_belongs_to_many :events
-  belongs_to :sub_unit
-  has_many :email_messages
 
   before_save :ensure_authentication_token
 
@@ -90,6 +91,10 @@ class User < ActiveRecord::Base
 
   def name_lf
     "#{last_name}, #{first_name}"
+  end
+
+  def f_name_l_initial
+    "#{first_name} #{last_name[0,1]}."
   end
 
   def age

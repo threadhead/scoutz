@@ -1,23 +1,30 @@
 - all_events_count = unit.events.count
 - events = unit.events.from_today.by_start.limit(limit).includes(:sub_units).all
 
-%div{id: "unit-events-#{unit.id}"}
+.row-fluid
+  .span7
+    %div.unit-events-list{id: "unit-events-#{unit.id}"}
 
-  .row-fluid
-    .well.span7{class: unit_well(unit)}
-      %p.xlarge
-        %strong #{unit.name} Upcoming Events
-      - if events.size == 0
-        %p
-          No future events. Would you like to
-          = link_to 'add an event', new_event_path(unit_id: unit.id)
-          ?
-      - else
-        - events.each do |event|
+      .well{class: unit_well(unit)}
+        %p.xlarge
+          %strong #{unit.name} Upcoming Events
+        - if events.size == 0
           %p
-            = link_to event do
-              = event_list_name(event)
-            %span.label #{event.attendee_count} going
+            No future events. Would you like to
+            = link_to 'add an event', new_event_path(unit_id: unit.id)
+            ?
+        - else
+          - events.each do |event|
+            %p
+              = link_to event do
+                = event_list_name(event)
+              %span.label #{event.attendee_count} going
 
-        - if all_events_count > events.size
-          %em=link_to "show #{show_more_amount(all_events_count, events.size)} more...", unit_events_path(unit, limit: limit+5), remote: true, class: 'btn btn-mini'
+          - if all_events_count > events.size
+            %em=link_to "show #{show_more_amount(all_events_count, events.size)} more...", unit_events_path(unit, limit: limit+5), remote: true, class: 'btn btn-mini'
+
+  .span4
+    .unit-activities.well.well-small
+      %ul.unstyled
+        - unit.activities.limit(10).each do |activity|
+          = render_activity activity

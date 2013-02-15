@@ -22,6 +22,7 @@ class EventSignupsController < ApplicationController
 
     respond_to do |format|
       if @event_signup.save
+        create_activity(:create)
         format.html { redirect_for_signups }
         format.json { render json: @event_signup, status: :created, location: @event_signup }
       else
@@ -46,6 +47,7 @@ class EventSignupsController < ApplicationController
 
   def destroy
     flash[:info] = "#{@event_signup.scout.full_name}'s sign up cancelled."
+    create_activity(:destroy)
     @event_signup.destroy
     respond_to do |format|
       format.html { redirect_to (event_submit? ? event_url(@event) : event_signups_url) }
@@ -98,6 +100,10 @@ class EventSignupsController < ApplicationController
     def user_params
       # params.require(:user).permit(:name, :email)
       params[:event_signup]
+    end
+
+    def create_activity(task)
+      @event_signup.create_activity task, owner: current_user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id}
     end
 
 end

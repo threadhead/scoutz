@@ -73,15 +73,16 @@
             %td &nbsp;
             %td= @event.message.html_safe
 
-          %tr
-            %td
-              %strong Roster
-            %td
-              - unless @event_rosters.empty?
-                %p.right-aligned= link_to "Send email to all attendees", email_attendees_event_path(@event), class: 'btn'
-              %table.table-condensed
-                = render partial: 'event_signups/event_roster', collection: @event_rosters
-                - #@event.event_signups.includes(:scout).each do |signup|
+          - if @event.signup_required
+            %tr
+              %td
+                %strong Roster
+              %td
+                - unless @event_rosters.empty?
+                  %p.right-aligned= link_to "Send email to all attendees", email_attendees_event_path(@event), class: 'btn'
+                %table.table-condensed
+                  = render partial: 'event_signups/event_roster', collection: @event_rosters
+                  - #@event.event_signups.includes(:scout).each do |signup|
 
 
   .span4

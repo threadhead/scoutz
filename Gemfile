@@ -25,7 +25,7 @@ gem 'wicked'
 # gem 'slodown'
 gem 'sanitize'
 gem 'ckeditor'
-gem 'gmaps4rails'
+# gem 'gmaps4rails'
 gem 'public_activity'
 
 # Gems used only for assets and not required

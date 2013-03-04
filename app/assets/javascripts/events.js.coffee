@@ -28,3 +28,28 @@ jQuery ->
       $("#sub-unit-list").collapse("show")
     else
       $("#sub-unit-list").collapse("hide")
+
+  if $("#gmap").length > 0
+    GMaps.geocode({
+      address: $("#gmap").data("address"),
+      callback: (results, status) ->
+        if (status == 'OK')
+          map = new GMaps({
+            div: "#gmap",
+            lng: 0,
+            lat: 0,
+            zoomControl : true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.SMALL,
+                position: google.maps.ControlPosition.TOP_LEFT
+              },
+            panControl: false,
+          })
+
+          latlng = results[0].geometry.location
+          map.setCenter(latlng.lat(), latlng.lng())
+          map.addMarker({
+            lat: latlng.lat(),
+            lng: latlng.lng()
+          })
+    })

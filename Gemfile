@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.0.0'
-gem 'rails', '3.2.13.rc1'
+gem 'rails', '3.2.13.rc2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -19,7 +19,7 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'fog', '< 1.9.0'
 gem 'mini_magick'
-# gem "queue_classic"
+gem 'delayed_job_active_record'
 gem 'carmen-rails'
 gem 'wicked'
 # gem 'slodown'

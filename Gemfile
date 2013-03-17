@@ -74,6 +74,7 @@ end
 
 group :test do
 	gem 'rake' # for travis-ci
+  gem 'minitest', '3.5.0'
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
 	gem 'ffaker'

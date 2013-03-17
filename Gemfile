@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
-gem 'rails', '3.2.12'
+#ruby '2.0.0'
+gem 'rails', '3.2.13.rc2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -19,13 +19,13 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'fog', '< 1.9.0'
 gem 'mini_magick'
-# gem "queue_classic"
+gem 'delayed_job_active_record'
 gem 'carmen-rails'
 gem 'wicked'
 # gem 'slodown'
 gem 'sanitize'
 gem 'ckeditor'
-gem 'gmaps4rails'
+# gem 'gmaps4rails'
 gem 'public_activity'
 
 # Gems used only for assets and not required
@@ -60,6 +60,7 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'capistrano'
 
   # gem 'meta_request'
   gem 'guard-livereload'

@@ -21,7 +21,7 @@
                 %span.label #{event.attendee_count} going
 
           - if all_events_count > events.size
-            %em=link_to "show #{show_more_amount(all_events_count, events.size)} more...", unit_events_path(unit, limit: limit+5), remote: true, class: 'btn btn-mini'
+            %em=link_to "show #{show_more_amount(all_events_count, events.size)} more&hellip;".html_safe, unit_events_path(unit, limit: limit+5), remote: true, class: 'btn btn-mini'
 
   .span4
     .unit-activities.well.well-small

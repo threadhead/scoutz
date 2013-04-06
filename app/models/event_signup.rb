@@ -9,6 +9,7 @@ class EventSignup < ActiveRecord::Base
   validates :adults_attending, numericality: { greater_than: -1 }
   validates :scouts_attending, numericality: { greater_than: -1 }
   validates :siblings_attending, numericality: { greater_than: -1 }
+  validates :scout_id, uniqueness: {scope: :event_id}
 
   validate :at_least_one_attending
   def at_least_one_attending

@@ -1,9 +1,9 @@
-- all_events_count = unit.events.count
+- all_events_count = unit.events.from_today.count
 - events = unit.events.from_today.by_start.limit(limit).includes(:sub_units).all
 
 .row-fluid
   .span8
-    %div.unit-events-list{id: "unit-events-#{unit.id}"}
+    %div.unit-events-list
 
       .well{class: unit_well(unit)}
         %p.xlarge

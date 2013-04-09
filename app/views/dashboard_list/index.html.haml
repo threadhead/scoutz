@@ -2,4 +2,8 @@
   .span12
     = render partial: 'dashboard/calendar_list'
 
-= render partial: 'events/unit', collection: @units, locals: {limit: @limit}
+- @units.each do |unit|
+  %div{id: "unit-events-#{unit.id}"}
+    = render partial: 'events/unit', locals: {unit: unit, limit: @limit}
+
+= #render partial: 'events/unit', collection: @units, locals: {limit: @limit}

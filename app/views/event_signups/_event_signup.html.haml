@@ -29,7 +29,7 @@
             .centered
               = f.submit signup_submit(event_signup), name: 'event_signup_in_event_commit', class: 'btn btn-primary'
               - unless event_signup.new_record?
-                = link_to "Cancel", event_event_signup_path(event, event_signup, event_signup_in_event_commit: 1), method: :delete, confirm: 'Are you sure?', class: 'btn btn-warning'
+                = link_to "Cancel", event_event_signup_path(event, event_signup, event_signup_in_event_commit: 1), method: :delete, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning'
 
 
         / .span2{style: "background-color: #ccc; height: 400px"}

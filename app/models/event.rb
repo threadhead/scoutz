@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :sub_units
   # acts_as_gmappable process_geocoding: false, validation: false
 
-  attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_id, :message, :sub_unit_ids
+  attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :sub_unit_ids
 
   validates_presence_of :name
   validates_presence_of :start_at

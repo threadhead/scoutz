@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130406000822) do
+ActiveRecord::Schema.define(:version => 20130409195810) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -133,7 +133,6 @@ ActiveRecord::Schema.define(:version => 20130406000822) do
     t.integer  "unit_id"
     t.string   "kind"
     t.string   "name"
-    t.integer  "user_id"
     t.boolean  "send_reminders",    :default => true
     t.string   "notifier_type"
     t.datetime "start_at"
@@ -163,7 +162,6 @@ ActiveRecord::Schema.define(:version => 20130406000822) do
   add_index "events", ["signup_required"], :name => "index_events_on_signup_required"
   add_index "events", ["start_at"], :name => "index_events_on_start_at"
   add_index "events", ["unit_id"], :name => "index_events_on_unit_id"
-  add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "events_sub_units", :id => false, :force => true do |t|
     t.integer "event_id"

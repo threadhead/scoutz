@@ -27,8 +27,12 @@ class EmailMessage < ActiveRecord::Base
 
 
   def send_email
-    puts "sending email..."
-    MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
+    if events_have_signup?
+      # emails will contain individual links for signup
+      recipients_emails.each { |recipient| MessageMailer.email_blast(self.sender, recipient, self).deliver }
+    else
+      MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
+    end
   end
 
   # the default: Array.new for serialized columns does not work
@@ -57,6 +61,14 @@ class EmailMessage < ActiveRecord::Base
 
   def has_attachments?
     self.email_attachments.count > 0
+  end
+
+  def events_have_signup?
+    self.events.where(signup_required: true).size > 0
+  end
+
+  def has_events?
+    self.events.size > 0
   end
 
 

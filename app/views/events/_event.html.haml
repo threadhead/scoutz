@@ -1,0 +1,53 @@
+%h3 #{event.unit.name} - #{event.name}
+%div{style: "margin-left: 12px;"}
+  %table
+    %tr
+      %td{td_email}
+        %strong Kind
+      %td
+        = event.kind
+        = " - #{event_kind_sub_units(event)}" if event.sub_unit_kind?
+
+    %tr
+      %td
+        %strong Times
+      %td #{event.start_at.to_s(:short_ampm)} - #{event.end_at.to_s(:short_ampm)}
+
+    %tr
+      %td
+        %strong Organizers
+      %td
+        = event.users.map(&:full_name).join(", ")
+
+    %tr
+      %td
+        %strong RSVP
+      %td
+        #{event.signup_required ? "required, by #{event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
+        %a{href: "#signup"} signup below
+
+    - if event.signup_required
+      %td
+        %strong Attending
+      %td
+        = event.attendee_count
+        %span{style: "color: dimgray;"} (as of #{Time.zone.now.to_s(:short_ampm)})
+
+    %tr
+      %td
+        %strong Attire
+      %td= event.attire
+
+    %tr
+      %td{td_email}
+        %strong Location
+      %td
+        %address= location_show(event)
+
+    %tr
+      %td &nbsp;
+      %td= event.message.html_safe
+
+  %div#signup
+  %h4 Signup using the links below
+  %a{href: "http://scoutz.dev/event/#{event.id}/event_signup/email?scouts_attending=1,siblings_attending=0,adults_attending=1"}

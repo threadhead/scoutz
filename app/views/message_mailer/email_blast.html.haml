@@ -2,5 +2,10 @@
 %html
   %head
   %body
-    %h2= @email_message.subject
+    %h2{style: "color: white; background-color: gray; padding: 4px"}= @email_message.subject
+    %hl
     = @email_message.message.html_safe
+
+    - if @email_message.has_events?
+      %div{style: "height: 12; background-color: darkgray; margin-bottom: 8px;"}
+      = render @email_message.events

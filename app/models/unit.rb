@@ -31,6 +31,11 @@ class Unit < ActiveRecord::Base
     "#{unit_type_title} #{unit_number}"
   end
 
+  # example: "[CS Pack 134]", "[BS Troop 603]"
+  def email_name
+    "[#{unit_type_short} #{unit_type_title} #{unit_number}]"
+  end
+
   def scouts
     self.users.where(type: 'Scout')
   end
@@ -47,18 +52,22 @@ class Unit < ActiveRecord::Base
     @scout_sub_unit_count ||= self.scouts.joins(:sub_unit).group('"sub_units"."name"').count
   end
 
+  # example: :cub_scouts, :boy_scouts
   def unit_type_to_sym
     @unit_type_to_sym ||= unit_type.gsub(/ /, '').underscore.to_sym
   end
 
+  # example: "CS", "BS"
   def unit_type_short
     @unit_type_short ||= AppConstants.unit_types[unit_type_to_sym][:short_name]
   end
 
+  # example: "Pack", "Troop"
   def unit_type_title
     @unit_type_title ||= AppConstants.unit_types[unit_type_to_sym][:title]
   end
 
+  # example: "Den", "Patrol"
   def sub_unit_name
     @sub_unit_name ||= AppConstants.unit_types[unit_type_to_sym][:sub_unit_name]
   end

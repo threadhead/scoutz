@@ -26,6 +26,11 @@ class EmailMessage < ActiveRecord::Base
   before_save :ensure_id_token
 
 
+  def send_email
+    puts "sending email..."
+    MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
+  end
+
   # the default: Array.new for serialized columns does not work
   # this is the workaround
   def sub_unit_ids
@@ -59,6 +64,11 @@ class EmailMessage < ActiveRecord::Base
     recipients ? recipients.count : 0
   end
 
+
+  def subject_with_unit
+    "#{self.unit.email_name} #{subject}"
+  end
+
   def recipients
     case send_to_option
     when 1
@@ -76,6 +86,10 @@ class EmailMessage < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def recipients_emails
+    recipients.map(&:email)
   end
 
   def sub_units

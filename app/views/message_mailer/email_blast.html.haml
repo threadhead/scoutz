@@ -1,0 +1,6 @@
+!!!
+%html
+  %head
+  %body
+    %h2= @email_message.subject
+    = @email_message.message.html_safe

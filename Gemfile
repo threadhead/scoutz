@@ -69,6 +69,7 @@ group :development do
   gem "letter_opener"
   gem 'wirble', require: false
   gem 'hirb', require: false
+  gem 'awesome_print', require: false
 end
 
 

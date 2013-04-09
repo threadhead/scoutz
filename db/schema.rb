@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130304062418) do
+ActiveRecord::Schema.define(:version => 20130406000822) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -114,17 +114,18 @@ ActiveRecord::Schema.define(:version => 20130304062418) do
   create_table "event_signups", :force => true do |t|
     t.integer  "event_id"
     t.integer  "scout_id"
-    t.integer  "scouts_attending"
-    t.integer  "adults_attending"
-    t.integer  "siblings_attending"
+    t.integer  "scouts_attending",   :default => 0
+    t.integer  "adults_attending",   :default => 0
+    t.integer  "siblings_attending", :default => 0
     t.text     "comment"
     t.datetime "canceled_at"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "event_signups", ["adults_attending"], :name => "index_event_signups_on_adults_attending"
   add_index "event_signups", ["event_id"], :name => "index_event_signups_on_event_id"
+  add_index "event_signups", ["scout_id", "event_id"], :name => "index_event_signups_on_scout_id_and_event_id"
   add_index "event_signups", ["scouts_attending"], :name => "index_event_signups_on_scouts_attending"
   add_index "event_signups", ["siblings_attending"], :name => "index_event_signups_on_siblings_attending"
 

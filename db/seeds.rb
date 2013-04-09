@@ -117,9 +117,19 @@ end
   date = rand(3..90).days.from_now
   event = Event.create(name: ename, kind: 'Pack Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
   log_item(event, 8)
+  event.save
 
   unit1.events << event
   user1.events << event
+
+  # add some signups
+  rand(5).times do
+    unit1_scout_count = unit1.scouts.count
+    rnd_scout = unit1.scouts.offset(rand(unit1_scout_count)).first
+    event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scout.id)
+    event_signup.create_activity :create, unit_id: unit1.id, parameters: {event_id: event.id, scout_id: rnd_scout.id}
+    log_item(event_signup, 10)
+  end
 end
 
 
@@ -127,6 +137,7 @@ end
 ['Den Meeting', 'Swimming Badge', 'Readyman Pin'].each do |ename|
   date = rand(3..90).days.from_now
   event = Event.create(name: ename, kind: 'Den Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
+  event.save
   log_item(event, 8)
 
   unit1.events << event
@@ -139,8 +150,19 @@ end
 ['Camp Raymond', 'Move Night - Beasts of the Southern Wild', 'Watch Mold Grow', 'The Art of Making Mud Pies', 'Backpack - The Pacific Coast Trail'].each do |ename|
   date = rand(3..90).days.from_now
   event = Event.create(name: ename, kind: 'Troop Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>This is a message!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
+  event.save
   log_item(event, 8)
 
   unit2.events << event
   user1.events << event
+
+  # add some signups
+  rand(5).times do
+    # unit2_scout_count = unit2.scouts.count
+    rnd_scout = unit2.scouts.offset(rand(unit2.scouts.count)).first
+    event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scout.id)
+    event_signup.create_activity :create, unit_id: unit2.id, parameters: {event_id: event.id, scout_id: rnd_scout.id}
+    log_item(event_signup, 10)
+  end
+
 end

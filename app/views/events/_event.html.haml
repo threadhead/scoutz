@@ -11,7 +11,7 @@
     %tr
       %td
         %strong Times
-      %td #{event.start_at.to_s(:short_ampm)} - #{event.end_at.to_s(:short_ampm)}
+      %td #{event.start_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)} - #{event.end_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}
 
     %tr
       %td
@@ -23,15 +23,15 @@
       %td
         %strong RSVP
       %td
-        #{event.signup_required ? "required, by #{event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
-        %a{href: "#signup"} signup below
+        #{event.signup_required ? "required, by #{event.signup_deadline.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}" : 'not required'}
+        %a{href: "#signup"} (signup below)
 
     - if event.signup_required
       %td
         %strong Attending
       %td
         = event.attendee_count
-        %span{style: "color: dimgray;"} (as of #{Time.zone.now.to_s(:short_ampm)})
+        %span{style: "color: dimgray;"} (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
 
     %tr
       %td
@@ -42,7 +42,7 @@
       %td{td_email}
         %strong Location
       %td
-        %address= location_show(event)
+        %address= email_location(event)
 
     %tr
       %td &nbsp;
@@ -56,6 +56,8 @@
 
   %div{style: "border: 1px solid gainsboro; margin: 0 0 12px 20px; background-color: whitesmoke; padding: 12px;"}
     - scouts.each do |scout|
+      - if event.after_signup_deadline?
+        %h4{sytle: "color: darkred;"} Signup for this event has passed. You can not signup, but you can change your reservation.
       %div{style: "background-color: dimgray; color: white; padding: 4px 12px; margin-bottom: 12px"}
         %strong{style: "font-size: 24px;"} Signup for #{scout.full_name}
       %table
@@ -103,7 +105,7 @@
               %tr
                 %td &nbsp;
                 %td{colspan: 3, style: "text-align: center; padding-top: 12px;"}
-                  = link_to "Signup with different options", from_email_event_event_signups_url(event, {scout_id: scout.id,user_token: @recipient_user.signup_token, event_token: event.signup_token})
+                  = link_to "Signup with different options", event_email_event_signups_url(event, {scout_id: scout.id,user_token: @recipient_user.signup_token, event_token: event.signup_token})
 
               %tr
                 %td{colspan: 4, style: "text-align: center; padding-top: 8px;"}

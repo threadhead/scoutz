@@ -1,4 +1,5 @@
 class MessageMailer < ActionMailer::Base
+  add_template_helper(EmailEventSignupsHelper)
   add_template_helper(EventsHelper)
 
   def email_blast(sender, recipients, email_message, recipient_user=nil)

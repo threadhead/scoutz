@@ -1,6 +1,4 @@
 Scoutz::Application.routes.draw do
-
-
   mount Ckeditor::Engine => '/ckeditor'
   get "events/index"
 
@@ -16,11 +14,8 @@ Scoutz::Application.routes.draw do
     member do
       get 'email_attendees'
     end
-    resources :event_signups do
-      collection do
-        get 'from_email'
-      end
-    end
+    resources :event_signups
+    resources :email_event_signups
   end
 
   resources :sub_units

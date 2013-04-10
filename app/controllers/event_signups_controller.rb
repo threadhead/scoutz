@@ -55,19 +55,6 @@ class EventSignupsController < ApplicationController
     end
   end
 
-  def from_email
-    @user = User.find_by_signup_token(params[:user_token])
-    # Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
-    @event = Event.find_by_signup_token(params[:event_token])
-    @scout = Scout.find(params[:scout_id])
-    @event_signup = EventSignup.where(scout_id: @scout.id, event_id: @event.id)
-    if @event_signup.blank?
-      @event.event_signups.build()
-    else
-    end
-
-  end
-
 
 
   private

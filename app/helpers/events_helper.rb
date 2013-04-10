@@ -36,27 +36,4 @@ module EventsHelper
     event.location_map_url =~ /maps.google.com/ ? event.location_map_url + '&amp;output=embed' : event.location_map_url
   end
 
-  def td_email
-    {style: "width: 100px; vertical-align: top;"}
-  end
-
-  def email_signup_link(options={})
-    link_to email_signup_text(options),
-            from_email_event_event_signups_url(options[:event],
-                                          {
-                                            scouts_attending: options[:scouts],
-                                            adults_attending: options[:adults],
-                                            siblings_attending: options[:siblings],
-                                            scout_id: options[:scout].id,
-                                            user_token: options[:recipient_user].signup_token,
-                                            event_token: options[:event].signup_token
-                                            }
-                                          )
-
-  end
-
-  def email_signup_text(options={})
-    return options[:body] if options[:body]
-    "#{options[:adults]} AD / #{options[:siblings]} sib"
-  end
 end

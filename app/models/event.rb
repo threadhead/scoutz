@@ -56,7 +56,7 @@ class Event < ActiveRecord::Base
   end
 
   def after_signup_deadline?
-    Time.zone.now <= signup_deadline
+    signup_deadline <= Time.zone.now
   end
 
   def user_signups(user)

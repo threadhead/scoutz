@@ -1,7 +1,7 @@
 class EventSignupsController < ApplicationController
-  before_filter :auth_and_time_zone
+  before_filter :auth_and_time_zone, except: [:from_email]
   before_filter :set_event_signup, only: [:show, :edit, :update, :destroy]
-  before_filter :set_event
+  before_filter :set_event, except: [:from_email]
 
   def index
     @event_signups = EventSignup.all
@@ -54,6 +54,21 @@ class EventSignupsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def from_email
+    @user = User.find_by_signup_token(params[:user_token])
+    # Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
+    @event = Event.find_by_signup_token(params[:event_token])
+    @scout = Scout.find(params[:scout_id])
+    @event_signup = EventSignup.where(scout_id: @scout.id, event_id: @event.id)
+    if @event_signup.blank?
+      @event.event_signups.build()
+    else
+    end
+
+  end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

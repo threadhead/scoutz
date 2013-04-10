@@ -28,6 +28,8 @@ class Event < ActiveRecord::Base
     self.kind =~ /Den|Patrol/
   end
 
+  before_save :ensure_signup_token
+
   before_save :sanitize_message
   def sanitize_message
     self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
@@ -102,4 +104,19 @@ class Event < ActiveRecord::Base
     Time.zone.at(date_time.to_i).to_s(:db)
   end
 
+  private
+    def ensure_signup_token
+      self.signup_token = valid_token
+    end
+
+    def valid_token
+      loop do
+        rand_token = generate_token
+        break rand_token unless User.where(signup_token: rand_token).exists?
+      end
+    end
+
+    def generate_token
+      SecureRandom.urlsafe_base64(12)
+    end
 end

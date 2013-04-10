@@ -29,7 +29,7 @@ class EmailMessage < ActiveRecord::Base
   def send_email
     if events_have_signup?
       # emails will contain individual links for signup
-      recipients_emails.each { |recipient| MessageMailer.email_blast(self.sender, recipient, self).deliver }
+      recipients.each { |recipient| MessageMailer.email_blast(self.sender, recipient.email, self, recipient).deliver }
     else
       MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
     end
@@ -159,6 +159,6 @@ class EmailMessage < ActiveRecord::Base
     end
 
     def generate_token
-      SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
+      SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
     end
 end

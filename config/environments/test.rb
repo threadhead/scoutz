@@ -35,6 +35,6 @@ Scoutz::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.action_mailer.default_url_options = { :host => 'http://www.testing.com/' }
+  config.action_mailer.default_url_options = { host: 'http://www.testing.com/' }
 
 end

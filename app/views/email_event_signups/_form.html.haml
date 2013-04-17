@@ -2,17 +2,17 @@
 = hidden_field_tag :user_token, @user.signup_token
 = hidden_field_tag :event_token, @event.signup_token
 .control-group
-  = f.label :scouts_attending, 'scouts', class: 'control-label'
+  = f.label :scouts_attending, 'Scouts', class: 'control-label'
   .controls
     = f.select :scouts_attending, [0,1], {}, {class: 'span5'}
 
 .control-group
-  = f.label :siblings_attending, 'siblings', class: 'control-label'
+  = f.label :siblings_attending, 'Siblings', class: 'control-label'
   .controls
     = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'span5'}
 
 .control-group
-  = f.label :adults_attending, 'adults', class: 'control-label'
+  = f.label :adults_attending, 'Adults', class: 'control-label'
   .controls
     = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'span5'}
 
@@ -23,4 +23,5 @@
 .centered
   = f.submit signup_submit(@event_signup), class: 'btn btn-primary'
   - unless @event_signup.new_record?
-    = link_to "Cancel", event_event_signup_path(@event, @event_signup, event_signup_in_event_commit: 1), method: :delete, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning'
+    &nbsp;
+    = link_to "Cancel reservation", event_email_event_signup_path(@event, @event_signup, user_token: @user.signup_token, event_token: @event.signup_token, scout_id: @scout.id), method: :delete, class: 'btn btn-warning'

@@ -2,7 +2,7 @@
 %html(lang="en")
   %head
     = render partial: 'layouts/head'
-    = yield :head
+    = #yield :head
 
   %body
     #header
@@ -10,7 +10,7 @@
 
     .container-fluid
       .row-fluid
-        .span6.offset3
+        .span4.offset4
           #content
             = yield
 
@@ -20,6 +20,6 @@
       Javascripts
       \==================================================
     / Placed at the end of the document so the pages load faster
-    = javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"
+    = #javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"
     = javascript_include_tag "application"
-    = yield :scripts
+    = #yield :scripts

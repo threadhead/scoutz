@@ -87,7 +87,7 @@
                   %td Comments:
                   %td= event_signup.comment
 
-              %p= link_to("Cancel this reservation", '#')
+              %p= link_to("Cancel this signup", event_email_event_signups_url(event, {scout_id: scout.id, user_token: @recipient_user.signup_token, event_token: event.signup_token, cancel_reservation: true}))
 
           - if !event_signup.blank? || !event.after_signup_deadline?
             %td{style: "border: 2px solid #eeeeee; padding: 6px; background-color: snow;"}

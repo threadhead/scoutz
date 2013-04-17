@@ -6,10 +6,10 @@
     = @event.users.map { |u| mail_to u.email, u.full_name }.join(", ")
 
 - else
-  %h2 Signup for #{@scout.f_name_l_initial}
+  %h4 Signup for #{@scout.f_name_l_initial}
 
   .well.well-small
     %p.xxlarge
-    = form_for [@event, @event_signup], url: event_email_event_signups_path, html: { class: 'form-horizontal form-condensed' } do |f|
+    = form_for ([@event, :email, @event_signup]), html: { class: 'form-horizontal form-condensed' } do |f|
 
       = render partial: 'form', locals: {f: f}

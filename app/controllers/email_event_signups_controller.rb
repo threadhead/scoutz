@@ -10,6 +10,24 @@ class EmailEventSignupsController < ApplicationController
     if !set_user_event_scout_signup
       render status: 404
 
+    elsif params[:cancel_reservation] == 'true'
+      if @event_signup.new_record?
+        flash[:alert] = "The signup you are trying to cancel is not active. If you meant to create a new signup, use the form below."
+        render :new
+      else
+        flash[:info] = "Are you sure you want to cancel this signup?"
+        render :edit
+      end
+
+      # existing signup, update with options from email
+    elsif !@event_signup.new_record? && !select_custom_options
+      if @event_signup.update_attributes(params.extract!(*valid_keys).except(:comment))
+        redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup changed."
+      else
+        flash[:error] = "Change failed. See below."
+        render :edit
+      end
+
       # user can edit their existing signup
     elsif !@event_signup.new_record?
       flash[:info] = "The deadline for signup has passed, but you can change your existing signup." if @event.after_signup_deadline?
@@ -26,7 +44,7 @@ class EmailEventSignupsController < ApplicationController
 
       # user selected an option from email, deadline has NOT passed
     elsif @event_signup.new_record? && !@event.after_signup_deadline?
-      handle_event_signup_create(params)
+      handle_event_signup_create
     end
 
   end
@@ -59,6 +77,13 @@ class EmailEventSignupsController < ApplicationController
   end
 
   def destroy
+    if set_user_event_scout_signup
+      # @event_signup = EventSignup.find(params[:id])
+      # @scout = @event_signup.scout
+      @event_signup.destroy
+    else
+      render status: 404
+    end
   end
 
   def show
@@ -70,6 +95,7 @@ class EmailEventSignupsController < ApplicationController
   end
 
   def edit
+    # you can't come here directly!!!
   end
 
   private
@@ -99,7 +125,6 @@ class EmailEventSignupsController < ApplicationController
     end
 
     def handle_event_signup_create
-      valid_keys = [:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment]
       record_params = params.has_key?(:event_signup) ? params[:event_signup] : params
       @event_signup = @event.event_signups.build(record_params.extract!(*valid_keys))
 
@@ -111,4 +136,7 @@ class EmailEventSignupsController < ApplicationController
       end
     end
 
+    def valid_keys
+      [:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment]
+    end
 end

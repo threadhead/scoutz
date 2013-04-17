@@ -30,4 +30,8 @@ module EmailEventSignupsHelper
     sanitize(city_state_zip(event)) + add_break(city_state_zip(event)) +
     (link_to(truncate(event.location_map_url), event.location_map_url, target: '_blank') unless event.location_map_url.blank?)
   end
+
+  def event_name_date(event)
+    "#{event.name} on #{event.start_at.to_s(:short_ampm)}"
+  end
 end

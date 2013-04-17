@@ -4,7 +4,7 @@
       .row-fluid
         .span12
           %p.xxlarge
-            %strong Sign Up #{event_signup.scout.full_name}
+            %strong Sign Up #{event_signup.scout.f_name_l_initial}
           = form_for [event, event_signup], html: { class: 'form-horizontal form-condensed' } do |f|
             = f.hidden_field :scout_id
             .control-group

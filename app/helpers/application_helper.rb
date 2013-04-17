@@ -1,6 +1,6 @@
 module ApplicationHelper
   def display_flash_type?(name)
-    allowed_names = [:notice, :msg_ok, :error, :alert, :info]
+    allowed_names = [:notice, :msg_ok, :error, :alert, :info, :warning]
     name && allowed_names.include?(name)
   end
 

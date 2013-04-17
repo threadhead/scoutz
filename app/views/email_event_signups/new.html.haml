@@ -1,2 +1,15 @@
-%h1 EmailEventSignups#new
-%p Find me in app/views/email_event_signups/new.html.haml
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
+
+- if @event.after_signup_deadline?
+  %h3
+    The signup dealine for this event has passed. You may try contacting the owners of this event:
+    = @event.users.map { |u| mail_to u.email, u.full_name }.join(", ")
+
+- else
+  %h2 Signup for #{@scout.f_name_l_initial}
+
+  .well.well-small
+    %p.xxlarge
+    = form_for [@event, @event_signup], url: event_email_event_signups_path, html: { class: 'form-horizontal form-condensed' } do |f|
+
+      = render partial: 'form', locals: {f: f}

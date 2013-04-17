@@ -23,7 +23,7 @@ class EmailMessage < ActiveRecord::Base
     errors.add(:base, "You must select at least 1 adult or scout recipient") if user_ids.empty?
   end
 
-  before_save :ensure_id_token
+  before_create :ensure_id_token
 
 
   def send_email

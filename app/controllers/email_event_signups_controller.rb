@@ -3,45 +3,55 @@ class EmailEventSignupsController < ApplicationController
   #
   # IMPORTANT do not allow access to data other than a single users signup!!!
   #
-  # before_filter :set_user_event_scout_signup, only: [:index]
-  before_filter :set_event_signup, only: [:show, :edit, :update, :destroy]
+
   layout 'unauth'
 
   def index
-    valid_keys = [:siblings_attending, :scouts_attending, :adults_attending, :scout_id]
-
     if !set_user_event_scout_signup
       render status: 404
 
-      # user selected other options for signup, with existing signup
-    elsif edit_options(params) && !@event_signup.blank?
+      # user can edit their existing signup
+    elsif !@event_signup.new_record?
+      flash[:info] = "The deadline for signup has passed, but you can change your existing signup." if @event.after_signup_deadline?
       render :edit
 
-      # user selected other options for signup, no existing signup
-    elsif edit_options(params) && @event_signup.blank?
-      flash[:warning] = "The deadline for signup has passed. Sorry." if @event.after_signup_deadline?
+      # no existing signup, deadline PASSED
+    elsif @event_signup.new_record? && @event.after_signup_deadline?
+      flash[:error] = "The deadline for signup has passed."
+      render :new
+
+      # no existing signup, custom options
+    elsif @event_signup.new_record? && select_custom_options
       render :new
 
       # user selected an option from email, deadline has NOT passed
-    elsif @event_signup.blank? && !@event.after_signup_deadline?
-      @event_signup = @event.event_signups.build(params.extract(*valid_keys))
-      if @event_signup.save
-        redirect_to event_email_event_signup_path(@event, @event_signup), notice: "Signup successful!"
-      else
-        render :new, warning: "Signup failed. See below."
-      end
-
-      # user selected an option from email, deadline PASSED
-    elsif @event_signup.blank? && @event.after_signup_deadline?
-      render :new, warning: "The deadline for signup has passed. Sorry."
+    elsif @event_signup.new_record? && !@event.after_signup_deadline?
+      handle_event_signup_create(params)
     end
 
   end
 
   def update
+    if set_user_and_event
+      @event_signup = EventSignup.find(params[:id])
+      if @event_signup.update_attributes(params[:event_signup])
+        redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup changed."
+      else
+        flash[:error] = "Change failed. See below."
+        render :edit
+      end
+
+    else
+      render status: 404
+    end
   end
 
   def create
+    if set_user_and_event
+      handle_event_signup_create
+    else
+      render status: 404
+    end
   end
 
   def new
@@ -52,36 +62,53 @@ class EmailEventSignupsController < ApplicationController
   end
 
   def show
-    @event = Event.find(params[:event_id])
-    @event_signup = EventSignup.find(params[:id])
+    if set_user_and_event
+      @event_signup = EventSignup.find(params[:id])
+    else
+      render status: 404
+    end
   end
 
   def edit
   end
 
   private
-    def set_event_signup
-      @event = Event.find(params[:event_id])
-      @event_signup = EventSignup.find(params[:id])
-    end
-
     def set_user_event_scout_signup
-      @user = User.find_by_signup_token(params[:user_token])
-      @event = Event.find_by_signup_token(params[:event_token])
-      return false if @user.blank? || @event.blank?
+      return false unless set_user_and_event
       Time.zone = @user.time_zone || "Pacific Time (US & Canada)"
       @scout = Scout.find(params[:scout_id])
       @event_signup = EventSignup.where(scout_id: @scout.id, event_id: @event.id).first
+      @event_signup = EventSignup.new(scout_id: @scout.id) if @event_signup.blank?
+      return true
     end
 
-    def edit_options(params)
+    def set_user_and_event
+      @user = User.find_by_signup_token(params[:user_token])
+      @event = Event.find_by_signup_token(params[:event_token])
+      !@user.blank? && !@event.blank?
+    end
+
+    def edit_options
       params[:scouts_attending] == '0' && params[:adults_attending] == '0' && params[:siblings_attending] == '0'
     end
 
-    def no_attending_values(params)
+    def select_custom_options
       !params.has_key?(:scouts_attending) &&
       !params.has_key?(:adults_attending) &&
       !params.has_key?(:siblings_attending)
+    end
+
+    def handle_event_signup_create
+      valid_keys = [:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment]
+      record_params = params.has_key?(:event_signup) ? params[:event_signup] : params
+      @event_signup = @event.event_signups.build(record_params.extract!(*valid_keys))
+
+      if @event_signup.save
+        redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup successful!"
+      else
+        flash[:error] = "Signup failed. See below."
+        render :new
+      end
     end
 
 end

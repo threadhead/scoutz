@@ -28,7 +28,7 @@ class Event < ActiveRecord::Base
     self.kind =~ /Den|Patrol/
   end
 
-  before_save :ensure_signup_token
+  before_create :ensure_signup_token
 
   before_save :sanitize_message
   def sanitize_message

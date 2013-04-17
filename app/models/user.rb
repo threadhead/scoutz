@@ -70,7 +70,7 @@ class User < ActiveRecord::Base
 
 
   before_save :ensure_authentication_token
-  before_save :ensure_signup_token
+  before_create :ensure_signup_token
 
   def name
     full_name

@@ -1,2 +1,28 @@
-%h1 EmailEventSignups#show
-%p Find me in app/views/email_event_signups/show.html.haml
+
+= render partial: 'layouts/flash', locals: {flash: flash}
+
+%h3 #{@event_signup.scout.f_name_l_initial} is signed up for:
+%table.table.table-condensed
+  %tr
+    %th Event:
+    %td
+      - if user_signed_in?
+        = link_to event_name_date(@event), @event
+      - else
+        = event_name_date(@event)
+
+  %tr
+    %th Scouts:
+    %td= @event_signup.scouts_attending
+
+  %tr
+    %th Adults:
+    %td= @event_signup.adults_attending
+
+  %tr
+    %th Siblings:
+    %td= @event_signup.siblings_attending
+
+  %tr
+    %th Comment:
+    %td= @event_signup.comment

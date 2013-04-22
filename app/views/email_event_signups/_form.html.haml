@@ -5,6 +5,7 @@
   = f.label :scouts_attending, 'Scouts', class: 'control-label'
   .controls
     = f.select :scouts_attending, [0,1], {}, {class: 'span5'}
+    (#{@scout.first_name})
 
 .control-group
   = f.label :siblings_attending, 'Siblings', class: 'control-label'

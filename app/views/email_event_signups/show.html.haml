@@ -13,7 +13,9 @@
 
   %tr
     %th Scouts:
-    %td= @event_signup.scouts_attending
+    %td
+      = @event_signup.scouts_attending
+      (#{@event_signup.scout.first_name})
 
   %tr
     %th Adults:

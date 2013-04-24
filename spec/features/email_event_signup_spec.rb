@@ -77,7 +77,7 @@ describe 'Email Event Signup' do
         before { existing_signup }
         context 'options selected from email' do
           before { visit event_email_event_signups_path(@event, @opts) }
-          it { should have_text("The deadline for signup has passed, but you can change your existing signup") }
+          it { should have_text("Signup changed") }
         end
 
         context 'with custom options selected from email' do

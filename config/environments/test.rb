@@ -15,7 +15,7 @@ Scoutz::Application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  # config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates
@@ -37,4 +37,8 @@ Scoutz::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'http://www.testing.com/' }
 
+
+  # allows rack:test to display error pages (i.e. 404)
+  config.consider_all_requests_local = false
+  config.action_dispatch.show_exceptions = true
 end

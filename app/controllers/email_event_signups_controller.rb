@@ -8,7 +8,7 @@ class EmailEventSignupsController < ApplicationController
 
   def index
     if !set_user_event_scout_signup
-      render status: 404
+      raise ActionController::RoutingError.new('Not Found')
 
     elsif params[:cancel_reservation] == 'true'
       if @event_signup.new_record?
@@ -60,7 +60,7 @@ class EmailEventSignupsController < ApplicationController
       end
 
     else
-      render status: 404
+      raise ActionController::RoutingError.new('Not Found')
     end
   end
 
@@ -68,7 +68,7 @@ class EmailEventSignupsController < ApplicationController
     if set_user_and_event
       handle_event_signup_create
     else
-      render status: 404
+      raise ActionController::RoutingError.new('Not Found')
     end
   end
 
@@ -82,7 +82,7 @@ class EmailEventSignupsController < ApplicationController
       # @scout = @event_signup.scout
       @event_signup.destroy
     else
-      render status: 404
+      raise ActionController::RoutingError.new('Not Found')
     end
   end
 
@@ -90,7 +90,7 @@ class EmailEventSignupsController < ApplicationController
     if set_user_and_event
       @event_signup = EventSignup.find(params[:id])
     else
-      render status: 404
+      raise ActionController::RoutingError.new('Not Found')
     end
   end
 

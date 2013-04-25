@@ -6,6 +6,7 @@
     .row-fluid
       .span4.offset1
         = f.select :send_to_option, EmailMessage.send_to_options(@unit), {}, {class: 'span12'}
+
       .span7
         #email-leaders-list.collapse{ class: ('in' if @email_message.send_to_leaders?) }
           .well.well-small
@@ -57,5 +58,5 @@
         %p= f.text_area :message, class: 'span12 ckeditor', placeholder: 'your message - style, add pictures, and links'
 
   .form-actions
-    = f.submit class: 'btn btn-primary'
+    = f.submit 'Send email blast', class: 'btn btn-primary'
     = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn'

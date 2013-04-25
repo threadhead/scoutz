@@ -29,9 +29,9 @@ class EmailMessage < ActiveRecord::Base
   def send_email
     if events_have_signup?
       # emails will contain individual links for signup
-      recipients.each { |recipient| MessageMailer.email_blast(self.sender, recipient.email, self, recipient).deliver }
+      recipients.each { |recipient| MessageMailer.delay.email_blast(self.sender, recipient.email, self, recipient) }
     else
-      MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
+      MessageMailer.delay.email_blast(self.sender, recipients_emails, self)
     end
   end
 

@@ -80,6 +80,7 @@ class EmailEventSignupsController < ApplicationController
     if set_user_event_scout_signup
       # @event_signup = EventSignup.find(params[:id])
       # @scout = @event_signup.scout
+      create_activity :destroy
       @event_signup.destroy
     else
       raise ActionController::RoutingError.new('Not Found')
@@ -129,6 +130,7 @@ class EmailEventSignupsController < ApplicationController
       @event_signup = @event.event_signups.build(record_params.extract!(*valid_keys))
 
       if @event_signup.save
+        create_activity :create
         redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup successful!"
       else
         flash[:error] = "Signup failed. See below."
@@ -138,5 +140,9 @@ class EmailEventSignupsController < ApplicationController
 
     def valid_keys
       [:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment]
+    end
+
+    def create_activity(task)
+      @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id}
     end
 end

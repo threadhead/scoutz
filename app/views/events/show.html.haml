@@ -86,13 +86,13 @@
                       %i.icon-envelope
                       Email all attendees
 
-                %table.table-condensed
+                %table.table-condensed.table-striped.table-roster
                   = render partial: 'event_signups/event_roster', collection: @event_rosters
                   - #@event.event_signups.includes(:scout).each do |signup|
 
 
   .span4
-    - if @event.signup_required && @event.after_signup_deadline?
+    - if @event.signup_required && !@event.after_signup_deadline?
       #event-signups-list
         = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}
 

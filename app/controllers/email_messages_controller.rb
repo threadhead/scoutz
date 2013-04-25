@@ -25,38 +25,28 @@ class EmailMessagesController < ApplicationController
   def create
     @email_message = @unit.email_messages.build(email_message_params)
 
-    respond_to do |format|
-      if @email_message.save
-        @unit.email_messages << @email_message
-        current_user.email_messages << @email_message
-        format.html { redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully created.' }
-        format.json { render json: @email_message, status: :created, location: @email_message }
-      else
-        4.times { @email_message.email_attachments.build }
-        format.html { render action: "new" }
-        format.json { render json: @email_message.errors, status: :unprocessable_entity }
-      end
+    if @email_message.save
+      @unit.email_messages << @email_message
+      current_user.email_messages << @email_message
+      @email_message.delay.send_email
+      redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully created.'
+    else
+      4.times { @email_message.email_attachments.build }
+      render action: "new"
     end
   end
 
   def update
-    respond_to do |format|
-      if @email_message.update_attributes(email_message_params)
-        format.html { redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @email_message.errors, status: :unprocessable_entity }
-      end
+    if @email_message.update_attributes(email_message_params)
+      redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully updated.'
+    else
+      render action: "edit"
     end
   end
 
   def destroy
     @email_message.destroy
-    respond_to do |format|
-      format.html { redirect_to email_messages_url }
-      format.json { head :no_content }
-    end
+      redirect_to email_messages_url
   end
 
 

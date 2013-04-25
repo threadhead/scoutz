@@ -14,6 +14,8 @@
 
 .row-fluid
   .span12
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
+
     .text-xlarge
       %table.table
         %tr

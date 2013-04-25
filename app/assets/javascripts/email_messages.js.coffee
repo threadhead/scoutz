@@ -1,4 +1,7 @@
 jQuery ->
+  $("#email-leaders-list").collapse({
+    toggle: false
+    })
   $("#email-send-to-users-list").collapse({
     toggle: false
     })

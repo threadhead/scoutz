@@ -11,12 +11,12 @@
         #email-leaders-list.collapse{ class: ('in' if @email_message.send_to_leaders?) }
           .well.well-small
             %h4 #{@unit.name_unit} Leaders
-            %smaller.text-grey= @unit.users.leaders.with_email.by_name_lf.map(&:name_email).join(', ')
+            %smaller.text-grey= @leaders.map(&:name_email).join(', ')
 
         #email-sub-unit-list.collapse{ class: ('in' if @email_message.send_to_sub_units?) }
           .well.well-small
             %ul.unstyled
-              - @unit.sub_units.order('name ASC').each do |sub_unit|
+              - @sub_units.each do |sub_unit|
                 %li
                   = f.label :sub_unit, class: 'checkbox sub-unit', data: {'original-title' => sub_unit_emails(sub_unit)} do
                     = check_box_tag 'email_message[sub_unit_ids][]', sub_unit.id, @email_message.sub_unit_ids.include?(sub_unit.id.to_s)
@@ -25,7 +25,7 @@
 
         #email-send-to-users-list.collapse{ class: ('in' if @email_message.send_to_users?) }
           .well.well-small
-            = f.collection_select :user_ids, @unit.users.with_email.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 100%;"}
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 100%;"}
 
   %fieldset
     %legend Events

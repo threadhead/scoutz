@@ -136,8 +136,9 @@ class EmailMessage < ActiveRecord::Base
 
   before_save :sanitize_message
   def sanitize_message
-    self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
+    self.message = Sanitize.clean(message, whitelist)
   end
+
 
 
   #scopes
@@ -160,5 +161,12 @@ class EmailMessage < ActiveRecord::Base
 
     def generate_token
       SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
+    end
+
+    def whitelist
+      whitelist = Sanitize::Config::RELAXED
+      whitelist[:elements] << "span"
+      whitelist[:attributes]["span"] = ["style"]
+      whitelist
     end
 end

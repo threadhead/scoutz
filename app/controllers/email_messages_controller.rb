@@ -2,7 +2,7 @@ class EmailMessagesController < ApplicationController
   before_filter :auth_and_time_zone
   before_filter :set_unit
   before_filter :set_email_message, only: [:show, :edit, :update, :destroy]
-
+  before_filter :set_send_to_lists, only: [:new, :edit, :update]
 
   def index
     @email_messages = EmailMessage.where(unit_id: @unit).where(user_id: current_user).includes(:sender).by_updated_at
@@ -57,6 +57,12 @@ class EmailMessagesController < ApplicationController
 
     def set_unit
       @unit = current_user.units.where(id: params[:unit_id]).first
+    end
+
+    def set_send_to_lists
+      @leaders = @unit.users.leaders.with_email.by_name_lf
+      @sub_units = @unit.sub_units.by_name
+      @unit_users = @unit.users.with_email.by_name_lf
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

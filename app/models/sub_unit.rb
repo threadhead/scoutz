@@ -20,4 +20,8 @@ class SubUnit < ActiveRecord::Base
   def users_with_emails
     adults.with_email + self.scouts.with_email
   end
+
+  # scoptes
+  scope :by_name, -> { order('"sub_units"."name" ASC') }
+
 end

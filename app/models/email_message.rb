@@ -29,10 +29,15 @@ class EmailMessage < ActiveRecord::Base
   def send_email
     if events_have_signup?
       # emails will contain individual links for signup
-      recipients.each { |recipient| MessageMailer.delay.email_blast(self.sender, recipient.email, self, recipient) }
+      recipients.each { |recipient| MessageMailer.email_blast(self.sender, recipient.email, self, recipient).deliver }
     else
-      MessageMailer.delay.email_blast(self.sender, recipients_emails, self)
+      MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
     end
+  end
+
+  def self.dj_send_email(id)
+    em = EmailMessage.find(id)
+    em.send_email if em
   end
 
   # the default: Array.new for serialized columns does not work

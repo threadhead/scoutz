@@ -28,7 +28,7 @@ class EmailMessagesController < ApplicationController
     if @email_message.save
       @unit.email_messages << @email_message
       current_user.email_messages << @email_message
-      @email_message.delay.send_email
+      EmailMessage.delay.dj_send_email(@email_message.id)
       redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully created.'
     else
       4.times { @email_message.email_attachments.build }

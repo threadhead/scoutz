@@ -9,7 +9,7 @@ describe 'Email Event Signup' do
     @user.units << @unit
     @scout = FactoryGirl.create(:scout)
     @user.scouts << @scout
-    @event = FactoryGirl.create(:event, signup_required: true, signup_deadline: 1.day.from_now)
+    @event = FactoryGirl.create(:event, unit: @unit, signup_required: true, signup_deadline: 1.day.from_now)
   end
 
   def sign_in_user(email, password)

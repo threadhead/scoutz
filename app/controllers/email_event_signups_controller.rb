@@ -12,7 +12,7 @@ class EmailEventSignupsController < ApplicationController
 
     elsif params[:cancel_reservation] == 'true'
       if @event_signup.new_record?
-        flash[:alert] = "The signup you are trying to cancel is not active. If you meant to create a new signup, use the form below."
+        flash[:alert] = "The signup you are trying to cancel is not available. If you meant to create a new signup, use the form below."
         render :new
       else
         flash[:info] = "Are you sure you want to cancel this signup?"

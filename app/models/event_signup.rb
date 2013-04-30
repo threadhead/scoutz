@@ -19,6 +19,7 @@ class EventSignup < ActiveRecord::Base
   end
 
   after_save :update_event_attendee_count
+  after_destroy :update_event_attendee_count
   def update_event_attendee_count
     self.event.update_attendee_count
   end

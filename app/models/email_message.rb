@@ -23,8 +23,22 @@ class EmailMessage < ActiveRecord::Base
     errors.add(:base, "You must select at least 1 adult or scout recipient") if user_ids.empty?
   end
 
-  before_save :ensure_id_token
+  before_create :ensure_id_token
 
+
+  def send_email
+    if events_have_signup?
+      # emails will contain individual links for signup
+      recipients.each { |recipient| MessageMailer.email_blast(self.sender, recipient.email, self, recipient).deliver }
+    else
+      MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
+    end
+  end
+
+  def self.dj_send_email(id)
+    em = EmailMessage.find(id)
+    em.send_email if em
+  end
 
   # the default: Array.new for serialized columns does not work
   # this is the workaround
@@ -54,9 +68,22 @@ class EmailMessage < ActiveRecord::Base
     self.email_attachments.count > 0
   end
 
+  def events_have_signup?
+    self.events.where(signup_required: true).size > 0
+  end
+
+  def has_events?
+    self.events.size > 0
+  end
+
 
   def send_to_count
     recipients ? recipients.count : 0
+  end
+
+
+  def subject_with_unit
+    "#{self.unit.email_name} #{subject}"
   end
 
   def recipients
@@ -76,6 +103,10 @@ class EmailMessage < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def recipients_emails
+    recipients.map(&:email)
   end
 
   def sub_units
@@ -110,8 +141,9 @@ class EmailMessage < ActiveRecord::Base
 
   before_save :sanitize_message
   def sanitize_message
-    self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
+    self.message = Sanitize.clean(message, whitelist)
   end
+
 
 
   #scopes
@@ -133,6 +165,13 @@ class EmailMessage < ActiveRecord::Base
     end
 
     def generate_token
-      SecureRandom.base64(15).tr('+/=lIO0', 'pqrsxyz')
+      SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
+    end
+
+    def whitelist
+      whitelist = Sanitize::Config::RELAXED
+      whitelist[:elements] << "span"
+      whitelist[:attributes]["span"] = ["style"]
+      whitelist
     end
 end

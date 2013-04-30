@@ -5,7 +5,7 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :sub_units
   # acts_as_gmappable process_geocoding: false, validation: false
 
-  attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_id, :message, :sub_unit_ids
+  attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :sub_unit_ids
 
   validates_presence_of :name
   validates_presence_of :start_at
@@ -27,6 +27,8 @@ class Event < ActiveRecord::Base
   def sub_unit_kind?
     self.kind =~ /Den|Patrol/
   end
+
+  before_create :ensure_signup_token
 
   before_save :sanitize_message
   def sanitize_message
@@ -54,7 +56,7 @@ class Event < ActiveRecord::Base
   end
 
   def after_signup_deadline?
-    Time.zone.now <= signup_deadline
+    signup_deadline <= Time.zone.now
   end
 
   def user_signups(user)
@@ -102,4 +104,19 @@ class Event < ActiveRecord::Base
     Time.zone.at(date_time.to_i).to_s(:db)
   end
 
+  private
+    def ensure_signup_token
+      self.signup_token = valid_token
+    end
+
+    def valid_token
+      loop do
+        rand_token = generate_token
+        break rand_token unless User.where(signup_token: rand_token).exists?
+      end
+    end
+
+    def generate_token
+      SecureRandom.urlsafe_base64(12)
+    end
 end

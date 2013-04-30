@@ -35,7 +35,7 @@ Scoutz::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.action_mailer.default_url_options = { :host => 'scoutz.dev' }
+  config.action_mailer.default_url_options = { host: 'scoutz.dev' }
 
   # shows sql in console
   # ActiveRecord::Base.logger = Logger.new(STDOUT)
@@ -53,11 +53,11 @@ Scoutz::Application.configure do
 
   config.middleware.insert_before(
       Rack::Lock, Rack::LiveReload,
-      :min_delay => 500,
-      :max_delay => 10000,
-      :port => 35729,
-      :host => 'localhost',
-      :ignore => [ %r{dont/modify\.html$} ]
+      min_delay: 500,
+      max_delay: 10000,
+      port: 35729,
+      host: 'localhost',
+      ignore: [ %r{dont/modify\.html$} ]
     )
 
 end

@@ -1,6 +1,6 @@
 module ApplicationHelper
   def display_flash_type?(name)
-    allowed_names = [:notice, :msg_ok, :error, :alert, :info]
+    allowed_names = [:notice, :msg_ok, :error, :alert, :info, :warning]
     name && allowed_names.include?(name)
   end
 
@@ -10,8 +10,10 @@ module ApplicationHelper
       'alert-success'
     when :msg_ok, :info
       'alert-info'
-    else
+    when :error, :warning
       'alert-error'
+    else
+      ''
     end
   end
 
@@ -19,10 +21,12 @@ module ApplicationHelper
     case name
       when :notice
         'icon-ok-sign'
-      when :msg_ok, :info
+      when :msg_ok, :info, :alert
         'icon-info-sign'
-      else
+      when :error, :warning
         'icon-warning-sign'
+      else
+        ''
       end
   end
 

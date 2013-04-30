@@ -70,6 +70,7 @@ class User < ActiveRecord::Base
 
 
   before_save :ensure_authentication_token
+  before_create :ensure_signup_token
 
   def name
     full_name
@@ -113,7 +114,6 @@ class User < ActiveRecord::Base
   end
 
 
-
   ## scopes
   scope :by_name_lf, -> { order('"users"."last_name" ASC, "users"."first_name" ASC') }
   scope :with_email, -> { where('"users"."email" IS NOT NULL') }
@@ -137,4 +137,19 @@ class User < ActiveRecord::Base
     end
     # end Devise
 
+  private
+    def ensure_signup_token
+      self.signup_token = valid_token
+    end
+
+    def valid_token
+      loop do
+        rand_token = generate_token
+        break rand_token unless User.where(signup_token: rand_token).exists?
+      end
+    end
+
+    def generate_token
+      SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
+    end
 end

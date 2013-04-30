@@ -88,4 +88,18 @@ describe Event do
     its([:url]) { should eq("/events/#{@event.id}") }
   end
 
+  describe '.after_signup_deadline?' do
+    before { @event = FactoryGirl.build(:event, signup_deadline: Time.zone.now)}
+
+    it 'retuns true when signup has passed' do
+      @event.signup_deadline = 3.seconds.ago
+      @event.after_signup_deadline?.should be_true
+    end
+
+    it 'return false when signup has NOT passed' do
+      @event.signup_deadline = 3.seconds.from_now
+      @event.after_signup_deadline?.should be_false
+    end
+  end
+
 end

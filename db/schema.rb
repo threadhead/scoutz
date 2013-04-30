@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130406000822) do
+ActiveRecord::Schema.define(:version => 20130409220031) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -133,7 +133,6 @@ ActiveRecord::Schema.define(:version => 20130406000822) do
     t.integer  "unit_id"
     t.string   "kind"
     t.string   "name"
-    t.integer  "user_id"
     t.boolean  "send_reminders",    :default => true
     t.string   "notifier_type"
     t.datetime "start_at"
@@ -156,14 +155,15 @@ ActiveRecord::Schema.define(:version => 20130406000822) do
     t.float    "longitude"
     t.boolean  "gmaps"
     t.integer  "attendee_count",    :default => 0
+    t.string   "signup_token"
   end
 
   add_index "events", ["end_at"], :name => "index_events_on_end_at"
   add_index "events", ["signup_deadline"], :name => "index_events_on_signup_deadline"
   add_index "events", ["signup_required"], :name => "index_events_on_signup_required"
+  add_index "events", ["signup_token"], :name => "index_events_on_signup_token"
   add_index "events", ["start_at"], :name => "index_events_on_start_at"
   add_index "events", ["unit_id"], :name => "index_events_on_unit_id"
-  add_index "events", ["user_id"], :name => "index_events_on_user_id"
 
   create_table "events_sub_units", :id => false, :force => true do |t|
     t.integer "event_id"
@@ -276,6 +276,7 @@ ActiveRecord::Schema.define(:version => 20130406000822) do
     t.datetime "deactivated_at"
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
+    t.string   "signup_token"
   end
 
   add_index "users", ["additional_leadership_positions"], :name => "index_users_on_additional_leadership_positions"
@@ -289,6 +290,7 @@ ActiveRecord::Schema.define(:version => 20130406000822) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["role"], :name => "index_users_on_role"
   add_index "users", ["send_reminders"], :name => "index_users_on_send_reminders"
+  add_index "users", ["signup_token"], :name => "index_users_on_signup_token"
   add_index "users", ["sub_unit_id"], :name => "index_users_on_sub_unit_id"
   add_index "users", ["type"], :name => "index_users_on_type"
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true

@@ -1,7 +1,7 @@
 class EventSignupsController < ApplicationController
-  before_filter :auth_and_time_zone
+  before_filter :auth_and_time_zone, except: [:from_email]
   before_filter :set_event_signup, only: [:show, :edit, :update, :destroy]
-  before_filter :set_event
+  before_filter :set_event, except: [:from_email]
 
   def index
     @event_signups = EventSignup.all
@@ -54,6 +54,8 @@ class EventSignupsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

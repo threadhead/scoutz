@@ -39,6 +39,8 @@ Spork.prefork do
     config.include Devise::TestHelpers, :type => :controller
     # config.extend ControllerMacros, :type => :controller
     # config.include ModelMacros, :type => :model
+    config.include ModelHelpers, type: :model
+
     # config.include RequestMacros
     # config.include ViewMacros, :type => :view
     config.include Gmaps4railsHelpers

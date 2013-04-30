@@ -10,24 +10,7 @@ describe Adult do
   end
 
   context '.sub_units' do
-    before(:all) do
-      @adult = FactoryGirl.create(:adult)
-      @unit1 = FactoryGirl.create(:unit)
-      @unit2 = FactoryGirl.create(:unit, unit_type: 'Boy Scouts', unit_number: '603')
-      @adult.units << @unit1
-      @adult.units << @unit2
-      @scout1 = FactoryGirl.create(:scout)
-      @scout2 = FactoryGirl.create(:scout)
-      @adult.scouts << @scout1
-      @adult.scouts << @scout2
-      @scout1.units << @unit1
-      @scout2.units << @unit2
-      @sub_unit1 = FactoryGirl.create(:cub_scout_sub_unit, unit: @unit1)
-      @sub_unit1.scouts << @scout1
-      @sub_unit2 = FactoryGirl.create(:boy_scout_sub_unit, unit: @unit2)
-      @sub_unit2.scouts << @scout2
-      @sub_unit3 = FactoryGirl.create(:cub_scout_sub_unit, unit: @unit1)
-    end
+    before(:all) { adult_2units_2scout_3subunits }
 
     it 'returns sub_units through associated scouts' do
       @adult.sub_units.should include(@sub_unit1)
@@ -43,6 +26,18 @@ describe Adult do
       @adult.sub_units(@unit2).should include(@sub_unit2)
       @adult.sub_units(@unit2).should_not include(@sub_unit1)
       @adult.sub_units(@unit2).should_not include(@sub_unit3)
+    end
+  end
+
+  context '.unit_scouts' do
+    before(:all) { adult_2units_2scout_3subunits }
+
+    it 'returns associated scouts in a unit' do
+      @adult.unit_scouts(@unit1).should include(@scout1)
+      @adult.unit_scouts(@unit1).should_not include(@scout2)
+
+      @adult.unit_scouts(@unit2).should include(@scout2)
+      @adult.unit_scouts(@unit2).should_not include(@scout1)
     end
   end
 end

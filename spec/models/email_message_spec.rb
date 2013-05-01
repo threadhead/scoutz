@@ -124,6 +124,36 @@ describe EmailMessage do
     end
   end
 
+  context '.events_have_signups?' do
+    before do
+      @event = FactoryGirl.create(:event)
+      # @event_signup = FactoryGirl.create(:event_signup)
+      @email_message = FactoryGirl.create(:email_message)
+      @email_message.events << @event
+    end
+
+    it 'returns TRUE when email message has an event that has signup required' do
+      @event.update_attribute(:signup_required, true)
+      @email_message.events_have_signup?.should be_true
+    end
+
+    it 'returns FALSE when email message has an event that does not have signup required' do
+      @email_message.events_have_signup?.should be_false
+    end
+  end
+
+  context '.subject_with_unit' do
+    before do
+      @unit = FactoryGirl.create(:unit, unit_type: "Boy Scouts", unit_number: '535')
+      @email_message = FactoryGirl.build(:email_message, unit: @unit)
+    end
+
+    it 'returns the subject with unit name' do
+      @email_message.subject = "Home with Homies"
+      @email_message.subject_with_unit.should eq("[BS Troop 535] Home with Homies")
+    end
+  end
+
   context 'send_to_xxx?' do
     before { @email_message = FactoryGirl.build(:email_message) }
 

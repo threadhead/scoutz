@@ -4,11 +4,11 @@ describe Adult do
   before(:all) { adult_2units_2scout_3subunits }
 
   it 'should be valid' do
-    FactoryGirl.build(:adult).should be_valid
+    FactoryGirl.build(:adult, email: 'karl@gmail.com').should be_valid
   end
 
   it 'has type: \'Adult\'' do
-    FactoryGirl.build(:adult).type.should eq('Adult')
+    FactoryGirl.build(:adult, email: 'karl@gmail.com').type.should eq('Adult')
   end
 
   context '.sub_units' do

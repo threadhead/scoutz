@@ -28,6 +28,12 @@ gem 'ckeditor'
 # gem 'gmaps4rails'
 gem 'public_activity'
 
+# add these gems to help with the transition:
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -54,7 +60,6 @@ group :development, :test do
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
-	gem 'sextant'
 end
 
 group :development do

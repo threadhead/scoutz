@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 #ruby '2.0.0'
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.0.rc1'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -11,7 +11,7 @@ gem 'sqlite3'
 
 gem 'thin'
 
-gem 'devise'
+gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
 # gem 'devise-async'
 gem 'haml'
 gem 'cancan'
@@ -19,7 +19,7 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'fog', '< 1.9.0'
 gem 'mini_magick'
-gem 'delayed_job_active_record'
+# gem 'delayed_job_active_record', git: 'https://github.com/collectiveidea/delayed_job_active_record', branch: 'master'
 gem 'carmen-rails'
 gem 'wicked'
 # gem 'slodown'
@@ -31,13 +31,13 @@ gem 'public_activity'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails', '~> 4.0.0.rc1'
+  gem 'coffee-rails', '~> 4.0.0'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '>= 1.3.0'
   gem 'therubyracer'
   gem 'less-rails'
 
@@ -75,11 +75,11 @@ end
 
 group :test do
 	gem 'rake' # for travis-ci
-  gem 'minitest', '3.5.0'
+  gem 'minitest'
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
 	gem 'ffaker'
-	gem 'spork-rails'
+	# gem 'spork-rails'
 	gem 'rb-fsevent'
 	gem 'terminal-notifier-guard'
 

@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :scout do
-    first_name          {Faker::Name.first_name}
-    last_name           {Faker::Name.last_name}
+    first_name          'Bocephus'
+    last_name           'Jones'
   end
 end

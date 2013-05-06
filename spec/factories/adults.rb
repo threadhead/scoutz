@@ -1,7 +1,8 @@
 FactoryGirl.define do
 
   factory :adult do
-    first_name          {Faker::Name.first_name}
-    last_name           {Faker::Name.last_name}
+    first_name          'Bob'
+    last_name           'Smith'
+    email               'threadhead@gmail.com'
   end
 end

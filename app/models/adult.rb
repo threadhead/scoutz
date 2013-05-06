@@ -3,7 +3,7 @@ class Adult < User
   def sub_units(unit=nil)
     scout_ids = self.scouts.select('"users"."id"')
     scout_ids = scout_ids.joins(:units).where(units: {id: unit}) if unit
-    SubUnit.order('"sub_units"."name" ASC').uniq.joins(:scouts).where(users: {id: scout_ids.all})
+    SubUnit.order('"sub_units"."name" ASC').uniq.joins(:scouts).where(users: {id: scout_ids.load})
   end
 
   # associated scouts in a unit

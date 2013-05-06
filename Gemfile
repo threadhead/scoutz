@@ -65,12 +65,11 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano'
+  gem 'capistrano', require: false
 
   # gem 'meta_request'
   gem 'guard-livereload'
   gem 'rack-livereload'
-  gem 'sextant'
   gem "letter_opener"
   gem 'wirble', require: false
   gem 'hirb', require: false
@@ -93,7 +92,7 @@ group :test do
 	gem 'guard-rspec'
   gem 'rspec-nc'
 
-	gem 'database_cleaner'
+	gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'
   gem 'capybara-screenshot'
 

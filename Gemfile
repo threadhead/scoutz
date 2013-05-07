@@ -26,7 +26,7 @@ gem 'wicked'
 gem 'sanitize'
 gem 'ckeditor'
 # gem 'gmaps4rails'
-gem 'public_activity'
+# gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
@@ -36,20 +36,19 @@ gem 'actionpack-action_caching'
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails', '~> 4.0.0.rc1'
-  gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.3.0'
-  gem 'therubyracer'
-  gem 'less-rails'
+gem 'uglifier', '>= 1.3.0'
+gem 'therubyracer'
+gem 'less-rails'
 
-  gem 'twitter-bootstrap-rails'
-  gem 'compass-rails'
-end
+gem 'twitter-bootstrap-rails'
+# gem 'compass-rails', git: 'git://github.com/milgner/compass-rails.git', branch: 'rails4'
+gem 'bourbon'
 
 gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
 gem 'jquery-rails-cdn'

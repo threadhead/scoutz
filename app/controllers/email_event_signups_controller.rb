@@ -8,7 +8,8 @@ class EmailEventSignupsController < ApplicationController
 
   def index
     if !set_user_event_scout_signup
-      raise ActionController::RoutingError.new('Not Found')
+      # raise ActionDispatch::RoutingError.new('Not Found')
+      render 'public/404', status: 404
 
     elsif params[:cancel_reservation] == 'true'
       if @event_signup.new_record?
@@ -49,6 +50,7 @@ class EmailEventSignupsController < ApplicationController
 
   end
 
+
   def update
     if set_user_and_event
       @event_signup = EventSignup.find(params[:id])
@@ -63,6 +65,7 @@ class EmailEventSignupsController < ApplicationController
       raise ActionController::RoutingError.new('Not Found')
     end
   end
+
 
   def create
     if set_user_and_event
@@ -143,6 +146,6 @@ class EmailEventSignupsController < ApplicationController
     end
 
     def create_activity(task)
-      @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id}
+      # @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id, created_at: Time.now}
     end
 end

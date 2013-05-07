@@ -78,7 +78,7 @@ Spork.prefork do
     end
 
     config.before(:all) do
-      PublicActivity.enabled = false
+      # PublicActivity.enabled = false
       ActiveRecord::Base.observers.disable(:all)
 
       User.delete_all

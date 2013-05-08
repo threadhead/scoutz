@@ -242,13 +242,65 @@ describe EmailMessage do
         @email_message.send_to_option = 4
         @email_message.user_ids = [@adult.id, @scout1.id, @scout2.id]
       end
+
       it 'returns all users with emails' do
         @email_message.recipients.should include(@adult)
         @email_message.recipients.should include(@scout2)
       end
+
       it 'should not return users without emails' do
         @email_message.recipients.should_not include(@scout1)
         @email_message.recipients.should_not include(@adult2)
+      end
+    end
+  end
+
+
+  context 'send_to_count' do
+    before(:all) do
+      Unit.delete_all
+      User.delete_all
+      adult_2units_2scout_3subunits
+      @adult2 = FactoryGirl.create(:adult, email: nil)
+      @adult2.units << @unit1 # add adult with no email
+      @email_message = FactoryGirl.create(:email_message, unit: @unit1)
+    end
+
+    context 'sending to all users in unit' do
+      it 'returns count of all users in unit' do
+        @email_message.send_to_count.should be(1)
+      end
+    end
+
+    context 'sending to unit leaders with emails' do
+      before(:all) do
+        @email_message.send_to_option = 2
+      end
+
+      it 'returns count of all leaders (adults) with emails' do
+        @email_message.send_to_count.should be(1)
+      end
+    end
+
+    context 'sending to selected sub units' do
+      before(:all) do
+        @email_message.send_to_option = 3
+        @email_message.sub_unit_ids = [@sub_unit1, @sub_unit3]
+      end
+
+      it 'returns cout of all user with emails' do
+        @email_message.send_to_count.should be(1)
+      end
+    end
+
+    context 'sending to selected users' do
+      before(:all) do
+        @email_message.send_to_option = 4
+        @email_message.user_ids = [@adult.id, @scout1.id, @scout2.id]
+      end
+
+      it 'returns cout of all users with emails' do
+        @email_message.send_to_count.should be(2)
       end
     end
   end

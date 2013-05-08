@@ -76,6 +76,10 @@ class Event < ActiveRecord::Base
     event_signup_users.map(&:id)
   end
 
+  def self.send_reminders
+    Event.where(send_reminders: true, reminder_sent_at: nil).where(:end_at >= 2.days.ago)
+  end
+
 
   # scopes
   def self.time_range(start_time, end_time)
@@ -103,6 +107,7 @@ class Event < ActiveRecord::Base
   def self.format_time(date_time)
     Time.zone.at(date_time.to_i).to_s(:db)
   end
+
 
   private
     def ensure_signup_token

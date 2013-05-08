@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409220031) do
+ActiveRecord::Schema.define(:version => 20130508232254) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -156,9 +156,12 @@ ActiveRecord::Schema.define(:version => 20130409220031) do
     t.boolean  "gmaps"
     t.integer  "attendee_count",    :default => 0
     t.string   "signup_token"
+    t.datetime "reminder_sent_at"
   end
 
   add_index "events", ["end_at"], :name => "index_events_on_end_at"
+  add_index "events", ["reminder_sent_at"], :name => "index_events_on_reminder_sent_at"
+  add_index "events", ["send_reminders"], :name => "index_events_on_send_reminders"
   add_index "events", ["signup_deadline"], :name => "index_events_on_signup_deadline"
   add_index "events", ["signup_required"], :name => "index_events_on_signup_required"
   add_index "events", ["signup_token"], :name => "index_events_on_signup_token"

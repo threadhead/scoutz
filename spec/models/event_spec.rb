@@ -102,4 +102,64 @@ describe Event do
     end
   end
 
+  describe 'Event.need_reminders' do
+    before do
+      @event1 = FactoryGirl.create(:event, start_at: Time.now, end_at: 1.days.from_now)
+      @event2 = FactoryGirl.create(:event, start_at: Time.now, end_at: 2.days.from_now)
+      @event3 = FactoryGirl.create(:event, start_at: Time.now, end_at: 3.days.from_now)
+      @event4 = FactoryGirl.create(:event, start_at: Time.now, end_at: 2.days.from_now+5)
+      @event5 = FactoryGirl.create(:event, start_at: Time.now, end_at: 2.days.from_now-5)
+    end
+
+    it 'returns events that end in 48 hours' do
+      Event.need_reminders.should include(@event1)
+      Event.need_reminders.should include(@event2)
+      Event.need_reminders.should include(@event5)
+    end
+
+    it 'does not return events that end > 48 hours' do
+      Event.need_reminders.should_not include(@event3)
+      Event.need_reminders.should_not include(@event4)
+    end
+
+    it 'does not return events that are do no require reminders' do
+      @event1.update_attribute(:send_reminders, false)
+      Event.need_reminders.should_not include(@event1)
+    end
+
+    it 'does not return events that reminders have already been sent' do
+      @event1.update_attribute(:reminder_sent_at, Time.zone.now)
+      Event.need_reminders.should_not include(@event1)
+    end
+  end
+
+
+  describe '.recipients' do
+    before(:all) do
+      adult_2units_2scout_3subunits
+    end
+
+    it 'returns all unit members' do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
+      @event.recipients.should include(@adult)
+      @event.recipients.should_not include(@scout1)
+      @event.recipients.should_not include(@scout2)
+    end
+
+    it 'returns all unit leaders' do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Leader Event')
+      @event.recipients.should include(@adult)
+      @event.recipients.should_not include(@scout1)
+      @event.recipients.should_not include(@scout2)
+    end
+
+    it 'returns all selected sub unit members' do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Den Event', sub_unit_ids: [@sub_unit1.id])
+      @event.recipients.should include(@adult)
+      @event.recipients.should_not include(@scout1)
+      @event.recipients.should_not include(@scout2)
+
+    end
+  end
+
 end

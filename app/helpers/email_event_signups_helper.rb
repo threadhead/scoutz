@@ -24,7 +24,7 @@ module EmailEventSignupsHelper
   end
 
   def email_location(event)
-    "#{sanitize_br(event.location_name)}#{sanitize_br(event.location_address1)}#{sanitize_br(event.location_address2)}#{sanitize_br(city_state_zip(event))}#{location_link(event)}"
+    "#{sanitize_br(event.location_name)}#{sanitize_br(event.location_address1)}#{sanitize_br(event.location_address2)}#{sanitize_br(city_state_zip(event))}#{location_link(event)}".html_safe
   end
 
   def event_name_date(event)

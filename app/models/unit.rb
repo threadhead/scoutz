@@ -96,6 +96,7 @@ class Unit < ActiveRecord::Base
 
   ## scopes
   def activities
-    PublicActivity::Activity.where(unit_id: self.id).order('created_at DESC')
+    # PublicActivity::Activity.where(unit_id: self.id).order('created_at DESC')
+    Unit.scoped
   end
 end

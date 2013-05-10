@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/plataformatec/devise.git
-  revision: 69f79ad446101b45bf7ec29d290dc2be96142686
+  revision: 6b5988d756d780903bf8c9ccb3e2b3b724ccebe8
   branch: rails4
   specs:
-    devise (2.2.3)
+    devise (2.2.4)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
@@ -61,7 +61,7 @@ GEM
       sass (>= 3.2.0)
       thor
     builder (3.1.4)
-    cancan (1.6.9)
+    cancan (1.6.10)
     capistrano (2.15.4)
       highline
       net-scp (>= 1.0.0)
@@ -140,7 +140,7 @@ GEM
       em-websocket (>= 0.5.0)
       guard (>= 1.8.0)
       multi_json (~> 1.7)
-    guard-rspec (2.6.0)
+    guard-rspec (3.0.0)
       guard (>= 1.8)
       rspec (~> 2.13)
     guard-spork (1.5.0)
@@ -165,15 +165,15 @@ GEM
     jquery-rails-cdn (0.4.0)
       jquery-rails
     json (1.7.7)
-    launchy (2.2.0)
+    launchy (2.3.0)
       addressable (~> 2.3)
     less (2.3.2)
       commonjs (~> 0.2.6)
     less-rails (2.3.3)
       actionpack (>= 3.1)
       less (~> 2.3.1)
-    letter_opener (1.1.0)
-      launchy (~> 2.2.0)
+    letter_opener (1.1.1)
+      launchy (~> 2.2)
     libv8 (3.11.8.17)
     listen (1.0.3)
       rb-fsevent (>= 0.9.3)
@@ -192,7 +192,7 @@ GEM
     multi_json (1.7.3)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
-    net-sftp (2.1.1)
+    net-sftp (2.1.2)
       net-ssh (>= 2.6.5)
     net-ssh (2.6.7)
     net-ssh-gateway (1.2.0)
@@ -294,7 +294,7 @@ GEM
     thor (0.18.1)
     thread_safe (0.1.0)
       atomic
-    tilt (1.4.0)
+    tilt (1.4.1)
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
@@ -303,7 +303,7 @@ GEM
       execjs
       railties (>= 3.1)
     tzinfo (0.3.37)
-    uglifier (2.0.1)
+    uglifier (2.1.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     unicode_utils (1.4.0)

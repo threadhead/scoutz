@@ -21,13 +21,16 @@ module EventsHelper
 
 
   def location_show(event)
-    sanitize(event.location_name) + add_break(event.location_name) +
-    sanitize(event.location_address1) + add_break(event.location_address1) +
-    sanitize(event.location_address2) + add_break(event.location_address2) +
-    sanitize(city_state_zip(event)) + add_break(city_state_zip(event)) +
-    (link_to(truncate(event.location_map_url), event.location_map_url, target: '_blank') unless event.location_map_url.blank?)
+    "#{sanitize_br(event.location_name)}#{sanitize_br(event.location_address1)}#{sanitize_br(event.location_address2)}#{sanitize_br(city_state_zip(event))}#{location_link(event)}"
   end
 
+  def location_link(event)
+    link_to(truncate(event.location_map_url), event.location_map_url, target: '_blank') unless event.location_map_url.blank?
+  end
+
+  def sanitize_br(str)
+    "#{sanitize(str)}#{add_break(str)}" if str
+  end
   def add_break(str)
     str.blank? ? '' : '<br/>'.html_safe
   end

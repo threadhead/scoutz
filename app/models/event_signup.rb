@@ -14,7 +14,7 @@ class EventSignup < ActiveRecord::Base
   validate :at_least_one_attending
   def at_least_one_attending
     if adults_attending == 0 && scouts_attending == 0 && siblings_attending == 0
-      errors.add(:base, "#{self.scout.full_name}: at least one person must attend.")
+      errors.add(:base, "#{self.scout.try(:full_name)}: at least one person must attend.")
     end
   end
 

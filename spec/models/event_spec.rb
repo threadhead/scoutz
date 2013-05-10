@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe Event do
   before { stub_geocoding }
+  before(:all) do
+    adult_2units_2scout_3subunits
+  end
 
   it { should belong_to(:unit) }
   it { should have_and_belong_to_many(:users) }
@@ -10,6 +13,7 @@ describe Event do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:start_at) }
   it { should validate_presence_of(:end_at) }
+  it { should validate_presence_of(:message) }
 
 
   it 'creates valid event' do
@@ -135,10 +139,6 @@ describe Event do
 
 
   describe '.recipients' do
-    before(:all) do
-      adult_2units_2scout_3subunits
-    end
-
     it 'returns all unit members' do
       @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
       @event.recipients.should include(@adult)
@@ -158,7 +158,57 @@ describe Event do
       @event.recipients.should include(@adult)
       @event.recipients.should_not include(@scout1)
       @event.recipients.should_not include(@scout2)
+    end
+  end
 
+
+  describe '.recipients_emails' do
+    it 'returns all unit members' do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
+      @event.recipients_emails.should include(@adult.email)
+      @event.recipients_emails.should_not include(@scout1.email)
+      @event.recipients_emails.should_not include(@scout2.email)
+    end
+
+    it 'returns all unit leaders' do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Leader Event')
+      @event.recipients_emails.should include(@adult.email)
+      @event.recipients_emails.should_not include(@scout1.email)
+      @event.recipients_emails.should_not include(@scout2.email)
+    end
+
+    it 'returns all selected sub unit members' do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Den Event', sub_unit_ids: [@sub_unit1.id])
+      @event.recipients_emails.should include(@adult.email)
+      @event.recipients_emails.should_not include(@scout1.email)
+      @event.recipients_emails.should_not include(@scout2.email)
+    end
+  end
+
+  describe '.reminder_subject' do
+    it 'retruns the name of the event with reminder suffix' do
+      @event = FactoryGirl.build(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event')
+      @event.reminder_subject.should eq('[CS Pack 134] Monster Painting - Reminder')
+    end
+  end
+
+  describe '.send_reminder', :foucs do
+    before do
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
+      adult2 = FactoryGirl.build(:adult)
+      adult2.units << @unit1
+    end
+
+    it 'sends one email to all event recipients' do
+      @event.send_reminder
+      ActionMailer::Base.deliveries.size.should eq(1)
+    end
+
+    it 'sends separate emails to all event recipients' do
+      @event.signup_required = true
+      @event.signup_deadline = Time.zone.now
+      @event.send_reminder
+      ActionMailer::Base.deliveries.size.should eq(2)
     end
   end
 

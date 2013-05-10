@@ -24,10 +24,11 @@
         %strong RSVP
       %td
         #{event.signup_required ? "required, by #{event.signup_deadline.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}" : 'not required'}
-        - if event.after_signup_deadline?
-          %strong (PASSED)
-        - else
-          %a{href: "#signup"} (signup below)
+        - if event.signup_required
+          - if event.after_signup_deadline?
+            %strong (PASSED)
+          - else
+            %a{href: "#signup"} (signup below)
 
     - if event.signup_required
       %td

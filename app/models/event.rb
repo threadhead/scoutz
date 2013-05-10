@@ -90,7 +90,7 @@ class Event < ActiveRecord::Base
   def send_reminder
     if signup_required
       # emails will contain individual links for signup
-      recipients.each { |recipient| EventMailer.reminder(self, recipient.email).deliver }
+      recipients.each { |recipient| EventMailer.reminder(self, recipient.email, recipient).deliver }
     else
       EventMailer.reminder(self, recipients_emails).deliver
     end

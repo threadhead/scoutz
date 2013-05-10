@@ -7,9 +7,8 @@ class Event < ActiveRecord::Base
 
   attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :sub_unit_ids
 
-  validates_presence_of :name
-  validates_presence_of :start_at
-  validates_presence_of :end_at
+  validates :name, :start_at, :end_at, :message,
+      :presence => true
 
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at

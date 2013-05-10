@@ -29,10 +29,11 @@ class EmailMessage < ActiveRecord::Base
   def send_email
     if events_have_signup?
       # emails will contain individual links for signup
-      recipients.each { |recipient| MessageMailer.email_blast(self.sender, recipient.email, self, recipient).deliver }
+      recipients.each { |recipient| MessageMailer.delay.email_blast(self.sender.id, recipient.email, self.id, recipient.id) }
     else
-      MessageMailer.email_blast(self.sender, recipients_emails, self).deliver
+      MessageMailer.delay.email_blast(self.sender.id, recipients_emails, self.id)
     end
+    self.update_attribute(:sent_at, Time.zone.now)
   end
 
   def self.dj_send_email(id)

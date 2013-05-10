@@ -3,5 +3,5 @@
 # Delayed::Worker.max_attempts = 3
 # Delayed::Worker.max_run_time = 5.minutes
 
-# Delayed::Worker.delay_jobs = ::Rails.env.production?
+Delayed::Worker.delay_jobs = ::Rails.env.production?
 # Delayed::Worker.delay_jobs = false

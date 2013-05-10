@@ -24,11 +24,7 @@ module EmailEventSignupsHelper
   end
 
   def email_location(event)
-    sanitize(event.location_name) + add_break(event.location_name) +
-    sanitize(event.location_address1) + add_break(event.location_address1) +
-    sanitize(event.location_address2) + add_break(event.location_address2) +
-    sanitize(city_state_zip(event)) + add_break(city_state_zip(event)) +
-    (link_to(truncate(event.location_map_url), event.location_map_url, target: '_blank') unless event.location_map_url.blank?)
+    "#{sanitize_br(event.location_name)}#{sanitize_br(event.location_address1)}#{sanitize_br(event.location_address2)}#{sanitize_br(city_state_zip(event))}#{location_link(event)}"
   end
 
   def event_name_date(event)

@@ -86,6 +86,7 @@ GEM
     compass-rails (1.0.3)
       compass (>= 0.12.2, < 0.14)
     daemons (1.1.9)
+    dalli (2.6.3)
     database_cleaner (1.0.1)
     debug_inspector (0.0.2)
     delayed_job (3.0.5)
@@ -162,6 +163,8 @@ GEM
     jquery-rails-cdn (1.0.1)
       jquery-rails
     json (1.8.0)
+    jwt (0.1.8)
+      multi_json (>= 1.5)
     launchy (2.3.0)
       addressable (~> 2.3)
     less (2.3.2)
@@ -303,6 +306,10 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    twilio-ruby (3.9.0)
+      builder (>= 2.1.2)
+      jwt (>= 0.1.2)
+      multi_json (>= 1.3.0)
     twitter-bootstrap-rails (2.2.6)
       actionpack (>= 3.1)
       execjs
@@ -338,6 +345,7 @@ DEPENDENCIES
   ckeditor
   coffee-rails (~> 3.2.1)
   compass-rails
+  dalli
   database_cleaner
   delayed_job_active_record
   devise
@@ -377,6 +385,7 @@ DEPENDENCIES
   terminal-notifier-guard
   therubyracer
   thin
+  twilio-ruby
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)
   wicked

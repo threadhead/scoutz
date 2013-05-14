@@ -27,6 +27,13 @@ gem 'sanitize'
 gem 'ckeditor'
 # gem 'gmaps4rails'
 gem 'public_activity'
+gem 'twilio-ruby'
+
+group :production, :staging do
+  # gem 'newrelic_rpm'
+  gem 'dalli'  # memcache client
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.

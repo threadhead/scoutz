@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130508232254) do
+ActiveRecord::Schema.define(:version => 20130515212008) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -280,6 +280,14 @@ ActiveRecord::Schema.define(:version => 20130508232254) do
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
     t.string   "signup_token"
+    t.string   "sms_number"
+    t.datetime "sms_number_verified_at"
+    t.boolean  "blast_email",                     :default => true
+    t.boolean  "blast_sms"
+    t.boolean  "event_reminder_email",            :default => true
+    t.boolean  "event_reminder_sms"
+    t.boolean  "signup_deadline_email",           :default => true
+    t.boolean  "signup_deadline_sms"
   end
 
   add_index "users", ["additional_leadership_positions"], :name => "index_users_on_additional_leadership_positions"

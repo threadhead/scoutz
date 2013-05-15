@@ -29,10 +29,51 @@
         = f.email_field :email, class: 'span5'
 
     .control-group
+      = f.label :sms_number, class: 'control-label'
       .controls
-        = f.label :send_reminders, class: 'checkbox' do
-          = f.check_box :send_reminders
-          send reminder before event deadlines and start times
+        = f.phone_field :sms_number, class: 'span3'
+        .help-inline cell number to send text messages to
+
+    .control-group
+      %span.control-label
+        Types
+      .controls
+        .span8
+          %table.table.table-condensed
+            %tr
+              %td{colspan: 3} select how you would like to receive notifications
+            %tr
+              %th Email blasts
+              %td
+                = f.label :blast_email, class: 'checkbox' do
+                  = f.check_box :blast_email
+                  email
+              %td
+                = f.label :blast_sms, class: 'checkbox' do
+                  = f.check_box :blast_sms
+                  sms
+            %tr
+              %th Event reminders
+              %td
+                = f.label :event_reminder_email, class: 'checkbox' do
+                  = f.check_box :event_reminder_email
+                  email
+              %td
+                = f.label :event_reminder_sms, class: 'checkbox' do
+                  = f.check_box :event_reminder_sms
+                  sms
+
+            %tr
+              %th Signup deadlines
+              %td
+                = f.label :signup_deadline_email, class: 'checkbox' do
+                  = f.check_box :signup_deadline_email
+                  email
+              %td
+                = f.label :signup_deadline_sms, class: 'checkbox' do
+                  = f.check_box :signup_deadline_sms
+                  sms
+          .help-block if you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email
 
 
   %fieldset

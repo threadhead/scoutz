@@ -1,0 +1,32 @@
+!!!
+%html
+  %head
+  %body
+    %h3 #{APP_NAME}: SMS Text Message - Reminder
+    %p You are receiving this message because you elected to receive notifications using SMS text messaging.
+
+    %h4 Just a Friendly Reminder
+    %p You must reply to the SMS text message sent to you from our service with the message 'HELLO'.
+
+    %h4{style: "color: maroon"} Text: HELLO to #{TWILIO_CONFIG['from']} from your phone #{@recipient.sms_number}
+
+    %h4 A couple of helpful notes:
+    %ul
+      %li Mobile number text messaging rates may apply.
+
+      %li Do not reply to notification SMS messages. No one will see it.
+
+
+    %p The verification process is immediate and you will receive an email confirming your verification.
+
+
+    %h4 Mistake?
+    %p If you did not intend to receive notifications from #{APP_NAME} via SMS text message, you can EDIT_USER_URL to remove SMS notifications. You only need to edit those notification that have SMS and uncheck the SMS box.
+
+    %h4 Stop these Reminders
+    %p As soon as you reply to the SMS text with 'HELLO', the reminders will stop.
+
+    %p If you no longer want to receive SMS text message notifications, see 'Mistake?' above for instructions. This will also stop reminders.
+
+
+    = render 'layouts/email_footer'

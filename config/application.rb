@@ -71,5 +71,6 @@ module Scoutz
       # Devise::Mailer.layout "email" # email.haml or email.erb
     end
 
+    APP_NAME = ::Rails.env.production? ? 'SCOUTTin' : "Scoutz - #{::Rails.env}"
   end
 end

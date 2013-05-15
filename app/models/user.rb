@@ -113,6 +113,10 @@ class User < ActiveRecord::Base
     type == 'Adult'
   end
 
+  def sms_number_verified
+    sms_number_verified_at != nil
+  end
+
 
   ## scopes
   scope :by_name_lf, -> { order('"users"."last_name" ASC, "users"."first_name" ASC') }

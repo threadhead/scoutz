@@ -30,4 +30,7 @@ module ApplicationHelper
       end
   end
 
+  def shorten_url(url)
+    Google::UrlShortenerV1::Base.shorten(url)
+  end
 end

@@ -28,6 +28,8 @@ gem 'ckeditor'
 # gem 'gmaps4rails'
 gem 'public_activity'
 gem 'twilio-ruby'
+gem 'rest-client'
+
 
 group :production, :staging do
   # gem 'newrelic_rpm'

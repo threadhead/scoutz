@@ -1,0 +1,14 @@
+development:
+  from: '+14806966876'
+  sid: 'ACc03bbb772f7e589e804e1dff728e2241'
+  token: 'ec3c48017644bb32f59980677af48ef2'
+
+staging:
+  from: '+14806966876'
+  sid: 'ACc03bbb772f7e589e804e1dff728e2241'
+  token: 'ec3c48017644bb32f59980677af48ef2'
+
+production:
+  from: '+14806966876'
+  sid: 'ACc03bbb772f7e589e804e1dff728e2241'
+  token: 'ec3c48017644bb32f59980677af48ef2'

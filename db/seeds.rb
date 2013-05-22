@@ -117,10 +117,10 @@ end
   date = rand(3..90).days.from_now
   event = Event.create(name: ename, kind: 'Pack Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>Info about the event!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
   log_item(event, 8)
-  event.save
 
   unit1.events << event
   user1.events << event
+  event.save
 
   # add some signups
   rand(5).times do
@@ -150,11 +150,11 @@ end
 ['Camp Raymond', 'Move Night - Beasts of the Southern Wild', 'Watch Mold Grow', 'The Art of Making Mud Pies', 'Backpack - The Pacific Coast Trail'].each do |ename|
   date = rand(3..90).days.from_now
   event = Event.create(name: ename, kind: 'Troop Event', start_at: date, end_at: date + rand(30).hours, location_name: 'The New York', location_address1: '3660 N Lake Shore Drive', location_city: 'Chicago', location_state: 'IL', location_zip_code: '60657', message: '<h1>Info about the event!</h1>', signup_required: true, signup_deadline: date.beginning_of_day)
-  event.save
   log_item(event, 8)
 
   unit2.events << event
   user1.events << event
+  event.save
 
   # add some signups
   rand(5).times do

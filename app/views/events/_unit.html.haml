@@ -1,5 +1,5 @@
 - all_events_count = unit.events.from_today.count
-- events = unit.events.from_today.by_start.limit(limit).includes(:sub_units).all
+- events = unit.events.from_today.by_start.limit(limit).includes(:sub_units).load
 
 .row-fluid
   .span8
@@ -29,4 +29,4 @@
     .unit-activities.well.well-small
       %ul.unstyled
         - unit.activities.limit(10).each do |activity|
-          = #render_activity activity
+          = render_activity activity

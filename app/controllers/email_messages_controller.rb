@@ -31,6 +31,7 @@ class EmailMessagesController < ApplicationController
       EmailMessage.delay.dj_send_email(@email_message.id)
       redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully created.'
     else
+      set_send_to_lists
       4.times { @email_message.email_attachments.build }
       render action: "new"
     end
@@ -67,8 +68,8 @@ class EmailMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_message_params
-      # params.require(:email_message).permit(:subject, :message)
-      filter_params(params[:email_message])
+      params.require(:email_message).permit(:message, :subject, :user_id, {sub_unit_ids: []}, :event_ids, :email_attachments_attributes, {user_ids: []}, :send_to_option)
+      # filter_params(params[:email_message])
     end
 
     def filter_params(params)

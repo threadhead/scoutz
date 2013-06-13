@@ -19,17 +19,18 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'fog', '< 1.9.0'
 gem 'mini_magick'
-# gem 'delayed_job_active_record', git: 'https://github.com/collectiveidea/delayed_job_active_record', branch: 'master'
+gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git', branch: 'master'
+gem 'delayed_job_active_record', git: 'https://github.com/collectiveidea/delayed_job_active_record', branch: 'master'
 gem 'carmen-rails'
 gem 'wicked'
 # gem 'slodown'
 gem 'sanitize'
 gem 'ckeditor'
 # gem 'gmaps4rails'
-# gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
+gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
 
 # add these gems to help with the transition:
-gem 'protected_attributes'
+# gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
@@ -59,6 +60,7 @@ gem 'twitter-bootstrap-rails'
 gem 'bourbon'
 
 gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
+gem 'jquery-ui-rails'
 gem 'jquery-rails-cdn'
 
 group :development, :test do

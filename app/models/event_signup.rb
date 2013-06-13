@@ -4,7 +4,7 @@ class EventSignup < ActiveRecord::Base
   belongs_to :event
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"
 
-  attr_accessible :adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id
+  # attr_accessible :adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id
 
   validates :adults_attending, numericality: { greater_than: -1 }
   validates :scouts_attending, numericality: { greater_than: -1 }

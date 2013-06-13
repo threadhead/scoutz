@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 #ruby '2.0.0'
-gem 'rails', '4.0.0.rc1'
+gem 'rails', '4.0.0.rc2'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -33,6 +33,14 @@ gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'
+
+gem 'twilio-ruby'
+
+group :production, :staging do
+  # gem 'newrelic_rpm'
+  gem 'dalli'  # memcache client
+end
+
 
 # Gems used only for assets and not required
 # in production environments by default.

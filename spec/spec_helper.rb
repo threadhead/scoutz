@@ -87,6 +87,7 @@ Spork.prefork do
       Event.delete_all
       Phone.delete_all
       UserRelationship.delete_all
+      EventSignup.delete_all
     end
 
 

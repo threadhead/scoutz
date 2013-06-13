@@ -7,9 +7,8 @@ class Event < ActiveRecord::Base
 
   attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :sub_unit_ids
 
-  validates_presence_of :name
-  validates_presence_of :start_at
-  validates_presence_of :end_at
+  validates :name, :start_at, :end_at, :message,
+      presence: true
 
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at
@@ -76,6 +75,48 @@ class Event < ActiveRecord::Base
     event_signup_users.map(&:id)
   end
 
+  def self.send_reminders
+    events = Event.need_reminders
+    events.each do |event|
+      event.send_reminder
+    end
+  end
+
+  def self.need_reminders
+    Event.where(send_reminders: true, reminder_sent_at: nil).where('"events"."end_at" <= ?', 2.days.from_now)
+  end
+
+  def send_reminder
+    if signup_required
+      # emails will contain individual links for signup
+      recipients.each { |recipient| EventMailer.delay.reminder(self.id, recipient.email, recipient.id) }
+    else
+      EventMailer.delay.reminder(self.id, recipients_emails)
+    end
+    update_attribute(:reminder_sent_at, Time.zone.now)
+  end
+
+  def recipients
+    case kind
+    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
+      self.unit.users.with_email
+    when 'Den Event', 'Patrol Event'
+      sub_unit_users = []
+      self.sub_units.each { |su| sub_unit_users << su.users_with_emails }
+      sub_unit_users.flatten
+    when 'Leader Event'
+      self.unit.users.leaders.with_email
+    end
+  end
+
+  def recipients_emails
+    recipients.map(&:email)
+  end
+
+  def reminder_subject
+    "#{unit.email_name} #{name} - Reminder"
+  end
+
 
   # scopes
   def self.time_range(start_time, end_time)
@@ -103,6 +144,7 @@ class Event < ActiveRecord::Base
   def self.format_time(date_time)
     Time.zone.at(date_time.to_i).to_s(:db)
   end
+
 
   private
     def ensure_signup_token

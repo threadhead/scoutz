@@ -98,7 +98,6 @@ group :test do
 
 	gem 'guard'
   gem 'guard-zeus'
-	# gem 'guard-spork'
 	gem 'guard-rspec'
   gem 'rspec-nc'
 

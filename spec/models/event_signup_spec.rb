@@ -41,7 +41,7 @@ describe EventSignup do
     before { @event_signup = FactoryGirl.build(:event_signup) }
 
     it 'returns true when canceled' do
-      @event_signup.canceled_at = Time.zone
+      @event_signup.canceled_at = Time.zone.now
       @event_signup.canceled?.should be_true
     end
 

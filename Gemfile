@@ -97,7 +97,8 @@ group :test do
 	gem 'terminal-notifier-guard'
 
 	gem 'guard'
-	gem 'guard-spork'
+  gem 'guard-zeus'
+	# gem 'guard-spork'
 	gem 'guard-rspec'
   gem 'rspec-nc'
 

@@ -13,6 +13,7 @@
   .span9
     %table.table
       %thead
+        %th
         %th Name
         %th= @unit.sub_unit_name
         %th Rank
@@ -21,6 +22,9 @@
 
       - @users.each do |scout|
         %tr
+          %td.user-picture
+            - if scout.picture.present?
+              %div.circle-picture{style: "background:url(#{scout.picture.thumb.url})"}
           %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
           %td= scout.sub_unit.try(:name)
           %td= scout.rank

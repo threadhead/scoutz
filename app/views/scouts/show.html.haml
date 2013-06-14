@@ -17,7 +17,7 @@
             %span.caret
           %ul.dropdown-menu.pull-right
             %li
-              = link_to(unit_scout_path(@user), method: :delete, confirm: 'Are you sure?', class: "") do
+              = link_to(unit_scout_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
                 %i.icon-trash.icon-large
                 destroy #{@user.first_name}
 
@@ -75,46 +75,50 @@
             %strong Address
           %td
             %address= user_address_show(@user)
+  .span4
+    .well.well-thin
+      = image_tag @user.picture.url
 
-        / %tr
-        /   %td
-        /     %strong Times
-        /   %td #{@event.start_at.to_s(:short_ampm)} - #{@event.start_at.to_s(:short_ampm)}
 
-        / %tr
-        /   %td
-        /     %strong Organizer
-        /   %td
-        /     - @event.users.each do |user|
-        /       = link_to user.full_name, user_path(user.id)
+/ %tr
+/   %td
+/     %strong Times
+/   %td #{@event.start_at.to_s(:short_ampm)} - #{@event.start_at.to_s(:short_ampm)}
 
-        / %tr
-        /   %td
-        /     %strong RSVP
-        /   %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
+/ %tr
+/   %td
+/     %strong Organizer
+/   %td
+/     - @event.users.each do |user|
+/       = link_to user.full_name, user_path(user.id)
 
-        / %tr
-        /   %td
-        /     %strong Reminders?
-        /   %td #{@event.send_reminders ? 'Yes' : 'No'}
+/ %tr
+/   %td
+/     %strong RSVP
+/   %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
 
-        /   %tr
-        /     %td
-        /       %strong Attire
-        /     %td= @event.attire
+/ %tr
+/   %td
+/     %strong Reminders?
+/   %td #{@event.send_reminders ? 'Yes' : 'No'}
 
-        / %tr
-        /   %td
-        /     %strong Location
-        /   %td
-        /     %address= location_show(@event)
-        /     - if @event.location_map_url.blank?
-        /       = gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
-        /       = #gmaps4rails(@event.to_gmaps4rails)
-        /     - else
-        /       .iframe-rwd
-        /         %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+/   %tr
+/     %td
+/       %strong Attire
+/     %td= @event.attire
 
-        /   %tr
-        /     %td &nbsp;
-        /     %td= @event.message.html_safe
+/ %tr
+/   %td
+/     %strong Location
+/   %td
+/     %address= location_show(@event)
+/     - if @event.location_map_url.blank?
+/       = gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
+/       = #gmaps4rails(@event.to_gmaps4rails)
+/     - else
+/       .iframe-rwd
+/         %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+/   %tr
+/     %td &nbsp;
+/     %td= @event.message.html_safe

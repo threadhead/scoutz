@@ -34,7 +34,7 @@ class Event < ActiveRecord::Base
     self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
   end
 
-  after_save :update_attendee_count
+  # after_save :update_attendee_count
   def update_attendee_count
     self.update_column(:attendee_count, event_signup_count)
   end

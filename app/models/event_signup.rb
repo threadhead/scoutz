@@ -1,5 +1,5 @@
 class EventSignup < ActiveRecord::Base
-  # include PublicActivity::Common
+  include PublicActivity::Common
 
   belongs_to :event
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"

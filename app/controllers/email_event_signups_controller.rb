@@ -152,6 +152,6 @@ class EmailEventSignupsController < ApplicationController
     end
 
     def create_activity(task)
-      # @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id, created_at: Time.now}
+      @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id, created_at: Time.now}
     end
 end

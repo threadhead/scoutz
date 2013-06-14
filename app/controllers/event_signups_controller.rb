@@ -18,7 +18,7 @@ class EventSignupsController < ApplicationController
   end
 
   def create
-    @event_signup = @event.event_signups.build(params[:event_signup])
+    @event_signup = @event.event_signups.build(event_signup_params)
 
     respond_to do |format|
       if @event_signup.save
@@ -35,7 +35,7 @@ class EventSignupsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @event_signup.update_attributes(params[:event_signup])
+      if @event_signup.update_attributes(event_signup_params)
         format.html { redirect_for_signups }
         format.json { head :no_content }
       else
@@ -99,9 +99,8 @@ class EventSignupsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      # params.require(:user).permit(:name, :email)
-      params[:event_signup]
+    def event_signup_params
+      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id)
     end
 
     def create_activity(task)

@@ -70,3 +70,6 @@
             %strong Address
           %td
             %address= user_address_show(@user)
+  .span4
+    .well.well-thin
+      = image_tag @user.picture.url

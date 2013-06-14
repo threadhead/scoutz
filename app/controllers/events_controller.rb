@@ -54,7 +54,8 @@ class EventsController < ApplicationController
     # @event = @unit.events.build(params[:event])
 
     if @event.save
-      redirect_to events_url, notice: 'Event was successfully created.'
+      current_user.events << @event
+      redirect_to @event, notice: 'Event was successfully created.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :new
@@ -63,7 +64,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update_attributes(event_params)
-      redirect_to events_url, notice: 'Event was successfully updated.'
+      redirect_to @event, notice: 'Event was successfully updated.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :edit

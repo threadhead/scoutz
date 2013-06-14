@@ -14,10 +14,10 @@ class User < ActiveRecord::Base
   has_many :email_messages, dependent: :destroy
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
-  attr_accessible :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders
-  attr_accessible :adult_ids, :scout_ids
+  # attr_accessible :email, :password, :password_confirmation, :remember_me
+  # attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
+  # attr_accessible :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders
+  # attr_accessible :adult_ids, :scout_ids
 
   validates_presence_of :first_name, :last_name
 

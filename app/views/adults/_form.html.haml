@@ -1,4 +1,6 @@
-= form_for @user, url: unit_adult_path(@unit), html: { class: 'form-horizontal' } do |f|
+= form_for @user, url: unit_adult_path(@unit, @user), html: { class: 'form-horizontal' } do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+
   .control-group
     = f.label :unit, class: 'control-label'
     .controls

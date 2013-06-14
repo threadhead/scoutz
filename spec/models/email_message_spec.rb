@@ -10,8 +10,8 @@ describe EmailMessage do
   it { should belong_to(:sender) }
   it { should belong_to(:unit) }
   it { should have_many(:email_attachments) }
-  it { should have_and_belong_to_many(:users) }
-  it { should have_and_belong_to_many(:events) }
+  # it { should have_and_belong_to_many(:users) }
+  # it { should have_and_belong_to_many(:events) }
 
   it { should validate_presence_of(:message) }
   it { should validate_presence_of(:subject) }

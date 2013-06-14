@@ -7,7 +7,7 @@ describe User do
 	it { should have_many(:scouts) }
 	it { should have_many(:adult_scout_relationships) }
 	it { should have_many(:scout_adult_relationships) }
-	it { should have_and_belong_to_many(:units) }
+	# it { should have_and_belong_to_many(:units) }
 
   it { should validate_presence_of(:first_name) }
   it { should validate_presence_of(:last_name) }

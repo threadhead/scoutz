@@ -1,10 +1,10 @@
 class EventSignup < ActiveRecord::Base
-  include PublicActivity::Common
+  # include PublicActivity::Common
 
   belongs_to :event
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"
 
-  attr_accessible :adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id
+  # attr_accessible :adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id
 
   validates :adults_attending, numericality: { greater_than: -1 }
   validates :scouts_attending, numericality: { greater_than: -1 }
@@ -25,7 +25,7 @@ class EventSignup < ActiveRecord::Base
   end
 
   def canceled?
-    !canceled_at.nil?
+    !canceled_at.blank?
   end
 
   def unit

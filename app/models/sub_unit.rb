@@ -1,5 +1,5 @@
 class SubUnit < ActiveRecord::Base
-  attr_accessible :description, :name, :unit_id
+  # attr_accessible :description, :name, :unit_id
 
   belongs_to :unit
   has_and_belongs_to_many :events

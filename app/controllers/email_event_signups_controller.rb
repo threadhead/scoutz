@@ -22,7 +22,8 @@ class EmailEventSignupsController < ApplicationController
 
       # existing signup, update with options from email
     elsif !@event_signup.new_record? && !select_custom_options
-      if @event_signup.update_attributes(params.extract!(*valid_keys).except(:comment))
+      # if @event_signup.update_attributes(params.extract!(*valid_keys).except(:comment))
+      if @event_signup.update_attributes(email_event_signups_params(params))
         redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup changed."
       else
         flash[:error] = "Change failed. See below."
@@ -103,6 +104,10 @@ class EmailEventSignupsController < ApplicationController
   end
 
   private
+    def email_event_signups_params(params)
+      params.permit(:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment)
+    end
+
     def set_user_event_scout_signup
       return false unless set_user_and_event
       Time.zone = @user.time_zone || "Pacific Time (US & Canada)"
@@ -130,7 +135,8 @@ class EmailEventSignupsController < ApplicationController
 
     def handle_event_signup_create
       record_params = params.has_key?(:event_signup) ? params[:event_signup] : params
-      @event_signup = @event.event_signups.build(record_params.extract!(*valid_keys))
+      # @event_signup = @event.event_signups.build(record_params.extract!(*valid_keys))
+      @event_signup = @event.event_signups.build(email_event_signups_params(record_params))
 
       if @event_signup.save
         create_activity :create

@@ -31,9 +31,9 @@ gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git', b
 
 # add these gems to help with the transition:
 # gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
+# gem 'rails-observers'
+# gem 'actionpack-page_caching'
+# gem 'actionpack-action_caching'
 
 gem 'twilio-ruby'
 

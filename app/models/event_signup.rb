@@ -25,7 +25,7 @@ class EventSignup < ActiveRecord::Base
   end
 
   def canceled?
-    !canceled_at.nil?
+    !canceled_at.blank?
   end
 
   def unit

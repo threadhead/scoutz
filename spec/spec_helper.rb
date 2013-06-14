@@ -1,4 +1,5 @@
 require 'rubygems'
+module ActiveModel; module Observing; end; end # Prevents spork from exiting due to non-existent class in rails4.
 require 'spork'
 #uncomment the following line to use spork with the debugger
 #require 'spork/ext/ruby-debug'
@@ -79,7 +80,7 @@ Spork.prefork do
 
     config.before(:all) do
       # PublicActivity.enabled = false
-      ActiveRecord::Base.observers.disable(:all)
+      # ActiveRecord::Base.observers.disable(:all)
 
       User.delete_all
       Unit.delete_all

@@ -73,4 +73,15 @@ class UnitsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_unit
+      @unit = Unit.find(params[:id])
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def unit_params
+      params.require(:unit).permit(:city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes)
+    end
 end

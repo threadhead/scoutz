@@ -194,7 +194,7 @@ describe Event do
 
   describe '.send_reminder', :foucs do
     before do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
+      @event = FactoryGirl.create(:event, unit: @unit1, kind: 'Pack Event')
       adult2 = FactoryGirl.build(:adult)
       adult2.units << @unit1
     end

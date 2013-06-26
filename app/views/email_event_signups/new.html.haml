@@ -3,7 +3,7 @@
 - if @event.after_signup_deadline?
   %h3
     The signup dealine for this event has passed. You may try contacting the owners of this event:
-    = @event.users.map { |u| mail_to u.email, u.full_name }.join(", ")
+    = @event.users.map { |u| mail_to u.email, u.full_name }.join(", ").html_safe
 
 - else
   %h4 Signup for #{@scout.f_name_l_initial}

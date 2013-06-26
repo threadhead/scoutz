@@ -5,7 +5,7 @@ class EmailAttachment < ActiveRecord::Base
 
   belongs_to :email_message
 
-  attr_accessible :attachment, :content_type, :file_size, :original_file_name
+  # attr_accessible :attachment, :content_type, :file_size, :original_file_name
 
   validates :attachment,
       :presence => true,

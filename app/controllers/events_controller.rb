@@ -49,12 +49,13 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(event_params)
     # @unit = Unit.find(params[:unit_id]) if params[:unit_id]
     # @event = @unit.events.build(params[:event])
 
     if @event.save
-      redirect_to events_url, notice: 'Event was successfully created.'
+      current_user.events << @event
+      redirect_to @event, notice: 'Event was successfully created.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :new
@@ -62,8 +63,8 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update_attributes(params[:event])
-      redirect_to events_url, notice: 'Event was successfully updated.'
+    if @event.update_attributes(event_params)
+      redirect_to @event, notice: 'Event was successfully updated.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :edit
@@ -87,6 +88,11 @@ class EventsController < ApplicationController
     def set_event
       @event = Event.find(params[:id])
     end
+
+    def event_params
+      params.require(:event).permit(:attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, {sub_unit_ids: []})
+    end
+
 
     def sub_unit_ids(params)
       if params

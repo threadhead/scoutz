@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 #ruby '2.0.0'
-gem 'rails', '3.2.13'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -11,7 +11,7 @@ gem 'sqlite3'
 
 gem 'thin'
 
-gem 'devise'
+gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
 # gem 'devise-async'
 gem 'haml'
 gem 'cancan'
@@ -19,14 +19,22 @@ gem 'state_machine'
 gem 'carrierwave'
 gem 'fog', '< 1.9.0'
 gem 'mini_magick'
-gem 'delayed_job_active_record'
+gem 'delayed_job', git: 'https://github.com/collectiveidea/delayed_job.git', branch: 'master'
+gem 'delayed_job_active_record', git: 'https://github.com/collectiveidea/delayed_job_active_record', branch: 'master'
 gem 'carmen-rails'
 gem 'wicked'
 # gem 'slodown'
 gem 'sanitize'
 gem 'ckeditor'
 # gem 'gmaps4rails'
-gem 'public_activity'
+gem 'public_activity', git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
+
+# add these gems to help with the transition:
+# gem 'protected_attributes'
+# gem 'rails-observers'
+# gem 'actionpack-page_caching'
+# gem 'actionpack-action_caching'
+
 gem 'twilio-ruby'
 gem 'rest-client'
 
@@ -39,22 +47,22 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer'
-  gem 'less-rails'
+gem 'uglifier', '>= 1.3.0'
+gem 'therubyracer'
+gem 'less-rails'
 
-  gem 'twitter-bootstrap-rails'
-  gem 'compass-rails'
-end
+gem 'twitter-bootstrap-rails'
+# gem 'compass-rails', git: 'git://github.com/milgner/compass-rails.git', branch: 'rails4'
+gem 'bourbon'
 
 gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
+gem 'jquery-ui-rails'
 gem 'jquery-rails-cdn'
 
 group :development, :test do
@@ -63,18 +71,16 @@ group :development, :test do
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
-	gem 'sextant'
 end
 
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano'
+  gem 'capistrano', require: false
 
   # gem 'meta_request'
   gem 'guard-livereload'
   gem 'rack-livereload'
-  gem 'sextant'
   gem "letter_opener"
   gem 'wirble', require: false
   gem 'hirb', require: false
@@ -84,20 +90,20 @@ end
 
 group :test do
 	gem 'rake' # for travis-ci
-  gem 'minitest', '3.5.0'
+  gem 'minitest'
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
 	gem 'ffaker'
-	gem 'spork-rails'
+	# gem 'spork-rails'
 	gem 'rb-fsevent'
 	gem 'terminal-notifier-guard'
 
 	gem 'guard'
-	gem 'guard-spork'
+  gem 'guard-zeus'
 	gem 'guard-rspec'
   gem 'rspec-nc'
 
-	gem 'database_cleaner'
+	gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'
   gem 'capybara-screenshot'
 

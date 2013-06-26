@@ -10,7 +10,7 @@ class Unit < ActiveRecord::Base
   has_many :attachment_files, as: :assetable
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
-  attr_accessible :city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes
+  # attr_accessible :city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes
 
   validates_presence_of :unit_type, :unit_number, :time_zone, :state, :city
 
@@ -97,5 +97,6 @@ class Unit < ActiveRecord::Base
   ## scopes
   def activities
     PublicActivity::Activity.where(unit_id: self.id).order('created_at DESC')
+    # Unit.all
   end
 end

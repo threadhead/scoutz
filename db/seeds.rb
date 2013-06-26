@@ -17,7 +17,7 @@ unit2 = Unit.create(unit_type: 'Boy Scouts', unit_number: '603', city: 'Scottsda
 log_item(unit2)
 
 
-user1 = Adult.create({email: 'threadhead@gmail.com', password: 'pack1134', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
+user1 = Adult.create(email: 'threadhead@gmail.com', password: 'pack1134', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona', confirmed_at: 1.day.ago)
 log_item(user1, 2)
 
 scout1 = Scout.create(first_name: 'Aydan', last_name: 'Smith', time_zone: 'Arizona', birth: '2002-12-19'.to_date, rank: 'Webelos I')
@@ -29,7 +29,7 @@ user1.scouts << [scout1, scout2]
 
 
 
-user2 = Adult.create({email: 'rob@robmadden.com', password: 'pack1134', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
+user2 = Adult.create(email: 'rob@robmadden.com', password: 'pack1134', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona', confirmed_at: 1.day.ago)
 log_item(user2, 2)
 
 scout3 = Scout.create(first_name: 'Matthew', last_name: 'Madden', time_zone: 'Arizona', birth: '2002-02-02'.to_date, rank: 'Webelos I')
@@ -73,7 +73,7 @@ end
 ['Mary Smith', 'Marty Black', 'Chris Masters', 'Juan Lopez', 'Frank Jones', 'Tommy Schlame', 'Mel Torme', 'Bill Withers', 'Clyde Cycle', 'Marilyn Manson', 'Bob Barnacle', 'Gene Snow', 'Cavlin Cooper'].each_with_index do |name, idx|
   fname = name.split(' ').first
   lname = name.split(' ').last
-  userX = Adult.create({email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
+  userX = Adult.create(email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago)
   log_item(userX, 2)
 
   userX.units << unit1
@@ -93,7 +93,7 @@ end
 ['Mark Smith', 'Sara Black', 'Chris Tripp', 'Juan DeNada', 'Frank Castle', 'Mark Tuttle', 'Marshall Moon', 'Franklin Pearce', 'Seamore Butts', 'Gregg Brady', 'Wilma Firestone', 'Rudy Diesel', 'Brad Pitts'].each_with_index do |name, idx|
   fname = name.split(' ').first
   lname = name.split(' ').last
-  userX = Adult.create({email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago}, without_protection: true)
+  userX = Adult.create(email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago)
   log_item(userX, 2)
 
   userX.units << unit2
@@ -127,6 +127,10 @@ end
     unit1_scout_count = unit1.scouts.count
     rnd_scout = unit1.scouts.offset(rand(unit1_scout_count)).first
     event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scout.id)
+    event_signup.save!
+    # unit1.save
+    # event.save!
+    # rnd_scout.save
     event_signup.create_activity :create, unit_id: unit1.id, parameters: {event_id: event.id, scout_id: rnd_scout.id}
     log_item(event_signup, 10)
   end
@@ -161,6 +165,10 @@ end
     # unit2_scout_count = unit2.scouts.count
     rnd_scout = unit2.scouts.offset(rand(unit2.scouts.count)).first
     event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scout.id)
+    # event_signup.save
+    # event.save!
+    # unit2.save
+    # rnd_scout.save
     event_signup.create_activity :create, unit_id: unit2.id, parameters: {event_id: event.id, scout_id: rnd_scout.id}
     log_item(event_signup, 10)
   end

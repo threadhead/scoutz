@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable, :validatable,
@@ -13,11 +14,14 @@ class User < ActiveRecord::Base
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
 
+  before_save :update_picture_attributes
+  before_create :save_original_filename
+
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
-  attr_accessible :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders
-  attr_accessible :adult_ids, :scout_ids
+  # attr_accessible :email, :password, :password_confirmation, :remember_me
+  # attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
+  # attr_accessible :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders
+  # attr_accessible :adult_ids, :scout_ids
 
   validates_presence_of :first_name, :last_name
 
@@ -30,6 +34,9 @@ class User < ActiveRecord::Base
       self.skip_confirmation!
     end
   end
+
+  validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
+
 
   # don't use Devise validations
   # validates_presence_of   :email, if: :email_required?
@@ -155,5 +162,19 @@ class User < ActiveRecord::Base
 
     def generate_token
       SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
+    end
+
+    def save_original_filename
+      if picture.present?
+        self.picture_original_file_name = picture.file.original_filename
+      end
+    end
+
+    def update_picture_attributes
+      if picture.present? && picture_changed?
+        self.picture_content_type = picture.file.content_type
+        self.picture_file_size = picture.file.size
+        self.picture_updated_at = Time.zone.now
+      end
     end
 end

@@ -17,7 +17,7 @@
             %span.caret
           %ul.dropdown-menu.pull-right
             %li
-              = link_to(unit_adult_path(@user), method: :delete, confirm: 'Are you sure?', class: "") do
+              = link_to(unit_adult_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
                 %i.icon-trash.icon-large
                 destroy #{@user.first_name}
 
@@ -70,3 +70,6 @@
             %strong Address
           %td
             %address= user_address_show(@user)
+  .span4
+    .well.well-thin
+      = image_tag @user.picture.url

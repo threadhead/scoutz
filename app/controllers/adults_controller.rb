@@ -64,7 +64,6 @@ class AdultsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      # params.require(:user).permit(:name, :email)
-      params[:adult]
+      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :email)
     end
 end

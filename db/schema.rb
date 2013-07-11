@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(:version => 20130515212008) do
-=======
 ActiveRecord::Schema.define(version: 20130614173803) do
->>>>>>> develop
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -284,22 +280,19 @@ ActiveRecord::Schema.define(version: 20130614173803) do
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
     t.string   "signup_token"
-<<<<<<< HEAD
-    t.string   "sms_number"
-    t.datetime "sms_number_verified_at"
-    t.boolean  "blast_email",                     :default => true
-    t.boolean  "blast_sms"
-    t.boolean  "event_reminder_email",            :default => true
-    t.boolean  "event_reminder_sms"
-    t.boolean  "signup_deadline_email",           :default => true
-    t.boolean  "signup_deadline_sms"
-=======
     t.string   "picture"
     t.integer  "picture_file_size"
     t.string   "picture_content_type"
     t.string   "picture_original_file_name"
     t.datetime "picture_updated_at"
->>>>>>> develop
+    t.string   "sms_number"
+    t.datetime "sms_number_verified_at"
+    t.boolean  "blast_email",                     default: true
+    t.boolean  "blast_sms"
+    t.boolean  "event_reminder_email",            default: true
+    t.boolean  "event_reminder_sms"
+    t.boolean  "signup_deadline_email",           default: true
+    t.boolean  "signup_deadline_sms"
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"

@@ -11,7 +11,7 @@ gem 'sqlite3'
 
 gem 'thin'
 
-gem 'devise', github: 'plataformatec/devise', branch: 'rails4'
+gem 'devise'
 # gem 'devise-async'
 gem 'haml'
 gem 'cancan'

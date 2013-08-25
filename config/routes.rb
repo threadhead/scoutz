@@ -45,6 +45,7 @@ Scoutz::Application.routes.draw do
   get "sign_up/new_sub_unit"
   post "sign_up/create_sub_unit"
 
+  put "sms/send_verification"
   # resources :after_signup
 
   # The priority is based upon order of creation:

@@ -192,7 +192,7 @@ describe Event do
     end
   end
 
-  describe '.send_reminder', :foucs do
+  describe '.send_reminder' do
     before do
       @event = FactoryGirl.create(:event, unit: @unit1, kind: 'Pack Event')
       adult2 = FactoryGirl.build(:adult)
@@ -209,6 +209,76 @@ describe Event do
       @event.signup_deadline = Time.zone.now
       @event.send_reminder
       ActionMailer::Base.deliveries.size.should eq(2)
+    end
+  end
+
+  describe 'saving' do
+    before { @event = FactoryGirl.build(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event') }
+
+    it 'initially creates the .ics file' do
+      expect(@event).to receive(:update_ical_background).exactly(1).times
+      @event.save
+    end
+
+    it 'with updates creates a new .ics file' do
+      @event.save
+      expect(@event).to receive(:update_ical_background).once
+      @event.update_attribute(:name, "Whoopie!")
+    end
+  end
+
+  describe 'EventCalendar' do
+    before { @event = FactoryGirl.create(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event') }
+
+    specify { expect(@event.ical_uuid).not_to be_empty }
+
+    describe '.update_ical' do
+      it 'increments the ical_sequence and saves ics file' do
+        @event.reload
+        ical_sequence = @event.ical_sequence
+        @event.update_ical
+        expect(@event.reload.ical_sequence).to eq(ical_sequence + 1)
+        expect(@event.ical.present?).to be_true
+      end
+    end
+
+    describe 'Event.update_ical' do
+      it 'finds the event with id and calls event.update_ical' do
+        expect(Event).to receive(:find).with(@event.id).and_return(@event)
+        Event.any_instance.should_receive(:update_ical)
+        Event.update_ical(@event.id)
+      end
+    end
+
+    describe '.update_ical_background' do
+      it 'add an update_ical to the background queue' do
+        d = double
+        expect(Event).to receive(:delay).and_return(d)
+        expect(d).to receive(:update_ical).with(@event.id)
+        @event.update_ical_background
+      end
+    end
+
+    describe '.skip_update_ical_background_callbacks' do
+      it 'calls the passed block without the after_save callback' do
+        expect(Event).to receive(:skip_callback).once
+        expect(Event).to receive(:set_callback).once
+        d = double
+        expect(d).to receive(:yieldy).once
+        @event.skip_update_ical_background_callbacks{ d.yieldy }
+      end
+    end
+
+    describe '.in_temp_file' do
+      it 'creates a temporary file for use, calls the passed block, then deletes it' do
+        tf = double
+        expect(Tempfile).to receive(:new).with([@event.ical_uuid, '.ics']).and_return(tf)
+        expect(tf).to receive(:close)
+        expect(tf).to receive(:unlink)
+        d = double
+        expect(d).to receive(:yieldy).once
+        @event.in_temp_file{ |tf| d.yieldy }
+      end
     end
   end
 

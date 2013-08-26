@@ -22,6 +22,12 @@
 .row-fluid
   .span8
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
+    - if @event.ical.present?
+      .pull-right
+        %i.icon-calendar
+        %span.small
+          = link_to 'add to calendar', @event.ical.url
+
     %em.xxlarge= @event.unit.name
     .text-xlarge
       %table.table

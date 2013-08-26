@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130614173803) do
+ActiveRecord::Schema.define(version: 20130825180049) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -157,6 +157,12 @@ ActiveRecord::Schema.define(version: 20130614173803) do
     t.integer  "attendee_count",    default: 0
     t.string   "signup_token"
     t.datetime "reminder_sent_at"
+    t.string   "ical"
+    t.integer  "ical_file_size"
+    t.string   "ical_content_type"
+    t.datetime "ical_updated_at"
+    t.integer  "ical_sequence",     default: 0
+    t.string   "ical_uuid"
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at"
@@ -285,6 +291,15 @@ ActiveRecord::Schema.define(version: 20130614173803) do
     t.string   "picture_content_type"
     t.string   "picture_original_file_name"
     t.datetime "picture_updated_at"
+    t.string   "sms_number"
+    t.datetime "sms_number_verified_at"
+    t.boolean  "blast_email",                     default: true
+    t.boolean  "blast_sms"
+    t.boolean  "event_reminder_email",            default: true
+    t.boolean  "event_reminder_sms"
+    t.boolean  "signup_deadline_email",           default: true
+    t.boolean  "signup_deadline_sms"
+    t.datetime "sms_verification_sent_at"
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"

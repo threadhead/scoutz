@@ -31,6 +31,7 @@ module EventsHelper
   def sanitize_br(str)
     "#{sanitize(str)}#{add_break(str)}" if str
   end
+
   def add_break(str)
     str.blank? ? '' : '<br/>'.html_safe
   end

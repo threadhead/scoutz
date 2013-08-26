@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include EventCalendar
+
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
   has_and_belongs_to_many :users
@@ -39,6 +41,7 @@ class Event < ActiveRecord::Base
     self.update_column(:attendee_count, event_signup_count)
   end
 
+
   def event_signup_count
     EventSignup.find_by_sql([
           "SELECT
@@ -52,6 +55,10 @@ class Event < ActiveRecord::Base
 
   def full_address
     "#{location_address1} #{}"
+  end
+
+  def full_location
+    @full_location ||= [location_name, location_address1, location_address2, location_city, "#{location_state} #{location_zip_code}".strip].reject{ |a| a.blank? }.join(', ')
   end
 
   def after_signup_deadline?
@@ -161,4 +168,5 @@ class Event < ActiveRecord::Base
     def generate_token
       SecureRandom.urlsafe_base64(12)
     end
+
 end

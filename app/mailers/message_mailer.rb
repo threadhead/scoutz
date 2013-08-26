@@ -14,6 +14,13 @@ class MessageMailer < ActionMailer::Base
       end
     end
 
+    @events.each do |event|
+      if event.ical.present?
+        # attachments.inline[File.basename(event.ical.path)] = {mime_type: 'text/calendar', content: File.read(event.ical.current_path)}
+        attachments[File.basename(event.ical.path)] = {mime_type: event.ical_content_type, content: File.read(event.ical.current_path)}
+      end
+    end
+
     mail from: @sender.email,
          to: recipients,
          subject: @email_message.subject_with_unit

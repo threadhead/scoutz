@@ -17,7 +17,7 @@ class MessageMailer < ActionMailer::Base
     @events.each do |event|
       if event.ical.present?
         # attachments.inline[File.basename(event.ical.path)] = {mime_type: 'text/calendar', content: File.read(event.ical.current_path)}
-        attachments[File.basename(event.ical.path)] = {mime_type: 'text/calendar', content: File.read(event.ical.current_path)}
+        attachments[File.basename(event.ical.path)] = {mime_type: event.ical_content_type, content: File.read(event.ical.current_path)}
       end
     end
 

@@ -1,12 +1,11 @@
 class Event < ActiveRecord::Base
-  require 'tempfile'
+  include EventCalendar
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
   has_and_belongs_to_many :users
   has_and_belongs_to_many :sub_units
   # acts_as_gmappable process_geocoding: false, validation: false
-  mount_uploader :ical, IcalUploader
 
   # attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :sub_unit_ids
 
@@ -31,7 +30,6 @@ class Event < ActiveRecord::Base
   end
 
   before_create :ensure_signup_token
-  before_create :ensure_ical_uuid
 
   before_save :sanitize_message
   def sanitize_message
@@ -41,11 +39,6 @@ class Event < ActiveRecord::Base
   # after_save :update_attendee_count
   def update_attendee_count
     self.update_column(:attendee_count, event_signup_count)
-  end
-
-  after_save :update_ical_background
-  def update_ical_background
-    Event.delay(priority: -5).update_ical(self.id)
   end
 
 
@@ -131,52 +124,6 @@ class Event < ActiveRecord::Base
     "#{unit.email_name} #{name} - Reminder"
   end
 
-  def ical_string
-    cal = Icalendar::Calendar.new
-    e = self
-    cal.event do
-      klass        "PRIVATE"
-      dtstart       e.start_at.utc.to_s(:ical)
-      dtend         e.end_at.utc.to_s(:ical)
-      summary       e.name
-      description   Sanitize.clean(e.message, whitespace_elements: [])
-      # location      e.full_location, {"ALTREP" => ["\"#{e.location_map_url}\""]}
-      location      e.full_location
-      uid           e.ical_uuid
-      sequence      e.ical_sequence
-      url           Rails.application.routes.url_helpers.event_url(e, host: Rails.application.config.action_mailer.default_url_options[:host])
-    end
-    cal.to_ical
-  end
-
-  def self.update_ical(event_id)
-    event = Event.find(event_id)
-    if event
-      Event.skip_callback(:save, :after, :update_ical_background)
-      event.update_ical
-      Event.set_callback(:save, :after, :update_ical_background)
-    end
-  end
-
-
-  def update_ical
-    increment_ical_sequence if ical.present?
-
-    temp_file = Tempfile.new([self.ical_uuid, '.ics'])
-    file = File.open(temp_file, 'w')
-    file.write ical_string
-
-    self.ical = file
-    self.save!
-    file.close
-    temp_file.close
-    temp_file.unlink #delete the temp file
-  end
-
-  def increment_ical_sequence
-    self.increment! :ical_sequence
-  end
-
 
   # scopes
   def self.time_range(start_time, end_time)
@@ -207,10 +154,6 @@ class Event < ActiveRecord::Base
 
 
   private
-    def ensure_ical_uuid
-      self.ical_uuid = SecureRandom.uuid
-    end
-
     def ensure_signup_token
       self.signup_token = valid_token
     end
@@ -226,11 +169,4 @@ class Event < ActiveRecord::Base
       SecureRandom.urlsafe_base64(12)
     end
 
-    def update_ical_attributes
-      if ical.present? && ical_changed?
-        self.ical_content_type = ical.file.content_type
-        self.ical_file_size = ical.file.size
-        self.ical_updated_at = Time.zone.now
-      end
-    end
 end

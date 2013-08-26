@@ -4,7 +4,7 @@ class ScoutsController < ApplicationController
   before_filter :set_unit
 
   def index
-    @users = @unit.scouts.includes(:sub_unit).by_name_lf
+    @users = @unit.scouts.includes(:sub_unit, :adults).by_name_lf
   end
 
   def show

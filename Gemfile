@@ -36,6 +36,7 @@ gem 'public_activity' #, git: 'https://github.com/pokonski/public_activity.git',
 # gem 'actionpack-action_caching'
 
 gem 'twilio-ruby'
+gem 'icalendar'
 
 group :production, :staging do
   # gem 'newrelic_rpm'

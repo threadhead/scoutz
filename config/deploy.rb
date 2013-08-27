@@ -1,5 +1,6 @@
 require "bundler/capistrano"
 require "rvm/capistrano"
+# require 'capistrano_colors'
 
 set :application, "scoutz"
 set :repository,  "."

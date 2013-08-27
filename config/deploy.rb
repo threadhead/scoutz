@@ -1,4 +1,4 @@
-# require "bundler/capistrano"
+require "bundler/capistrano"
 require "rvm/capistrano"
 require "delayed/recipes"
 # require 'capistrano_colors'

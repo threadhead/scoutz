@@ -9,7 +9,7 @@ class Ckeditor::Asset < ActiveRecord::Base
       presence: true
       # file_size: {
       #   maximum: 5.megabytes.to_i
-      }
+      # }
 
   validate :image_size_validation, :if => "data?"
   def image_size_validation

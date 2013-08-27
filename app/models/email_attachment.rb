@@ -15,7 +15,7 @@ class EmailAttachment < ActiveRecord::Base
 
   validate :image_size_validation, :if => "attachment?"
   def image_size_validation
-    errors[:attachment] << "should be less than 1M" if attachment.size > 1.0.megabytes.to_i
+    errors.add(:attachment, "should be less than 1M") if attachment.size > 1.0.megabytes.to_i
   end
 
 

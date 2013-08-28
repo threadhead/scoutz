@@ -35,7 +35,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
+  # validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
+  validate :image_size_validation, :if => "picture?"
+  def image_size_validation
+    errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+  end
+
+
 
 
   # don't use Devise validations

@@ -8,10 +8,17 @@ class EmailAttachment < ActiveRecord::Base
   # attr_accessible :attachment, :content_type, :file_size, :original_file_name
 
   validates :attachment,
-      :presence => true,
-      :file_size => {
-        :maximum => 1.0.megabytes.to_i
-      }
+      :presence => true
+      # :file_size => {
+      #   :maximum => 1.0.megabytes.to_i
+      # }
+
+  validate :image_size_validation, :if => "attachment?"
+  def image_size_validation
+    errors.add(:attachment, "should be less than 1M") if attachment.size > 1.0.megabytes.to_i
+  end
+
+
 
   private
     def save_original_filename

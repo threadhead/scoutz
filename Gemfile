@@ -10,6 +10,7 @@ gem 'sqlite3'
 # gem 'pg'
 
 gem 'thin'
+gem 'rake'
 
 gem 'devise'
 # gem 'devise-async'
@@ -76,6 +77,8 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano', require: false
+  gem 'capistrano_colors', require: false
+  gem 'rvm-capistrano', require: false
 
   # gem 'meta_request'
   gem 'guard-livereload'

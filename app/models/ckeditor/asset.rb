@@ -6,10 +6,15 @@ class Ckeditor::Asset < ActiveRecord::Base
   validates_presence_of :data
 
   validates :data,
-      presence: true,
-      file_size: {
-        maximum: 5.megabytes.to_i
-      }
+      presence: true
+      # file_size: {
+      #   maximum: 5.megabytes.to_i
+      # }
+
+  validate :image_size_validation, :if => "data?"
+  def image_size_validation
+    errors.add(:data, "should be less than 5M") if data.size > 5.0.megabytes.to_i
+  end
 
 
   before_save :set_unit_id

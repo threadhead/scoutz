@@ -3,15 +3,7 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require_self
- *= require jquery.ui.all
+ *= require_tree .
 */
 
-@import "bootstrap_and_overrides";
-@import "bourbon";
-@import "devise";
-@import "fullcalendar";
-@import "gmaps4rails";
-@import "jquery-ui-1.10.0.custom.min";
-@import "jquery-ui-timepicker-addon";
-@import "screen";
-@import "select2";
+body { padding-top: 60px; }

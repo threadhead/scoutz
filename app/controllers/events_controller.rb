@@ -35,6 +35,7 @@ class EventsController < ApplicationController
   def show
     @event_signups = @event.user_signups(current_user)
     @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
+    fresh_when(@event)
   end
 
   def new

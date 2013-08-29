@@ -11,7 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery_ujs
-//= require jquery.ui.all
+//= require jquery.ui.slider
+//= require jquery.ui.datepicker
 //= require twitter/bootstrap
 //= require ckeditor/init
 //= require_tree .

@@ -6,6 +6,7 @@ class EmailMessagesController < ApplicationController
 
   def index
     @email_messages = EmailMessage.where(unit_id: @unit).where(user_id: current_user).includes(:sender).by_updated_at
+    fresh_when last_modified: @email_messages.maximum(:updated_at)
   end
 
   def show

@@ -5,6 +5,7 @@ class ScoutsController < ApplicationController
 
   def index
     @users = @unit.scouts.includes(:sub_unit, :adults).by_name_lf
+    fresh_when last_modified: @users.maximum(:updated_at)
   end
 
   def show

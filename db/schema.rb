@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130825180049) do
+ActiveRecord::Schema.define(version: 20130829022906) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20130825180049) do
   add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token"
   add_index "email_messages", ["sent_at"], name: "index_email_messages_on_sent_at"
   add_index "email_messages", ["unit_id"], name: "index_email_messages_on_unit_id"
+  add_index "email_messages", ["updated_at"], name: "index_email_messages_on_updated_at"
   add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id"
 
   create_table "email_messages_events", id: false, force: true do |t|
@@ -173,6 +174,7 @@ ActiveRecord::Schema.define(version: 20130825180049) do
   add_index "events", ["signup_token"], name: "index_events_on_signup_token"
   add_index "events", ["start_at"], name: "index_events_on_start_at"
   add_index "events", ["unit_id"], name: "index_events_on_unit_id"
+  add_index "events", ["updated_at"], name: "index_events_on_updated_at"
 
   create_table "events_sub_units", id: false, force: true do |t|
     t.integer "event_id"
@@ -317,5 +319,6 @@ ActiveRecord::Schema.define(version: 20130825180049) do
   add_index "users", ["sub_unit_id"], name: "index_users_on_sub_unit_id"
   add_index "users", ["type"], name: "index_users_on_type"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  add_index "users", ["updated_at"], name: "index_users_on_updated_at"
 
 end

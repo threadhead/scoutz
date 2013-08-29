@@ -1,0 +1,104 @@
+= #content_for(:scripts) {javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"}
+.row-fluid
+  .span12
+    .page-header
+      .pull-right
+        = link_to(dashboard_list_path, class: 'btn') do
+          %i.icon-large.icon-reply
+          back
+
+        - if @event.users.where(id: current_user).count > 0
+          = link_to(edit_event_path(@event), class: 'btn') do
+            %i.icon-large.icon-edit
+            change
+
+        = link_to(new_event_path, class: "btn btn-success") do
+          %i.icon-large.icon-plus
+          new event
+
+      %h2 #{@event.name}
+
+
+.row-fluid
+  .span8
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
+    - if @event.ical.present?
+      .pull-right
+        %i.icon-calendar
+        %span.small
+          = link_to 'add to calendar', @event.ical.url
+
+    %em.xxlarge= @event.unit.name
+    .text-xlarge
+      %table.table
+        %tr
+          %td
+            %strong Kind
+          %td
+            = @event.kind
+            = " - #{event_kind_sub_units(@event)}" if @event.sub_unit_kind?
+
+        %tr
+          %td
+            %strong Times
+          %td #{@event.start_at.to_s(:short_ampm)} - #{@event.end_at.to_s(:short_ampm)}
+
+        %tr
+          %td
+            %strong Organizer
+          %td
+            - @event.users.each do |user|
+              = link_to user.full_name, user_path(user.id)
+
+        %tr
+          %td
+            %strong RSVP
+          %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
+
+        %tr
+          %td
+            %strong Reminders?
+          %td #{@event.send_reminders ? 'Yes' : 'No'}
+
+          %tr
+            %td
+              %strong Attire
+            %td= @event.attire
+
+        %tr
+          %td
+            %strong Location
+          %td
+            %address= location_show(@event)
+            - if @event.location_map_url.blank?
+              = #gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
+              #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
+            - else
+              .iframe-rwd
+                %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+          %tr
+            %td &nbsp;
+            %td= @event.message.html_safe
+
+          - if @event.signup_required
+            %tr
+              %td
+                %strong Roster
+              %td
+                - unless @event_rosters.empty?
+                  %p.right-aligned
+                    = link_to email_attendees_event_path(@event), class: 'btn' do
+                      %i.icon-envelope
+                      Email all attendees
+
+                %table.table-condensed.table-striped.table-roster
+                  = render partial: 'event_signups/event_roster', collection: @event_rosters
+                  - #@event.event_signups.includes(:scout).each do |signup|
+
+
+  .span4
+    - if @event.signup_required && !@event.after_signup_deadline?
+      #event-signups-list
+        = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}
+

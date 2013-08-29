@@ -1,0 +1,2 @@
+:plain
+  $("div#event-signups-list").html("#{escape_javascript(render partial: 'event_signup', collection: @event_signups, locals: {event: @event})}");

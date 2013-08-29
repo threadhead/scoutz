@@ -1,4 +1,6 @@
 class SubUnitsController < ApplicationController
+  before_filter :auth_and_time_zone
+
   # GET /sub_units
   # GET /sub_units.json
   def index

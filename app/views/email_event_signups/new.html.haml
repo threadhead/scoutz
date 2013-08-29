@@ -1,0 +1,15 @@
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
+
+- if @event.after_signup_deadline?
+  %h3
+    The signup dealine for this event has passed. You may try contacting the owners of this event:
+    = @event.users.map { |u| mail_to u.email, u.full_name }.join(", ").html_safe
+
+- else
+  %h4 Signup for #{@scout.f_name_l_initial}
+
+  .well.well-small
+    %p.xxlarge
+    = form_for ([@event, :email, @event_signup]), html: { class: 'form-horizontal form-condensed' } do |f|
+
+      = render partial: 'form', locals: {f: f}

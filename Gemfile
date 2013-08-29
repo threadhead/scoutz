@@ -1,15 +1,16 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
-gem 'rails', '3.2.3'
+#ruby '2.0.0'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
-gem 'pg'
+# gem 'pg'
 
 gem 'thin'
+gem 'rake'
 
 gem 'devise'
 # gem 'devise-async'
@@ -17,50 +18,99 @@ gem 'haml'
 gem 'cancan'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog'
+gem 'fog', '< 1.9.0'
 gem 'mini_magick'
-# gem "queue_classic"
+gem 'delayed_job'
+gem 'delayed_job_active_record'
 gem 'carmen-rails'
 gem 'mechanize'
+gem 'wicked'
+# gem 'slodown'
+gem 'sanitize'
+gem 'ckeditor'
+# gem 'gmaps4rails'
+gem 'public_activity'
+
+# add these gems to help with the transition:
+# gem 'protected_attributes'
+# gem 'rails-observers'
+# gem 'actionpack-page_caching'
+# gem 'actionpack-action_caching'
+
+gem 'twilio-ruby'
+gem 'icalendar'
+
+group :production, :staging do
+  # gem 'newrelic_rpm'
+  gem 'dalli'  # memcache client
+end
 
 # Gems used only for assets and not required
 # in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'coffee-rails', '~> 4.0.0'
 
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
+# See https://github.com/sstephenson/execjs#readme for more supported runtimes
+# gem 'therubyracer', :platform => :ruby
 
-  gem 'uglifier', '>= 1.0.3'
-  gem 'twitter-bootstrap-rails'
-  gem 'compass-rails'
-end
+gem 'uglifier', '>= 1.3.0'
+gem 'therubyracer'
+gem 'less-rails'
 
-gem 'jquery-rails'
+gem 'twitter-bootstrap-rails'
+# gem 'compass-rails', git: 'git://github.com/milgner/compass-rails.git', branch: 'rails4'
+gem 'bourbon'
+
+gem 'jquery-rails' #fullCalendar is sensitive to the jQuery/jQuery UI version!
+gem 'jquery-ui-rails'
+gem 'jquery-rails-cdn'
 
 group :development, :test do
+  # gem 'quiet_assets'
 	gem 'haml-rails'
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
 end
 
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'capistrano', require: false
+  gem 'capistrano_colors', require: false
+  gem 'rvm-capistrano', require: false
+
+  # gem 'meta_request'
+  gem 'guard-livereload'
+  gem 'rack-livereload'
+  gem "letter_opener"
+  gem 'wirble', require: false
+  gem 'hirb', require: false
+  gem 'awesome_print', require: false
+end
+
+
 group :test do
 	gem 'rake' # for travis-ci
+  gem 'minitest'
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
 	gem 'ffaker'
-	gem 'spork-rails'
+	# gem 'spork-rails'
 	gem 'rb-fsevent'
-	gem 'growl'
+	gem 'terminal-notifier-guard'
 
 	gem 'guard'
-	gem 'guard-spork'
+  gem 'guard-zeus'
 	gem 'guard-rspec'
+  gem 'rspec-nc'
 
-	gem 'database_cleaner'
+	gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'
+  gem 'capybara-screenshot'
+
+  gem 'simplecov', '>= 0.4.0', require: false
+  gem 'simplecov-rcov', require: false
 end
 
 # To use ActiveModel has_secure_password

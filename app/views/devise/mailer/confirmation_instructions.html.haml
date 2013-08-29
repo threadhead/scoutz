@@ -1,3 +1,4 @@
-%p Welcome #{@resource.email}!
+%p Welcome #{@resource.full_name} to Scoutz.com!
 %p You can confirm your account email through the link below:
 %p= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token)
+%p To make setup as easy as possible, you have up to 48 hours to confirm your account before it is deactivated.

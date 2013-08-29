@@ -1,9 +1,51 @@
 Scoutz::Application.routes.draw do
+  mount Ckeditor::Engine => '/ckeditor'
+  get "events/index"
+
+  get "dashboard_list" => "dashboard_list#index"
+  get "dashboard_calendar" => "dashboard_calendar#index"
+  get "dashboard/index" => "dashboard_list#index"
+
+  get "events/index"
+  resources :events do
+    collection do
+      get 'calendar'
+    end
+    member do
+      get 'email_attendees'
+    end
+    resources :event_signups
+    resources :email_event_signups
+  end
+
   resources :sub_units
+  resources :units do
+    resources :events
+    resources :scouts
+    resources :adults
+    resources :email_messages
+  end
 
-  resources :organizations
+  post 'units/new' => 'units#new'
+  devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
+  resources :users
+  resources :scouts
+  resources :adults
 
-  devise_for :users
+  get "page/landing"
+  get "page/terms_of_service"
+  get "page/privacy"
+  get "page/contact"
+  get "page/about"
+
+  get "sign_up/import"
+  get "sign_up/user"
+  post "sign_up/new_unit"
+  post "sign_up/create_unit"
+  get "sign_up/new_sub_unit"
+  post "sign_up/create_sub_unit"
+
+  # resources :after_signup
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -54,7 +96,7 @@ Scoutz::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'welcome#index'
+  root :to => 'dashboard_list#index'
 
   # See how all your routes lay out with "rake routes"
 

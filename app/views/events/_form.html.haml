@@ -1,0 +1,108 @@
+= form_for @event, html: { class: 'form-horizontal' } do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
+
+  .row-fluid
+    .span12
+      .page-header
+        %h2
+          - if controller.action_name == 'new'
+            #{controller.action_name.titleize} Event for
+            = f.collection_select :unit_id, current_user.units, :id, :name
+          - else
+            Edit Event for #{@unit.name}
+
+  .row-fluid
+    .span9
+      .control-group
+        = f.label :name, class: 'control-label'
+        .controls
+          = f.text_field :name, class: 'span12', placeholder: 'event name', autofocus: true
+
+      .control-group
+        = f.label :start_at, 'Starts', class: 'control-label'
+        .controls
+          .input-append.input-append-start-end
+            = f.text_field :start_at, class: 'datetime-picker span10', value: @event.start_at.to_s(:datetimepicker)
+            %span.add-on
+              %i.icon-calendar
+          to&nbsp;
+          .input-append.input-append-start-end
+            = f.text_field :end_at, class: 'datetime-picker span10', value: @event.end_at.to_s(:datetimepicker)
+            %span.add-on
+              %i.icon-calendar
+
+      .control-group
+        =# f.label :send_reminders, 'notifications', class: 'control-label'
+        .controls
+          %table
+            %tr
+              %td.span5
+                = f.label :send_reminders, class: 'checkbox' do
+                  = f.check_box :send_reminders
+                  send reminder 48 hours before event start
+              / %td
+              /   = f.text_field :notifier_type, placeholder: 'notificaiton type'
+
+
+      .control-group
+        = f.label :signup_required, 'Require signup', class: 'control-label'
+        .controls
+          .input-prepend.input-append
+            %span.add-on{style: 'line-height: 3px'}= f.check_box :signup_required
+            = f.text_field :signup_deadline, class: 'datetime-picker span7', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker)
+            %span.add-on
+              %i.icon-calendar
+
+      .control-group
+        = f.label :attire, class: 'control-label'
+        .controls
+          = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span7'
+
+
+      %fieldset
+        %legend Location
+        .control-group
+          = f.label :location_name, 'Name', class: 'control-label'
+          .controls
+            = f.text_field :location_name, class: 'span10'
+
+        .control-group
+          = f.label :location_address1, 'Address 1', class: 'control-label'
+          .controls
+            = f.text_field :location_address1
+
+        .control-group
+          = f.label :location_address2, 'Address 2', class: 'control-label'
+          .controls
+            = f.text_field :location_address2
+
+        .control-group
+          = f.label :location_city, 'City, State, Zip', class: 'control-label'
+          .controls
+            = f.text_field :location_city, class: 'span6', placeholder: 'city'
+            = f.text_field :location_state, class: 'span3', placeholder: 'state'
+            = f.text_field :location_zip_code, class: 'span3', placeholder: 'zip code'
+
+        .control-group
+          = f.label :location_map_url, 'Map Link', class: 'control-label'
+          .controls
+            = f.url_field :location_map_url, class: 'span12', placeholder: 'http://maps.google.com'
+
+    .span3
+      %p= f.select :kind, @unit.event_kinds, {}, {class: 'span10'}
+      #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
+        .well.well-small.span9
+          - @unit.sub_units.order('name ASC').each do |sub_unit|
+            = f.label :sub_unit, class: 'checkbox' do
+              = check_box_tag 'event[sub_unit_ids][]', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id)
+              = sub_unit.name
+
+  .row-fluid
+    .span12
+      %fieldset
+        %legend Details
+        = f.text_area :message, class: 'span10 ckeditor'
+
+      .form-actions
+        = f.submit class: 'btn btn-primary'
+        = link_to 'Cancel', events_path, class: 'btn'

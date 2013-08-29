@@ -7,7 +7,7 @@ A Scouting (as in [BSA](http://www.scouting.org)) Management Tool. Suitable for 
 Documentation
 -------------
 
-`scoutz` is a Ruby on Rails V3 application for the management of BSA Scouting organizations. `scoutz` is in no way associated nor endorsed by the [Boy Scouts of America](http://www.scouting.org).
+`scoutz` is a Ruby on Rails V3 application for the management of BSA Scouting units. `scoutz` is in no way associated nor endorsed by the [Boy Scouts of America](http://www.scouting.org).
 
 Install it, play with it, let me know what you think.
 
@@ -40,7 +40,9 @@ Some of the gems `scoutz` is using:
 * Devise - authentication
 * Cancan - authorization
 * Carrierwave - uploads
-* queue_classic - bucking the trend with this one
+* delayed_job - the ole' standby
+* sextant - will be in rails 4, let the goodness roll for 3.X
+* exception_notification - hard to beat free excpetion emails
 
 
 

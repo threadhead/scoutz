@@ -25,6 +25,7 @@ class EventsController < ApplicationController
       format.json { render json: @events }
       format.js
     end
+    fresh_when last_modified: @events.maximum(:updated_at)
   end
 
   def calendar

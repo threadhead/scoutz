@@ -10,6 +10,7 @@ class EmailMessagesController < ApplicationController
   end
 
   def show
+    fresh_when(@email_message)
   end
 
   def new

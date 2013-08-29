@@ -9,6 +9,7 @@ class ScoutsController < ApplicationController
   end
 
   def show
+    fresh_when(@user)
   end
 
   def new

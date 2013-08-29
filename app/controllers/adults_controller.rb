@@ -9,6 +9,7 @@ class AdultsController < ApplicationController
   end
 
   def show
+    fresh_when(@user)
   end
 
   def new

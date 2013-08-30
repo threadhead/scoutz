@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Scoutlander do
 	describe 'find_url' do
-		it 'should return the uid from a url string', :focus do
+		it 'should return the uid from a url string' do
 			sl = Scoutlander::Importer.new('username', 'password')
 			sl.find_uid('/securesite/welcome.aspx?UID=3218').should eq('3218')
 			sl.find_uid('/securesite/welcome.aspx?UID=3228').should eq('3228')

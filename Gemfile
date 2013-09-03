@@ -47,14 +47,14 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails', '~> 4.0.0.rc1'
+gem 'sass-rails', '~> 4.0.0'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', :platform => :ruby
 
 gem 'uglifier', '>= 1.3.0'
-gem 'therubyracer'
+gem 'therubyracer', platforms: :ruby
 gem 'less-rails'
 
 gem 'twitter-bootstrap-rails'

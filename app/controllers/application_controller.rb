@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  # helper :all
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
 
   private
   def auth_and_time_zone

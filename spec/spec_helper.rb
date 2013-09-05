@@ -10,6 +10,7 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
 require 'shoulda/matchers/integrations/rspec'
+# require 'webmock/rspec'
 
 # load "#{Rails.root}/db/schema.rb"
 # load_schema = lambda {
@@ -96,4 +97,13 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run_including focus: true
   config.run_all_when_everything_filtered = true
+end
+
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/vcr'
+  c.hook_into :webmock
+  c.configure_rspec_metadata!
+  c.filter_sensitive_data('<SCOUTLANDER_PASSWORD>') { ENV['SCOUTLANDER_PASSWORD'] }
+  c.default_cassette_options = { record: :new_episodes }
 end

@@ -1,7 +1,7 @@
 module Scoutlander
   module Importer
     class Adults < Scoutlander::Importer::Base
-      attr_reader :adults
+      attr_accessor :adults
 
       def initialize(options={})
         super(options)
@@ -11,6 +11,7 @@ module Scoutlander
       def fetch_unit_adults(unit_id)
         unit = Unit.find(unit_id)
         login
+
         adults_page = @agent.get("/securesite/parentmain.aspx?UID=#{3218}")
         adults_page.links_with(href: /parentmain.*&profile/).each do |link|
           adult = Scoutlander::Datum::Person.new

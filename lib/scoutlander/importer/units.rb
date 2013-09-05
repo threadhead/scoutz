@@ -40,7 +40,7 @@ module Scoutlander
           str.strip!
           city = str.split(',').first.strip
           state = str.split(',').last.strip
-          city, state
+          return city, state
         end
       end
 

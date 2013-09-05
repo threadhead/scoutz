@@ -18,7 +18,7 @@ gem 'haml'
 gem 'cancan'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog', '< 1.9.0'
+gem 'fog' #, '< 1.9.0'
 gem 'mini_magick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -99,6 +99,9 @@ group :test do
 	# gem 'spork-rails'
 	gem 'rb-fsevent'
 	gem 'terminal-notifier-guard'
+
+  gem 'vcr'
+  gem 'webmock'
 
 	gem 'guard'
   gem 'guard-zeus'

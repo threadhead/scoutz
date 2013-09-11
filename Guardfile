@@ -18,8 +18,8 @@ group :backend do
 
   guard 'rspec', zeus: true, bundler: false, :all_after_pass => true, :cli => "--color --format nested --fail-fast" do
     watch(%r{^spec/.+_spec\.rb$})
-    watch(%r{^lib/(.+)\.rb$})     { |m| "spec/lib/#{m[1]}_spec.rb" }
-    watch('spec/spec_helper.rb')  { "spec" }
+    watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
+    watch('spec/spec_helper.rb')                        { "spec" }
 
     # Rails example
     watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
@@ -32,11 +32,8 @@ group :backend do
     # Capybara request specs
     watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
 
-    # Turnip features and steps
-    # watch(%r{^spec/acceptance/(.+)\.feature$})
-    # watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})   { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
 
-    watch(/^lib\/(.*)\.rb/)                             { |m| "spec/lib/#{m[1]}_spec.rb" }
+    # watch(/^lib\/(.*)\.rb/)                             { |m| "spec/lib/#{m[1]}_spec.rb" }
   end
 end
 

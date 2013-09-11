@@ -75,7 +75,7 @@ describe Scoutlander::Importer::Adults do
     end
     subject { @sl }
 
-    specify { expect(subject.find_or_create_by_profile('111')).to eq(@person1) }
+    specify { expect(subject.find_or_create_by_profile('111')).to eq(@person7) }
     specify { expect(subject.find_or_create_by_profile('222')).to eq(@person2) }
     specify { expect(subject.find_or_create_by_profile('333')).to eq(@person3) }
   end

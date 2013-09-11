@@ -33,6 +33,7 @@ RSpec.configure do |config|
   # config.extend ControllerMacros, :type => :controller
   # config.include ModelMacros, :type => :model
   config.include ModelHelpers, type: :model
+  config.include FeatureHelpers, type: :feature
 
   # config.include RequestMacros
   # config.include ViewMacros, :type => :view

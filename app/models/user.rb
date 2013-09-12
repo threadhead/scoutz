@@ -64,21 +64,26 @@ class User < ActiveRecord::Base
   validates :password, length: Devise.password_length, allow_blank: true
 
 
-  has_many     :adult_scout_relationships,
-               :class_name            => "UserRelationship",
-               :foreign_key           => :scout_id,
-               :dependent             => :destroy
-  has_many     :adults,
-               :through               => :adult_scout_relationships,
-               :source                => :adult
+  # this may help: http://stackoverflow.com/questions/15056000/rails-habtm-self-join-error
+  has_and_belongs_to_many :scouts, class_name: 'User', join_table: "user_relationships", foreign_key: "adult_id", association_foreign_key: 'scout_id'
+  has_and_belongs_to_many :adults, class_name: 'User', join_table: "user_relationships", foreign_key: "scout_id", association_foreign_key: 'adult_id'
 
-  has_many     :scout_adult_relationships,
-               :class_name            => "UserRelationship",
-               :foreign_key           => :adult_id,
-               :dependent             => :destroy
-  has_many     :scouts,
-               :through               => :scout_adult_relationships,
-               :source                => :scout
+  # this works, except for forms with related info (e.g. new adults assigning related scouts)
+  # has_many     :adult_scout_relationships,
+  #              :class_name            => "UserRelationship",
+  #              :foreign_key           => :scout_id,
+  #              :dependent             => :destroy
+  # has_many     :adults,
+  #              :through               => :adult_scout_relationships,
+  #              :source                => :adult
+
+  # has_many     :scout_adult_relationships,
+  #              :class_name            => "UserRelationship",
+  #              :foreign_key           => :adult_id,
+  #              :dependent             => :destroy
+  # has_many     :scouts,
+  #              :through               => :scout_adult_relationships,
+  #              :source                => :scout
 
 
 
@@ -124,6 +129,10 @@ class User < ActiveRecord::Base
 
   def is_an_adult?
     type == 'Adult'
+  end
+
+  def all_leadership_positions
+    [leadership_position, additional_leadership_positions].reject(&:blank?).compact.join(', ')
   end
 
 

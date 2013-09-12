@@ -45,7 +45,7 @@
           %td
             %strong Position
           %td
-            = [@user.leadership_position, @user.additional_leadership_positions].compact.join(', ')
+            = @user.all_leadership_positions
 
         %tr
           %td

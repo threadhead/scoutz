@@ -20,6 +20,7 @@ class AdultsController < ApplicationController
   end
 
   def edit
+    fresh_when(@user)
   end
 
   def create
@@ -51,8 +52,9 @@ class AdultsController < ApplicationController
 
   def destroy
     @user.destroy
+    user_name = @user.full_name
     respond_to do |format|
-      format.html { redirect_to unit_adults_path(@unit) }
+      format.html { redirect_to unit_adults_path(@unit), notice: "#{user_name}, and all associated data, was permanently deleted." }
       format.json { head :no_content }
     end
   end

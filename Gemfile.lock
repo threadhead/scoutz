@@ -269,8 +269,6 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    simplecov-rcov (0.2.3)
-      simplecov (>= 0.4.1)
     slop (3.4.6)
     sprockets (2.10.0)
       hike (~> 1.2)
@@ -377,8 +375,7 @@ DEPENDENCIES
   sanitize
   sass-rails (~> 4.0.0.rc1)
   shoulda-matchers
-  simplecov (>= 0.4.0)
-  simplecov-rcov
+  simplecov
   sqlite3
   state_machine
   terminal-notifier-guard

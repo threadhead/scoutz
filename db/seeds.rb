@@ -127,6 +127,7 @@ end
   rand(5).times do
     unit1_scout_count = unit1.scouts.count
     rnd_scout = unit1.scouts.offset(rand(unit1_scout_count)).first
+    event.save
     event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scout.id)
     event_signup.save!
     # unit1.save
@@ -167,7 +168,7 @@ end
     # unit2_scout_count = unit2.scouts.count
     rnd_scout = unit2.scouts.offset(rand(unit2.scouts.count)).first
     event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scout.id)
-    # event_signup.save
+    event_signup.save
     # event.save!
     # unit2.save
     # rnd_scout.save

@@ -19,9 +19,9 @@ describe User do
     FactoryGirl.build(:user).should be_valid
   end
 
-  it 'should have an authentication token' do
-  	FactoryGirl.create(:user).authentication_token.empty?.should be_false
-  end
+  # it 'should have an authentication token' do
+  # 	FactoryGirl.create(:user).authentication_token.empty?.should be_false
+  # end
 
   describe 'The adult-scout relationships' do
   	it "adult can have many scouts" do

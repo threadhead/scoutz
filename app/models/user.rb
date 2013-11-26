@@ -1,11 +1,11 @@
 class User < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
+  # :confirmable,
   # :lockable, :timeoutable and :omniauthable, :validatable,
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         :token_authenticatable, :confirmable, :lockable, :timeoutable
+         :confirmable, :lockable, :timeoutable
 
   has_and_belongs_to_many :units
   has_many :phones
@@ -87,7 +87,7 @@ class User < ActiveRecord::Base
 
 
 
-  before_save :ensure_authentication_token
+  # before_save :ensure_authentication_token
   before_create :ensure_signup_token
 
   def name

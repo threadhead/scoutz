@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130829022906) do
+ActiveRecord::Schema.define(version: 20131126220101) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -266,7 +266,6 @@ ActiveRecord::Schema.define(version: 20130829022906) do
     t.integer  "failed_attempts",                 default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "first_name"
@@ -305,7 +304,6 @@ ActiveRecord::Schema.define(version: 20130829022906) do
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["deactivated_at"], name: "index_users_on_deactivated_at"
   add_index "users", ["email"], name: "index_users_on_email", unique: true

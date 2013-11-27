@@ -1,6 +1,6 @@
 module UsersHelper
   def unit_adults_link_list(unit, users)
-    users.map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
+    users.map { |user| link_to(user.full_name, unit_adults_path(unit, user)) }.join(', ').html_safe
   end
 
   def unit_scouts_link_list(unit, users)
@@ -8,7 +8,7 @@ module UsersHelper
   end
 
   def scout_adults_link_list(unit, scout)
-    scout.unit_adults(unit).map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
+    scout.unit_adults(unit).map { |user| link_to(user.full_name, unit_adults_path(unit, user)) }.join(', ').html_safe
   end
 
   def adult_scouts_link_list(unit, adult)

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-#ruby '2.0.0'
-gem 'rails', '4.0.1'
+#ruby '2.1.0'
+gem 'rails', '4.0.2'
 
 gem 'sqlite3'
 # gem 'pg'
@@ -103,7 +103,7 @@ group :test do
 	gem 'guard-rspec'
   gem 'rspec-nc'
 
-	gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
+	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'
   gem 'capybara-screenshot'
 

@@ -16,7 +16,7 @@ group :backend do
   #   # watch(%r|^app/models/(.*)\.rb$|)      { |m| "test/unit/#{m[1]}_test.rb" }
   # end
 
-  guard 'rspec', zeus: true, bundler: false, :all_after_pass => true, :cli => "--color --format nested --fail-fast" do
+  guard 'rspec', zeus: true, bundler: false, cli: "--color --format nested --fail-fast" do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
     watch('spec/spec_helper.rb')                        { "spec" }

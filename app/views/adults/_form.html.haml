@@ -1,4 +1,4 @@
-= form_for @user, url: unit_adult_path(@unit, @user), html: { class: 'form-horizontal' } do |f|
+= form_for [@unit, @user], html: { class: 'form-horizontal' } do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
   .control-group
@@ -68,7 +68,7 @@
   %fieldset
     %legend Scouts
     .control-group
-      = label_tag :scout_ids, 'Scouts', class: 'control-label'
+      = f.label :scout_ids, 'Scouts', class: 'control-label'
       .controls
         = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
@@ -76,4 +76,7 @@
 
   .form-actions
     = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', unit_adults_path, class: 'btn'
+    - if @user.new_record?
+      = link_to 'Cancel', unit_adults_path(@unit), class: 'btn'
+    - else
+      = link_to 'Cancel', unit_adult_path(@unit, @user), class: 'btn'

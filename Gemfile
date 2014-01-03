@@ -1,10 +1,7 @@
 source 'https://rubygems.org'
 
-#ruby '2.0.0'
-gem 'rails'
-
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
+#ruby '2.1.0'
+gem 'rails', '4.0.2'
 
 gem 'sqlite3'
 # gem 'pg'
@@ -71,6 +68,7 @@ group :development, :test do
 	gem 'rspec-rails'
 	gem 'ffi'
 	gem 'capybara'
+  gem 'awesome_print'
 end
 
 group :development do
@@ -86,7 +84,7 @@ group :development do
   gem "letter_opener"
   gem 'wirble', require: false
   gem 'hirb', require: false
-  gem 'awesome_print', require: false
+  gem 'brakeman', :require => false
 end
 
 
@@ -108,12 +106,12 @@ group :test do
 	gem 'guard-rspec'
   gem 'rspec-nc'
 
-	gem 'database_cleaner', git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
+	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'
   gem 'capybara-screenshot'
 
-  gem 'simplecov', '>= 0.4.0', require: false
-  gem 'simplecov-rcov', require: false
+  gem 'simplecov', require: false
+  # gem 'simplecov-rcov', require: false
 end
 
 # To use ActiveModel has_secure_password

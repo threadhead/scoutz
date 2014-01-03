@@ -1,6 +1,11 @@
 require 'rubygems'
 ENV["RAILS_ENV"] ||= 'test'
 
+require 'simplecov'
+# require 'simplecov-rcov'
+# SimpleCov.formatter = SimpleCov::Formatter::RcovFormatter
+SimpleCov.start 'rails'
+
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require File.expand_path("../../config/environment", __FILE__)
@@ -34,6 +39,7 @@ RSpec.configure do |config|
   # config.extend ControllerMacros, :type => :controller
   # config.include ModelMacros, :type => :model
   config.include ModelHelpers, type: :model
+  config.include FeatureHelpers, type: :feature
 
   # config.include RequestMacros
   # config.include ViewMacros, :type => :view

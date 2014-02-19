@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 #ruby '2.1.0'
-gem 'rails', '4.0.2'
+gem 'rails', '4.0.3'
 
 gem 'sqlite3'
 # gem 'pg'
@@ -89,17 +89,16 @@ end
 
 
 group :test do
-	gem 'rake' # for travis-ci
+	# gem 'rake' # for travis-ci
   gem 'minitest'
 	gem 'shoulda-matchers'
 	gem 'factory_girl_rails'
 	gem 'ffaker'
-	# gem 'spork-rails'
 	gem 'rb-fsevent'
 	gem 'terminal-notifier-guard'
 
   gem 'vcr'
-  gem 'webmock'
+  gem 'webmock', '<= 1.16'
 
 	gem 'guard'
   gem 'guard-zeus'

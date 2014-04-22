@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 
-#ruby '2.1.0'
-gem 'rails', '4.0.2'
+#ruby '2.1.1'
+gem 'rails', '4.0.4'
 
 gem 'sqlite3'
 # gem 'pg'
 
 gem 'thin'
-gem 'rake'
+# gem 'rake'
 
 gem 'devise'
 # gem 'devise-async'

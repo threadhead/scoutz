@@ -1,3 +1,7 @@
+# This class will crawl a Unit's site on Scoutlander and populate Scoutlander::Datum objects
+# with the information it scrapes. It will NOT persist any data.
+
+
 module Scoutlander
   module Importer
     class Adults < Scoutlander::Importer::Base
@@ -8,6 +12,8 @@ module Scoutlander
         @adults = []
       end
 
+
+      # just scrape for unit audults (name and profile id/href), no scout info
       def fetch_unit_adults(unit_id)
         unit = Unit.find(unit_id)
         login
@@ -25,11 +31,13 @@ module Scoutlander
       end
 
 
+      # scrape the Adult Search page table and populate adult name/url/uid and related scout name/url/uid
       def fetch_unit_adults_with_scouts(unit_id)
         unit = Unit.find(unit_id)
         login
 
         adults_page = @agent.get("/securesite/parentmain.aspx?UID=#{3218}")
+        # puts adults_page.inspect
         # get the table rows, excluding the first two header rows
         rows = adults_page.search('table#ctl00_mainContent_ParentSearch_tblPersonSearch tr')[2..-1]
         rows.each do |row|
@@ -65,31 +73,44 @@ module Scoutlander
         @adults
       end
 
-      def fetch_adult_info(adult_datum)
-        adult_page = adult_info_page(adult_datum)
 
-        adult_datum.unit_role = adult_page.search("td#ctl00_mainContent_ParentProfile_txtRole").text
-        adult_datum.first_name = adult_page.search("td#ctl00_mainContent_ParentProfile_txtFirstName").text
-        adult_datum.last_name = adult_page.search("td#ctl00_mainContent_ParentProfile_txtLastName").text
-        adult_datum.security_level = adult_page.search("td#ctl00_mainContent_ParentProfile_txtSecurityLevel").text
-        adult_datum.email = adult_page.search("td#ctl00_mainContent_ParentProfile_txtEmail").text
-        adult_datum.alt_email = adult_page.search("td#ctl00_mainContent_ParentProfile_txtAltEmail").text
-        adult_datum.event_reminders = adult_page.search("td#ctl00_mainContent_ParentProfile_txtEventNotification").text
-
-        adult_datum.home_phone = adult_page.search("td#ctl00_mainContent_ParentProfile_txtHomePhone").text
-        adult_datum.work_phone = adult_page.search("td#ctl00_mainContent_ParentProfile_txtWorkPhone").text
-        adult_datum.cell_phone = adult_page.search("td#ctl00_mainContent_ParentProfile_txtCellPhone").text
-
-        adult_datum.street = adult_page.search("td#ctl00_mainContent_ParentProfile_txtStreet").text
-        adult_datum.city = adult_page.search("td#ctl00_mainContent_ParentProfile_txtCity").text
-        adult_datum.state = adult_page.search("td#ctl00_mainContent_ParentProfile_txtState").text
-        adult_datum.zip_code = adult_page.search("td#ctl00_mainContent_ParentProfile_txtZip").text
-
-        adult_datum.inspected = true
-
-        adult_page
+      # scrape an adult show page and populate all data
+      def fetch_adult_info(dautm)
+        fetch_person_info(datum, "ParentProfile")
       end
 
+      # scrape a scout show page and populate all data
+      def fetch_scout_info(dautm)
+        fetch_person_info(dautm, "ScoutProfile")
+      end
+
+      def fetch_person_info(datum, profile_name)
+        person_page = person_info_page(datum)
+
+        datum.unit_role = person_page.search("td#ctl00_mainContent_#{profile_name}_txtRole").text
+        datum.first_name = person_page.search("td#ctl00_mainContent_#{profile_name}_txtFirstName").text
+        datum.last_name = person_page.search("td#ctl00_mainContent_#{profile_name}_txtLastName").text
+        datum.security_level = person_page.search("td#ctl00_mainContent_#{profile_name}_txtSecurityLevel").text
+        datum.email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEmail").text
+        datum.alt_email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtAltEmail").text
+        datum.event_reminders = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEventNotification").text
+
+        datum.home_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtHomePhone").text
+        datum.work_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtWorkPhone").text
+        datum.cell_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtCellPhone").text
+
+        datum.street = person_page.search("td#ctl00_mainContent_#{profile_name}_txtStreet").text
+        datum.city = person_page.search("td#ctl00_mainContent_#{profile_name}_txtCity").text
+        datum.state = person_page.search("td#ctl00_mainContent_#{profile_name}_txtState").text
+        datum.zip_code = person_page.search("td#ctl00_mainContent_#{profile_name}_txtZip").text
+
+        datum.inspected = true
+
+        person_page
+      end
+
+
+      # scrape Scoutlander for the passed adult, popluate their info, and add scout links (but no scout info)
       def fetch_adult_info_with_scout_links(adult_datum)
         adult_page = fetch_adult_info(adult_datum)
 
@@ -108,10 +129,12 @@ module Scoutlander
         end
       end
 
-      def adult_info_page(adult_datum)
-        return nil if adult_datum.uid.blank? || adult_datum.profile.blank?
+
+      # goto the adult show page
+      def adult_info_page(datum)
+        return nil if datum.url.blank?
         login
-        agent.get("/securesite/parentmain.aspx?UID=#{adult_datum.uid}&profile=#{adult_datum.profile}")
+        @agent.get(datum.url)
       end
 
 

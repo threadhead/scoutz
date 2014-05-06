@@ -58,3 +58,20 @@ namespace :deploy do
     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
   end
 end
+
+
+namespace :deploy do
+  namespace :assets do
+    desc 'Run the precompile task locally and rsync with shared'
+    task :precompile, :roles => :web, :except => { :no_release => true } do
+      from = source.next_revision(current_revision)
+      if releases.length <= 1 || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
+        %x{bundle exec rake assets:precompile}
+        %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@#{host}:#{shared_path}}
+        %x{bundle exec rake assets:clean}
+      else
+        logger.info 'Skipping asset pre-compilation because there were no asset changes'
+      end
+    end
+  end
+end

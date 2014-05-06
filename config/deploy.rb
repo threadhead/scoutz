@@ -68,7 +68,7 @@ namespace :deploy do
       # if releases.length <= 1 || capture("cd #{latest_release} && #{source.local.log(from)} vendor/assets/ app/assets/ | wc -l").to_i > 0
         %x{bundle exec rake assets:precompile}
         %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@#{web}:#{shared_path}}
-        %x{bundle exec rake assets:clean}
+        %x{bundle exec rake assets:clobber}
       # else
       #   logger.info 'Skipping asset pre-compilation because there were no asset changes'
       # end

@@ -16,9 +16,12 @@ set :shared_children, shared_children + %w{public/uploads}
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-role :web, "desertsol-apps.net"                          # Your HTTP server, Apache/etc
-role :app, "desertsol-apps.net"                          # This may be the same as your `Web` server
-role :db,  "desertsol-apps.net", :primary => true # This is where Rails migrations will run
+# role :web, "desertsol-apps.net"                          # Your HTTP server, Apache/etc
+# role :app, "desertsol-apps.net"                          # This may be the same as your `Web` server
+# role :db,  "desertsol-apps.net", :primary => true # This is where Rails migrations will run
+role :web, "192.168.0.2"                          # Your HTTP server, Apache/etc
+role :app, "192.168.0.2"                          # This may be the same as your `Web` server
+role :db,  "192.168.0.2", :primary => true # This is where Rails migrations will run
 # role :db,  "your slave db-server here"
 
 set :user, "karl"

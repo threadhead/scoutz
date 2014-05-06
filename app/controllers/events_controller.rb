@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  respond_to :html, :js
   before_filter :auth_and_time_zone
   before_filter :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
 

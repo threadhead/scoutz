@@ -27,7 +27,7 @@ Scoutz::Application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = true
+  config.assets.compile = false
 
   # Generate digests for assets URLs.
   config.assets.digest = true
@@ -78,5 +78,5 @@ Scoutz::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { host: 'http://scoutt.in/' }
+  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in/' }
 end

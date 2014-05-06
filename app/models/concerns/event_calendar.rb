@@ -51,17 +51,17 @@ module EventCalendar
   def ical_string
     cal = Icalendar::Calendar.new
     e = self
-    cal.event do
-      klass        "PRIVATE"
-      dtstart       e.start_at.utc.to_s(:ical)
-      dtend         e.end_at.utc.to_s(:ical)
-      summary       e.name
-      description   Sanitize.clean(e.message, whitespace_elements: [])
-      # location      e.full_location, {"ALTREP" => ["\"#{e.location_map_url}\""]}
-      location      e.full_location
-      uid           e.ical_uuid
-      sequence      e.ical_sequence
-      url           Rails.application.routes.url_helpers.event_url(e, host: Rails.application.config.action_mailer.default_url_options[:host])
+    cal.event do |e|
+      e.ip_class      = "PRIVATE"
+      e.dtstart       = self.start_at.utc.to_s(:ical)
+      e.dtend         = self.end_at.utc.to_s(:ical)
+      e.summary       = self.name
+      e.description   = Sanitize.clean(self.message, whitespace_elements: [])
+      # e.location    =   self.full_location, {"ALTREP" => ["\"#{self.location_map_url}\""]}
+      e.location      = self.full_location
+      e.uid           = self.ical_uuid
+      e.sequence      = self.ical_sequence
+      e.url           = Rails.application.routes.url_helpers.event_url(self, host: Rails.application.config.action_mailer.default_url_options[:host])
     end
     cal.to_ical
   end

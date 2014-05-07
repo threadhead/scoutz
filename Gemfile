@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
 ruby '2.1.1'
-gem 'rails', '4.0.4'
+gem 'rails', '4.0.5'
 
 gem 'sqlite3'
 # gem 'pg'
 
-gem 'thin'
+# gem 'thin'
 # gem 'rake'
 
 gem 'devise'
@@ -54,8 +54,6 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'therubyracer'
 # gem 'less-rails'
 
-# gem 'twitter-bootstrap-rails'
-# gem 'compass-rails', git: 'git://github.com/milgner/compass-rails.git', branch: 'rails4'
 gem 'bourbon'
 
 gem 'jquery-rails'

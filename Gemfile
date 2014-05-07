@@ -27,6 +27,7 @@ gem 'sanitize'
 gem 'ckeditor'
 # gem 'gmaps4rails'
 gem 'public_activity' #, git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
+gem "non-stupid-digest-assets"
 
 # add these gems to help with the transition:
 # gem 'protected_attributes'

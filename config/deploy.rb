@@ -57,19 +57,19 @@ namespace :deploy do
   end
 end
 
-desc 'copy ckeditor nondigest assets'
-task :copy_nondigest_assets, roles: :app do
-  run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} ckeditor:create_nondigest_assets"
-end
-after 'deploy:assets:precompile', 'copy_nondigest_assets'
+# desc 'copy ckeditor nondigest assets'
+# task :copy_nondigest_assets, roles: :app do
+#   run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} ckeditor:create_nondigest_assets"
+# end
+# after 'deploy:assets:precompile', 'copy_nondigest_assets'
 
 namespace :deploy do
   namespace :assets do
     desc 'Run the precompile task locally and rsync with shared'
-    task :precompile, :roles => :web, :except => { :no_release => true } do
-      %x{bundle exec rake assets:precompile}
-      %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@192.168.0.2:#{shared_path}}
-      %x{bundle exec rake assets:clean}
+    task :precompile, roles: :web, except: { no_release: true } do
+      run_locally "bundle exec rake assets:precompile"
+      run_locally "rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@192.168.0.2:#{shared_path}"
+      run_locally "bundle exec rake assets:clobber"
     end
   end
 end

@@ -204,6 +204,7 @@ GEM
     nio4r (1.0.0)
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
+    non-stupid-digest-assets (1.0.4)
     orm_adapter (0.5.0)
     polyglot (0.3.4)
     pry (0.9.12.6)
@@ -368,6 +369,7 @@ DEPENDENCIES
   letter_opener
   mini_magick
   minitest
+  non-stupid-digest-assets
   public_activity
   rack-livereload
   rails (= 4.0.5)

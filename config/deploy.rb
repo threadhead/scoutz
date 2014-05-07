@@ -8,6 +8,7 @@ set :repository,  "."
 set :use_sudo, false
 set :asset_env, ""
 set :shared_children, shared_children + %w{public/uploads}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/uploads public/assets}
 
 
 # set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
@@ -61,6 +62,17 @@ task :copy_nondigest_assets, roles: :app do
   run "cd #{latest_release} && #{rake} RAILS_ENV=#{rails_env} ckeditor:create_nondigest_assets"
 end
 after 'deploy:assets:precompile', 'copy_nondigest_assets'
+
+namespace :deploy do
+  namespace :assets do
+    desc 'Run the precompile task locally and rsync with shared'
+    task :precompile, :roles => :web, :except => { :no_release => true } do
+      %x{bundle exec rake assets:precompile}
+      %x{rsync --recursive --times --rsh=ssh --compress --human-readable --progress public/assets #{user}@192.168.0.2:#{shared_path}}
+      %x{bundle exec rake assets:clean}
+    end
+  end
+end
 
 
 # namespace :deploy do

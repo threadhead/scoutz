@@ -1,47 +1,50 @@
-= form_for @unit, url: sign_up_create_unit_path, :html => { class: 'form-horizontal' } do |f|
-  .row-fluid
-    .span6
+= form_for @unit, url: sign_up_create_unit_path, html: { class: 'form-horizontal' } do |f|
+  .row
+    .col-md-6
       .well
-        %h2 About your unit
+        %h2 First&hellip; about your unit
+        %p &nbsp;
 
         .form-group
-          = f.label :unit_type, class: 'control-label'
-          .controls
-            = f.select :unit_type, Unit.unit_types
+          = f.label :unit_type, class: @label_col_class
+          .col-md-5
+            = f.select :unit_type, Unit.unit_types, {}, class: 'form-control'
         .form-group
-          = f.label :unit_number, class: 'control-label'
-          .controls
-            = f.text_field :unit_number, class: 'text_field'
-            %span{class: 'help-inline'} ex. 134, 603, 15
+          = f.label :unit_number, class: @label_col_class
+          .col-md-3
+            = f.text_field :unit_number, class: 'form-control'
+            .help-block ex. 134, 603, 15
         .form-group
-          = f.label :city, class: 'control-label'
-          .controls
-            = f.text_field :city, class: 'text_field'
+          = f.label :city, class: @label_col_class
+          .col-md-5
+            = f.text_field :city, class: 'form-control'
         .form-group
-          = f.label :state, class: 'control-label'
-          .controls
-            = f.subregion_select :state, 'US'
+          = f.label :state, class: @label_col_class
+          .col-md-8
+            = f.subregion_select :state, 'US', {}, class: 'form-control'
         .form-group
-          = f.label :time_zone, class: 'control-label'
-          .controls
-            = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+          = f.label :time_zone, class: @label_col_class
+          .col-md-8
+            = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}, class: 'form-control'
 
-    .span6
+    .col-md-6
       .well.sub-units
         %h2
-          Add some
-          %span.unit-type-plural= @unit.sub_unit_type.pluralize
+          Next&hellip; add some
+          %span.unit-type-plural= @unit.sub_unit_name.pluralize
+        %p &nbsp;
 
         = f.fields_for :sub_units do |f_sub|
           .form-group
-            = f_sub.label :name, class: 'control-label'
-            .controls.sub-unit
-              = f_sub.text_field :name, class: 'input-medium'
+            = f_sub.label :name, class: @label_col_class
+            .col-md-4.controls.sub-unit
+              = f_sub.text_field :name, class: 'form-control'
+            .col-md-4
               = f_sub.hidden_field :_destroy
-              = link_to "remove", '#', class: 'btn btn-warning btn-mini remove-sub-unit-button'
+              = link_to "remove", '#', class: 'btn btn-warning btn-sm remove-sub-unit-button'
 
         .form-group.add-sub-unit
-          .controls
+          .col-md-offset-4.col-md-8
             %span.help-block.sub-unit-type#cub-scouts.hidden ex. Den 1, Den 9, Den 11
             %span.help-block.sub-unit-type#boy-scouts.hidden ex. Dragons, Eagles, Sea Cucumbers
             %span.help-block.sub-unit-type#girl-scouts.hidden ex. Patrol 1, Buffalo Gals, Copperheads
@@ -50,21 +53,22 @@
             %br
             = link_to '#', class: 'btn btn-primary add-sub-unit-button' do
               add a
-              %span.unit-type= @unit.sub_unit_type
+              %span.unit-type= @unit.sub_unit_name
 
           #new-sub-unit-fields.hidden
             = f.fields_for :sub_units, SubUnit.new, child_index: 'new_sub_unit' do |f_sub|
               .form-group
-                = f_sub.label :name, class: 'control-label'
-                .controls.sub-unit
-                  = f_sub.text_field :name, class: 'input-medium'
+                = f_sub.label :name, class: @label_col_class
+                .col-md-4.controls.sub-unit
+                  = f_sub.text_field :name, class: 'form-control'
+                .col-md-4
                   = f_sub.hidden_field :_destroy
-                  = link_to "remove", '#', class: 'btn btn-warning btn-mini remove-sub-unit-button'
+                  = link_to "remove", '#', class: 'btn btn-warning btn-sm remove-sub-unit-button'
 
-  .row-fluid
-    .span12.centered
+  .row
+    .col-md-12.centered
       = link_to 'Create My Unit', '#', class: 'btn btn-primary create-my-unit'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn btn-default'
 
 :javascript
-  window.unit_types = "#{j Unit::SUB_UNIT_TYPES.to_json}";
+  window.unit_types = "#{j Unit.unit_types_sub_units.to_json}";

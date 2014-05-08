@@ -5,6 +5,7 @@
       = msg
 
 - if defined?(ar_object) && !ar_object.nil?
-  - ar_object.errors.full_messages.each do |msg|
-    = content_tag :div, class: "alert alert-error" do
+  = content_tag :div, class: "alert alert-danger" do
+    %h4 #{pluralize(ar_object.errors.count, "error")} prohibited this #{ar_object.class.name} from being saved:
+    - ar_object.errors.full_messages.each do |msg|
       %p #{msg}

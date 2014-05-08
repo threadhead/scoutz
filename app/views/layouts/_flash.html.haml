@@ -4,7 +4,7 @@
       %i{class:"#{flash_method_icon(name)} icon-large"}
       = msg
 
-- if defined?(ar_object) && !ar_object.nil?
+- if defined?(ar_object) && !ar_object.nil? && ar_object.errors.size > 0
   = content_tag :div, class: "alert alert-danger" do
     %h4 #{pluralize(ar_object.errors.count, "error")} prohibited this #{ar_object.class.name} from being saved:
     - ar_object.errors.full_messages.each do |msg|

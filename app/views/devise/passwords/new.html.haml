@@ -8,12 +8,12 @@
 
 		= #devise_error_messages!
 
-		.control-group
+		.form-group
 			= f.label :email, :class => 'control-label'
 			.controls
 				= f.email_field :email, :class => 'text_field'
 
-		.control-group
+		.form-group
 			.controls
 				= f.submit "Send me reset password instructions", :class => 'btn btn-primary'
 

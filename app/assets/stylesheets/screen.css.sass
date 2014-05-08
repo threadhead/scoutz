@@ -54,10 +54,14 @@ div.text-xxxlarge, p.xxxlarge, p xxxlarge, i.xxxlarge, span.xxxlarge, strong.xxx
   font-size: 42px
   line-height: 1.4
 
+h2.form-title
+  margin-top: 0px
+  margin-bottom: 0px
+
 .form-condensed
   font-size: 12px
   margin-bottom: 1px
-  .control-group
+  .form-group
     margin-bottom: 12px
     .control-label
       width: 120px
@@ -145,10 +149,10 @@ body.body-modal
   background-color: #f4f1ed
   border-color: #cccbe3
 
-.well-thin
-  margin-top: 6px
-  margin-bottom: 12px
-  padding: 6px
+// .well-thin
+//   margin-top: 6px
+//   margin-bottom: 12px
+//   padding: 6px
 
 .table-roster
   font-size: .8em
@@ -185,9 +189,9 @@ body.body-modal
   height: 100%
 
 .email-message-events
-  border: 2px solid #ccc
-  padding-top: 12px
-  padding-bottom: 12px
+  // border: 2px solid #ccc
+  padding-top: 2px
+  padding-bottom: 2px
   height: 140px
   overflow-y: scroll
 
@@ -225,3 +229,39 @@ legend
 legend + *
   -webkit-margin-top-collapse : separate
   margin-top                  : 20px
+
+.navbar-sidebar
+  background-color: #555
+
+  .navbar-brand
+    color: #ccc
+
+  .navbar-brand:hover
+    color: #ccc
+
+  .navbar-nav>li>a
+    color: #ccc
+
+  .navbar-nav>li>a:hover, .navbar-nav>li>a:focus
+    color: #fff
+
+  .navbar-toggle
+    border-color: #999
+
+@media (min-width: 768px)
+  .sidebar-nav .navbar .navbar-collapse
+    padding: 0
+    max-height: none
+
+  .sidebar-nav .navbar ul
+    float: none
+    display: block
+
+  .sidebar-nav .navbar li
+    float: none
+    display: block
+
+  .sidebar-nav .navbar li a
+    padding-top: 12px
+    padding-bottom: 12px
+

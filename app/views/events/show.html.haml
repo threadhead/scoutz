@@ -1,14 +1,14 @@
 = #content_for(:scripts) {javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"}
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
-        = link_to(dashboard_list_path, class: 'btn') do
+        = link_to(dashboard_list_path, class: 'btn btn-default') do
           %i.icon-large.icon-reply
           back
 
         - if @event.users.where(id: current_user).count > 0
-          = link_to(edit_event_path(@event), class: 'btn') do
+          = link_to(edit_event_path(@event), class: 'btn btn-default') do
             %i.icon-large.icon-edit
             change
 
@@ -19,16 +19,17 @@
       %h2 #{@event.name}
 
 
-.row-fluid
-  .span8
+.row
+  .col-md-8
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
     - if @event.ical.present?
       .pull-right
-        %i.icon-calendar
-        %span.small
-          = link_to 'add to calendar', @event.ical.url
+        = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
+          %i.icon-calendar
+          add to calendar
 
-    %em.xxlarge= @event.unit.name
+
+    %p.xxlarge= @event.unit.name
     .text-xlarge
       %table.table
         %tr
@@ -88,7 +89,7 @@
               %td
                 - unless @event_rosters.empty?
                   %p.right-aligned
-                    = link_to email_attendees_event_path(@event), class: 'btn' do
+                    = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
                       %i.icon-envelope
                       Email all attendees
 
@@ -97,7 +98,7 @@
                   - #@event.event_signups.includes(:scout).each do |signup|
 
 
-  .span4
+  .col-md-4
     - if @event.signup_required && !@event.after_signup_deadline?
       #event-signups-list
         = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}

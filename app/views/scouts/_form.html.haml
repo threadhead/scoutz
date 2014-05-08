@@ -1,42 +1,43 @@
 = form_for [@unit, @user], html: { class: 'form-horizontal' } do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-  .control-group
-    = f.label :unit, class: 'control-label'
-    .controls
+  .form-group
+    = f.label :unit, class: @label_col_class
+    .col-md-6
       .text-xlarge= @unit.name
 
-  .control-group
-    = f.label :sub_unit_id, @unit.sub_unit_name ,class: 'control-label'
-    .controls
-      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name
+  .form-group
+    = f.label :sub_unit_id, @unit.sub_unit_name ,class: @label_col_class
+    .col-md-6
+      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, class: 'form-control'
 
-  .control-group
-    = f.label :name, class: 'control-label'
-    .controls
-      = f.text_field :first_name, class: 'text_field', placeholder: 'first name'
-      = f.text_field :last_name, class: 'text_field', placeholder: 'last name'
+  .form-group
+    = f.label :name, class: @label_col_class
+    .col-md-3
+      = f.text_field :first_name, class: 'form-control', placeholder: 'first name'
+    .col-md-3
+      = f.text_field :last_name, class: 'form-control', placeholder: 'last name'
 
-  .control-group
-    = f.label :rank, class: 'control-label'
-    .controls
-      = f.select :rank, @unit.ranks, include_blank: true
+  .form-group
+    = f.label :rank, class: @label_col_class
+    .col-md-2
+      = f.select :rank, @unit.ranks, {}, class: 'form-control', include_blank: true
 
-  .control-group
-    = f.label :leadership_position, 'Leadership positions', class: 'control-label'
-    .controls
-      %p= f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true
-      = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
+  .form-group
+    = f.label :leadership_position, 'Leadership positions', class: @label_col_class
+    .col-md-6
+      %p= f.select :leadership_position, @unit.scout_leadership_positions, {}, class: 'form-control', include_blank: true
+      = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions'
 
-  .control-group
-    = f.label :birth, 'Birthday', class: 'control-label'
-    .controls
-      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'span2'
+  .form-group
+    = f.label :birth, 'Birthday', class: @label_col_class
+    .col-md-6
+      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'form-control'
 
   %fieldset
     %legend Picture
-    .control-group
-      .well.well-thin
+    .form-group
+      .well.well-sm
         = image_tag @user.picture.url
         %p= f.file_field :picture
       .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
@@ -45,32 +46,35 @@
 
   %fieldset
     %legend Address
-    .control-group
-      = f.label :address1, class: 'control-label'
-      .controls
-        = f.text_field :address1, class: 'span6'
+    .form-group
+      = f.label :address1, class: @label_col_class
+      .col-md-4
+        = f.text_field :address1, class: 'form-control'
 
-    .control-group
-      = f.label :address2, class: 'control-label'
-      .controls
-        = f.text_field :address2, class: 'span6'
+    .form-group
+      = f.label :address2, class: @label_col_class
+      .col-md-4
+        = f.text_field :address2, class: 'form-control'
 
-    .control-group
-      = f.label :city, 'City, State, Zip', class: 'control-label'
-      .controls
-        = f.text_field :city, class: 'span4', placeholder: 'city'
-        = f.text_field :state, class: 'span1', placeholder: 'state'
-        = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
+    .form-group
+      = f.label :city, 'City, State, Zip', class: @label_col_class
+      .col-md-2
+        = f.text_field :city, class: 'form-control', placeholder: 'city'
+      .col-md-1
+        = f.text_field :state, class: 'form-control', placeholder: 'state'
+      .col-md-2
+        = f.text_field :zip_code, class: 'form-control', placeholder: 'zip code'
 
   %fieldset
     %legend Parents (adults)
-    .control-group
-      = label_tag :adult_ids, 'Parents', class: 'control-label'
-      .controls
-        = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
+    .form-group
+      = label_tag :adult_ids, 'Parents', class: @label_col_class
+      .col-md-6
+        = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: 'form-control', style: "width: 500px"}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 
-  .form-actions
-    = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn'
+  .form-group
+    .col-md-offset-4.col-md-6
+      = f.submit class: 'btn btn-primary'
+      = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn'

@@ -40,7 +40,8 @@ Scoutz::Application.routes.draw do
 
   get "sign_up/import"
   get "sign_up/user"
-  post "sign_up/new_unit"
+  # post "sign_up/new_unit"
+  get "sign_up/new_unit"
   post "sign_up/create_unit"
   get "sign_up/new_sub_unit"
   post "sign_up/create_sub_unit"

@@ -9,13 +9,12 @@
       = render 'layouts/header'
 
     .container-fluid
-      .row-fluid
-        .span2
+      .row
+        .col-md-2
           = render 'layouts/sidebar'
 
-        .span10
-          #content
-            = yield
+        .col-md-10
+          = yield
 
     - #cache('application/footer') do
     = render 'layouts/footer'

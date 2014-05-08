@@ -1,40 +1,68 @@
-.list-group
-  = link_to dashboard_list_path, class: 'list-group-item' do
-    %i.icon-list-alt
-    Event List
+.sidebar-nav
+  .navbar.navbar-default.navbar-sidebar
+    .navbar-header
+      %span.visible-xs.navbar-brand Events
+      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#calendar-navbar-collapse")
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
 
-  = link_to dashboard_calendar_path, class: 'list-group-item' do
-    %i.icon-calendar
-    Event Calendar
+    .navbar-collapse.collapse#calendar-navbar-collapse
+      %ul.nav.navbar-nav
+        %li
+          = link_to dashboard_list_path, class: '' do
+            %i.icon-list-alt
+            Event List
+
+        %li
+          = link_to dashboard_calendar_path, class: '' do
+            %i.icon-calendar
+            Event Calendar
 
 - @units.each do |unit|
-  .list-group
-    %h5.list-group-item= unit.name_unit
+  .sidebar-nav
+    .navbar.navbar-default.navbar-sidebar
+      .navbar-header
+        %span.visible-xs.navbar-brand= unit.name_unit
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-#{unit.id}-navbar-collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
 
-    = link_to unit_scouts_path(unit), class: 'list-group-item' do
-      %i.icon-user{style: "color: darkred;"}
-      Scouts
+      .navbar-collapse.collapse{id: "unit-#{unit.id}-navbar-collapse"}
+        %ul.nav.navbar-nav
+          %li.hidden-xs.navbar-brand= unit.name_unit
+          %li
+            = link_to unit_scouts_path(unit), class: '' do
+              %i.icon-user{style: "color: #c00;"}
+              Scouts
 
-    = link_to unit_adults_path(unit), class: 'list-group-item' do
-      %i.icon-user{style: "color: olive;"}
-      Adults
+          %li
+            = link_to unit_adults_path(unit), class: '' do
+              %i.icon-user{style: "color: #c0c000;"}
+              Adults
 
-    = link_to '#', class: 'list-group-item', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
-      %i.icon-envelope
-      Email Blast
-      %i.icon-caret-down
+          %li
+            = link_to '#', class: '', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
+              %i.icon-envelope
+              Email Blast
+              %i.icon-caret-down
 
-      .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
-        = link_to new_unit_email_message_path(unit), class: 'list-group-item' do
-          &nbsp;
-          %i.icon-plus
-          New
+            .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
+              %ul.nav.navbar-nav
+                %li
+                  = link_to new_unit_email_message_path(unit), class: '' do
+                    &nbsp;
+                    %i.icon-plus
+                    New
 
-        = link_to unit_email_messages_path(unit), class: 'list-group-item' do
-          &nbsp;
-          %i.icon-list
-          Sent
+                %li
+                  = link_to unit_email_messages_path(unit), class: '' do
+                    &nbsp;
+                    %i.icon-list
+                    Sent
 
-    = link_to new_unit_event_path(unit), class: 'list-group-item' do
-      %i.icon-plus
-      New Event
+          %li
+            = link_to new_unit_event_path(unit), class: '' do
+              %i.icon-plus
+              New Event

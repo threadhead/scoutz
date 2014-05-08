@@ -89,7 +89,6 @@ Scoutz::Application.configure do
       authentication:       'login', # Mandrill supports 'plain' or 'login'
       domain:               'scoutt.in', # your domain to identify your server when connecting
     }
-  end
 
   config.action_mailer.default_url_options = { host: 'http://www.scoutt.in/' }
 end

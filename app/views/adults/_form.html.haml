@@ -1,46 +1,50 @@
 = form_for [@unit, @user], html: { class: 'form-horizontal' } do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-  .control-group
-    = f.label :unit, class: 'control-label'
-    .controls
+  .form-group
+    = f.label :unit, class: @label_col_class
+    .col-md-6
       .text-xlarge= @unit.name
 
-  .control-group
-    = f.label :name, class: 'control-label'
-    .controls
-      = f.text_field :first_name, class: 'text_field', placeholder: 'first name'
-      = f.text_field :last_name, class: 'text_field', placeholder: 'last name'
+  .form-group
+    = f.label :name, class: @label_col_class
+    .col-md-3
+      = f.text_field :first_name, class: 'form-control', placeholder: 'first name'
+    .col-md-3
+      = f.text_field :last_name, class: 'form-control', placeholder: 'last name'
 
-  .control-group
-    = f.label :leadership_position, 'Leadership positions', class: 'control-label'
-    .controls
-      %p= f.select :leadership_position, @unit.adult_leadership_positions, include_blank: true
-      = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
+  .form-group
+    = f.label :leadership_position, 'Leadership positions', class: @label_col_class
+    .col-md-3
+      %p= f.select :leadership_position, @unit.adult_leadership_positions, {include_blank: true}, class: 'form-control'
+  .form-group
+    .col-md-offset-4.col-md-6
+      = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions'
 
-  .control-group
-    = f.label :birth, 'Birthday', class: 'control-label'
-    .controls
-      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'span2'
+  .form-group
+    = f.label :birth, 'Birthday', class: @label_col_class
+    .col-md-6
+      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'form-control'
 
   %fieldset
     %legend Picture
-    .control-group
-      .well.well-thin
-        = image_tag @user.picture.url
-        %p= f.file_field :picture
-      .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+    .form-group
+      .col-md-offset-4.col-md-6
+        .well.well-sm
+          = image_tag @user.picture.url
+          %p= f.file_field :picture
+        .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
 
 
   %fieldset
     %legend Notifications
-    .control-group
-      = f.label :email, class: 'control-label'
-      .controls
-        = f.email_field :email, class: 'span5'
+    .form-group
+      = f.label :email, class: @label_col_class
+      .col-md-4
+        = f.email_field :email, class: 'form-control'
 
-    .control-group
-      .controls
+    .form-group
+      .col-md-6
         = f.label :send_reminders, class: 'checkbox' do
           = f.check_box :send_reminders
           send reminder before event deadlines and start times
@@ -48,35 +52,38 @@
 
   %fieldset
     %legend Address
-    .control-group
-      = f.label :address1, class: 'control-label'
-      .controls
-        = f.text_field :address1, class: 'span6'
+    .form-group
+      = f.label :address1, class: @label_col_class
+      .col-md-4
+        = f.text_field :address1, class: 'form-control'
 
-    .control-group
-      = f.label :address2, class: 'control-label'
-      .controls
-        = f.text_field :address2, class: 'span6'
+    .form-group
+      = f.label :address2, class: @label_col_class
+      .col-md-4
+        = f.text_field :address2, class: 'form-control'
 
-    .control-group
-      = f.label :city, 'City, State, Zip', class: 'control-label'
-      .controls
-        = f.text_field :city, class: 'span4', placeholder: 'city'
-        = f.text_field :state, class: 'span1', placeholder: 'state'
-        = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
+    .form-group
+      = f.label :city, 'City, State, Zip', class: @label_col_class
+      .col-md-2
+        = f.text_field :city, class: 'form-control', placeholder: 'city'
+      .col-md-1
+        = f.text_field :state, class: 'form-control', placeholder: 'state'
+      .col-md-2
+        = f.text_field :zip_code, class: 'form-control', placeholder: 'zip code'
 
   %fieldset
     %legend Scouts
-    .control-group
-      = f.label :scout_ids, 'Scouts', class: 'control-label'
-      .controls
-        = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
+    .form-group
+      = f.label :scout_ids, 'Scouts', class: @label_col_class
+      .col-md-6
+        = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: 'form-control', style: "width: 500px"}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 
-  .form-actions
-    = f.submit class: 'btn btn-primary'
-    - if @user.new_record?
-      = link_to 'Cancel', unit_adults_path(@unit), class: 'btn'
-    - else
-      = link_to 'Cancel', unit_adult_path(@unit, @user), class: 'btn'
+  .form-group
+    .col-md-offset-4.col-md-6
+      = f.submit class: 'btn btn-primary'
+      - if @user.new_record?
+        = link_to 'Cancel', unit_adults_path(@unit), class: 'btn btn-default'
+      - else
+        = link_to 'Cancel', unit_adult_path(@unit, @user), class: 'btn btn-default'

@@ -57,7 +57,6 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'less-rails'
 
 gem 'bourbon'
-
 gem 'jquery-rails'
 
 #fullCalendar is sensitive to the jQuery/jQuery UI version!
@@ -68,6 +67,7 @@ group :development, :test do
   # gem 'quiet_assets'
 	gem 'haml-rails'
 	gem 'rspec-rails'
+  # gem 'rspec-rails', '~> 3.0.0.beta2'
 	gem 'ffi'
 	gem 'capybara'
   gem 'awesome_print'
@@ -93,17 +93,16 @@ end
 group :test do
 	gem 'rake' # for travis-ci
   gem 'minitest'
-	gem 'shoulda-matchers'
-	gem 'factory_girl_rails'
-	gem 'ffaker'
-	# gem 'spork-rails'
-	gem 'rb-fsevent'
-	gem 'terminal-notifier-guard'
+  gem 'factory_girl_rails'
+  gem 'ffaker'
+  # gem 'spork-rails'
+  gem 'rb-fsevent'
+  gem 'terminal-notifier-guard'
 
-	gem 'guard'
+  gem 'guard'
   gem 'guard-zeus'
-	gem 'guard-rspec'
-  gem 'rspec-nc'
+  gem 'guard-rspec'
+	gem 'shoulda-matchers'
 
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'

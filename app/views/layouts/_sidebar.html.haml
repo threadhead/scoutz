@@ -1,42 +1,40 @@
-.well.sidebar-nav
-  %ul.nav.nav-list
-    %li
-      = link_to dashboard_list_path do
-        %i.icon-list-alt
-        Event List
-    %li
-      = link_to dashboard_calendar_path do
-        %i.icon-calendar
-        Event Calendar
+.list-group
+  = link_to dashboard_list_path, class: 'list-group-item' do
+    %i.icon-list-alt
+    Event List
+
+  = link_to dashboard_calendar_path, class: 'list-group-item' do
+    %i.icon-calendar
+    Event Calendar
 
 - @units.each do |unit|
-  .well.sidebar-nav
-    %ul.nav.nav-list
-      %li.nav-header= unit.name_unit
-      %li
-        = link_to unit_scouts_path(unit) do
-          %i.icon-user{style: "color: darkred;"}
-          Scouts
-      %li
-        = link_to unit_adults_path(unit) do
-          %i.icon-user{style: "color: olive;"}
-          Adults
-      %li
-        = link_to '#', html_options = {'data-toggle' => 'collapse', 'data-target' => "#email-blast-#{unit.id}"} do
-          %i.icon-envelope
-          Email Blast
-          %i.icon-caret-down
+  .list-group
+    %h5.list-group-item= unit.name_unit
 
-        %ul.collapse.nav.nav-list{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
-          %li
-            = link_to new_unit_email_message_path(unit) do
-              %i.icon-plus
-              New
+    = link_to unit_scouts_path(unit), class: 'list-group-item' do
+      %i.icon-user{style: "color: darkred;"}
+      Scouts
 
-            = link_to unit_email_messages_path(unit) do
-              %i.icon-list
-              Sent
-      %li
-        = link_to new_unit_event_path(unit) do
+    = link_to unit_adults_path(unit), class: 'list-group-item' do
+      %i.icon-user{style: "color: olive;"}
+      Adults
+
+    = link_to '#', class: 'list-group-item', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
+      %i.icon-envelope
+      Email Blast
+      %i.icon-caret-down
+
+      .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
+        = link_to new_unit_email_message_path(unit), class: 'list-group-item' do
+          &nbsp;
           %i.icon-plus
-          New Event
+          New
+
+        = link_to unit_email_messages_path(unit), class: 'list-group-item' do
+          &nbsp;
+          %i.icon-list
+          Sent
+
+    = link_to new_unit_event_path(unit), class: 'list-group-item' do
+      %i.icon-plus
+      New Event

@@ -3,60 +3,64 @@
 
   %fieldset
     %legend Send to
-    .row-fluid
-      .span4.offset1
-        = f.select :send_to_option, EmailMessage.send_to_options(@unit), {}, {class: 'span12'}
+    .form-group
+      = f.label :send_to_option, class: 'sr-only'
+      .col-md-offset-2.col-md-4
+        = f.select :send_to_option, EmailMessage.send_to_options(@unit), {}, class: 'form-control'
+        %br
 
-      .span7
+    .form-group
+      .col-md-offset-2.col-md-7
         #email-leaders-list.collapse{ class: ('in' if @email_message.send_to_leaders?) }
-          .well.well-small
+          .well.well-sm
             %h4 #{@unit.name_unit} Leaders
             %smaller.text-grey= @leaders.map(&:name_email).join(', ')
 
         #email-sub-unit-list.collapse{ class: ('in' if @email_message.send_to_sub_units?) }
-          .well.well-small
-            %ul.unstyled
-              - @sub_units.each do |sub_unit|
-                %li
-                  = f.label :sub_unit, class: 'checkbox sub-unit', data: {'original-title' => sub_unit_emails(sub_unit)} do
-                    = check_box_tag 'email_message[sub_unit_ids][]', sub_unit.id, @email_message.sub_unit_ids.include?(sub_unit.id.to_s)
-                    %strong= sub_unit.name
-                    %smaller.text-grey= sub_unit_emails(sub_unit)
+          .well.well-sm
+            - @sub_units.each do |sub_unit|
+              .checkbox
+                = f.label :sub_unit, class: 'sub-unit', data: {'original-title' => sub_unit_emails(sub_unit)} do
+                  = check_box_tag 'email_message[sub_unit_ids][]', sub_unit.id, @email_message.sub_unit_ids.include?(sub_unit.id.to_s)
+                  %strong= sub_unit.name
+                  %smaller.text-grey= sub_unit_emails(sub_unit)
 
         #email-send-to-users-list.collapse{ class: ('in' if @email_message.send_to_users?) }
-          .well.well-small
-            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 100%;"}
+          .well.well-sm
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {}, {multiple: true, class: 'form-control', style: "width: 100%;"}
 
   %fieldset
     %legend Events
-    .row-fluid
-      .span11.offset1
-        %p Selected events will have links at the bottom of the message
-        .well.email-message-events
+    .form-group
+      .col-md-8.col-md-offset-2
+        %p Selected events will have signup links at the bottom of the message
+        .well.well-sm.email-message-events
           - @unit.events.from_today.by_start.each do |event|
-            = f.label :event_ids, class: 'checkbox' do
-              = check_box_tag 'email_message[event_ids][]', event.id, @email_message.event_ids.include?(event.id)
-              = event_list_name(event)
+            .checkbox
+              = f.label :event_ids, class: '' do
+                = check_box_tag 'email_message[event_ids][]', event.id, @email_message.event_ids.include?(event.id)
+                = event_list_name(event)
 
 
   %fieldset
     %legend Attachments
-    .row-fluid
-      .span11.offset1
+    .form-group
+      .col-md-8.col-md-offset-2
         %strong Attach up to 4 files, total size should not exceed 2MB
         = f.fields_for :email_attachments do |f_attachment|
-          .well.well-thin
+          .well.well-sm
             %p= f_attachment.file_field :attachment
         .help-block alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf ppt txt csv
 
   %fieldset
     %legend Message
-    .row-fluid
-      .span11.offset1
+    .form-group
+      .col-md-12
         %p from: #{current_user.email}
-        %p= f.text_field :subject, class: 'span12', placeholder: 'subject'
-        %p= f.text_area :message, class: 'span12 ckeditor', placeholder: 'your message - style, add pictures, and links'
+        %p= f.text_field :subject, class: 'form-control', placeholder: 'subject'
+        %p= f.text_area :message, class: 'ckeditor', placeholder: 'your message - style, add pictures, and links'
 
-  .form-actions
-    = f.submit 'Send email blast', class: 'btn btn-primary'
-    = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn'
+  .form-group
+    .col-md-offset-2.col-md-6
+      = f.submit 'Send email blast', class: 'btn btn-primary'
+      = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn'

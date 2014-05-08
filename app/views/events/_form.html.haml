@@ -1,108 +1,116 @@
 = form_for @event, html: { class: 'form-horizontal' } do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
-  .row-fluid
-    .span12
+  .row
+    .col-md-12
       .page-header
-        %h2
+        .form-inline
           - if controller.action_name == 'new'
-            #{controller.action_name.titleize} Event for
-            = f.collection_select :unit_id, current_user.units, :id, :name
+            .pull-left
+              %h2.form-title #{controller.action_name.titleize} Event for: &nbsp;
+            = f.collection_select :unit_id, current_user.units, :id, :name, {}, class: 'form-control'
           - else
-            Edit Event for #{@unit.name}
+            %h2 Edit Event for #{@unit.name}
 
-  .row-fluid
-    .span9
-      .control-group
-        = f.label :name, class: 'control-label'
-        .controls
-          = f.text_field :name, class: 'span12', placeholder: 'event name', autofocus: true
+  .row
+    .col-md-9
+      .form-group
+        = f.label :name, class: @label_col_class
+        .col-md-8
+          = f.text_field :name, class: 'form-control', placeholder: 'event name', autofocus: true
 
-      .control-group
-        = f.label :start_at, 'Starts', class: 'control-label'
-        .controls
-          .input-append.input-append-start-end
-            = f.text_field :start_at, class: 'datetime-picker span10', value: @event.start_at.to_s(:datetimepicker)
-            %span.add-on
-              %i.icon-calendar
-          to&nbsp;
-          .input-append.input-append-start-end
-            = f.text_field :end_at, class: 'datetime-picker span10', value: @event.end_at.to_s(:datetimepicker)
-            %span.add-on
-              %i.icon-calendar
+      .form-group
+        = f.label :start_at, 'Starts', class: @label_col_class
+        .col-md-8
+          .row
+            .col-md-5
+              .input-group
+                = f.text_field :start_at, class: 'datetime-picker form-control', value: @event.start_at.to_s(:datetimepicker)
+                %span.input-group-addon
+                  %i.icon-calendar
+            .pull-left to&nbsp;
+            .col-md-5
+              .input-group
+                = f.text_field :end_at, class: 'datetime-picker form-control', value: @event.end_at.to_s(:datetimepicker)
+                %span.input-group-addon
+                  %i.icon-calendar
 
-      .control-group
-        =# f.label :send_reminders, 'notifications', class: 'control-label'
-        .controls
-          %table
-            %tr
-              %td.span5
-                = f.label :send_reminders, class: 'checkbox' do
-                  = f.check_box :send_reminders
-                  send reminder 48 hours before event start
-              / %td
-              /   = f.text_field :notifier_type, placeholder: 'notificaiton type'
+      .form-group
+        =# f.label :send_reminders, 'notifications', class: @label_col_class
+        .col-md-offset-4.col-md-6
+          = f.label :send_reminders, class: 'checkbox' do
+            = f.check_box :send_reminders
+            send reminder 48 hours before event start
 
 
-      .control-group
-        = f.label :signup_required, 'Require signup', class: 'control-label'
-        .controls
-          .input-prepend.input-append
-            %span.add-on{style: 'line-height: 3px'}= f.check_box :signup_required
-            = f.text_field :signup_deadline, class: 'datetime-picker span7', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker)
-            %span.add-on
+      .form-group
+        = f.label :signup_required, 'Require signup', class: @label_col_class
+        .col-md-5
+          .input-group
+            %span.input-group-addon{style: 'line-height: 3px'}= f.check_box :signup_required
+            = f.text_field :signup_deadline, class: 'datetime-picker form-control', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker)
+            %span.input-group-addon
               %i.icon-calendar
 
-      .control-group
-        = f.label :attire, class: 'control-label'
-        .controls
-          = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'span7'
+      .form-group
+        = f.label :attire, class: @label_col_class
+        .col-md-5
+          = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {}, class: 'form-control'
 
 
       %fieldset
         %legend Location
-        .control-group
-          = f.label :location_name, 'Name', class: 'control-label'
-          .controls
-            = f.text_field :location_name, class: 'span10'
+        .form-group
+          = f.label :location_name, 'Name', class: @label_col_class
+          .col-md-6
+            = f.text_field :location_name, class: 'form-control'
 
-        .control-group
-          = f.label :location_address1, 'Address 1', class: 'control-label'
-          .controls
-            = f.text_field :location_address1
+        .form-group
+          = f.label :location_address1, 'Address 1', class: @label_col_class
+          .col-md-6
+            = f.text_field :location_address1, class: 'form-control'
 
-        .control-group
-          = f.label :location_address2, 'Address 2', class: 'control-label'
-          .controls
-            = f.text_field :location_address2
+        .form-group
+          = f.label :location_address2, 'Address 2', class: @label_col_class
+          .col-md-6
+            = f.text_field :location_address2, class: 'form-control'
 
-        .control-group
-          = f.label :location_city, 'City, State, Zip', class: 'control-label'
-          .controls
-            = f.text_field :location_city, class: 'span6', placeholder: 'city'
-            = f.text_field :location_state, class: 'span3', placeholder: 'state'
-            = f.text_field :location_zip_code, class: 'span3', placeholder: 'zip code'
+        .form-group
+          = f.label :location_city, 'City, State, Zip', class: @label_col_class
+          .col-md-3
+            = f.text_field :location_city, class: 'form-control', placeholder: 'city'
+          .col-md-2
+            = f.text_field :location_state, class: 'form-control', placeholder: 'state'
+          .col-md-3
+            = f.text_field :location_zip_code, class: 'form-control', placeholder: 'zip code'
 
-        .control-group
-          = f.label :location_map_url, 'Map Link', class: 'control-label'
-          .controls
-            = f.url_field :location_map_url, class: 'span12', placeholder: 'http://maps.google.com'
+        .form-group
+          = f.label :location_map_url, 'Map Link', class: @label_col_class
+          .col-md-8
+            = f.url_field :location_map_url, class: 'form-control', placeholder: 'http://maps.google.com'
 
-    .span3
-      %p= f.select :kind, @unit.event_kinds, {}, {class: 'span10'}
+    .col-md-3
+      %p= f.select :kind, @unit.event_kinds, {}, {class: 'form-control'}
       #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
-        .well.well-small.span9
+        .well.well-sm
+          %strong.large Select #{@unit.sub_unit_name}s in event
           - @unit.sub_units.order('name ASC').each do |sub_unit|
-            = f.label :sub_unit, class: 'checkbox' do
-              = check_box_tag 'event[sub_unit_ids][]', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id)
-              = sub_unit.name
+            .checkbox
+              = label_tag '', class: '' do
+                = check_box_tag 'event[sub_unit_ids][]', sub_unit.id, @event.sub_unit_ids.include?(sub_unit.id), class: ''
+                = sub_unit.name
 
-  .row-fluid
-    .span12
+  .row
+    .col-md-12
       %fieldset
         %legend Details
-        = f.text_area :message, class: 'span10 ckeditor'
+        %br
+        = f.text_area :message, class: 'ckeditor'
+        %br
 
-      .form-actions
-        = f.submit class: 'btn btn-primary'
-        = link_to 'Cancel', events_path, class: 'btn'
+  .row
+    .col-md-9
+      .form-group
+        .col-md-offset-4.col-md-6
+          = f.submit class: 'btn btn-primary'
+          = link_to 'Cancel', events_path, class: 'btn btn-default'

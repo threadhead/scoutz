@@ -36,7 +36,7 @@ jQuery ->
 
   removeSubUnit = (link) ->
     $(link).prev("input[type=hidden]").val("1")
-    $(link).closest(".control-group").hide()
+    $(link).closest(".form-group").hide()
 
   $('a.create-my-unit').click ->
     # remove duplicate form values

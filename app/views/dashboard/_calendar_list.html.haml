@@ -1,10 +1,10 @@
 .page-header
   .pull-right
     .btn-group
-      = link_to dashboard_calendar_path, class: "btn btn-small #{calendar_button_status(controller.controller_name)}" do
+      = link_to dashboard_calendar_path, class: "btn btn-default btn-small #{calendar_button_status(controller.controller_name)}" do
         %i.icon-calendar
         calendar
-      = link_to dashboard_list_path, class: "btn btn-small #{list_button_status(controller.controller_name)}" do
+      = link_to dashboard_list_path, class: "btn btn-default btn-small #{list_button_status(controller.controller_name)}" do
         %i.icon-list
         list
 

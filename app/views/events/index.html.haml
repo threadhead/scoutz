@@ -1,5 +1,5 @@
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
         = link_to(new_event_path, class: "btn btn-success") do
@@ -9,8 +9,8 @@
       %h2 Events
 
 
-.row-fluid
-  .span12
+.row
+  .col-md-12
     %table.table
       %tr
         %th Kind
@@ -18,6 +18,7 @@
         %th Start
         %th End
         %th Signup required
+        %th Actions
 
       - @events.each do |event|
         %tr
@@ -29,7 +30,7 @@
           %td= link_to 'Show', event
           %td= link_to 'Edit', edit_event_path(event)
           %td= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete
-
-.row-fluid
-  .span12
+.row
+  .col-md-12
+    %hr
     #calendar

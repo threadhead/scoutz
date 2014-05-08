@@ -17,7 +17,7 @@ describe 'Adults' do
 
   context 'when viewing a list of unit adults' do
     it 'shows the adult name, den, leadership position, and scouts' do
-      within '#content table' do
+      within 'body .container-fluid table' do
         expect(page).to have_link('Karl, Tara')
         expect(page).to have_text('Den 44, Den 55')
         expect(page).to have_text('Committee Chair')

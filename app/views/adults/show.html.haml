@@ -1,15 +1,16 @@
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
-        - #if @user.users.where(id: current_user).count > 0
-        = link_to(unit_adults_path(@unit), class: 'btn') do
-          %i.icon-reply
-          #{@unit.name_unit} adults
+        .btn-group
+          - #if @user.users.where(id: current_user).count > 0
+          = link_to(unit_adults_path(@unit), class: 'btn btn-default') do
+            %i.icon-reply
+            #{@unit.name_unit} adults
 
-        = link_to(edit_unit_adult_path(@unit, @user), class: 'btn') do
-          %i.icon-edit
-          change
+          = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
+            %i.icon-edit
+            change
 
         .btn-group
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
@@ -30,8 +31,8 @@
 
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-.row-fluid
-  .span8
+.row
+  .col-md-8
     .text-xlarge
       %table.table
         %tr
@@ -70,6 +71,6 @@
             %strong Address
           %td
             %address= user_address_show(@user)
-  .span4
-    .well.well-thin
+  .col-md-4
+    .well.well-sm
       = image_tag @user.picture.url

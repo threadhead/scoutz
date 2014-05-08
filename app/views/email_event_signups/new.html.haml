@@ -8,7 +8,7 @@
 - else
   %h4 Signup for #{@scout.f_name_l_initial}
 
-  .well.well-small
+  .well.well-sm
     %p.xxlarge
     = form_for ([@event, :email, @event_signup]), html: { class: 'form-horizontal form-condensed' } do |f|
 

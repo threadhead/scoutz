@@ -1,5 +1,5 @@
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
         = link_to(new_unit_adult_path(@unit), class: "btn btn-success") do
@@ -9,8 +9,8 @@
       %h2 Adults in #{@unit.name}
 
 
-.row-fluid
-  .span9
+.row
+  .col-md-9
     = render partial: 'layouts/flash', locals: {flash: flash}
 
     %table.table
@@ -30,15 +30,3 @@
           %td= adult_sub_units_list(@unit, adult)
           %td= adult.leadership_position
           %td= unit_scouts_link_list(@unit, adult.unit_scouts(@unit))
-
-  .span3
-    / .well.well-boys
-    /   %strong Rank Count
-    /   %ul.unstyled
-    /     - @unit.scout_rank_count.each do |rank|
-    /       %li= "#{rank[0] || '<none>'} : #{rank[1]}"
-
-    /   %strong #{@unit.sub_unit_name} Count
-    /   %ul.unstyled
-    /     - @unit.scout_sub_unit_count.each do |sub_unit|
-    /       %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

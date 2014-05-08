@@ -1,18 +1,18 @@
 = f.hidden_field :scout_id
 = hidden_field_tag :user_token, @user.signup_token
 = hidden_field_tag :event_token, @event.signup_token
-.control-group
+.form-group
   = f.label :scouts_attending, 'Scouts', class: 'control-label'
   .controls
     = f.select :scouts_attending, [0,1], {}, {class: 'span5'}
     (#{@scout.first_name})
 
-.control-group
+.form-group
   = f.label :siblings_attending, 'Siblings', class: 'control-label'
   .controls
     = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'span5'}
 
-.control-group
+.form-group
   = f.label :adults_attending, 'Adults', class: 'control-label'
   .controls
     = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'span5'}

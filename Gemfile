@@ -77,9 +77,11 @@ end
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano', require: false
-  gem 'capistrano_colors', require: false
-  gem 'rvm-capistrano', require: false
+  gem 'capistrano' #, require: false
+  gem 'capistrano-bundler' #, require: false
+  gem 'capistrano-rails' #, require: false
+  gem 'capistrano-rvm' #, require: false
+  gem 'capistrano_colors' #, require: false
 
   # gem 'meta_request'
   gem 'guard-livereload'

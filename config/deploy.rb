@@ -43,8 +43,6 @@ set :keep_releases, 20
 # set :git_shallow_clone, 1
 set :use_sudo, false
 # set :repository,  "."
-set :delayed_job_server_role, :worker
-set :delayed_job_args, "-n 2"
 
 
 
@@ -53,37 +51,38 @@ namespace :deploy do
 
   desc 'Restart application'
   task :restart do
+    invoke 'delayed_job:restart'
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
       execute :touch, release_path.join('tmp/restart.txt')
-      # invoke 'delayed_job:restart'
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :bundle, :exec, :'bin/delayed_job', :restart
-        end
-      end
     end
+
   end
 
-  # my config
-  # after 'deploy:symlink:shared', 'deploy:compile_assets_locally'
-  # after :updated, "assets:precompile"
-  after :finishing, 'deploy:cleanup'
-  # after :publishing, 'deploy:restart'
+#   task :restart do
+#     on roles(:app), in: :sequence, wait: 5 do
+#       # Your restart mechanism here, for example:
+#       execute :touch, release_path.join('tmp/restart.txt')
+#     end
+#   end
+
+#   # my config
+#   # after :updated, "assets:precompile"
+#   after :finishing, 'deploy:cleanup'
 
 
   after :publishing, :restart
 
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 1 do
-      # Here we can do anything such as:
-      within release_path do
-        # invoke 'delayed_job:restart'
-        # execute :rake, 'delayed_job:restart'
-      end
-    end
-  end
+#   after :restart, :clear_cache do
+#     on roles(:web), in: :groups, limit: 3, wait: 10 do
+#       # Here we can do anything such as:
+#       # within release_path do
+#       #   execute :rake, 'cache:clear'
+#       # end
+#     end
+#   end
 end
+
 
 # namespace :assets do
 #   desc "Precompile assets locally and then rsync to web servers"

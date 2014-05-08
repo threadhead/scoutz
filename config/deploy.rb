@@ -48,14 +48,16 @@ namespace :deploy do
   end
 end
 
-before 'deploy:assets:precompile', 'deploy:symlink_db'
+set :linked_files, %w{config/database.yml config/.env.production}
 
-namespace :deploy do
-  desc "Symlinks the database.yml"
-  task :symlink_db, :roles => :app do
-    run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
-  end
-end
+# before 'deploy:assets:precompile', 'deploy:symlink_db'
+
+# namespace :deploy do
+#   desc "Symlinks the database.yml"
+#   task :symlink_db, :roles => :app do
+#     run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+#   end
+# end
 
 # desc 'copy ckeditor nondigest assets'
 # task :copy_nondigest_assets, roles: :app do

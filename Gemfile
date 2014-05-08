@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 ruby '2.1.1'
+gem 'dotenv-deployment'
 gem 'rails', '4.0.5'
 
 gem 'sqlite3'

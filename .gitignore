@@ -7,7 +7,6 @@
 /tmp/**/*
 /public/system/**
 /backups/**
-/bin/**
 /update/**
 /public/images/dog_in_collar.jpg
 /public/uploads/**

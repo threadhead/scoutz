@@ -3,7 +3,7 @@
     .page-header
       .pull-right
         = link_to(new_unit_email_message_path(@unit), class: "btn btn-success") do
-          %i.icon-plus
+          %i.fa.fa-plus
           new message
 
       %h2 My Sent Messages
@@ -30,7 +30,7 @@
           %td
             = link_to email_message.subject, unit_email_message_path(@unit, email_message)
             - if email_message.has_attachments?
-              %i.icon-paper-clip
+              %i.fa.fa-paper-clip
           %td= email_message.sender.email
           %td= email_message.send_to
           %td= link_to 'view', unit_email_message_path(@unit, email_message), class: 'btn btn-mini'

@@ -3,11 +3,11 @@
     .page-header
       .pull-right
         = link_to(unit_email_messages_path(@unit), class: 'btn btn-default') do
-          %i.icon-large.icon-reply
+          %i.fa.fa-large.icon-reply
           sent emails
 
         = link_to(new_unit_email_message_path(@unit), class: 'btn btn-success') do
-          %i.icon-large.icon-plus
+          %i.fa.fa-large.icon-plus
           new email blast
 
       %h2 Email Message

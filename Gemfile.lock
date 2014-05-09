@@ -121,6 +121,8 @@ GEM
     dotenv (0.11.1)
       dotenv-deployment (~> 0.0.2)
     dotenv-deployment (0.0.2)
+    dotenv-rails (0.11.1)
+      dotenv (= 0.11.1)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -360,8 +362,8 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   devise
-  dotenv
   dotenv-deployment
+  dotenv-rails
   factory_girl_rails
   ffaker
   ffi

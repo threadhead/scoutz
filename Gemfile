@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
 ruby '2.1.1'
+gem 'dotenv-rails'
+gem 'dotenv-deployment'
+
 gem 'rails', '4.0.5'
 
 gem 'sqlite3'
@@ -39,8 +42,6 @@ gem 'twilio-ruby'
 gem 'icalendar'
 
 group :production, :staging do
-  gem 'dotenv-rails'
-  gem 'dotenv-deployment'
   # gem 'newrelic_rpm'
   gem 'dalli'  # memcache client
 end

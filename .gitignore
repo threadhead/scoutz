@@ -30,3 +30,4 @@
 /lib/tasks/asset_sync.rake
 .powenv
 .powrc
+.env

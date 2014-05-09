@@ -7,16 +7,16 @@
       .text-xlarge= @unit.name
 
   .form-group
-    = f.label :sub_unit_id, @unit.sub_unit_name ,class: @label_col_class
-    .col-md-6
-      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, class: 'form-control'
-
-  .form-group
     = f.label :name, class: @label_col_class
     .col-md-3
       = f.text_field :first_name, class: 'form-control', placeholder: 'first name'
     .col-md-3
       = f.text_field :last_name, class: 'form-control', placeholder: 'last name'
+
+  .form-group
+    = f.label :sub_unit_id, @unit.sub_unit_name ,class: @label_col_class
+    .col-md-2
+      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, {include_blank: true}, class: 'form-control'
 
   .form-group
     = f.label :rank, class: @label_col_class
@@ -25,8 +25,10 @@
 
   .form-group
     = f.label :leadership_position, 'Leadership positions', class: @label_col_class
-    .col-md-6
-      %p= f.select :leadership_position, @unit.scout_leadership_positions, {}, class: 'form-control', include_blank: true
+    .col-md-2
+      %p= f.select :leadership_position, @unit.scout_leadership_positions, {include_blank: true}, class: 'form-control'
+  .form-group
+    .col-md-offset-4.col-md-6
       = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions'
 
   .form-group
@@ -37,10 +39,11 @@
   %fieldset
     %legend Picture
     .form-group
-      .well.well-sm
-        = image_tag @user.picture.url
-        %p= f.file_field :picture
-      .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+      .col-md-offset-4.col-md-6
+        .well.well-sm
+          = image_tag @user.picture.url
+          %p= f.file_field :picture
+        .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
 
 
 

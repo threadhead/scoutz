@@ -1,28 +1,31 @@
 = f.hidden_field :scout_id
 = hidden_field_tag :user_token, @user.signup_token
 = hidden_field_tag :event_token, @event.signup_token
+
 .form-group
-  = f.label :scouts_attending, 'Scouts', class: 'control-label'
-  .controls
-    = f.select :scouts_attending, [0,1], {}, {class: 'span5'}
+  = f.label :scouts_attending, 'Scouts', class: 'control-label col-md-4'
+  .col-md-3
+    = f.select :scouts_attending, [0,1], {}, class: 'form-control'
+  .col-md-5
     (#{@scout.first_name})
 
 .form-group
-  = f.label :siblings_attending, 'Siblings', class: 'control-label'
-  .controls
-    = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'span5'}
+  = f.label :siblings_attending, 'Siblings', class: 'control-label col-md-4'
+  .col-md-3
+    = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, class: 'form-control'
 
 .form-group
-  = f.label :adults_attending, 'Adults', class: 'control-label'
-  .controls
-    = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'span5'}
+  = f.label :adults_attending, 'Adults', class: 'control-label col-md-4'
+  .col-md-3
+    = f.select :adults_attending, [0,1,2,3,4,5,6], {}, class: 'form-control'
 
-.row-fluid
-  .span10.offset1.centered
-    = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 95%;"
-%br
-.centered
-  = f.submit signup_submit(@event_signup), class: 'btn btn-primary'
-  - unless @event_signup.new_record?
-    &nbsp;
-    = link_to "Cancel reservation", event_email_event_signup_path(@event, @event_signup, user_token: @user.signup_token, event_token: @event.signup_token, scout_id: @scout.id), method: :delete, class: 'btn btn-warning'
+.form-group
+  .col-md-12
+    = f.text_area :comment, placeholder: 'comments', rows: 3, class: 'form-control'
+
+.form-group
+  .col-md-12.centered
+    = f.submit signup_submit(@event_signup), class: 'btn btn-primary'
+    - unless @event_signup.new_record?
+      &nbsp;
+      = link_to "Cancel reservation", event_email_event_signup_path(@event, @event_signup, user_token: @user.signup_token, event_token: @event.signup_token, scout_id: @scout.id), method: :delete, class: 'btn btn-warning'

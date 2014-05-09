@@ -27,7 +27,7 @@ set :deploy_to, "/home/karl/scoutz"
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w{config/database.yml config/.env.production}
+set :linked_files, %w{config/database.yml config/.env}
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads public/assets}
@@ -52,7 +52,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     invoke 'delayed_job:restart'
-    on roles(:app), in: :sequence, wait: 5 do
+    on roles(:app), in: :sequence, wait: 1 do
       # Your restart mechanism here, for example:
       execute :touch, release_path.join('tmp/restart.txt')
     end

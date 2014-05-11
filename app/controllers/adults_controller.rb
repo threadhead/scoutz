@@ -39,6 +39,8 @@ class AdultsController < ApplicationController
   end
 
   def update
+    logger.info "handle_relations_update: #{@user.handle_relations_update(@unit, params[:adult][:scout_ids])}"
+    params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
     respond_to do |format|
       if @user.update_attributes(user_params)
         format.html { redirect_to unit_adult_path(@unit, @user), notice: "#{@user.full_name} was successfully updated." }

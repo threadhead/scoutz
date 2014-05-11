@@ -27,13 +27,13 @@
               .input-group
                 = f.text_field :start_at, class: 'datetime-picker form-control', value: @event.start_at.to_s(:datetimepicker)
                 %span.input-group-addon
-                  %i.icon-calendar
+                  %i.fa.fa-calendar
             .pull-left to&nbsp;
             .col-md-5
               .input-group
                 = f.text_field :end_at, class: 'datetime-picker form-control', value: @event.end_at.to_s(:datetimepicker)
                 %span.input-group-addon
-                  %i.icon-calendar
+                  %i.fa.fa-calendar
 
       .form-group
         =# f.label :send_reminders, 'notifications', class: @label_col_class
@@ -50,7 +50,7 @@
             %span.input-group-addon{style: 'line-height: 3px'}= f.check_box :signup_required
             = f.text_field :signup_deadline, class: 'datetime-picker form-control', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker)
             %span.input-group-addon
-              %i.icon-calendar
+              %i.fa.fa-calendar
 
       .form-group
         = f.label :attire, class: @label_col_class

@@ -11,12 +11,12 @@
       %ul.nav.navbar-nav
         %li
           = link_to dashboard_list_path, class: '' do
-            %i.icon-list-alt
+            %i.fa.fa-list-alt
             Event List
 
         %li
           = link_to dashboard_calendar_path, class: '' do
-            %i.icon-calendar
+            %i.fa.fa-calendar
             Event Calendar
 
 - @units.each do |unit|
@@ -34,35 +34,35 @@
           %li.hidden-xs.navbar-brand= unit.name_unit
           %li
             = link_to unit_scouts_path(unit), class: '' do
-              %i.icon-user{style: "color: #c00;"}
+              %i.fa.fa-user{style: "color: #c00;"}
               Scouts
 
           %li
             = link_to unit_adults_path(unit), class: '' do
-              %i.icon-user{style: "color: #c0c000;"}
+              %i.fa.fa-user{style: "color: #c0c000;"}
               Adults
 
           %li
             = link_to '#', class: '', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
-              %i.icon-envelope
+              %i.fa.fa-envelope
               Email Blast
-              %i.icon-caret-down
+              %i.fa.fa-caret-down
 
             .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
               %ul.nav.navbar-nav
                 %li
                   = link_to new_unit_email_message_path(unit), class: '' do
                     &nbsp;
-                    %i.icon-plus
+                    %i.fa.fa-plus
                     New
 
                 %li
                   = link_to unit_email_messages_path(unit), class: '' do
                     &nbsp;
-                    %i.icon-list
+                    %i.fa.fa-list
                     Sent
 
           %li
             = link_to new_unit_event_path(unit), class: '' do
-              %i.icon-plus
+              %i.fa.fa-plus
               New Event

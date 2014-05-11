@@ -20,11 +20,11 @@ module ApplicationHelper
   def flash_method_icon(name)
     case name.to_s
       when 'notice'
-        'icon-ok-sign'
+        'fa-check-circle'
       when 'msg_ok', 'info', 'alert'
-        'icon-info-sign'
+        'fa-info-circle'
       when 'error', 'warning'
-        'icon-warning-sign'
+        'fa-exclamation-triangle'
       else
         ''
       end

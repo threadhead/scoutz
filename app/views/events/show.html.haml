@@ -4,16 +4,16 @@
     .page-header
       .pull-right
         = link_to(dashboard_list_path, class: 'btn btn-default') do
-          %i.icon-large.icon-reply
+          %i.fa.fa-reply
           back
 
         - if @event.users.where(id: current_user).count > 0
           = link_to(edit_event_path(@event), class: 'btn btn-default') do
-            %i.icon-large.icon-edit
+            %i.fa.fa-edit
             change
 
         = link_to(new_event_path, class: "btn btn-success") do
-          %i.icon-large.icon-plus
+          %i.fa.fa-plus
           new event
 
       %h2 #{@event.name}
@@ -25,7 +25,7 @@
     - if @event.ical.present?
       .pull-right
         = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
-          %i.icon-calendar
+          %i.fa.fa-calendar
           add to calendar
 
 
@@ -90,7 +90,7 @@
                 - unless @event_rosters.empty?
                   %p.right-aligned
                     = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                      %i.icon-envelope
+                      %i.fa.fa-envelope
                       Email all attendees
 
                 %table.table-condensed.table-striped.table-roster

@@ -5,11 +5,11 @@
         .btn-group
           - #if @user.users.where(id: current_user).count > 0
           = link_to(unit_scouts_path(@unit), class: 'btn btn-default') do
-            %i.icon-large.icon-reply
+            %i.fa.fa-reply
             #{@unit.name_unit} scouts
 
           = link_to(edit_unit_scout_path(@unit, @user), class: 'btn btn-default') do
-            %i.icon-large.icon-edit
+            %i.fa.fa-edit
             change
 
         .btn-group
@@ -19,12 +19,12 @@
           %ul.dropdown-menu.pull-right
             %li
               = link_to(unit_scout_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
-                %i.icon-trash.icon-large
+                %i.fa.fa-trash-o
                 destroy #{@user.first_name}
 
             %li
               = link_to(new_unit_scout_path(@unit), class: "") do
-                %i.icon-large.icon-plus
+                %i.fa.fa-plus
                 new scout
 
       %h2 Scout: #{@user.full_name}

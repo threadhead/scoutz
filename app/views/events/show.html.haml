@@ -4,16 +4,16 @@
     .page-header
       .pull-right
         = link_to(dashboard_list_path, class: 'btn btn-default') do
-          %i.fa.fa-large.icon-reply
+          %i.fa.fa-reply
           back
 
         - if @event.users.where(id: current_user).count > 0
           = link_to(edit_event_path(@event), class: 'btn btn-default') do
-            %i.fa.fa-large.icon-edit
+            %i.fa.fa-edit
             change
 
         = link_to(new_event_path, class: "btn btn-success") do
-          %i.fa.fa-large.icon-plus
+          %i.fa.fa-plus
           new event
 
       %h2 #{@event.name}

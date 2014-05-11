@@ -76,7 +76,7 @@
     .form-group
       = f.label :scout_ids, 'Scouts', class: @label_col_class
       .col-md-6
-        = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: 'form-control', style: "width: 500px"}
+        = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: 'form-control'}
         .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
 
 

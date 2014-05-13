@@ -1,89 +1,53 @@
-= form_for [@unit, @user], html: { class: 'form-horizontal' } do |f|
+= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
   .form-group
-    = f.label :unit, class: @label_col_class
+    = f.label :unit, class: 'control-label col-md-3'
     .col-md-6
       .text-xlarge= @unit.name
 
-  .form-group
-    = f.label :name, class: @label_col_class
-    .col-md-3
-      = f.text_field :first_name, class: 'form-control', placeholder: 'first name'
-    .col-md-3
-      = f.text_field :last_name, class: 'form-control', placeholder: 'last name'
+  = f.text_field :first_name, control_col: 'col-md-4'
+  = f.text_field :last_name, control_col: 'col-md-4'
 
-  .form-group
-    = f.label :leadership_position, 'Leadership positions', class: @label_col_class
-    .col-md-3
-      %p= f.select :leadership_position, @unit.adult_leadership_positions, {include_blank: true}, class: 'form-control'
-  .form-group
-    .col-md-offset-4.col-md-6
-      = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions'
+  = f.select :leadership_position, @unit.adult_leadership_positions, include_blank: true, control_col: 'col-md-4'
+  = f.text_field :additional_leadership_positions, hide_label: true, control_col: 'col-md-6', placeholder: 'additional leadership positions'
 
-  .form-group
-    = f.label :birth, 'Birthday', class: @label_col_class
-    .col-md-6
-      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'form-control'
+  = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
 
   %fieldset
     %legend Picture
-    .form-group
-      .col-md-offset-4.col-md-6
+    .row
+      .col-md-offset-3.col-md-6
         .well.well-sm
           = image_tag @user.picture.url
-          %p= f.file_field :picture
-        .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+    = f.file_field :picture, hide_label: true, help: 'alowed attachments: jpg jpeg gif png, at least 200px X 200px'
 
 
   %fieldset
     %legend Notifications
-    .form-group
-      = f.label :email, class: @label_col_class
-      .col-md-4
-        = f.email_field :email, class: 'form-control'
+    = f.email_field :email, control_col: 'col-md-6'
+    = f.form_group do
+      = f.check_box :send_reminders, label: 'send reminder before event deadlines and start times'
 
-    .form-group
-      .col-md-6
-        = f.label :send_reminders, class: 'checkbox' do
-          = f.check_box :send_reminders
-          send reminder before event deadlines and start times
 
 
   %fieldset
     %legend Address
-    .form-group
-      = f.label :address1, class: @label_col_class
-      .col-md-4
-        = f.text_field :address1, class: 'form-control'
+    = f.text_field :address1, control_col: 'col-md-4'
+    = f.text_field :address2, control_col: 'col-md-4'
 
-    .form-group
-      = f.label :address2, class: @label_col_class
-      .col-md-4
-        = f.text_field :address2, class: 'form-control'
-
-    .form-group
-      = f.label :city, 'City, State, Zip', class: @label_col_class
-      .col-md-2
-        = f.text_field :city, class: 'form-control', placeholder: 'city'
-      .col-md-1
-        = f.text_field :state, class: 'form-control', placeholder: 'state'
-      .col-md-2
-        = f.text_field :zip_code, class: 'form-control', placeholder: 'zip code'
+    = f.text_field :city, control_col: 'col-md-3'
+    = f.text_field :state, control_col: 'col-md-2'
+    = f.text_field :zip_code, control_col: 'col-md-2'
 
   %fieldset
     %legend Scouts
-    .form-group
-      = f.label :scout_ids, 'Scouts', class: @label_col_class
-      .col-md-6
-        = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {}, {multiple: true, class: 'form-control'}
-        .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
+    = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {control_col: 'col-md-6', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout', label: 'Scouts'}, multiple: true
 
 
-  .form-group
-    .col-md-offset-4.col-md-6
-      = f.submit class: 'btn btn-primary'
-      - if @user.new_record?
-        = link_to 'Cancel', unit_adults_path(@unit), class: 'btn btn-default'
-      - else
-        = link_to 'Cancel', unit_adult_path(@unit, @user), class: 'btn btn-default'
+  = f.form_group do
+    = f.primary
+    - if @user.new_record?
+      = link_to 'Cancel', unit_adults_path(@unit), class: 'btn btn-default'
+    - else
+      = link_to 'Cancel', unit_adult_path(@unit, @user), class: 'btn btn-default'

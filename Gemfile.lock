@@ -73,9 +73,6 @@ GEM
     capybara-screenshot (0.3.19)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.1.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     carmen (1.0.1)
       unicode_utils (~> 1.4.0)
     carmen-rails (1.0.1)
@@ -353,7 +350,6 @@ DEPENDENCIES
   capistrano-rvm
   capybara
   capybara-screenshot
-  capybara-webkit
   carmen-rails
   carrierwave
   ckeditor

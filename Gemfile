@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.2'
+ruby '2.1.1'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
@@ -110,7 +110,7 @@ group :test do
 	gem 'shoulda-matchers'
 
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
-	gem 'capybara-webkit'
+	# gem 'capybara-webkit'
   gem 'capybara-screenshot'
 
   gem 'simplecov', require: false

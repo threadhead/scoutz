@@ -1,7 +1,7 @@
 - flash.each do |name, msg|
   - if display_flash_type?(name)
     = content_tag :div, class: "alert #{flash_method_class(name)}" do
-      %i{class:"#{flash_method_icon(name)} icon-large"}
+      %i{class: "fa #{flash_method_icon(name)} fa-lg"}
       = msg
 
 - if defined?(ar_object) && !ar_object.nil? && ar_object.errors.size > 0

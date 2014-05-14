@@ -43,7 +43,7 @@ describe 'Adults' do
 
         within 'form#new_adult' do
           fill_in 'Email', with: 'rusty.balls@aol.com'
-          select 'Webmaster', from: 'Leadership positions'
+          select 'Webmaster', from: 'Leadership position'
           fill_in 'adult_additional_leadership_positions', with: 'Joker'
           select '1955', from: 'adult_birth_1i'
           select 'February', from: 'adult_birth_2i'

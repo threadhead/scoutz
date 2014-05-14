@@ -1,9 +1,13 @@
-= bootstrap_form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true}, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+= form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true} do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
   %fieldset
     %legend Send to
-    = f.select :send_to_option, EmailMessage.send_to_options(@unit), {hide_label: true, control_col: 'col-md-5'}
+    .form-group
+      = f.label :send_to_option, class: 'sr-only'
+      .col-md-offset-2.col-md-4
+        = f.select :send_to_option, EmailMessage.send_to_options(@unit), {}, class: 'form-control'
+        %br
 
     .form-group
       .col-md-offset-2.col-md-7
@@ -23,7 +27,7 @@
 
         #email-send-to-users-list.collapse{ class: ('in' if @email_message.send_to_users?) }
           .well.well-sm
-            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true, control_col: 'col-md-12'}, {multiple: true}
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {}, {multiple: true, class: 'form-control', style: "width: 100%;"}
 
   %fieldset
     %legend Events
@@ -31,7 +35,11 @@
       .col-md-8.col-md-offset-2
         %p Selected events will have signup links at the bottom of the message
         .well.well-sm.email-message-events
-          = f.check_boxes_collection :event_ids, @unit.events.from_today.by_start, :id, :event_list_name, hide_label: true, control_col: 'col-md-12'
+          - @unit.events.from_today.by_start.each do |event|
+            .checkbox
+              = f.label :event_ids, class: '' do
+                = check_box_tag 'email_message[event_ids][]', event.id, @email_message.event_ids.include?(event.id)
+                = event_list_name(event)
 
 
   %fieldset
@@ -41,16 +49,18 @@
         %strong Attach up to 4 files, total size should not exceed 2MB
         = f.fields_for :email_attachments do |f_attachment|
           .well.well-sm
-            %p= f_attachment.file_field :attachment, hide_label: true, control_col: 'col-md-12'
+            %p= f_attachment.file_field :attachment
         .help-block alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf ppt txt csv
 
   %fieldset
     %legend Message
-    = f.form_group do
-      from: #{current_user.email}
-    %p= f.text_field :subject, hide_label: true, control_col: 'col-md-10', placeholder: 'subject'
-    %p= f.text_area :message, class: 'ckeditor', hide_label: true, control_col: 'col-md-10'
+    .form-group
+      .col-md-12
+        %p from: #{current_user.email}
+        %p= f.text_field :subject, class: 'form-control', placeholder: 'subject'
+        %p= f.text_area :message, class: 'ckeditor', placeholder: 'your message - style, add pictures, and links'
 
-  = f.form_group do
-    = f.primary 'Send email blast'
-    = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn btn-default'
+  .form-group
+    .col-md-offset-2.col-md-6
+      = f.submit 'Send email blast', class: 'btn btn-primary'
+      = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn btn-default'

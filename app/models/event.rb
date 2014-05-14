@@ -61,6 +61,24 @@ class Event < ActiveRecord::Base
     @full_location ||= [location_name, location_address1, location_address2, location_city, "#{location_state} #{location_zip_code}".strip].reject{ |a| a.blank? }.join(', ')
   end
 
+
+  def event_list_name
+    "#{start_at.to_s(:short_ampm)} - #{name} (#{event_kind_details})"
+  end
+
+  def event_kind_details
+    if sub_unit_kind?
+      event_kind_sub_units
+    else
+      kind
+    end
+  end
+
+  def event_kind_sub_units
+    self.sub_units.map(&:name).join(', ')
+  end
+
+
   def after_signup_deadline?
     signup_deadline <= Time.zone.now
   end

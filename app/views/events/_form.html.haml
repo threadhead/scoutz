@@ -16,8 +16,8 @@
     .col-md-9
       = f.text_field :name, autofocus: true, label: 'Event name'
 
-      = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_s(:datetimepicker), control_col: 'col-md-4', append: "<i class=\"fa fa-calendar\"></i>".html_safe
-      = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_s(:datetimepicker), control_col: 'col-md-4', append: "<i class=\"fa fa-calendar\"></i>".html_safe
+      = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_s(:datetimepicker), control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
+      = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_s(:datetimepicker), control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
 
       = f.form_group :send_reminders do
         = f.check_box :send_reminders, label: "send reminder 48 hours before event start"
@@ -28,7 +28,7 @@
         %legend Signup (RSVP)
         = f.form_group :signup_deadline do
           = f.check_box :signup_required
-        = f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), hide_label: true, control_col: 'col-md-4', append: "<i class=\"fa fa-calendar\"></i>".html_safe
+        = f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), hide_label: true, control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
         = #f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), append: "<i class=\"fa fa-calendar\"></i>".html_safe, prepend: "#{f.check_box :signup_required, label: ''}".html_safe
 
 
@@ -45,11 +45,13 @@
         = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL'
 
     .col-md-3
-      = f.select :kind, @unit.event_kinds, {hide_label: true, layout: :default}
-      #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
-        .well.well-sm
-          %strong.large Select #{@unit.sub_unit_name}s in event
-          = f.check_boxes_collection :sub_unit_ids, @unit.sub_units.order('name ASC').each, :id, :name, hide_label: true, control_col: 'col-md-12'
+      .row
+        .col-md-11
+          = f.select :kind, @unit.event_kinds, {hide_label: true, layout: :default}
+          #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
+            .well.well-sm
+              %strong.large Select #{@unit.sub_unit_name}s in event
+              = f.check_boxes_collection :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true, control_col: 'col-md-12'
 
   .row
     .col-md-12

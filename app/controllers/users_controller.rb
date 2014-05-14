@@ -1,11 +1,18 @@
 class UsersController < ApplicationController
   before_filter :set_user, only: [:show, :edit, :update, :destroy]
+  before_filter :set_unit, only: [:show]
 
   def index
     @users = User.all
   end
 
   def show
+    case @user.type
+    when "Adult"
+      redirect_to unit_adult_url(@unit, @user)
+    when "Scout"
+      redirect_to unit_scout_url(@unit, @user)
+    end
   end
 
   def new
@@ -53,6 +60,10 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
+    end
+
+    def set_unit
+      @unit = current_user.units.where(id: params[:unit_id]).first
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

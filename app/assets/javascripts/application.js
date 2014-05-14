@@ -13,6 +13,5 @@
 //= require jquery_ujs
 //= require jquery.ui.slider
 //= require jquery.ui.datepicker
-//= require ckeditor/override
 //= require ckeditor/init
 //= require_tree .

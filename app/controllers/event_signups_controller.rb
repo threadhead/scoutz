@@ -1,7 +1,7 @@
 class EventSignupsController < ApplicationController
-  before_filter :auth_and_time_zone, except: [:from_email]
-  before_filter :set_event_signup, only: [:show, :edit, :update, :destroy]
-  before_filter :set_event, except: [:from_email]
+  before_action :auth_and_time_zone, except: [:from_email]
+  before_action :set_event_signup, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, except: [:from_email]
 
   def index
     @event_signups = EventSignup.all

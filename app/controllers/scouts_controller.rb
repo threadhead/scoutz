@@ -2,9 +2,9 @@ class ScoutsController < ApplicationController
   etag { current_user.try :id }
   # etag { current_customer.id }
 
-  before_filter :auth_and_time_zone
-  before_filter :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :set_unit
+  before_action :auth_and_time_zone
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_unit
 
   def index
     @users = @unit.scouts.includes(:sub_unit, :adults).by_name_lf

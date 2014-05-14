@@ -1,8 +1,8 @@
 class EmailMessagesController < ApplicationController
-  before_filter :auth_and_time_zone
-  before_filter :set_unit
-  before_filter :set_email_message, only: [:show, :edit, :update, :destroy]
-  before_filter :set_send_to_lists, only: [:new, :edit, :update]
+  before_action :auth_and_time_zone
+  before_action :set_unit
+  before_action :set_email_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_send_to_lists, only: [:new, :edit, :update]
 
   def index
     @email_messages = EmailMessage.where(unit_id: @unit).where(user_id: current_user).includes(:sender).by_updated_at

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_filter :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :set_unit, only: [:show]
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_unit, only: [:show]
 
   def index
     @users = User.all

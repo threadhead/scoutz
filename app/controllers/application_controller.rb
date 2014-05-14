@@ -1,10 +1,10 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
-  before_filter :label_col_class
+  protect_from_forgery with: :exception
+
+  before_action :label_col_class
   def label_col_class
     @label_col_class = 'control-label col-md-4'
   end
-  # helper :all
 
   private
   def auth_and_time_zone

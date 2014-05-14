@@ -45,6 +45,7 @@ gem 'icalendar'
 group :production, :staging do
   # gem 'newrelic_rpm'
   gem 'dalli'  # memcache client
+  gem 'exception_notification'
 end
 
 

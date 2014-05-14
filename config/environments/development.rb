@@ -60,4 +60,12 @@ Scoutz::Application.configure do
       ignore: [ %r{dont/modify\.html$} ]
     )
 
+  # execption notification
+  # config.middleware.use ExceptionNotification::Rack,
+  #   :email => {
+  #     :email_prefix => "[SCOUTT.IN] ",
+  #     :sender_address => %{"scoutt.in notifier" <notifier@scoutt.in>},
+  #     :exception_recipients => %w{threadhead@gmail.com}
+  #   }
+
 end

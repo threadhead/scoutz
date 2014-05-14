@@ -128,6 +128,9 @@ GEM
       http_parser.rb (~> 0.6.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     excon (0.6.6)
     execjs (2.0.2)
     factory_girl (4.4.0)
@@ -368,6 +371,7 @@ DEPENDENCIES
   devise
   dotenv-deployment
   dotenv-rails
+  exception_notification
   factory_girl_rails
   ffaker
   ffi

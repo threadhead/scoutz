@@ -4,7 +4,7 @@ ruby '2.1.1'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
-gem 'rails', '4.0.5'
+gem 'rails', '4.1.1'
 
 gem 'sqlite3'
 # gem 'pg'
@@ -50,7 +50,7 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails', '~> 4.0.3'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -78,6 +78,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'spring'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano' #, require: false
@@ -120,8 +121,11 @@ end
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
+# gem 'jbuilder', '~> 2.0'
+
+# bundle exec rake doc:rails generates the API under doc/api.
+# gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Use unicorn as the app server
 # gem 'unicorn'

@@ -1,5 +1,5 @@
 class PageController < ApplicationController
-  before_filter :auth_and_time_zone
+  before_action :auth_and_time_zone
 
   def landing
   end

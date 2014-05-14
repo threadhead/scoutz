@@ -7,11 +7,6 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
   # include CarrierWave::ImageScience
 
-  # Include the Sprockets helpers for Rails 3.1+ asset pipeline compatibility:
-  # if default_url is used
-  # include Sprockets::Helpers::RailsHelper
-  # include Sprockets::Helpers::IsolatedHelper
-
   # Choose what kind of storage to use for this uploader:
   storage :file
 
@@ -27,7 +22,7 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   # end
 
   # Process files as they are uploaded:
-  # process scale: [200, 300]
+  # process :scale => [200, 300]
   #
   # def scale(width, height)
   #   # do something

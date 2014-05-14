@@ -11,7 +11,7 @@
 
   = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true, control_col: 'col-md-2'
   = f.select :rank, @unit.ranks, include_blank: true, control_col: 'col-md-2'
-  = f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true, control_col: 'col-md-2'
+  = f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true, control_col: 'col-md-4'
 
   = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions', control_col: 'col-md-6', hide_label: true
 

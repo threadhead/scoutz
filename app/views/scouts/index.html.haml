@@ -17,6 +17,7 @@
         %th Name
         %th= @unit.sub_unit_name
         %th Rank
+        %th Leadership
         %th.text-right Age
         %th Adults
 
@@ -28,6 +29,7 @@
           %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
           %td= scout.sub_unit.try(:name)
           %td= scout.rank
+          %td.col-md-2= scout.all_leadership_positions
           %td.text-right= scout.age
           %td= unit_adults_link_list(@unit, scout.adults)
 

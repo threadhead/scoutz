@@ -79,6 +79,7 @@ end
 
 group :development do
   gem 'spring'
+  gem "spring-commands-rspec"
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano' #, require: false
@@ -106,7 +107,6 @@ group :test do
   gem 'terminal-notifier-guard'
 
   gem 'guard'
-  gem 'guard-zeus'
   gem 'guard-rspec'
 	gem 'shoulda-matchers'
 

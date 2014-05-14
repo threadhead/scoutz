@@ -68,6 +68,7 @@ gem 'jquery-ui-rails'
 # gem 'jquery-rails-cdn'
 
 group :development, :test do
+  gem 'whiny_validation'
   # gem 'quiet_assets'
 	gem 'haml-rails'
 	gem 'rspec-rails'

@@ -330,6 +330,9 @@ GEM
     unicode_utils (1.4.0)
     warden (1.2.3)
       rack (>= 1.0)
+    whiny_validation (0.1.1)
+      activerecord
+      activesupport
     wicked (1.0.3)
       rails (>= 3.0.7)
     wirble (0.1.3)
@@ -399,5 +402,6 @@ DEPENDENCIES
   terminal-notifier-guard
   twilio-ruby
   uglifier (>= 1.3.0)
+  whiny_validation
   wicked
   wirble

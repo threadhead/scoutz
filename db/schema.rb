@@ -292,15 +292,6 @@ ActiveRecord::Schema.define(version: 20131126220101) do
     t.string   "picture_content_type"
     t.string   "picture_original_file_name"
     t.datetime "picture_updated_at"
-    t.string   "sms_number"
-    t.datetime "sms_number_verified_at"
-    t.boolean  "blast_email",                     default: true
-    t.boolean  "blast_sms"
-    t.boolean  "event_reminder_email",            default: true
-    t.boolean  "event_reminder_sms"
-    t.boolean  "signup_deadline_email",           default: true
-    t.boolean  "signup_deadline_sms"
-    t.datetime "sms_verification_sent_at"
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"

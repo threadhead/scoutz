@@ -1,19 +1,19 @@
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
-        = link_to(unit_email_messages_path(@unit), class: 'btn') do
-          %i.icon-large.icon-reply
+        = link_to(unit_email_messages_path(@unit), class: 'btn btn-default') do
+          %i.fa.fa-reply
           sent emails
 
         = link_to(new_unit_email_message_path(@unit), class: 'btn btn-success') do
-          %i.icon-large.icon-plus
+          %i.fa.fa-plus
           new email blast
 
       %h2 Email Message
 
-.row-fluid
-  .span12
+.row
+  .col-md-12
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
     .text-xlarge
@@ -67,5 +67,3 @@
             %strong Message
           %td
             .show-message= @email_message.message.html_safe
-
-

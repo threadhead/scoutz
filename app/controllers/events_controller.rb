@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
-  before_filter :auth_and_time_zone
-  before_filter :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
+  respond_to :html, :js
+  before_action :auth_and_time_zone
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
 
 
   def index

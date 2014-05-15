@@ -13,7 +13,7 @@ jQuery ->
       },
     events: '/events.json',
     theme: false,
-    height: 300
+    height: 600
 
     })
 

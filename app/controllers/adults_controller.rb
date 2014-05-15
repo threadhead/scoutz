@@ -2,9 +2,9 @@ class AdultsController < ApplicationController
   etag { current_user.try :id }
   # etag { current_customer.id }
 
-  before_filter :auth_and_time_zone
-  before_filter :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :set_unit
+  before_action :auth_and_time_zone
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_unit
 
   def index
     @users = @unit.adults.by_name_lf
@@ -39,6 +39,7 @@ class AdultsController < ApplicationController
   end
 
   def update
+    params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
     respond_to do |format|
       if @user.update_attributes(user_params)
         format.html { redirect_to unit_adult_path(@unit, @user), notice: "#{@user.full_name} was successfully updated." }

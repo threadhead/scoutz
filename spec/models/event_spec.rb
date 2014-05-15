@@ -194,8 +194,9 @@ describe Event do
 
   describe '.send_reminder' do
     before do
+      ActionMailer::Base.deliveries.clear
       @event = FactoryGirl.create(:event, unit: @unit1, kind: 'Pack Event')
-      adult2 = FactoryGirl.build(:adult)
+      adult2 = FactoryGirl.create(:adult)
       adult2.units << @unit1
     end
 
@@ -204,7 +205,7 @@ describe Event do
       ActionMailer::Base.deliveries.size.should eq(1)
     end
 
-    it 'sends separate emails to all event recipients' do
+    it 'if signup required,sends separate emails to all event recipients' do
       @event.signup_required = true
       @event.signup_deadline = Time.zone.now
       @event.send_reminder

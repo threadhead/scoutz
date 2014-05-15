@@ -6,12 +6,13 @@ class SignUpController < ApplicationController
   end
 
   def new_unit
-    @unit = Unit.new(params[:unit])
+    @unit = Unit.new(unit_type: 'Cub Scouts', unit_number: '999')
+    # @unit = Unit.new(unit_params)
     @unit.sub_units.build
   end
 
   def create_unit
-    @unit = Unit.new(params[:unit])
+    @unit = Unit.new(unit_params)
     if @unit.save
       current_user.units << @unit
       redirect_to sign_up_new_sub_unit_path, notice: 'Unit was successfully created.'
@@ -28,4 +29,10 @@ class SignUpController < ApplicationController
 
   def import
   end
+
+  private
+    def unit_params
+      params.require(:unit).permit(:unit_type, :unit_number, :city, :state, :time_zone, {sub_units_attributes: []})
+    end
+
 end

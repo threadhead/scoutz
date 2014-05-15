@@ -90,6 +90,13 @@ class Unit < ActiveRecord::Base
 
   def self.unit_types
     @@unit_types ||= AppConstants.unit_types.keys.map { |e| AppConstants.unit_types[e][:name] }
+  end
+
+  def self.unit_types_sub_units
+    h = Hash.new
+    # @@unit_types ||= AppConstants.unit_types.keys.each { |e| h[AppConstants.unit_types[e][:name]] = AppConstants.unit_types[e][:sub_unit_name] }
+    AppConstants.unit_types.keys.each { |e| h[AppConstants.unit_types[e][:name]] = AppConstants.unit_types[e][:sub_unit_name] }
+    h
     # SUB_UNIT_TYPES.keys
   end
 

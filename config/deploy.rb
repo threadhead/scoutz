@@ -1,57 +1,102 @@
-require "bundler/capistrano"
-require "rvm/capistrano"
-require "delayed/recipes"
-# require 'capistrano_colors'
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-set :application, "scoutz"
-set :repository,  "."
+set :application, 'scoutz'
+# set :repo_url, 'git@example.com:me/my_repo.git'
+set :repo_url, 'git@github.com:threadhead/scoutz.git'
+# set :local_repository, "file://."
 
+
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+
+# Default deploy_to directory is /var/www/my_app
+# set :deploy_to, '/var/www/my_app'
+set :deploy_to, "/home/karl/scoutz"
+
+# Default value for :scm is :git
+# set :scm, :git
+
+# Default value for :format is :pretty
+# set :format, :pretty
+
+# Default value for :log_level is :debug
+# set :log_level, :debug
+
+# Default value for :pty is false
+# set :pty, true
+
+# Default value for :linked_files is []
+set :linked_files, %w{config/database.yml .env}
+
+# Default value for linked_dirs is []
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads public/assets}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+set :keep_releases, 20
+
+# my config
+# set :deploy_via, :copy
+# set :git_shallow_clone, 1
 set :use_sudo, false
-
-set :asset_env, ""
-
-set :shared_children, shared_children + %w{public/uploads}
+# set :repository,  "."
 
 
-# set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-# Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
 
-role :web, "desertsol-apps.net"                          # Your HTTP server, Apache/etc
-role :app, "desertsol-apps.net"                          # This may be the same as your `Web` server
-role :db,  "desertsol-apps.net", :primary => true # This is where Rails migrations will run
-# role :db,  "your slave db-server here"
-
-set :user, "karl"
-set :deploy_to, "/home/#{user}/#{application}"
-set :deploy_via, :copy
-set :git_shallow_clone, 1
-
-# if you want to clean up old releases on each deploy uncomment this:
-after "deploy:restart", "deploy:cleanup"
-
-# for delayed job worker
-after "deploy:stop",    "delayed_job:stop"
-after "deploy:start",   "delayed_job:start"
-after "deploy:restart", "delayed_job:restart"
-
-
-# if you're still using the script/reaper helper you will need
-# these http://github.com/rails/irs_process_scripts
-
-# If you are using Passenger mod_rails uncomment this:
-namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
-end
-
-before 'deploy:assets:precompile', 'deploy:symlink_db'
 
 namespace :deploy do
-  desc "Symlinks the database.yml"
-  task :symlink_db, :roles => :app do
-    run "ln -nfs #{deploy_to}/shared/config/database.yml #{release_path}/config/database.yml"
+
+  desc 'Restart application'
+  task :restart do
+    invoke 'delayed_job:restart'
+    on roles(:app), in: :sequence, wait: 1 do
+      # Your restart mechanism here, for example:
+      execute :touch, release_path.join('tmp/restart.txt')
+    end
+
   end
+
+#   task :restart do
+#     on roles(:app), in: :sequence, wait: 5 do
+#       # Your restart mechanism here, for example:
+#       execute :touch, release_path.join('tmp/restart.txt')
+#     end
+#   end
+
+#   # my config
+#   # after :updated, "assets:precompile"
+#   after :finishing, 'deploy:cleanup'
+
+
+  after :publishing, :restart
+
+#   after :restart, :clear_cache do
+#     on roles(:web), in: :groups, limit: 3, wait: 10 do
+#       # Here we can do anything such as:
+#       # within release_path do
+#       #   execute :rake, 'cache:clear'
+#       # end
+#     end
+#   end
 end
+
+
+# namespace :assets do
+#   desc "Precompile assets locally and then rsync to web servers"
+#   task :precompile do
+#     on roles(:web) do
+#       rsync_host = host.to_s # this needs to be done outside run_locally in order for host to exist
+#       run_locally do
+#         with rails_env: fetch(:stage) do
+#           execute :bundle, "exec rake assets:precompile"
+#         end
+#         execute "rsync -av --delete ./public/assets/ #{fetch(:user)}@#{rsync_host}:#{shared_path}/public/assets/"
+#         execute "rm -rf public/assets"
+#         # execute "rm -rf tmp/cache/assets" # in case you are not seeing changes
+#       end
+#     end
+#   end
+# end

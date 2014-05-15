@@ -1,6 +1,8 @@
-.page-header
-  %h2 New Adult in #{@unit.name}
+.row
+  .col-md-12
+    .page-header
+      %h2 New Adult in #{@unit.name}
 
-.row-fluid
-  .span12
+.row
+  .col-md-12
     = render partial: 'form'

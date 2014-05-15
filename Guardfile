@@ -16,7 +16,7 @@ group :backend do
   #   # watch(%r|^app/models/(.*)\.rb$|)      { |m| "test/unit/#{m[1]}_test.rb" }
   # end
 
-  guard 'rspec', cmd: 'zeus rspec --color --format nested --fail-fast' do
+  guard 'rspec', cmd: "spring rspec --color -f doc --fail-fast" do
     watch(%r{^spec/.+_spec\.rb$})
     watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
     watch('spec/spec_helper.rb')                        { "spec" }

@@ -36,12 +36,25 @@ scout3 = Scout.create(first_name: 'Matthew', last_name: 'Madden', time_zone: 'Ar
 log_item(scout3, 4)
 user2.scouts << scout3
 
+
+user3 = Adult.create(email: 'stoya.robert@orbital.com', password: 'pack1134', first_name: 'Rob', last_name: 'Stoya', time_zone: 'Arizona', confirmed_at: 1.day.ago)
+log_item(user3, 2)
+
+scout4 = Scout.create(first_name: 'Robbie', last_name: 'Stoya', time_zone: 'Arizona', birth: '2002-02-02'.to_date, rank: 'Webelos I')
+log_item(scout4, 4)
+user3.scouts << scout4
+
+
+
 user1.units << unit1
 user1.units << unit2
 user2.units << unit1
+user3.units << unit2
 scout1.units << unit1
 scout2.units << unit2
 scout3.units << unit1
+scout4.units << unit2
+
 
 6.times do |idx|
   su = SubUnit.create(name: "Den #{idx+1}")

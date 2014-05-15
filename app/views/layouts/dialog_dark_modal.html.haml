@@ -1,18 +1,13 @@
 !!! 5
 %html(lang="en")
   %head
-    = render partial: 'layouts/head'
+    = render 'layouts/head'
     = yield :head
 
   %body.dialog-dark
     .container-fluid
-      .row-fluid
+      .row
         = yield
 
-    = render partial: 'layouts/footer'
-
-    /
-      Javascripts
-      \==================================================
-    / Placed at the end of the document so the pages load faster
-    = javascript_include_tag "application"
+    = render 'layouts/footer'
+    = render 'layouts/js'

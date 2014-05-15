@@ -1,76 +1,46 @@
-= form_for [@unit, @user], html: { class: 'form-horizontal' } do |f|
+= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-  .control-group
-    = f.label :unit, class: 'control-label'
-    .controls
+  .form-group
+    = f.label :unit, class: 'control-label col-md-3'
+    .col-md-6
       .text-xlarge= @unit.name
 
-  .control-group
-    = f.label :sub_unit_id, @unit.sub_unit_name ,class: 'control-label'
-    .controls
-      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name
+  = f.text_field :first_name, control_col: 'col-md-3', placeholder: 'first name'
+  = f.text_field :last_name, control_col: 'col-md-3', placeholder: 'last name'
 
-  .control-group
-    = f.label :name, class: 'control-label'
-    .controls
-      = f.text_field :first_name, class: 'text_field', placeholder: 'first name'
-      = f.text_field :last_name, class: 'text_field', placeholder: 'last name'
+  = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true, control_col: 'col-md-2'
+  = f.select :rank, @unit.ranks, include_blank: true, control_col: 'col-md-2'
+  = f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true, control_col: 'col-md-4'
 
-  .control-group
-    = f.label :rank, class: 'control-label'
-    .controls
-      = f.select :rank, @unit.ranks, include_blank: true
+  = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions', control_col: 'col-md-6', hide_label: true
 
-  .control-group
-    = f.label :leadership_position, 'Leadership positions', class: 'control-label'
-    .controls
-      %p= f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true
-      = f.text_field :additional_leadership_positions, class: 'span8', placeholder: 'additional leadership positions'
-
-  .control-group
-    = f.label :birth, 'Birthday', class: 'control-label'
-    .controls
-      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, class: 'span2'
+  = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
 
   %fieldset
     %legend Picture
-    .control-group
-      .well.well-thin
-        = image_tag @user.picture.url
-        %p= f.file_field :picture
-      .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+    .row
+      .col-md-offset-3.col-md-6
+        .well.well-sm
+          = image_tag @user.picture.url
+    = f.file_field :picture, hide_label: true, help: 'alowed attachments: jpg jpeg gif png, at least 200px X 200px'
 
 
 
   %fieldset
     %legend Address
-    .control-group
-      = f.label :address1, class: 'control-label'
-      .controls
-        = f.text_field :address1, class: 'span6'
+    = f.text_field :address1, control_col: 'col-md-4'
+    = f.text_field :address2, control_col: 'col-md-4'
 
-    .control-group
-      = f.label :address2, class: 'control-label'
-      .controls
-        = f.text_field :address2, class: 'span6'
-
-    .control-group
-      = f.label :city, 'City, State, Zip', class: 'control-label'
-      .controls
-        = f.text_field :city, class: 'span4', placeholder: 'city'
-        = f.text_field :state, class: 'span1', placeholder: 'state'
-        = f.text_field :zip_code, class: 'span2', placeholder: 'zip code'
+    = f.text_field :city, control_col: 'col-md-3'
+    = f.text_field :state, control_col: 'col-md-2'
+    = f.text_field :zip_code, control_col: 'col-md-2'
 
   %fieldset
     %legend Parents (adults)
-    .control-group
-      = label_tag :adult_ids, 'Parents', class: 'control-label'
-      .controls
-        = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {}, {multiple: true, class: '', style: "width: 500px"}
-        .help-block parents will also be associated to the den(s)/patrol(s) of this Scout
+    = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Parents', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout'}, multiple: true, style: "width: 500px"
 
 
-  .form-actions
-    = f.submit class: 'btn btn-primary'
-    = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn'
+  = f.form_group do
+    = f.primary
+    = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn btn-default'

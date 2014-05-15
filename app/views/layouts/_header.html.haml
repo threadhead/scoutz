@@ -1,13 +1,16 @@
-.navbar.navbar-fixed-top.navbar-inverse
-  .navbar-inner
-    .container-fluid
-      %a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
+.navbar.navbar-fixed-top.navbar-inverse.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#scoutz-navbar-collapse")
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.brand(href="/") Scoutz
-      .container.nav-collapse
-        %ul.nav
-          - if current_user
-            %li= link_to 'Sign out', destroy_user_session_path, method: :delete
-            %li= #select_tag("My Units", options_from_collection_for_select(current_user.units, :id, :unit_number))
+      %a.navbar-brand(href="/") Scoutz
+
+    .collapse.navbar-collapse#scoutz-navbar-collapse
+      %ul.nav.navbar-nav
+        - if current_user
+          %li= link_to 'Sign out', destroy_user_session_path, method: :delete
+          %li= #select_tag("My Units", options_from_collection_for_select(current_user.units, :id, :unit_number))
+        - else
+          %li= link_to 'Sign in', new_user_session_path

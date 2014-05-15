@@ -1,25 +1,26 @@
 = form_for @unit, html: { class: 'form-horizontal' } do |f|
-  .control-group
+  .form-group
     = f.label :unit_type, class: 'control-label'
     .controls
       = f.select :unit_type, Unit.unit_types
-  .control-group
+  .form-group
     = f.label :unit_number, class: 'control-label'
     .controls
       = f.text_field :unit_number, class: 'text_field'
       %span{class: 'help-inline'} ex. 134, 603, 15
-  .control-group
+  .form-group
     = f.label :city, class: 'control-label'
     .controls
       = f.text_field :city, class: 'text_field'
-  .control-group
+  .form-group
     = f.label :state, class: 'control-label'
     .controls
       = f.subregion_select :state, 'US'
-  .control-group
+  .form-group
     = f.label :time_zone, class: 'control-label'
     .controls
       = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
-  .form-actions
-    = f.submit 'Save', class: 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn'
+  .form-group
+    .col-md-offset-4.col-md-6
+      = f.submit 'Save', class: 'btn btn-primary'
+      = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn btn-default'

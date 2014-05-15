@@ -11,6 +11,7 @@ describe Adult do
     FactoryGirl.build(:adult, email: 'karl@gmail.com').type.should eq('Adult')
   end
 
+
   context '.sub_units' do
     it 'returns sub_units through associated scouts' do
       @adult.sub_units.should include(@sub_unit1)
@@ -29,6 +30,7 @@ describe Adult do
     end
   end
 
+
   context '.unit_scouts' do
     it 'returns associated scouts in a unit' do
       @adult.unit_scouts(@unit1).should include(@scout1)
@@ -36,6 +38,60 @@ describe Adult do
 
       @adult.unit_scouts(@unit2).should include(@scout2)
       @adult.unit_scouts(@unit2).should_not include(@scout1)
+    end
+  end
+
+  context '.handle_relations_update(unit, updates)' do
+    describe 'reassymbles scout_ids with additons and deletions' do
+      it 'no modifications, returns full set of scout_ids' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, %w(1 3)).should eq(%w(1 2 3 4))
+      end
+
+      it 'adding one new relationship, returns full set plus additions' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, %w(1 3 5)).should eq(%w(1 2 3 4 5))
+      end
+
+      it 'adding two new relationships, returns full set plus additions' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, %w(1 3 5 6)).should eq(%w(1 2 3 4 5 6))
+      end
+
+      it 'removing one relationships, returns full set minus deletion' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, %w(3)).should eq(%w(2 3 4))
+      end
+
+      it 'removing all relationships, returns full set minus deletion' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, []).should eq(%w(2 4))
+      end
+
+      it 'add one remove one relationship, returns full with additions and deletions' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, %w(1 5)).should eq(%w(1 2 4 5))
+      end
+
+      it 'add multi remove multi relationships, returns full with additions and deletions' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4 5))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3 5))
+        @adult.handle_relations_update(@unit1, %w(1 6 7)).should eq(%w(1 2 4 6 7))
+      end
+
+      it 'make sure empty update set is cleaned and ignored' do
+        @adult.stub_chain(:scouts, :pluck, :map).and_return(%w(1 2 3 4))
+        @adult.stub_chain(:unit_scouts, :pluck, :map).and_return(%w(1 3))
+        @adult.handle_relations_update(@unit1, ['']).should eq(%w(2 4))
+        @adult.handle_relations_update(@unit1, ['', '1']).should eq(%w(1 2 4))
+      end
+
     end
   end
 end

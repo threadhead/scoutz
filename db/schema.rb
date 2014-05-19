@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126220101) do
+ActiveRecord::Schema.define(version: 20140519220648) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -164,6 +164,8 @@ ActiveRecord::Schema.define(version: 20131126220101) do
     t.datetime "ical_updated_at"
     t.integer  "ical_sequence",     default: 0
     t.string   "ical_uuid"
+    t.string   "sl_profile"
+    t.string   "sl_uid"
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at"
@@ -230,6 +232,7 @@ ActiveRecord::Schema.define(version: 20131126220101) do
     t.string   "time_zone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sl_uid"
   end
 
   create_table "units_users", id: false, force: true do |t|
@@ -292,12 +295,23 @@ ActiveRecord::Schema.define(version: 20131126220101) do
     t.string   "picture_content_type"
     t.string   "picture_original_file_name"
     t.datetime "picture_updated_at"
+    t.string   "sms_number"
+    t.datetime "sms_number_verified_at"
+    t.boolean  "blast_email",                     default: true
+    t.boolean  "blast_sms"
+    t.boolean  "event_reminder_email",            default: true
+    t.boolean  "event_reminder_sms"
+    t.boolean  "signup_deadline_email",           default: true
+    t.boolean  "signup_deadline_sms"
+    t.datetime "sms_verification_sent_at"
+    t.string   "sl_profile"
+    t.string   "sl_uid"
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["deactivated_at"], name: "index_users_on_deactivated_at"
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["encrypted_password"], name: "index_users_on_encrypted_password"
   add_index "users", ["leadership_position"], name: "index_users_on_leadership_position"
   add_index "users", ["rank"], name: "index_users_on_rank"

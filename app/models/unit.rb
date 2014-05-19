@@ -14,10 +14,7 @@ class Unit < ActiveRecord::Base
 
   validates_presence_of :unit_type, :unit_number, :time_zone, :state, :city
 
-  # validate :unique_sub_units
-  # def unique_sub_units
-  #   sub_units
-  # end
+  validates :sl_uid, uniqueness: { allow_nil: true }
 
   def name
     "#{unit_type.singularize} #{unit_type_title} #{unit_number}"

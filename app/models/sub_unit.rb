@@ -7,11 +7,10 @@ class SubUnit < ActiveRecord::Base
   has_many :scouts
   has_many :adults
 
-  # validates :name,
-  #           presence: true,
-  #           uniqueness: { scope: :unit_id, case_sensitive: false }
+  validates :name,
+            presence: true,
+            uniqueness: { scope: :unit_id, case_sensitive: false }
 
-  # validates_uniqueness_of :name
 
   def adults
     Adult.joins(scouts: :sub_unit).where(sub_units: {id: self.id} )

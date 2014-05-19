@@ -9,6 +9,7 @@ module Scoutlander
       def initialize(options={})
         @email = options[:email]
         @password = options[:password]
+        @unit = options[:unit]
         @agent = nil
 
         @logger_io = StringIO.new

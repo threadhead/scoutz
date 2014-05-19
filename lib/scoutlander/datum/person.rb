@@ -2,13 +2,13 @@ module Scoutlander
   module Datum
 
     class Person
-      attr_accessor :inspected, :first_name, :last_name, :unit_number, :unit_number, :unit_role, :security_level, :email , :alt_email, :event_reminders, :home_phone, :work_phone, :cell_phone, :street , :city , :state , :zip_code, :url, :uid, :profile, :relations, :parent
+      attr_accessor :inspected, :first_name, :last_name, :unit_number, :sub_unit, :unit_role, :security_level, :email , :alt_email, :event_reminders, :home_phone, :work_phone, :cell_phone, :street , :city , :state , :zip_code, :sl_url, :sl_uid, :sl_profile, :relations, :parent
 
       def initialize(options={})
         @inspected = options[:inspected] || false
-        @url = options[:url]
-        @uid = options[:uid]
-        @profile = options[:profile]
+        @sl_url = options[:url]
+        @sl_uid = options[:uid]
+        @sl_profile = options[:profile]
         @first_name = options[:first_name]
         @last_name = options[:last_name]
         @unit_number = options[:unit_number]

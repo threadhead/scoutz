@@ -21,8 +21,8 @@ describe Scoutlander::Importer::Adults do
     before(:all) do
       @unit = FactoryGirl.create(:unit)
       VCR.use_cassette('fetch_adult_info') do
-        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
-        @sl.fetch_unit_adults(@unit.id)
+        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+        @sl.fetch_unit_adults
         @sl.fetch_adult_info(@sl.adults.first)
         @sl.fetch_adult_info(@sl.adults.last)
       end
@@ -38,8 +38,8 @@ describe Scoutlander::Importer::Adults do
     before(:all) do
       @unit = FactoryGirl.create(:unit)
       VCR.use_cassette('fetch_adult_info_with_scout_links') do
-        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
-        @sl.fetch_unit_adults(@unit.id)
+        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+        @sl.fetch_unit_adults
 
         @dave = @sl.find_or_create_by_profile('85542')
         @sl.fetch_adult_info_with_scout_links(@dave)

@@ -7,4 +7,5 @@ require 'datum/base'
 require 'datum/person'
 require 'datum/unit'
 require 'datum/sub_unit'
+require 'datum/event'
 

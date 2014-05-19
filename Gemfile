@@ -107,6 +107,8 @@ group :test do
   # gem 'spork-rails'
   gem 'rb-fsevent'
   gem 'terminal-notifier-guard'
+  gem 'vcr'
+  gem 'webmock', '<= 1.16'
 
   gem 'guard'
   gem 'guard-rspec'

@@ -6,7 +6,7 @@ module EventCalendar
     mount_uploader :ical, IcalUploader
     before_create :ensure_ical_uuid
     before_save :update_ical_attributes
-    after_save :update_ical_background
+    after_save :update_ical_background, if: :ical_valid?
   end
 
   module ClassMethods
@@ -14,6 +14,10 @@ module EventCalendar
       event = Event.find(event_id)
       event.update_ical if event
     end
+  end
+
+  def ical_valid?
+    !(self.start_at.blank? || self.end_at.blank? || self.name.blank?)
   end
 
   def update_ical_background

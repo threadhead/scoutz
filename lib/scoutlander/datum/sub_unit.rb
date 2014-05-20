@@ -1,11 +1,17 @@
 module Scoutlander
   module Datum
-    class SubUnit
-      attr_accessor :name
+    class SubUnit < Scoutlander::Datum::Base
 
       def initialize(options={})
-        @name = options[:name]
-        # @uid = options[:uid]
+        @attributes = [
+          :name,
+          :inspected
+        ]
+        create_setters_getters_instance_variables(options)
+      end
+
+      def to_params
+        to_params_without(:inspected)
       end
 
     end

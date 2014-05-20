@@ -15,15 +15,14 @@ module Scoutlander
         sites.each do |site|
           uid = uid_from_url(site['href'])
           name = site.child.text.strip
-          @units << Scoutlander::Datum::Unit.new(uid: uid, name: name)
+          @units << Scoutlander::Datum::Unit.new(sl_uid: uid, name: name)
         end
         logout
         # @units = dash_page.search("a.mysites").children.map(&:text)
-        @units
       end
 
       def unit_info(uid)
-        unit = Scoutlander::Datum::Unit.new(uid: uid)
+        unit = Scoutlander::Datum::Unit.new(sl_uid: uid)
         dash_page = login
         adv_settings = @agent.get("http://www.scoutlander.com/securesite/adminmain.aspx?UID=#{uid}")
 

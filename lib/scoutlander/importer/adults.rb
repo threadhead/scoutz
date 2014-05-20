@@ -32,7 +32,6 @@ module Scoutlander
           adult.sl_profile = profile_from_url(adult.sl_url)
           @adults << adult
         end
-        @adults
       end
 
 
@@ -97,26 +96,24 @@ module Scoutlander
           scout_info_page(datum)
         end
 
-        datum.unit_role = person_page.search("td#ctl00_mainContent_#{profile_name}_txtRole").text
+        datum.leadership_role = person_page.search("td#ctl00_mainContent_#{profile_name}_txtRole").text
         datum.first_name = person_page.search("td#ctl00_mainContent_#{profile_name}_txtFirstName").text
         datum.last_name = person_page.search("td#ctl00_mainContent_#{profile_name}_txtLastName").text
         datum.security_level = person_page.search("td#ctl00_mainContent_#{profile_name}_txtSecurityLevel").text
         datum.email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEmail").text
-        datum.alt_email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtAltEmail").text
-        datum.event_reminders = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEventNotification").text
+        datum.alternate_email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtAltEmail").text
+        datum.send_reminders = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEventNotification").text.include?("ON")
 
         datum.home_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtHomePhone").text
         datum.work_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtWorkPhone").text
         datum.cell_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtCellPhone").text
 
-        datum.street = person_page.search("td#ctl00_mainContent_#{profile_name}_txtStreet").text
+        datum.address1 = person_page.search("td#ctl00_mainContent_#{profile_name}_txtStreet").text
         datum.city = person_page.search("td#ctl00_mainContent_#{profile_name}_txtCity").text
         datum.state = person_page.search("td#ctl00_mainContent_#{profile_name}_txtState").text
         datum.zip_code = person_page.search("td#ctl00_mainContent_#{profile_name}_txtZip").text
 
         datum.inspected = true
-
-        person_page
       end
 
 
@@ -144,6 +141,7 @@ module Scoutlander
       def adult_info_page(datum)
         return nil if datum.sl_url.blank?
         login
+        @logger.info "ADULT_INFO_PAGE: #{datum.name}, profile: #{datum.sl_profile}, #{datum.sl_url}"
         @agent.get datum.sl_url
       end
 
@@ -157,6 +155,34 @@ module Scoutlander
         end
 
         Scoutlander::Datum::Person.new
+      end
+
+
+      def fetch_all_adult_info_and_create
+        @logger.info "FETCH_ALL_ADULT_INFO_AND_CREATE: start"
+        @adults.each do |adult|
+          fetch_adult_info(adult)
+
+          begin
+            user = @unit.adults.find_or_initialize_by(sl_profile: adult.sl_profile)
+            puts user.inspect
+            if user.new_record?
+              @logger.info "CREATE_USER: #{adult.name}, profile: #{adult.sl_profile}"
+              user.update_attributes(adult.to_params)
+              @unit.users << user
+            else
+              @logger.info "UPDATE_USER: #{user.name}"
+              user.update_attributes(adult.to_params)
+            end
+
+            user.phones.create(kind: 'Home', number: adult.home_phone ) unless adult.home_phone.blank?
+            user.phones.create(kind: 'Work', number: adult.work_phone ) unless adult.work_phone.blank?
+            user.phones.create(kind: 'Mobile', number: adult.cell_phone ) unless adult.cell_phone.blank?
+          rescue ActiveRecord::RecordInvalid
+            @logger.error "ActiveRecord::RecordInvalid: #{adult.inspect}"
+          end
+        end
+        @logger.info "FETCH_ALL_ADULT_INFO_AND_CREATE: finish"
       end
 
     end

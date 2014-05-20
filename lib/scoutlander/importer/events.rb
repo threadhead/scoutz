@@ -15,10 +15,8 @@ module Scoutlander
 
         login
 
-        # months = (-2..12).map{ |n| Date.today.beginning_of_month.months_since(n) }
-        months = [Date.today.beginning_of_month]
         events_page = nil
-        months.each do |month|
+        scrape_months.each do |month|
           url = "/securesite/calendarmain.aspx?UID=#{@unit.sl_uid}&CAL=#{month.strftime("%-m/%-d/%Y")}"
           @logger.info "FETCH_UNIT_EVENTS(url): #{url}"
           events_page = @agent.get url
@@ -45,7 +43,7 @@ module Scoutlander
 
         datum.kind = sl_kind event_page.search("select#ctl00_mainContent_EventEditProfile_cmbEventType option[@selected='selected']").attr('value').value
         checked_sub_units = event_page.search("input[id^=ctl00_mainContent_EventEditProfile_chklstSubUnit][@checked='checked']").map{|e| e.attr('id')}
-        datum.kind_sub_units = checked_sub_units.map{|su| event_page.search("label[@for='#{su}']").text}
+        datum.kind_sub_units = checked_sub_units.map{ |su| event_page.search("label[@for='#{su}']").text }
 
         datum.name = event_page.search("input#ctl00_mainContent_EventEditProfile_txtEventName").attr('value').value
         datum.organizer_profile = event_page.search("select#ctl00_mainContent_EventEditProfile_cmbOrganizer option[@selected='selected']").attr('value').value
@@ -83,6 +81,10 @@ module Scoutlander
         login
         @logger.info "EVENT_INFO_PAGE: #{datum.name}, #{datum.sl_url}"
         @agent.get datum.sl_url
+      end
+
+      def scrape_months
+        (-2..12).map{ |n| Date.today.beginning_of_month.months_since(n) }
       end
 
 

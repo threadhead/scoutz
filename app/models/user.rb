@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
   has_and_belongs_to_many :units
-  has_many :phones
+  has_many :phones, dependent: :destroy
   has_many :notifiers, dependent: :destroy
-  has_and_belongs_to_many :events
+  has_and_belongs_to_many :events, -> { uniq }
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
 

@@ -1,39 +1,48 @@
 module Scoutlander
   module Datum
 
-    class Person
-      attr_accessor :inspected, :first_name, :last_name, :unit_number, :sub_unit, :unit_role, :security_level, :email , :alt_email, :event_reminders, :home_phone, :work_phone, :cell_phone, :street , :city , :state , :zip_code, :sl_url, :sl_uid, :sl_profile, :relations, :parent
-
+    class Person < Scoutlander::Datum::Base
       def initialize(options={})
-        @inspected = options[:inspected] || false
-        @sl_url = options[:url]
-        @sl_uid = options[:uid]
-        @sl_profile = options[:profile]
-        @first_name = options[:first_name]
-        @last_name = options[:last_name]
-        @unit_number = options[:unit_number]
-        @sub_unit = options[:sub_unit]
-        @unit_role = options[:unit_role]
-        @security_level = options[:security_level]
-        @email = options[:email]
-        @alt_email = options[:alt_email]
-        @event_reminders = options[:event_reminders]
-        @home_phone = options[:home_phone]
-        @work_phone = options[:work_phone]
-        @cell_phone = options[:cell_phone]
-        @street = options[:street]
-        @city = options[:city]
-        @state = options[:state]
-        @zip_code = options[:zip_code]
+        @attributes = [
+          :inspected,
+          :first_name,
+          :last_name,
+          :sub_unit,
+          :leadership_role,
+          :security_level,
+          :email ,
+          :alternate_email,
+          :send_reminders,
+          :home_phone,
+          :work_phone,
+          :cell_phone,
+          :address1 ,
+          :city,
+          :state,
+          :zip_code,
+          :sl_url,
+          :sl_uid,
+          :sl_profile,
+          :relations,
+          :parent
+        ]
+        create_setters_getters_instance_variables(options)
         @relations = []
         @parent = nil
       end
 
+      def name
+        "#{@first_name} #{@last_name}"
+      end
 
       def add_relation(person)
         return unless person.is_a? Scoutlander::Datum::Person
         @relations << person
         person.parent = self
+      end
+
+      def to_params
+        to_params_without(:inspected, :relations, :parent, :security_level, :home_phone, :work_phone, :cell_phone, :sl_url)
       end
 
     end

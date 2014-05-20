@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'mechanize'
 
 module Scoutlander
@@ -12,11 +13,26 @@ module Scoutlander
         @unit = options[:unit]
         @agent = nil
 
-        @logger_io = StringIO.new
-        @logger = Logger.new(@logger_io)
+        # @logger_io = StringIO.new
+        # @logger = Logger.new(@logger_io)
+        FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
+        file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
+        @logger = Logger.new(file)
         @logger.formatter = proc do |severity, datetime, progname, msg|
           "[#{datetime.utc.strftime "%Y-%m-%d %H:%M:%SZ"}] #{msg}\n"
         end
+      end
+
+      def class_name
+        self.class.name.split("::").last.downcase
+      end
+
+      def time_number
+        Time.now.utc.to_s(:filename)
+      end
+
+      def logger_filename
+        "#{class_name}_unit_#{@unit.id}_#{time_number}.log"
       end
 
       def login

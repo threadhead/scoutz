@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140519220648) do
+ActiveRecord::Schema.define(version: 20140520143324) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -240,8 +240,8 @@ ActiveRecord::Schema.define(version: 20140519220648) do
     t.integer "user_id"
   end
 
-  add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id"
-  add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id"
+  add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id", unique: true
+  add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id", unique: true
 
   create_table "user_relationships", id: false, force: true do |t|
     t.integer "adult_id"
@@ -306,6 +306,7 @@ ActiveRecord::Schema.define(version: 20140519220648) do
     t.datetime "sms_verification_sent_at"
     t.string   "sl_profile"
     t.string   "sl_uid"
+    t.string   "alternate_email"
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"

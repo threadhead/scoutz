@@ -1,7 +1,0 @@
-[2014-05-20 20:26:42Z] EXEC(SUB_UNITS) : Unit=Boy Scout Troop 603, 603
-[2014-05-20 20:26:43Z] Login to Scoutlander.com -> GET 'http://www.scoutlander.com/publicsite/home.aspx', username: threadhead@gmail.com
-[2014-05-20 20:26:46Z] PAGE TITLE : ScoutLander - Home - Free Boy Scout, Cub Scout, and Girl Scout Websites
-[2014-05-20 20:26:50Z] CLICK : Site Setup Wizard
-[2014-05-20 20:26:50Z] CLICK : Add Dens or Patrols
-[2014-05-20 20:26:51Z] SUB UNIT NAMES : Patrols, Adult Leaders, Desert Dogs, Dragons, Eagle, Majestic Narwhals, Mavericks-Wolverine, Mavericks-Wolverine, Phoenix, Pit Vipers, Pythons, Racoons - Cherokees, Scorpions-NightBats, Scorpions-NightBats2, Stingers, Vipers, 
-[2014-05-20 20:26:52Z] Logout of Scoutlander.com - GET /common/LogOff.aspx

@@ -41,36 +41,12 @@ module Scoutlander
         @logger.info "FETCH_ALL_EVENT_INFO_AND_CREATE: start"
         @events.each do |event|
           fetch_event_info(event)
-
-          begin
-            found_event = @unit.events.find_or_initialize_by(sl_profile: event.sl_profile)
-            if found_event.new_record?
-              @logger.info "CREATE_EVENT: #{event.name}, profile: #{event.sl_profile}"
-            else
-              @logger.info "UPDATE_EVENT: #{user.name}"
-            end
-            found_event.update_attributes(event.to_params)
-            create_or_update_event_signups(found_event, event)
-
-          rescue ActiveRecord::RecordInvalid
-            @logger.error "ActiveRecord::RecordInvalid: #{event.inspect}"
-          end
+          saver = Scoutlander::Saver::EventAndSignups.new(unit: @unit, event: event, logger: @logger)
+          saver.create_or_update_event
         end
         @logger.info "FETCH_ALL_EVENT_INFO_AND_CREATE: finish"
       end
 
-      # to update signups, delete all existing signups and recreate
-      def create_or_update_event_signups(event, datum)
-        unless datum.event_signups.empty?
-          event.event_signups.destroy_all
-        end
-        datum.event_signups.each do |signup|
-          scout = Scout.where(sl_profile: signup.sl_profile).first
-          if scout
-            es = event.event_signup.create(signup.to_params.merge({scout_id: scout.id}))
-          end
-        end
-      end
 
 
 
@@ -100,8 +76,8 @@ module Scoutlander
         datum.location_city = event_page.search("#{td_id}txtCity").text
         datum.location_state = event_page.search("#{td_id}txtState").text
         datum.location_zip_code = event_page.search("#{td_id}txtZipCode").text
-        datum.location_url = event_page.links_with(id: "ctl00_mainContent_EventProfile_lnkLocationMapURL")
-        datum.location_url = datum.location_url.first.href unless datum.location_url.empty?
+        datum.location_map_url = event_page.links_with(id: "ctl00_mainContent_EventProfile_lnkLocationMapURL")
+        datum.location_map_url = datum.location_map_url.empty? ? nil : datum.location_map_url.first.href
 
         datum.attire = event_page.search("#{td_id}txtAttire").text
         datum.attire = sl_attire(datum.attire[0])

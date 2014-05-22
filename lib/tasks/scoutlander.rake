@@ -1,3 +1,11 @@
+VCR.configure do |c|
+  c.cassette_library_dir = 'tmp/vcr'
+  c.hook_into :webmock
+  c.filter_sensitive_data('<SCOUTLANDER_PASSWORD>') { ENV['SCOUTLANDER_PASSWORD'] }
+  c.default_cassette_options = { record: :new_episodes }
+end
+
+
 namespace :scoutlander do
   desc "import troop 603"
   task :import_troop_603 => [:environment] do
@@ -47,8 +55,7 @@ namespace :scoutlander do
                         unit: unit
                         )
 
-    event_importer.fetch_unit_events
-    event_importer.fetch_all_event_info_and_create
-
+    VCR.use_cassette('fetch_unit_events') { event_importer.fetch_unit_events }
+    VCR.use_cassette('fetch_all_event_info_and_create') { event_importer.fetch_all_event_info_and_create }
   end
 end

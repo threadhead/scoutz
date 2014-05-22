@@ -10,3 +10,4 @@ require 'datum/unit'
 require 'datum/sub_unit'
 require 'datum/event'
 
+require 'saver/event_and_signups'

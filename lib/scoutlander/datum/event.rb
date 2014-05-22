@@ -23,7 +23,7 @@ module Scoutlander
             :location_city,
             :location_state,
             :location_zip_code,
-            :location_url,
+            :location_map_url,
             :attire,
             :message,
             :fees,

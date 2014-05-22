@@ -1,15 +1,16 @@
 require 'spec_helper'
 
 describe Scoutlander::Importer::Adults do
+  before(:all) { @unit = FactoryGirl.create(:unit, sl_uid: '3218', unit_type: 'Boy Scouts') }
+
   describe '.fetch_unit_adults' do
     before(:all) do
-      @unit = FactoryGirl.create(:unit)
+      @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_unit_adults') do
-        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
-        @sl.fetch_unit_adults(@unit.id)
+        @sl.fetch_unit_adults
       end
     end
-    subject {@sl.adults}
+    subject { @sl.adults }
 
     specify { expect(subject).to_not be_blank }
     specify { expect(subject.size).to eq(122) }
@@ -19,28 +20,26 @@ describe Scoutlander::Importer::Adults do
 
   describe '.fetch_adult_info' do
     before(:all) do
-      @unit = FactoryGirl.create(:unit)
+      @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info') do
-        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
         @sl.fetch_unit_adults
         @sl.fetch_adult_info(@sl.adults.first)
         @sl.fetch_adult_info(@sl.adults.last)
       end
     end
-    subject {@sl.adults}
+    subject { @sl.adults }
 
-    specify { expect(subject.first.unit_role).to eq("Asst Scoutmaster") }
+    specify { expect(subject.first.leadership_role).to eq("Asst Scoutmaster") }
     specify { expect(subject.last.email).to eq("casadezoerb@mac.com") }
   end
 
 
   describe '.fetch_adult_info_with_scout_links' do
     before(:all) do
-      @unit = FactoryGirl.create(:unit)
+      @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info_with_scout_links') do
-        @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
         @sl.fetch_unit_adults
-
+        # pp @sl.adults
         @dave = @sl.find_or_create_by_profile('85542')
         @sl.fetch_adult_info_with_scout_links(@dave)
 
@@ -53,23 +52,23 @@ describe Scoutlander::Importer::Adults do
     end
 
     specify { expect(@dave.relations.size).to eq(1) }
-    specify { expect(@dave.relations.map(&:profile)).to include("91046") }
+    specify { expect(@dave.relations.map(&:sl_profile)).to include("91046") }
 
     specify { expect(@zoerb.relations.size).to eq(1) }
-    specify { expect(@zoerb.relations.map(&:profile)).to include("284938") }
+    specify { expect(@zoerb.relations.map(&:sl_profile)).to include("284938") }
 
     specify { expect(@kurt.relations.size).to eq(2) }
-    specify { expect(@kurt.relations.map(&:profile)).to include('284941') }
-    specify { expect(@kurt.relations.map(&:profile)).to include('284942') }
+    specify { expect(@kurt.relations.map(&:sl_profile)).to include('284941') }
+    specify { expect(@kurt.relations.map(&:sl_profile)).to include('284942') }
   end
 
 
   describe '.find_or_create_by_profile' do
     before do
       @sl = Scoutlander::Importer::Adults.new
-      @person1 = Scoutlander::Datum::Person.new(profile: "111")
-      @person2 = Scoutlander::Datum::Person.new(profile: "222")
-      @person3 = Scoutlander::Datum::Person.new(profile: "333")
+      @person1 = Scoutlander::Datum::Person.new(sl_profile: "111")
+      @person2 = Scoutlander::Datum::Person.new(sl_profile: "222")
+      @person3 = Scoutlander::Datum::Person.new(sl_profile: "333")
       @person2.add_relation(@person3)
       @sl.adults = [@person1, @person2]
     end

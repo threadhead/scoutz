@@ -217,11 +217,13 @@ describe Event do
     before { @event = FactoryGirl.build(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event') }
 
     it 'initially creates the .ics file' do
+      Event.any_instance.unstub(:ical_valid?)
       expect(@event).to receive(:update_ical_background).exactly(1).times
       @event.save
     end
 
-    it 'with updates creates a new .ics file' do
+    it 'updates creates a new .ics file' do
+      Event.any_instance.unstub(:ical_valid?)
       @event.save
       expect(@event).to receive(:update_ical_background).once
       @event.update_attribute(:name, "Whoopie!")
@@ -229,7 +231,10 @@ describe Event do
   end
 
   describe 'EventCalendar' do
-    before { @event = FactoryGirl.create(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event') }
+    before do
+      Event.any_instance.unstub(:ical_valid?)
+      @event = FactoryGirl.create(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event')
+    end
 
     specify { expect(@event.ical_uuid).not_to be_empty }
 

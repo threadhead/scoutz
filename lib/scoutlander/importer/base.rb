@@ -17,7 +17,7 @@ module Scoutlander
         # @logger = Logger.new(@logger_io)
         FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
         file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
-        @logger = Logger.new(file)
+        @logger = Rails.env.test? ? Logger.new('/dev/null') : Logger.new(file)
         @logger.formatter = proc do |severity, datetime, progname, msg|
           "[#{datetime.utc.strftime "%Y-%m-%d %H:%M:%SZ"}] #{msg}\n"
         end
@@ -32,7 +32,7 @@ module Scoutlander
       end
 
       def logger_filename
-        "#{class_name}_unit_#{@unit.id}_#{time_number}.log"
+        "#{class_name}_unit_#{@unit.try(:id)}_#{time_number}.log"
       end
 
       def login

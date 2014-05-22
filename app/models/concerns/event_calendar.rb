@@ -25,7 +25,10 @@ module EventCalendar
   end
 
   def update_ical
+    return unless ical_valid?
+    # puts "REALLY UPDATE_ICAL"
     self.increment(:ical_sequence) if ical.present?
+
     skip_update_ical_background_callbacks do
       in_temp_file do |temp_file|
         file = File.open(temp_file, 'w')
@@ -53,6 +56,7 @@ module EventCalendar
   end
 
   def ical_string
+    # return unless ical_valid?
     cal = Icalendar::Calendar.new
     e = self
     cal.event do |e|

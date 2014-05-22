@@ -99,7 +99,6 @@ describe User do
     end
 
     it 'allows users users with the same f/l name, if no email' do
-      puts User.all.inspect
       user = FactoryGirl.create(:user)
       FactoryGirl.create(:user, first_name: user.first_name, last_name: user.last_name)
       User.where(first_name: user.first_name, last_name: user.last_name).count.should eq(2)

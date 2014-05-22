@@ -4,12 +4,12 @@ describe Scoutlander::Importer::Units do
   describe '.available_names_uids' do
     before(:all) do
       VCR.use_cassette('available_names_uids') do
-        sl = Scoutlander::Importer::Units.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
-        @names = sl.available_names_uids
+        @sl = Scoutlander::Importer::Units.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
+        @sl.available_names_uids
       end
     end
 
-    subject {@names}
+    subject {@sl.units}
 
     specify { expect(subject.size).to eq(2) }
     specify { expect(subject.first).to be_kind_of(Scoutlander::Datum::Unit) }

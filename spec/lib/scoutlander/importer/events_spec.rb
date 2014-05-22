@@ -29,7 +29,7 @@ describe Scoutlander::Importer::Events do
   end
 
 
-  describe '.fetch_event_info', :focus do
+  describe '.fetch_event_info' do
     before do
       VCR.use_cassette('fetch_event_info') do
         @sl = Scoutlander::Importer::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)

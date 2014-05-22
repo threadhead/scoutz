@@ -43,6 +43,7 @@ set :keep_releases, 20
 # set :git_shallow_clone, 1
 set :use_sudo, false
 # set :repository,  "."
+set :rvm_ruby_version, '2.1.2'      # Defaults to: 'default'
 
 
 

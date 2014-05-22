@@ -7,14 +7,14 @@ describe Event do
   end
 
   it { should belong_to(:unit) }
-  # it { should have_and_belong_to_many(:users) }
-  # it { should have_and_belong_to_many(:sub_units) }
+  it { should have_and_belong_to_many(:users) }
+  it { should have_and_belong_to_many(:sub_units) }
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:start_at) }
   it { should validate_presence_of(:end_at) }
   it { should validate_presence_of(:message) }
-
+  it { should validate_uniqueness_of(:sl_profile).allow_nil }
 
   it 'creates valid event' do
     FactoryGirl.build(:event).should be_valid
@@ -217,11 +217,13 @@ describe Event do
     before { @event = FactoryGirl.build(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event') }
 
     it 'initially creates the .ics file' do
+      Event.any_instance.unstub(:ical_valid?)
       expect(@event).to receive(:update_ical_background).exactly(1).times
       @event.save
     end
 
-    it 'with updates creates a new .ics file' do
+    it 'updates creates a new .ics file' do
+      Event.any_instance.unstub(:ical_valid?)
       @event.save
       expect(@event).to receive(:update_ical_background).once
       @event.update_attribute(:name, "Whoopie!")
@@ -229,7 +231,10 @@ describe Event do
   end
 
   describe 'EventCalendar' do
-    before { @event = FactoryGirl.create(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event') }
+    before do
+      Event.any_instance.unstub(:ical_valid?)
+      @event = FactoryGirl.create(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event')
+    end
 
     specify { expect(@event.ical_uuid).not_to be_empty }
 

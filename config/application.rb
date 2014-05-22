@@ -16,6 +16,7 @@ module Scoutz
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
 
+    config.i18n.enforce_available_locales = false
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
@@ -23,7 +24,7 @@ module Scoutz
 
     # FROM RAILS 3 -- NOT NEEDED?
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/models/concerns)
     # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     # config.assets.precompile += ['jquery.js']

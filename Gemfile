@@ -18,12 +18,13 @@ gem 'haml'
 gem 'cancan'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog', '< 1.9.0'
+gem 'fog' #, '< 1.9.0'
 gem 'mini_magick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
 gem 'carmen-rails'
+gem 'mechanize'
 gem 'wicked'
 # gem 'slodown'
 gem 'sanitize'
@@ -47,7 +48,6 @@ group :production, :staging do
   gem 'dalli'  # memcache client
   gem 'exception_notification'
 end
-
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -77,6 +77,10 @@ group :development, :test do
 	gem 'ffi'
 	gem 'capybara'
   gem 'awesome_print'
+
+  gem 'vcr'
+  gem 'webmock', '<= 1.16'
+
 end
 
 group :development do
@@ -100,20 +104,23 @@ end
 
 
 group :test do
-	gem 'rake' # for travis-ci
+  # gem 'rspec-activemodel-mocks' #will need this when going to rspec 3.0
+	# gem 'rake' # for travis-ci
   gem 'minitest'
   gem 'factory_girl_rails'
   gem 'ffaker'
   # gem 'spork-rails'
   gem 'rb-fsevent'
   gem 'terminal-notifier-guard'
+  # gem 'vcr'
+  # gem 'webmock', '<= 1.16'
 
   gem 'guard'
   gem 'guard-rspec'
 	gem 'shoulda-matchers'
 
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
-	# gem 'capybara-webkit'
+	gem 'capybara-webkit'
   gem 'capybara-screenshot'
 
   gem 'simplecov', require: false

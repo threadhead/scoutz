@@ -8,9 +8,9 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
   has_and_belongs_to_many :units
-  has_many :phones
+  has_many :phones, dependent: :destroy
   has_many :notifiers, dependent: :destroy
-  has_and_belongs_to_many :events
+  has_and_belongs_to_many :events, -> { uniq }
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
 
@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
   # attr_accessible :adult_ids, :scout_ids
 
   validates_presence_of :first_name, :last_name
+
+  validates :sl_profile, uniqueness: { allow_nil: true }
 
   before_validation :strip_password_if_empty
   def strip_password_if_empty
@@ -54,11 +56,8 @@ class User < ActiveRecord::Base
   # validates_length_of       :password, within: Devise.password_length, allow_blank: true
 
   # rails-4-ify the validations to allow for blank passwords and emails
-  validates :email, presence: true, uniqueness: true, unless: :email_blank?
-  def email_blank?
-    email.blank?
-  end
-  validates :email, format: Devise.email_regexp, allow_blank: true, if: :email_changed?
+  validates :email, presence: { allow_blank: true }, uniqueness: { allow_blank: true }
+  # validates :email, format: Devise.email_regexp, allow_blank: true, if: :email_changed?
 
   validates :password, allow_blank: true, confirmation: true, if: :password_required?
   validates :password, length: Devise.password_length, allow_blank: true

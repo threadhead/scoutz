@@ -10,6 +10,7 @@ describe Unit do
   it { should validate_presence_of(:time_zone) }
   it { should validate_presence_of(:city) }
   it { should validate_presence_of(:state) }
+  it { should validate_uniqueness_of(:sl_uid).allow_nil }
 
 
   describe 'The units-users relationships' do

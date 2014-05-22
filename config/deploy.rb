@@ -30,7 +30,7 @@ set :deploy_to, "/home/karl/scoutz"
 set :linked_files, %w{config/database.yml .env}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads public/assets}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets tmp/vcr vendor/bundle public/system public/uploads public/assets}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

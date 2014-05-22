@@ -6,7 +6,7 @@ module EventCalendar
     mount_uploader :ical, IcalUploader
     before_create :ensure_ical_uuid
     before_save :update_ical_attributes
-    after_save :update_ical_background
+    after_save :update_ical_background, if: :ical_valid?
   end
 
   module ClassMethods
@@ -16,12 +16,19 @@ module EventCalendar
     end
   end
 
+  def ical_valid?
+    !(self.start_at.blank? || self.end_at.blank? || self.name.blank?)
+  end
+
   def update_ical_background
     Event.delay(priority: -5).update_ical(self.id)
   end
 
   def update_ical
+    return unless ical_valid?
+    # puts "REALLY UPDATE_ICAL"
     self.increment(:ical_sequence) if ical.present?
+
     skip_update_ical_background_callbacks do
       in_temp_file do |temp_file|
         file = File.open(temp_file, 'w')
@@ -49,6 +56,7 @@ module EventCalendar
   end
 
   def ical_string
+    # return unless ical_valid?
     cal = Icalendar::Calendar.new
     e = self
     cal.event do |e|

@@ -67,13 +67,11 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:each) do
-    if Capybara.current_driver == :rack_test
-      DatabaseCleaner.strategy = :transaction
-    else
-      DatabaseCleaner.strategy = :truncation
-    end
-
+    DatabaseCleaner.strategy = Capybara.current_driver == :rack_test ? :transaction : :truncation
     DatabaseCleaner.start
+    # This should effectively stop all creating ical files, which will happen in an after_save callback
+    # on Event. To remove this stub, call: reset(Event)
+    Event.any_instance.stub(:ical_valid?).and_return(false)
   end
 
   config.after(:each) do
@@ -81,7 +79,7 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
-    # PublicActivity.enabled = false
+    PublicActivity.enabled = false
     # ActiveRecord::Base.observers.disable(:all)
 
     User.delete_all
@@ -91,6 +89,7 @@ RSpec.configure do |config|
     Phone.delete_all
     UserRelationship.delete_all
     EventSignup.delete_all
+
   end
 
 
@@ -111,4 +110,13 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run_including focus: true
   config.run_all_when_everything_filtered = true
+end
+
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/vcr'
+  c.hook_into :webmock
+  c.configure_rspec_metadata!
+  c.filter_sensitive_data('<SCOUTLANDER_PASSWORD>') { ENV['SCOUTLANDER_PASSWORD'] }
+  c.default_cassette_options = { record: :new_episodes }
 end

@@ -10,10 +10,12 @@ describe User do
 	# it { should have_many(:adult_scout_relationships) }
 	# it { should have_many(:scout_adult_relationships) }
 	# it { should have_and_belong_to_many(:units) }
-
-  it { should validate_presence_of(:first_name) }
-  it { should validate_presence_of(:last_name) }
-
+  describe 'validators' do
+    before { FactoryGirl.create(:user) }
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+    it { should validate_uniqueness_of(:sl_profile).allow_nil }
+  end
 
   it 'should be valid' do
     FactoryGirl.build(:user).should be_valid

@@ -12,6 +12,8 @@ class Event < ActiveRecord::Base
   validates :name, :start_at, :end_at, :message,
       presence: true
 
+  validates :sl_profile, uniqueness: { allow_nil: true }
+
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at
     if end_at && start_at

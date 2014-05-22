@@ -82,8 +82,14 @@ module Scoutlander
         h
       end
 
+      def clean_string(str)
+        # uses the POSIX space characters, which includes space, non-breaking space, and more
+        return if str.nil?
+        str.gsub(/\A[[:space:]]+|[[:space:]]+\z/, '')
+      end
+
       def log
-        @logger_io.string
+        @logger_io.string if @logger_io
       end
 
 

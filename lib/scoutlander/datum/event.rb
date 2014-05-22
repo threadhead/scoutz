@@ -11,7 +11,7 @@ module Scoutlander
             :kind,
             :kind_sub_units,
             :name,
-            :organizer_profile,
+            :organizer_user,
             :send_reminders,
             :start_at,
             :end_at,
@@ -26,14 +26,21 @@ module Scoutlander
             :location_url,
             :attire,
             :message,
-            :fees
+            :fees,
+            :event_signups
           ]
 
         create_setters_getters_instance_variables(options)
+        @event_signups = []
+      end
+
+      def add_signup(event_signup)
+        return unless event_signup.is_a? Scoutlander::Datum::EventSignup
+        @event_signups << event_signup if event_signup.valid?
       end
 
       def to_params
-          to_params_without(:inspected, :kind_sub_units)
+          to_params_without(:inspected, :kind_sub_units, :organizer_user, :event_signups, :sl_url)
       end
     end
   end

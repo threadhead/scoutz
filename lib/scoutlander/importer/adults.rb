@@ -1,10 +1,10 @@
 # This class will crawl a Unit's site on Scoutlander and populate Scoutlander::Datum objects
-# with the information it scrapes. It will NOT persist any data.
+# with the information it scrapes.
 
 
 module Scoutlander
   module Importer
-    class Adults < Scoutlander::Importer::Base
+    class Adults < Scoutlander::Importer::Person
       attr_accessor :adults
 
       def initialize(options={})
@@ -20,19 +20,9 @@ module Scoutlander
 
 
       # just scrape for unit audults (name and profile id/href), no scout info
-      def fetch_unit_adults
-        login
 
-        adults_page = @agent.get("/securesite/parentmain.aspx?UID=#{@unit.sl_uid}")
-        adults_page.links_with(href: /parentmain.*&profile/).each do |link|
-          adult = Scoutlander::Datum::Person.new
-          adult.last_name, adult.first_name = link.text.split(', ')
-          adult.sl_url = link.href
-          adult.sl_uid = uid_from_url(adult.sl_url)
-          adult.sl_profile = profile_from_url(adult.sl_url)
-          @adults << adult
-        end
-      end
+
+
 
 
       # scrape the Adult Search page table and populate adult name/url/uid and related scout name/url/uid
@@ -73,48 +63,9 @@ module Scoutlander
 
           @adults << adult
         end
-
-        @adults
       end
 
 
-      # scrape an adult show page and populate all data
-      def fetch_adult_info(datum)
-        fetch_person_info(datum, "ParentProfile")
-      end
-
-      # scrape a scout show page and populate all data
-      def fetch_scout_info(datum)
-        fetch_person_info(datum, "ScoutProfile")
-      end
-
-      def fetch_person_info(datum, profile_name)
-        person_page = case profile_name
-        when "ParentProfile"
-          adult_info_page(datum)
-        when "ScoutProfile"
-          scout_info_page(datum)
-        end
-
-        datum.leadership_role = person_page.search("td#ctl00_mainContent_#{profile_name}_txtRole").text
-        datum.first_name = person_page.search("td#ctl00_mainContent_#{profile_name}_txtFirstName").text
-        datum.last_name = person_page.search("td#ctl00_mainContent_#{profile_name}_txtLastName").text
-        datum.security_level = person_page.search("td#ctl00_mainContent_#{profile_name}_txtSecurityLevel").text
-        datum.email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEmail").text
-        datum.alternate_email = person_page.search("td#ctl00_mainContent_#{profile_name}_txtAltEmail").text
-        datum.send_reminders = person_page.search("td#ctl00_mainContent_#{profile_name}_txtEventNotification").text.include?("ON")
-
-        datum.home_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtHomePhone").text
-        datum.work_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtWorkPhone").text
-        datum.cell_phone = person_page.search("td#ctl00_mainContent_#{profile_name}_txtCellPhone").text
-
-        datum.address1 = person_page.search("td#ctl00_mainContent_#{profile_name}_txtStreet").text
-        datum.city = person_page.search("td#ctl00_mainContent_#{profile_name}_txtCity").text
-        datum.state = person_page.search("td#ctl00_mainContent_#{profile_name}_txtState").text
-        datum.zip_code = person_page.search("td#ctl00_mainContent_#{profile_name}_txtZip").text
-
-        datum.inspected = true
-      end
 
 
       # scrape Scoutlander for the passed adult, popluate their info, and add scout links (but no scout info)
@@ -124,26 +75,20 @@ module Scoutlander
         if adult_page.search("table#ctl00_mainContent_ParentProfile_tblScoutGrid a").size > 0
           adult_page.search("table#ctl00_mainContent_ParentProfile_tblScoutGrid a").each do |scout|
             profile = profile_from_url(scout['href'])
-            adult_scout = find_or_create_by_profile(profile)
-            adult_scout.sl_profile = profile
-            adult_scout.sl_url = scout['href']
-            adult_scout.sl_uid = uid_from_url(scout['href'])
+            # adult_scout = find_or_create_by_profile(profile)
+            related_scout = Scoutlander::Datum::Person.new
+            related_scout.sl_profile = profile
+            related_scout.sl_url = scout['href']
+            related_scout.sl_uid = uid_from_url(scout['href'])
 
-            if adult_scout.parent.nil?
-              adult_datum.add_relation adult_scout
-            end
+            adult_datum.add_relation related_scout
+            # if related_scout.parent.nil?
+            #   adult_datum.add_relation related_scout
+            # end
           end
         end
       end
 
-
-      # goto the adult show page
-      def adult_info_page(datum)
-        return nil if datum.sl_url.blank?
-        login
-        @logger.info "ADULT_INFO_PAGE: #{datum.name}, profile: #{datum.sl_profile}, #{datum.sl_url}"
-        @agent.get datum.sl_url
-      end
 
 
       def find_or_create_by_profile(profile)
@@ -161,28 +106,42 @@ module Scoutlander
       def fetch_all_adult_info_and_create
         @logger.info "FETCH_ALL_ADULT_INFO_AND_CREATE: start"
         @adults.each do |adult|
-          fetch_adult_info(adult)
+          fetch_adult_info_with_scout_links(adult)
 
           begin
             user = @unit.adults.find_or_initialize_by(sl_profile: adult.sl_profile)
-            puts user.inspect
             if user.new_record?
-              @logger.info "CREATE_USER: #{adult.name}, profile: #{adult.sl_profile}"
+              @logger.info "CREATE_ADULT: #{adult.name}, profile: #{adult.sl_profile}"
               user.update_attributes(adult.to_params)
               @unit.users << user
             else
-              @logger.info "UPDATE_USER: #{user.name}"
+              @logger.info "UPDATE_ADULT: #{user.name}"
               user.update_attributes(adult.to_params)
             end
 
-            user.phones.create(kind: 'Home', number: adult.home_phone ) unless adult.home_phone.blank?
-            user.phones.create(kind: 'Work', number: adult.work_phone ) unless adult.work_phone.blank?
-            user.phones.create(kind: 'Mobile', number: adult.cell_phone ) unless adult.cell_phone.blank?
+            create_phones(user, adult)
+            find_and_associate_scout(user, adult)
+
           rescue ActiveRecord::RecordInvalid
             @logger.error "ActiveRecord::RecordInvalid: #{adult.inspect}"
           end
         end
         @logger.info "FETCH_ALL_ADULT_INFO_AND_CREATE: finish"
+      end
+
+
+      def find_and_associate_scout(resource, adult)
+        # puts "adult: #{adult.inspect}"
+        adult.relations.each do |scout|
+          rel_user = resource.scouts.where(sl_profile: scout.sl_profile).first
+          # puts "rel_user: #{rel_user.inspect}"
+          # if the adult(user) -> scout relationship does not exist, create it
+          if rel_user.nil?
+            related = Scout.where(sl_profile: scout.sl_profile).first
+            resource.scouts << related if related
+          end
+        end
+
       end
 
     end

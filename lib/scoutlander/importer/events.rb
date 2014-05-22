@@ -26,8 +26,8 @@ module Scoutlander
 
             event.name = row.children.children[1].text
             event.sl_url = row.children.children[1]['href']
-            event.sl_uid = uid_from_url(event.url)
-            event.sl_profile = profile_from_url(event.url)
+            event.sl_uid = uid_from_url(event.sl_url)
+            event.sl_profile = profile_from_url(event.sl_url)
 
             @events << event
             @logger.info "DATUM::EVENT(created): #{event.name}, #{event.sl_url}"
@@ -36,7 +36,148 @@ module Scoutlander
       end
 
 
+
+      def fetch_all_event_info_and_create
+        @logger.info "FETCH_ALL_EVENT_INFO_AND_CREATE: start"
+        @events.each do |event|
+          fetch_event_info(event)
+
+          begin
+            found_event = @unit.events.find_or_initialize_by(sl_profile: event.sl_profile)
+            if found_event.new_record?
+              @logger.info "CREATE_EVENT: #{event.name}, profile: #{event.sl_profile}"
+            else
+              @logger.info "UPDATE_EVENT: #{user.name}"
+            end
+            found_event.update_attributes(event.to_params)
+            create_or_update_event_signups(found_event, event)
+
+          rescue ActiveRecord::RecordInvalid
+            @logger.error "ActiveRecord::RecordInvalid: #{event.inspect}"
+          end
+        end
+        @logger.info "FETCH_ALL_EVENT_INFO_AND_CREATE: finish"
+      end
+
+      # to update signups, delete all existing signups and recreate
+      def create_or_update_event_signups(event, datum)
+        unless datum.event_signups.empty?
+          event.event_signups.destroy_all
+        end
+        datum.event_signups.each do |signup|
+          scout = Scout.where(sl_profile: signup.sl_profile).first
+          if scout
+            es = event.event_signup.create(signup.to_params.merge({scout_id: scout.id}))
+          end
+        end
+      end
+
+
+
       def fetch_event_info(datum)
+        event_page = event_info_page(datum)
+        td_id = "td#ctl00_mainContent_EventProfile_"
+
+        datum.kind = event_page.search("#{td_id}txtEventType").text
+        datum.kind_sub_units = event_page.search("#{td_id}txtSubUnit").text
+        sub_units_parse(datum)
+
+        # datum.name = event_page.search("td#")
+        organizer_name = event_page.search("#{td_id}txtOrganizer").text
+        datum.organizer_user = find_organizer(organizer_name)
+        datum.send_reminders = !!(event_page.search("#{td_id}txtEventReminders").text =~ /ON/)
+
+        start_at = event_page.search("#{td_id}txtStartDT").text
+        datum.start_at = up_to_dash(start_at).in_time_zone(@unit.time_zone)
+        end_at = event_page.search("#{td_id}txtEndDT").text
+        datum.end_at = up_to_dash(end_at).in_time_zone(@unit.time_zone)
+
+        datum.signup_required = event_page.search("#{td_id}txtDeadline").text
+        signup_and_deadline(datum)
+
+        datum.location_name = event_page.search("#{td_id}txtLocationName").text
+        datum.location_address1 = event_page.search("#{td_id}txtStreetAddress").text
+        datum.location_city = event_page.search("#{td_id}txtCity").text
+        datum.location_state = event_page.search("#{td_id}txtState").text
+        datum.location_zip_code = event_page.search("#{td_id}txtZipCode").text
+        datum.location_url = event_page.links_with(id: "ctl00_mainContent_EventProfile_lnkLocationMapURL")
+        datum.location_url = datum.location_url.first.href unless datum.location_url.empty?
+
+        datum.attire = event_page.search("#{td_id}txtAttire").text
+        datum.attire = sl_attire(datum.attire[0])
+
+        datum.message = sanitize_text event_page.search("#{td_id}txtMessage").children.to_s
+        datum.fees = event_page.search("#{td_id}txtFees").text
+
+        t = event_page.search("table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants>tr")
+        t.each do |row|
+          event_signup = Scoutlander::Datum::EventSignup.new
+          event_signup.sl_profile = find_response_link_profile(row)
+          find_response_amounts(row, event_signup)
+          event_signup.comment = clean_string row.at('td[6]').try(:text)
+          event_signup.inspected = true
+
+          datum.add_signup event_signup
+        end
+        # pp datum
+        # event_page.at("table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants").each do |row|
+        #   puts event_signup.sl_profile.inspect
+        # end
+
+      end
+
+
+      def find_response_amounts(row, datum)
+        datum.siblings_attending = response_value row, 'Scout'
+        datum.adults_attending = response_value row, 'Sibling'
+        datum.scouts_attending = response_value row, 'Adult'
+      end
+
+      def response_value(row, attending)
+        td = row.search('td table tr').at("td:contains(#{attending})")
+        return 0 if td.nil?
+        td.next.text.to_i
+      end
+
+      def find_response_link_profile(row)
+        r = row.at('a')
+        return if r.blank?
+        link_js = r.attr('onclick').to_s
+        link_js.split(';').first.gsub(/[^\d]/, '')
+      end
+
+      def signup_and_deadline(datum)
+        if datum.signup_required.downcase == "no signup required"
+          datum.signup_required = false
+          datum.signup_deadline = nil
+        else
+          datum.signup_deadline = up_to_dash(datum.signup_required).in_time_zone(@unit.time_zone)
+          datum.signup_required = true
+        end
+      end
+
+      def up_to_dash(str)
+        clean_string str.split('-').first
+      end
+
+      def sub_units_parse(datum)
+        if datum.kind == 'Patrol Event' || datum.kind = 'Den Event'
+          return if datum.kind_sub_units.blank?
+          datum.kind_sub_units = datum.kind_sub_units.strip.split(']').map{|v| clean_string v.sub('[','')}
+        end
+      end
+
+      def find_organizer(name)
+        l_name, f_name = clean_string(name).split(', ')
+        organizer = @unit.adults.where(first_name: f_name, last_name: l_name).first
+        if organizer.blank?
+          organizer = @unit.scouts.where(first_name: f_name, last_name: l_name).first
+        end
+        organizer
+      end
+
+
+      def fetch_event_edit_info(datum)
         # this will scrape all the event info except responses
         @logger.info "FETCH_EVENT_INFO: #{datum.name}"
         event_page = event_edit_page(datum)
@@ -65,23 +206,29 @@ module Scoutlander
         datum.attire = sl_attire event_page.search("select#ctl00_mainContent_EventEditProfile_cmbAttire option[@selected='selected']").attr('value').value
         datum.message = CGI::unescape event_page.search("textarea#ctl00_mainContent_EventEditProfile_Editor1ContentHiddenTextarea").text
         datum.fees = event_page.search("textarea#ctl00_mainContent_EventEditProfile_txtFees").children.text
+
+        datum.inspected = true
       end
+
+
 
       # goto the event show page
       def event_edit_page(datum)
-        return nil if datum.url.blank?
+        return nil if datum.sl_profile.blank?
         login
         url = "/securesite/calendarmain.aspx?UID=#{@unit.sl_uid}&editprofile=#{datum.sl_profile}"
-        @logger.info "EVENT_EDIT_PAGE: #{datum.name}, #{datum.sl_url}"
-        @agent.get sl_url
+        @logger.info "EVENT_EDIT_PAGE: #{datum.name}, #{url}"
+        @agent.get url
       end
 
       def event_info_page(datum)
-        return nil if datum.url.blank?
+        return nil if datum.sl_url.blank?
         login
         @logger.info "EVENT_INFO_PAGE: #{datum.name}, #{datum.sl_url}"
         @agent.get datum.sl_url
       end
+
+
 
       def scrape_months
         (-2..12).map{ |n| Date.today.beginning_of_month.months_since(n) }
@@ -112,6 +259,20 @@ module Scoutlander
       def sl_kind(str)
         @unit.event_kinds[str.to_i]
       end
+
+      private
+        def sanitize_text(text)
+          Sanitize.clean(text, whitelist)
+        end
+
+        def whitelist
+          whitelist = Sanitize::Config::RELAXED
+          whitelist[:elements] << "span"
+          whitelist[:elements] << "div"
+          whitelist[:attributes]["span"] = ["style"]
+          whitelist[:attributes]["div"] = ["style"]
+          whitelist
+        end
 
 
     end

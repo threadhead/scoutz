@@ -1,10 +1,10 @@
 module PublicActivitiesHelper
   def activity_scout(activity)
-    Scout.find(activity.parameters[:scout_id]) if activity.parameters.has_key?(:scout_id)
+    Scout.where(id: activity.parameters[:scout_id]).first if activity.parameters.has_key?(:scout_id)
   end
 
   def activity_event(activity)
-    Event.find(activity.parameters[:event_id]) if activity.parameters.has_key?(:event_id)
+    Event.where(id: activity.parameters[:event_id]).first if activity.parameters.has_key?(:event_id)
   end
 
   def activity_scout_link(activity)

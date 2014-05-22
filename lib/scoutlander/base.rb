@@ -1,4 +1,5 @@
 require 'importer/base'
+require 'importer/person'
 require 'importer/adults'
 require 'importer/sub_units'
 require 'importer/units'

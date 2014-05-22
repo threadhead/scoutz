@@ -1,5 +1,9 @@
 .row
   .col-md-12
+    = render partial: 'layouts/flash', locals: {flash: flash}
+
+.row
+  .col-md-12
     = render partial: 'dashboard/calendar_list'
 
 - @units.each do |unit|

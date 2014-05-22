@@ -21,6 +21,7 @@ module Scoutlander
           end
 
           @event.update_attributes(@datum.to_params)
+          create_or_update_sub_units
           create_or_update_event_signups
 
         rescue ActiveRecord::RecordInvalid
@@ -29,16 +30,44 @@ module Scoutlander
       end
 
 
-      def create_or_update_event_signups
-
-        # delete all the existing signups if there are signups to update
-        @event.event_signups.destroy_all unless @datum.event_signups.empty?
-
-        @datum.event_signups.each do |signup|
-          if signup.valid?
-            scout = Scout.where(sl_profile: signup.sl_profile).first
-            @event.event_signups.create(signup.to_params.merge({scout_id: scout.id})) if scout
+      def create_or_update_sub_units
+        if @event.sub_unit_kind?
+          @datum.kind_sub_units.each do |sub_unit|
+            event_sub_unit = @event.sub_units.where(name: sub_unit).first
+            if event_sub_unit.nil?
+              su = @unit.sub_units.where(name: sub_unit).first
+              @event.sub_units << su if su
+            end
           end
+        end
+      end
+
+
+      def create_or_update_event_signups
+        # we wrap all the creating and updates of signups for two reasons:
+        #  - if there is an error creating the signups, we don't want existing signups deleted
+        #  - there is a possibiliy of a "bad" signup that would cause deletion of all existing signups, so
+        #    we want to make sure that is at least one good signup
+
+        ActiveRecord::Base.transaction do
+          # delete all the existing signups if there are signups to update
+          existing_signups = @event.event_signups.all.load
+          # @event.event_signups.destroy_all unless @datum.event_signups.empty?
+
+          at_least_one_signup = false
+          @datum.event_signups.each do |signup|
+            if signup.valid?
+              scout = Scout.where(sl_profile: signup.sl_profile).first
+              @event.event_signups.create(signup.to_params.merge({scout_id: scout.id})) if scout
+              at_least_one_signup = true
+            end
+          end
+
+          if at_least_one_signup
+            existing_signups.destroy_all
+          end
+
+         raise ActiveRecord::Rollback unless at_least_one_signup
         end
       end
 

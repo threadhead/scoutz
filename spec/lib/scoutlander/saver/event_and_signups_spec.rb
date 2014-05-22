@@ -46,8 +46,8 @@ describe Scoutlander::Saver::EventAndSignups do
         @unit.scouts << @scout
       end
       before do
-        signup = Scoutlander::Datum::EventSignup.new(scouts_attending: 1, inspected: true, sl_profile: '888999')
-        @datum.add_signup signup
+        @signup = Scoutlander::Datum::EventSignup.new(scouts_attending: 1, inspected: true, sl_profile: '888999')
+        @datum.add_signup @signup
         event_saver.event = @event
       end
 
@@ -62,6 +62,13 @@ describe Scoutlander::Saver::EventAndSignups do
         expect(@event.event_signups.first.scout_id).to be_blank
         event_saver.create_or_update_event_signups
         expect(@event.event_signups.first.scout_id).to eq(@scout.id)
+      end
+
+      it 'does not save signups without matching scout' do
+        expect(@event.event_signups.count).to eq(1)
+        @signup.sl_profile = '777666'
+        event_saver.create_or_update_event_signups
+        expect(@event.event_signups.count).to eq(0)
       end
     end
 

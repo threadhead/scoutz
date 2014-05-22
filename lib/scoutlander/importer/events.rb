@@ -95,7 +95,9 @@ module Scoutlander
 
           datum.add_signup event_signup
         end
-        # pp datum
+        # pp datum.kind
+        # pp datum.kind_sub_units
+
         # event_page.at("table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants").each do |row|
         #   puts event_signup.sl_profile.inspect
         # end
@@ -137,9 +139,11 @@ module Scoutlander
       end
 
       def sub_units_parse(datum)
-        if datum.kind == 'Patrol Event' || datum.kind = 'Den Event'
-          return if datum.kind_sub_units.blank?
-          datum.kind_sub_units = datum.kind_sub_units.strip.split(']').map{|v| clean_string v.sub('[','')}
+        datum.kind_sub_units = if datum.kind == 'Patrol Event' || datum.kind == 'Den Event'
+          return [] if datum.kind_sub_units.blank?
+          datum.kind_sub_units.strip.split(']').map{|v| clean_string v.sub('[','')}
+        else
+          []
         end
       end
 

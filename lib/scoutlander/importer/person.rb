@@ -44,7 +44,7 @@ module Scoutlander
 
         datum.inspected = true
         person_page
-        puts "datum - fname: #{datum.first_name}, lname: #{datum.last_name}, role: #{person_page.search("#{td_id}txtRole").text}"
+        # puts "datum - fname: #{datum.first_name}, lname: #{datum.last_name}, role: #{person_page.search("#{td_id}txtRole").text}"
       end
 
       def sl_leadership(datum)

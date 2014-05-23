@@ -23,18 +23,18 @@ describe Scoutlander::Importer::Adults do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info') do
         @sl.fetch_unit_adults
-        # @sl.fetch_adult_info(@sl.adults.first)
-        # @sl.fetch_adult_info(@sl.adults.last)
-        @sl.adults.each {|a| @sl.fetch_adult_info(a)}
+        @sl.fetch_adult_info(@sl.adults.first)
+        @sl.fetch_adult_info(@sl.adults.last)
+        # @sl.adults.each {|a| @sl.fetch_adult_info(a)}
       end
     end
     subject { @sl.adults }
-    it "does something", :focus do
+    it "does something" do
       pp @sl.adults.map(&:leadership_position).inspect
       pp @sl.adults.map(&:additional_leadership_positions).inspect
     end
 
-    specify { expect(subject.first.leadership_role).to eq("Asst Scoutmaster") }
+    specify { expect(subject.first.leadership_position).to eq("Asst Scoutmaster") }
     specify { expect(subject.last.email).to eq("casadezoerb@mac.com") }
   end
 

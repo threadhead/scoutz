@@ -22,7 +22,8 @@ module Scoutlander
         # end
         td_id = "td#ctl00_mainContent_#{profile_name}_"
 
-        datum.leadership_role = person_page.search("#{td_id}txtRole").text
+        datum.leadership_position = person_page.search("#{td_id}txtRole").text
+        sl_leadership(datum)
         datum.first_name = person_page.search("#{td_id}txtFirstName").text
         datum.last_name = person_page.search("#{td_id}txtLastName").text
         datum.sub_unit = person_page.search("#{td_id}txtSubUnit").text
@@ -43,6 +44,20 @@ module Scoutlander
 
         datum.inspected = true
         person_page
+        puts "datum - fname: #{datum.first_name}, lname: #{datum.last_name}, role: #{person_page.search("#{td_id}txtRole").text}"
+      end
+
+      def sl_leadership(datum)
+        return if datum.leadership_position.blank?
+
+        roles = datum.leadership_position.split(', ')
+        # the first leadership postion may be from a selection option
+        # if so, then set leaderhip_postion to that option and additional_leadership_positions to the rest
+        if @unit.adult_leadership_positions.include?(roles.first) || @unit.scout_leadership_positions.include?(roles.first)
+          datum.leadership_position = roles.first
+          roles.delete_at(0)
+        end
+        datum.additional_leadership_positions = roles.join(', ') unless roles.empty?
       end
 
       # def get_info_text(page, profile_name, field_id)

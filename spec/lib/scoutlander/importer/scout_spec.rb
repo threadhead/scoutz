@@ -12,9 +12,9 @@ describe Scoutlander::Importer::Scouts do
     end
     subject { @sl.scouts }
 
-    it "does something" do
-      ap subject
-    end
+    # it "does something" do
+    #   ap subject
+    # end
 
     # specify { expect(subject).to_not be_blank }
     # specify { expect(subject.size).to eq(122) }
@@ -30,16 +30,16 @@ describe Scoutlander::Importer::Scouts do
         @sl.fetch_scout_info(@sl.scouts.first)
         @sl.fetch_scout_info(@sl.scouts[1])
         @sl.fetch_scout_info(@sl.scouts.last)
-        @sl.scouts.each {|s| @sl.fetch_scout_info(s)}
+        # @sl.scouts.each {|s| @sl.fetch_scout_info(s)}
       end
     end
     subject { @sl.scouts }
 
-    it "does something", :focus do
-      pp @sl.scouts.first
-      pp @sl.scouts.last
-      pp @sl.scouts[1]
-    end
+    # it "does something" do
+    #   pp @sl.scouts.first
+    #   pp @sl.scouts.last
+    #   pp @sl.scouts[1]
+    # end
 
     # specify { expect(subject.first.leadership_position).to eq("Asst Scoutmaster") }
     # specify { expect(subject.last.email).to eq("casadezoerb@mac.com") }

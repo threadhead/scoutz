@@ -19,7 +19,7 @@ describe 'Adults' do
     it 'shows the adult name, den, leadership position, and scouts' do
       within 'body .container-fluid table' do
         expect(page).to have_link('Karl, Tara')
-        expect(page).to have_text('Den 44, Den 55')
+        # expect(page).to have_text('Den 44, Den 55') -- we no longer display related patrols
         expect(page).to have_text('Committee Chair')
         expect(page).to have_link("Bocephus Jones")
         expect(page).to have_link("Aydan Russel")

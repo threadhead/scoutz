@@ -7,7 +7,7 @@ describe Scoutlander::Datum::Event do
   context 'when initialized' do
     specify { expect(subject.name).to be_nil }
     specify { expect(subject.attire).to eq('none') }
-    specify { expect(subject.inspected).to be_false }
+    specify { expect(subject.inspected).to be_falsy }
   end
 
   describe '.to_params' do

@@ -6,7 +6,7 @@ describe Scoutlander::Datum::SubUnit do
 
   context 'when initialized' do
     specify { expect(subject.name).to eq('Blip') }
-    specify { expect(subject.inspected).to be_false }
+    specify { expect(subject.inspected).to be_falsy }
   end
 
   describe '.to_params' do

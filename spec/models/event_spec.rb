@@ -51,14 +51,14 @@ describe Event do
     ['Den Event', 'Patrol Event'].each do |event|
       it "returns TRUE when '#{event}'" do
         @event.kind = event
-        @event.sub_unit_kind?.should be_true
+        @event.sub_unit_kind?.should be
       end
     end
 
     ['Pack Event', 'Troop Event', 'Lodge Event'].each do |event|
       it "returns FALSE when '#{event}'" do
         @event.kind = event
-        @event.sub_unit_kind?.should be_false
+        @event.sub_unit_kind?.should be_falsy
       end
     end
   end
@@ -82,14 +82,14 @@ describe Event do
     end
     subject { @event.as_json }
 
-    its([:id]) { should eq(@event.id) }
-    its([:title]) { should eq('USS Midway Overnight') }
-    its([:description]) { should eq('') }
-    its([:allDay]) { should be_false }
-    its([:recurring]) { should be_false }
-    its([:start]) { should eq(@time.rfc822) }
-    its([:end]) { should eq((@time+1).rfc822) }
-    its([:url]) { should eq("/events/#{@event.id}") }
+    specify { expect(subject[:id]).to eq(@event.id) }
+    specify { expect(subject[:title]).to eq('USS Midway Overnight') }
+    specify { expect(subject[:description]).to eq('') }
+    specify { expect(subject[:allDay]).to be_falsy }
+    specify { expect(subject[:recurring]).to be_falsy }
+    specify { expect(subject[:start]).to eq(@time.rfc822) }
+    specify { expect(subject[:end]).to eq((@time+1).rfc822) }
+    specify { expect(subject[:url]).to eq("/events/#{@event.id}") }
   end
 
   describe '.after_signup_deadline?' do
@@ -97,12 +97,12 @@ describe Event do
 
     it 'retuns true when signup has passed' do
       @event.signup_deadline = 3.seconds.ago
-      @event.after_signup_deadline?.should be_true
+      @event.after_signup_deadline?.should be
     end
 
     it 'return false when signup has NOT passed' do
       @event.signup_deadline = 3.seconds.from_now
-      @event.after_signup_deadline?.should be_false
+      @event.after_signup_deadline?.should be_falsy
     end
   end
 
@@ -244,7 +244,7 @@ describe Event do
         ical_sequence = @event.ical_sequence
         @event.update_ical
         expect(@event.reload.ical_sequence).to eq(ical_sequence + 1)
-        expect(@event.ical.present?).to be_true
+        expect(@event.ical.present?).to be
       end
     end
 

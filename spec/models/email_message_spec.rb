@@ -122,12 +122,12 @@ describe EmailMessage do
     end
 
     it 'returns FALSE when no associated events' do
-      @email_message.has_events?.should be_false
+      @email_message.has_events?.should be_falsy
     end
 
     it 'returns TRUE when it has associated events' do
       @email_message.events << @event
-      @email_message.has_events?.should be_true
+      @email_message.has_events?.should be
     end
   end
 
@@ -142,11 +142,11 @@ describe EmailMessage do
 
     it 'returns TRUE when email message has an event that has signup required' do
       @event.update_attribute(:signup_required, true)
-      @email_message.events_have_signup?.should be_true
+      @email_message.events_have_signup?.should be
     end
 
     it 'returns FALSE when email message has an event that does not have signup required' do
-      @email_message.events_have_signup?.should be_false
+      @email_message.events_have_signup?.should be_falsy
     end
   end
 
@@ -169,22 +169,22 @@ describe EmailMessage do
 
     it 'returns true when send_to_unit' do
       @email_message.send_to_option = 1
-      @email_message.send_to_unit?.should be_true
+      @email_message.send_to_unit?.should be
     end
 
     it 'returns true when send_to_leaders' do
       @email_message.send_to_option = 2
-      @email_message.send_to_leaders?.should be_true
+      @email_message.send_to_leaders?.should be
     end
 
     it 'returns true when send_to_sub_units' do
       @email_message.send_to_option = 3
-      @email_message.send_to_sub_units?.should be_true
+      @email_message.send_to_sub_units?.should be
     end
 
     it 'returns true when send_to_users' do
       @email_message.send_to_option = 4
-      @email_message.send_to_users?.should be_true
+      @email_message.send_to_users?.should be
     end
   end
 

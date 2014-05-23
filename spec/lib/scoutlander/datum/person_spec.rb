@@ -9,7 +9,7 @@ describe Scoutlander::Datum::Person do
     specify { expect(subject.email).to eq('threadhead@gmail.com') }
     specify { expect(subject.relations).to be_empty }
     specify { expect(subject.parent).to be_nil }
-    specify { expect(subject.inspected).to be_false }
+    specify { expect(subject.inspected).to be_falsy }
   end
 
   describe '.add_relation' do

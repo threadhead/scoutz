@@ -42,11 +42,11 @@ describe EventSignup do
 
     it 'returns true when canceled' do
       @event_signup.canceled_at = Time.zone.now
-      @event_signup.canceled?.should be_true
+      expect(@event_signup.canceled?).to be
     end
 
     it 'returns false when not canceled' do
-      @event_signup.canceled?.should be_false
+      expect(@event_signup.canceled?).to be_falsy
     end
   end
 

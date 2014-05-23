@@ -37,6 +37,10 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end
+  config.mock_with :rspec do |mocks|
+    mocks.syntax = [:should, :expect]
+  end
+
 
   config.include Devise::TestHelpers, :type => :controller
   # config.extend ControllerMacros, :type => :controller
@@ -71,7 +75,7 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     # This should effectively stop all creating ical files, which will happen in an after_save callback
     # on Event. To remove this stub, call: reset(Event)
-    Event.any_instance.stub(:ical_valid?).and_return(false)
+    allow_any_instance_of(Event).to receive(:ical_valid?).and_return(false)
   end
 
   config.after(:each) do
@@ -107,7 +111,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   #some rspec configs
-  config.treat_symbols_as_metadata_keys_with_true_values = true
+  # config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run_including focus: true
   config.run_all_when_everything_filtered = true
 end

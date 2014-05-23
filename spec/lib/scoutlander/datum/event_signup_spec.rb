@@ -9,7 +9,7 @@ describe Scoutlander::Datum::EventSignup do
     specify { expect(subject.scouts_attending).to eq(1) }
     specify { expect(subject.adults_attending).to eq(0) }
     specify { expect(subject.siblings_attending).to eq(0) }
-    specify { expect(subject.inspected).to be_false }
+    specify { expect(subject.inspected).to be_falsy }
   end
 
   describe '.to_params' do
@@ -24,7 +24,7 @@ describe Scoutlander::Datum::EventSignup do
     describe "returns true" do
       it "when inspected and at least one attending" do
         subject.inspected = true
-        expect(subject.valid?).to be_true
+        expect(subject.valid?).to be
       end
     end
 
@@ -32,13 +32,13 @@ describe Scoutlander::Datum::EventSignup do
     describe "returns false" do
       it "when inspected is false" do
         subject.inspected = false
-        expect(subject.valid?).to be_false
+        expect(subject.valid?).to be_falsy
       end
 
       it "when all attendings are 0" do
         subject.inspected = true
         subject.scouts_attending = 0
-        expect(subject.valid?).to be_false
+        expect(subject.valid?).to be_falsy
       end
     end
   end

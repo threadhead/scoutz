@@ -40,6 +40,7 @@
 /public/assets/not_auto_loaded/**
 /.sass-cache/**
 /lib/tasks/asset_sync.rake
+/spec/vcr/*.yml
 .powenv
 .powrc
 .env

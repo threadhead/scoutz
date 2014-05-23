@@ -93,19 +93,22 @@ group :development do
   gem 'capistrano-rails' #, require: false
   gem 'capistrano-rvm' #, require: false
 
+  gem 'guard'
+  gem 'guard-rspec', require: false
+  gem 'guard-livereload', require: false
+
   # gem 'meta_request'
-  gem 'guard-livereload'
   gem 'rack-livereload'
   gem "letter_opener"
   gem 'wirble', require: false
   gem 'hirb', require: false
-  gem 'brakeman', :require => false
+  gem 'brakeman', require: false
 end
 
 
 group :test do
   # gem 'rspec-activemodel-mocks' #will need this when going to rspec 3.0
-	# gem 'rake' # for travis-ci
+  # gem 'rake' # for travis-ci
   gem 'minitest'
   gem 'factory_girl_rails'
   gem 'ffaker'
@@ -115,8 +118,6 @@ group :test do
   # gem 'vcr'
   # gem 'webmock', '<= 1.16'
 
-  gem 'guard'
-  gem 'guard-rspec'
 	gem 'shoulda-matchers'
 
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'

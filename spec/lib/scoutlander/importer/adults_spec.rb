@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Scoutlander::Importer::Adults do
   before(:all) { @unit = FactoryGirl.create(:unit, sl_uid: '3218', unit_type: 'Boy Scouts') }
 
-  describe '.fetch_unit_adults' do
+  describe '.fetch_unit_adults', :vcr do
     before(:all) do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_unit_adults') do
@@ -18,7 +18,7 @@ describe Scoutlander::Importer::Adults do
   end
 
 
-  describe '.fetch_adult_info' do
+  describe '.fetch_adult_info', :vcr do
     before(:all) do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info') do
@@ -29,17 +29,13 @@ describe Scoutlander::Importer::Adults do
       end
     end
     subject { @sl.adults }
-    it "does something" do
-      pp @sl.adults.map(&:leadership_position).inspect
-      pp @sl.adults.map(&:additional_leadership_positions).inspect
-    end
 
     specify { expect(subject.first.leadership_position).to eq("Asst Scoutmaster") }
     specify { expect(subject.last.email).to eq("casadezoerb@mac.com") }
   end
 
 
-  describe '.fetch_adult_info_with_scout_links' do
+  describe '.fetch_adult_info_with_scout_links', :vcr do
     before(:all) do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info_with_scout_links') do

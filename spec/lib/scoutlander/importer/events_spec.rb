@@ -7,7 +7,7 @@ describe Scoutlander::Importer::Events do
     @unit.users << @user
   end
 
-  describe '.fetch_unit_events' do
+  describe '.fetch_unit_events', :vcr do
     before do
       VCR.use_cassette('fetch_unit_events') do
         @sl = Scoutlander::Importer::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
@@ -29,7 +29,7 @@ describe Scoutlander::Importer::Events do
   end
 
 
-  describe '.fetch_event_info' do
+  describe '.fetch_event_info', :vcr do
     before do
       VCR.use_cassette('fetch_event_info') do
         @sl = Scoutlander::Importer::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Scoutlander::Importer::Units do
-  describe '.available_names_uids' do
+  describe '.available_names_uids', :vcr do
     before(:all) do
       VCR.use_cassette('available_names_uids') do
         @sl = Scoutlander::Importer::Units.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])

@@ -1,4 +1,5 @@
 language: ruby
 rvm: 2.1.2
 before_install: "gem install bundler"
-script: "RAILS_ENV=test bundle exec rake db:migrate spec"
+before_script: "RAILS_ENV=test bundle exec rake db:migrate"
+script: "bundle exec rspec spec --tag ~@vcr"

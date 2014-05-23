@@ -5,7 +5,7 @@
 module Scoutlander
   module Importer
     class Scouts < Scoutlander::Importer::Person
-      attr_accessor :scout
+      attr_accessor :scouts
 
       def initialize(options={})
         super(options)

@@ -21,6 +21,7 @@ module Scoutlander
           :city,
           :state,
           :zip_code,
+          :rank,
           :sl_url,
           :sl_uid,
           :sl_profile,

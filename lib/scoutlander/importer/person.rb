@@ -27,6 +27,7 @@ module Scoutlander
         datum.first_name = person_page.search("#{td_id}txtFirstName").text
         datum.last_name = person_page.search("#{td_id}txtLastName").text
         datum.sub_unit = person_page.search("#{td_id}txtSubUnit").text
+        datum.rank = person_page.search("#{td_id}txtRank").text
         datum.security_level = person_page.search("#{td_id}txtSecurityLevel").text
         datum.email = person_page.search("#{td_id}txtEmail").text
         datum.email = nil if datum.email.downcase == "no email"

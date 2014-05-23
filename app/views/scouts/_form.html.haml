@@ -23,7 +23,11 @@
       .col-md-offset-3.col-md-6
         .well.well-sm
           = image_tag @user.picture.url
-    = f.file_field :picture, hide_label: true, help: 'alowed attachments: jpg jpeg gif png, at least 200px X 200px'
+    = f.file_field :picture, hide_label: true
+    = f.form_group do
+      = f.check_box :remove_picture, label: 'remove picture'
+      .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+
 
 
 

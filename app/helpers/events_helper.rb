@@ -37,7 +37,8 @@ module EventsHelper
   end
 
   def location_map_url_iframe(event)
-    event.location_map_url =~ /maps.google.com/ ? event.location_map_url + '&amp;output=embed' : event.location_map_url
+    m = event.location_map_url =~ /maps.google.com/ ? event.location_map_url + '&amp;output=embed' : event.location_map_url
+    m.html_safe
   end
 
 end

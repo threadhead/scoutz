@@ -7,7 +7,7 @@ class AdultsController < ApplicationController
   before_action :set_unit
 
   def index
-    @users = @unit.adults.by_name_lf
+    @users = @unit.adults.includes(:sub_unit, :scouts).by_name_lf
     fresh_when last_modified: @users.maximum(:updated_at)
   end
 
@@ -72,6 +72,6 @@ class AdultsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :email)
+      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :remove_picture, :email)
     end
 end

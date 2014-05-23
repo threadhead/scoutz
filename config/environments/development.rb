@@ -1,6 +1,6 @@
 Scoutz::Application.configure do
   if defined?(WebMock)
-    # WebMock.disable!
+    WebMock.disable!
   end
   # Settings specified here will take precedence over those in config/application.rb.
 

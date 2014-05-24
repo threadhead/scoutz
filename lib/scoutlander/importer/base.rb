@@ -16,9 +16,13 @@ module Scoutlander
 
         # @logger_io = StringIO.new
         # @logger = Logger.new(@logger_io)
-        FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
-        file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
-        @logger = Rails.env.test? ? Logger.new('/dev/null') : Logger.new(file)
+        @logger = if Rails.env.test?
+          Logger.new('/dev/null')
+        else
+          FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
+          file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
+          Logger.new(file)
+        end
         @logger.formatter = proc do |severity, datetime, progname, msg|
           "[#{datetime.utc.strftime "%Y-%m-%d %H:%M:%SZ"}] #{msg}\n"
         end
@@ -94,6 +98,7 @@ module Scoutlander
       end
 
 
+      # queries a collection of daum elements returning matches to the key_vals pairs
       def find_collection_elements_with(*key_vals)
         self.collection.select do |elem|
           key_vals.all? do |kv|

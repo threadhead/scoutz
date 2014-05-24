@@ -36,14 +36,15 @@ module Scoutlander
           datum.send("#{k}=".to_sym, reader.get_text_with(v))
         end
 
+        # massage some of the data
         sl_leadership(datum)
         datum.email = nil if datum.email.nil? || datum.email.downcase == "no email"
         datum.send_reminders = !datum.send_reminders.nil? && datum.send_reminders.include?("ON")
 
         datum.inspected = true
         person_page
-        # puts "datum - fname: #{datum.first_name}, lname: #{datum.last_name}, role: #{person_page.search("#{td_id}txtRole").text}"
       end
+
 
       def sl_leadership(datum)
         return if datum.leadership_position.blank?
@@ -58,9 +59,6 @@ module Scoutlander
         datum.additional_leadership_positions = roles.join(', ') unless roles.empty?
       end
 
-      # def get_info_text(page, profile_name, field_id)
-      #   page.search("td#ctl00_mainContent_#{profile_name}_#{field_id}").text
-      # end
 
       # goto the person's show page
       def person_info_page(datum)
@@ -91,7 +89,7 @@ module Scoutlander
           person.sl_url = link.href
           person.sl_uid = uid_from_url(person.sl_url)
           person.sl_profile = profile_from_url(person.sl_url)
-          collection << person
+          collection << person     # collection is defined in subclasses
         end
       end
 

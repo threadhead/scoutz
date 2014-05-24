@@ -13,6 +13,8 @@ describe Scoutlander::Importer::Scouts do
 
     subject { (@sl.find_collection_elements_with first_name: 'Bennett', last_name: 'Smith').first }
 
+
+
     specify { expect(subject).to_not be_blank }
 
     context 'loaded attributes' do
@@ -27,6 +29,8 @@ describe Scoutlander::Importer::Scouts do
       end
     end
   end
+
+
 
 
   describe '.fetch_scout_info', :vcr do
@@ -64,11 +68,6 @@ describe Scoutlander::Importer::Scouts do
         specify { expect(subject.send(attr)).to be_nil }
       end
     end
-
-
-
-    # specify { expect(subject.first.leadership_position).to eq("Asst Scoutmaster") }
-    # specify { expect(subject.last.email).to eq("casadezoerb@mac.com") }
   end
 
 

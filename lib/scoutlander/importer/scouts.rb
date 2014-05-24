@@ -12,6 +12,10 @@ module Scoutlander
         @scouts = []
       end
 
+      def collection
+        @scouts
+      end
+
 
       def fetch_all_scout_info_and_create
         @logger.info "FETCH_ALL_SCOUT_INFO_AND_CREATE: start"

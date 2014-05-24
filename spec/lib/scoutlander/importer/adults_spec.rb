@@ -7,7 +7,7 @@ describe Scoutlander::Importer::Adults do
     before(:all) do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_unit_adults') do
-        @sl.fetch_unit_adults
+        @sl.fetch_unit_persons(:adult)
       end
     end
     subject { @sl.adults }
@@ -22,9 +22,9 @@ describe Scoutlander::Importer::Adults do
     before(:all) do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info') do
-        @sl.fetch_unit_adults
-        @sl.fetch_adult_info(@sl.adults.first)
-        @sl.fetch_adult_info(@sl.adults.last)
+        @sl.fetch_unit_persons(:adult)
+        @sl.fetch_person_info(:adult, @sl.adults.first)
+        @sl.fetch_person_info(:adult, @sl.adults.last)
         # @sl.adults.each {|a| @sl.fetch_adult_info(a)}
       end
     end
@@ -39,7 +39,7 @@ describe Scoutlander::Importer::Adults do
     before(:all) do
       @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info_with_scout_links') do
-        @sl.fetch_unit_adults
+        @sl.fetch_unit_persons(:adult)
         # pp @sl.adults
         @dave = @sl.find_or_create_by_profile('85542')
         @sl.fetch_adult_info_with_scout_links(@dave)

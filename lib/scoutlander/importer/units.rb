@@ -8,6 +8,10 @@ module Scoutlander
         @units = []
       end
 
+      def collection
+        @units
+      end
+
 
       def available_names_uids
         dash_page = login

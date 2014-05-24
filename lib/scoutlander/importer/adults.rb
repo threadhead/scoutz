@@ -12,6 +12,10 @@ module Scoutlander
         @adults = []
       end
 
+      def collection
+        @adults
+      end
+
       # in general, you would first scrape the 'Adult Search' table using .fetch_unit_adults
       #  this will poplulate the @adults array with basid name, uid (user id), and url (used to get details)
 
@@ -70,7 +74,7 @@ module Scoutlander
 
       # scrape Scoutlander for the passed adult, popluate their info, and add scout links (but no scout info)
       def fetch_adult_info_with_scout_links(adult_datum)
-        adult_page = fetch_adult_info(adult_datum)
+        adult_page = fetch_person_info(:adult, adult_datum)
 
         if adult_page.search("table#ctl00_mainContent_ParentProfile_tblScoutGrid a").size > 0
           adult_page.search("table#ctl00_mainContent_ParentProfile_tblScoutGrid a").each do |scout|

@@ -3,6 +3,7 @@ require 'importer/person'
 require 'importer/adults'
 require 'importer/sub_units'
 require 'importer/units'
+require 'importer/td_reader'
 
 require 'datum/base'
 require 'datum/person'

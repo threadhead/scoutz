@@ -4,10 +4,11 @@ require 'mechanize'
 module Scoutlander
   module Importer
     class Base
-      attr_accessor :logger
+      attr_accessor :logger, :collection
       attr_reader :agent
 
       def initialize(options={})
+        @collection = []
         @email = options[:email]
         @password = options[:password]
         @unit = options[:unit]
@@ -90,6 +91,17 @@ module Scoutlander
 
       def log
         @logger_io.string if @logger_io
+      end
+
+
+      def find_collection_elements_with(*key_vals)
+        self.collection.select do |elem|
+          key_vals.all? do |kv|
+            k,v = kv.first
+            return unless elem.respond_to?(k.to_sym)
+            elem.send(k.to_sym) == v
+          end
+        end
       end
 
 

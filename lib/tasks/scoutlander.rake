@@ -34,7 +34,7 @@ begin
                             unit: unit
                             )
 
-        VCR.use_cassette('fetch_unit_scouts') { scout_importer.fetch_unit_scouts }
+        VCR.use_cassette('fetch_unit_persons(:scout)') { scout_importer.fetch_unit_scouts }
         VCR.use_cassette('fetch_all_scout_info_and_create') { scout_importer.fetch_all_scout_info_and_create }
 
 
@@ -46,7 +46,7 @@ begin
                             unit: unit
                             )
 
-        VCR.use_cassette('fetch_unit_adults') { adult_importer.fetch_unit_adults }
+        VCR.use_cassette('fetch_unit_persons(:adult)') { adult_importer.fetch_unit_adults }
         VCR.use_cassette('fetch_all_adult_info_and_create') { adult_importer.fetch_all_adult_info_and_create }
 
 

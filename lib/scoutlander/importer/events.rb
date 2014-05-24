@@ -8,6 +8,10 @@ module Scoutlander
         @events = []
       end
 
+      def collection
+        @events
+      end
+
 
       def fetch_unit_events
         @logger.info "EXEC(EVENTS) : Unit=#{@unit.name}, #{@unit.unit_number}"

@@ -2,46 +2,43 @@ module Scoutlander
   module Importer
     class Person < Scoutlander::Importer::Base
 
-      # scrape an adult show page and populate all data
-      def fetch_adult_info(datum)
-        fetch_person_info(datum, "ParentProfile")
+      def profile_name(kind)
+        case kind
+        when :scout
+          'ScoutProfile'
+        when :adult
+          'ParentProfile'
+        end
       end
 
-      # scrape a scout show page and populate all data
-      def fetch_scout_info(datum)
-        fetch_person_info(datum, "ScoutProfile")
-      end
-
-      def fetch_person_info(datum, profile_name)
+      def fetch_person_info(kind, datum)
         person_page = person_info_page(datum)
-        # person_page = case profile_name
-        # when "ParentProfile"
-        #   adult_info_page(datum)
-        # when "ScoutProfile"
-        #   scout_info_page(datum)
-        # end
-        td_id = "td#ctl00_mainContent_#{profile_name}_"
+        reader = Scoutlander::Importer::TdReader.new(page: person_page, id: "td#ctl00_mainContent_#{profile_name(kind)}_")
 
-        datum.leadership_position = person_page.search("#{td_id}txtRole").text
+        {
+          leadership_position: 'txtRole',
+          first_name: 'txtFirstName',
+          last_name: 'txtLastName',
+          sub_unit: 'txtSubUnit',
+          rank: 'txtRank',
+          security_level: 'txtSecurityLevel',
+          email: 'txtEmail',
+          alternate_email: 'txtAltEmail',
+          send_reminders: 'txtEventNotification',
+          home_phone: 'txtHomePhone',
+          work_phone: 'txtWorkPhone',
+          cell_phone: 'txtCellPhone',
+          address1: 'txtStreet',
+          city: 'txtCity',
+          state: 'txtState',
+          zip_code: 'txtZip'
+        }.each do |k,v|
+          datum.send("#{k}=".to_sym, reader.get_text_with(v))
+        end
+
         sl_leadership(datum)
-        datum.first_name = person_page.search("#{td_id}txtFirstName").text
-        datum.last_name = person_page.search("#{td_id}txtLastName").text
-        datum.sub_unit = person_page.search("#{td_id}txtSubUnit").text
-        datum.rank = person_page.search("#{td_id}txtRank").text
-        datum.security_level = person_page.search("#{td_id}txtSecurityLevel").text
-        datum.email = person_page.search("#{td_id}txtEmail").text
-        datum.email = nil if datum.email.downcase == "no email"
-        datum.alternate_email = person_page.search("#{td_id}txtAltEmail").text
-        datum.send_reminders = person_page.search("#{td_id}txtEventNotification").text.include?("ON")
-
-        datum.home_phone = person_page.search("#{td_id}txtHomePhone").text
-        datum.work_phone = person_page.search("#{td_id}txtWorkPhone").text
-        datum.cell_phone = person_page.search("#{td_id}txtCellPhone").text
-
-        datum.address1 = person_page.search("#{td_id}txtStreet").text
-        datum.city = person_page.search("#{td_id}txtCity").text
-        datum.state = person_page.search("#{td_id}txtState").text
-        datum.zip_code = person_page.search("#{td_id}txtZip").text
+        datum.email = nil if datum.email.nil? || datum.email.downcase == "no email"
+        datum.send_reminders = !datum.send_reminders.nil? && datum.send_reminders.include?("ON")
 
         datum.inspected = true
         person_page
@@ -65,7 +62,7 @@ module Scoutlander
       #   page.search("td#ctl00_mainContent_#{profile_name}_#{field_id}").text
       # end
 
-      # goto the adult show page
+      # goto the person's show page
       def person_info_page(datum)
         return nil if datum.sl_url.blank?
         login
@@ -75,26 +72,26 @@ module Scoutlander
 
 
 
-
-      def fetch_unit_adults
-        fetch_unit_persons(@adults, 'parentmain')
+      def unit_profile_name(kind)
+        case kind
+        when :adult
+          'parentmain'
+        when :scout
+          'scoutmain'
+        end
       end
 
-      def fetch_unit_scouts
-        fetch_unit_persons(@scouts, 'scoutmain')
-      end
-
-      def fetch_unit_persons(datum_collection, profile_name)
+      def fetch_unit_persons(kind)
         login
 
-        persons_page = @agent.get("/securesite/#{profile_name}.aspx?UID=#{@unit.sl_uid}")
-        persons_page.links_with(href: /#{profile_name}.*&profile/).each do |link|
+        persons_page = @agent.get("/securesite/#{unit_profile_name(kind)}.aspx?UID=#{@unit.sl_uid}")
+        persons_page.links_with(href: /#{unit_profile_name(kind)}.*&profile/).each do |link|
           person = Scoutlander::Datum::Person.new
           person.last_name, person.first_name = link.text.split(', ')
           person.sl_url = link.href
           person.sl_uid = uid_from_url(person.sl_url)
           person.sl_profile = profile_from_url(person.sl_url)
-          datum_collection << person
+          collection << person
         end
       end
 

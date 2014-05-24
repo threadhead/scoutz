@@ -8,6 +8,10 @@ module Scoutlander
         @sub_units = []
       end
 
+      def collection
+        @sub_units
+      end
+
 
       # returns an array of Scoutlander::Datum::SubUnits with the name of each sub unit
       def fetch_sub_units

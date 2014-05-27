@@ -4,11 +4,11 @@ describe Adult do
   before(:all) { adult_2units_2scout_3subunits }
 
   it 'should be valid' do
-    FactoryGirl.build(:adult, email: 'karl@gmail.com').should be_valid
+    expect(FactoryGirl.build(:adult, email: 'karl@gmail.com')).to be_valid
   end
 
   it 'has type: \'Adult\'' do
-    FactoryGirl.build(:adult, email: 'karl@gmail.com').type.should eq('Adult')
+    expect(FactoryGirl.build(:adult, email: 'karl@gmail.com').type).to eq('Adult')
   end
 
 

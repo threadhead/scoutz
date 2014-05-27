@@ -17,7 +17,7 @@ describe Scoutlander::Saver::EventAndSignups do
   describe '.create_or_update_event' do
     context 'with existing event' do
       it 'updates info' do
-        event_saver.stub(:create_or_update_event_signups)
+        allow(event_saver).to receive(:create_or_update_event_signups)
         expect(@event.name).to eq('Minnie')
         event_saver.create_or_update_event
         @event.reload
@@ -27,7 +27,7 @@ describe Scoutlander::Saver::EventAndSignups do
 
     context 'without existing event' do
       it 'creates new event' do
-        event_saver.stub(:create_or_update_event_signups)
+        allow(event_saver).to receive(:create_or_update_event_signups)
         @datum.sl_profile = '123456'
         @datum.start_at = Time.now
         @datum.end_at = Time.now

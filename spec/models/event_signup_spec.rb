@@ -13,7 +13,9 @@ describe EventSignup do
   it 'should have at least one person attending' do
     @event_signup = FactoryGirl.build(:event_signup, scouts_attending: 0)
     @event_signup.should_not be_valid
-    @event_signup.should have(1).error_on(:base)
+    # @event_signup.should have(1).error_on(:base)
+    expect(@event_signup.errors.count).to eq(1)
+    expect(@event_signup.errors).to include(:base)
   end
 
 

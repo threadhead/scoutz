@@ -10,8 +10,8 @@ describe EmailMessage do
   it { should belong_to(:sender) }
   it { should belong_to(:unit) }
   it { should have_many(:email_attachments) }
-  # it { should have_and_belong_to_many(:users) }
-  # it { should have_and_belong_to_many(:events) }
+  it { should have_and_belong_to_many(:users) }
+  it { should have_and_belong_to_many(:events) }
 
   it { should validate_presence_of(:message) }
   it { should validate_presence_of(:subject) }
@@ -26,7 +26,8 @@ describe EmailMessage do
     it 'invalid when no sub_unit_ids when send_to_sub_units selected' do
       @email_message.send_to_option = 3
       @email_message.should_not be_valid
-      @email_message.should have(1).error_on(:base)
+      expect(@email_message.errors.count).to eq(1)
+      expect(@email_message.errors).to include(:base)
     end
 
     it 'valid when sub_unit_ids when send_to_sub_units selected' do
@@ -38,7 +39,8 @@ describe EmailMessage do
     it 'invalid when no user_ids when send_to_users selected' do
       @email_message.send_to_option = 4
       @email_message.should_not be_valid
-      @email_message.should have(1).error_on(:base)
+      expect(@email_message.errors.count).to eq(1)
+      expect(@email_message.errors).to include(:base)
     end
 
     it 'valid when sub_unit_ids when send_to_users selected' do

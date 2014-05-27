@@ -73,7 +73,8 @@ group :development, :test do
   # gem 'quiet_assets'
 	gem 'haml-rails'
 	# gem 'rspec-rails'
-  gem 'rspec-rails', '~> 3.0.0.beta2'
+  gem 'rspec', '> 3.0.0.beta2'
+  gem 'rspec-rails', '~> 3.0.0.rc1'
 	gem 'ffi'
 	gem 'capybara'
   gem 'awesome_print'
@@ -94,7 +95,7 @@ group :development do
   gem 'capistrano-rvm' #, require: false
 
   gem 'guard'
-  gem 'guard-rspec', require: false
+  gem 'guard-rspec', '~> 4.2.9', require: false
   gem 'guard-livereload', require: false
 
   # gem 'meta_request'
@@ -118,7 +119,7 @@ group :test do
   # gem 'vcr'
   # gem 'webmock', '<= 1.16'
 
-	gem 'shoulda-matchers'
+	gem 'shoulda-matchers', require: false
 
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'

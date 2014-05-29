@@ -1,14 +1,16 @@
 class EmailMessagesController < ApplicationController
-  before_filter :auth_and_time_zone
-  before_filter :set_unit
-  before_filter :set_email_message, only: [:show, :edit, :update, :destroy]
-  before_filter :set_send_to_lists, only: [:new, :edit, :update]
+  before_action :auth_and_time_zone
+  before_action :set_unit
+  before_action :set_email_message, only: [:show, :edit, :update, :destroy]
+  before_action :set_send_to_lists, only: [:new, :edit, :update]
 
   def index
     @email_messages = EmailMessage.where(unit_id: @unit).where(user_id: current_user).includes(:sender).by_updated_at
+    fresh_when last_modified: @email_messages.maximum(:updated_at)
   end
 
   def show
+    fresh_when(@email_message)
   end
 
   def new
@@ -17,6 +19,9 @@ class EmailMessagesController < ApplicationController
     options.merge!({event_ids: params[:event_ids].split(',')}) if params[:event_ids]
     @email_message = EmailMessage.new(options)
     4.times { @email_message.email_attachments.build }
+
+    # logger.info "em: #{@email_message.inspect}"
+    # logger.info "em_att: #{@email_message.email_attachmentsinspect}"
   end
 
   def edit
@@ -68,7 +73,7 @@ class EmailMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_message_params
-      params.require(:email_message).permit(:message, :subject, :user_id, {sub_unit_ids: []}, {event_ids: []}, :email_attachments_attributes, {user_ids: []}, :send_to_option)
+      params.require(:email_message).permit(:message, :subject, :user_id, {email_attachments_attributes: [:attachment]}, {sub_unit_ids: []}, {event_ids: []}, {user_ids: []}, :send_to_option)
       # filter_params(params[:email_message])
     end
 

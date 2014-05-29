@@ -13,7 +13,9 @@ describe EventSignup do
   it 'should have at least one person attending' do
     @event_signup = FactoryGirl.build(:event_signup, scouts_attending: 0)
     @event_signup.should_not be_valid
-    @event_signup.should have(1).error_on(:base)
+    # @event_signup.should have(1).error_on(:base)
+    expect(@event_signup.errors.count).to eq(1)
+    expect(@event_signup.errors).to include(:base)
   end
 
 
@@ -42,11 +44,11 @@ describe EventSignup do
 
     it 'returns true when canceled' do
       @event_signup.canceled_at = Time.zone.now
-      @event_signup.canceled?.should be_true
+      expect(@event_signup.canceled?).to be
     end
 
     it 'returns false when not canceled' do
-      @event_signup.canceled?.should be_false
+      expect(@event_signup.canceled?).to be_falsy
     end
   end
 

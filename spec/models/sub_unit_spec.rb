@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe SubUnit do
   it { should belong_to(:unit) }
-  # it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:name) }
+  it { should validate_uniqueness_of(:name).scoped_to(:unit_id) }
 
   # it 'validates uniqueness of name' do
   #   FactoryGirl.create(:sub_unit)

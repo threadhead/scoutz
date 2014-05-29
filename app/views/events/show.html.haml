@@ -1,28 +1,35 @@
 = #content_for(:scripts) {javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"}
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
-        = link_to(dashboard_list_path, class: 'btn') do
-          %i.icon-large.icon-reply
+        = link_to(dashboard_list_path, class: 'btn btn-default') do
+          %i.fa.fa-reply
           back
 
-        - if @event.users.where(id: current_user).count > 0
-          = link_to(edit_event_path(@event), class: 'btn') do
-            %i.icon-large.icon-edit
+        - if @event.users.where(id: current_user).count == 0
+          = link_to(edit_event_path(@event), class: 'btn btn-default') do
+            %i.fa.fa-edit
             change
 
         = link_to(new_event_path, class: "btn btn-success") do
-          %i.icon-large.icon-plus
+          %i.fa.fa-plus
           new event
 
       %h2 #{@event.name}
 
 
-.row-fluid
-  .span8
+.row
+  .col-md-10
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
-    %em.xxlarge= @event.unit.name
+    - if @event.ical.present?
+      .pull-right
+        = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
+          %i.fa.fa-calendar
+          add to calendar
+
+
+    %p.xxlarge= @event.unit.name
     .text-xlarge
       %table.table
         %tr
@@ -42,7 +49,7 @@
             %strong Organizer
           %td
             - @event.users.each do |user|
-              = link_to user.full_name, user_path(user.id)
+              = link_to user.full_name, unit_user_path(@event.unit, user.id)
 
         %tr
           %td
@@ -69,7 +76,7 @@
               #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
             - else
               .iframe-rwd
-                %iframe{src: location_map_url_iframe(@event).html_safe, frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+                %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
 
           %tr
             %td &nbsp;
@@ -82,8 +89,8 @@
               %td
                 - unless @event_rosters.empty?
                   %p.right-aligned
-                    = link_to email_attendees_event_path(@event), class: 'btn' do
-                      %i.icon-envelope
+                    = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
+                      %i.fa.fa-envelope
                       Email all attendees
 
                 %table.table-condensed.table-striped.table-roster
@@ -91,7 +98,7 @@
                   - #@event.event_signups.includes(:scout).each do |signup|
 
 
-  .span4
+  .col-md-4
     - if @event.signup_required && !@event.after_signup_deadline?
       #event-signups-list
         = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}

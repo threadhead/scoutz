@@ -1,10 +1,12 @@
+@import "bourbon"
+
 // .navbar .navbar-inner
 //   padding-left: 20px
 .circle-picture
   width: 40px
   height: 40px
   display: inline-block
-  border-radius: 50em
+  border-radius: 50%
   border: 1px solid grey
   position: relative
   top: 3px
@@ -34,7 +36,7 @@
 
 div.text-small, p.small, p small, i.small, span.small, strong.small, em.small
   font-size: 12px
-  line-height: 0.8
+  line-height: 1
 
 div.text-large, p.large, p large, i.large, span.large, strong.large, em.large
   font-size: 14px
@@ -52,10 +54,14 @@ div.text-xxxlarge, p.xxxlarge, p xxxlarge, i.xxxlarge, span.xxxlarge, strong.xxx
   font-size: 42px
   line-height: 1.4
 
+h2.form-title
+  margin-top: 0px
+  margin-bottom: 0px
+
 .form-condensed
   font-size: 12px
   margin-bottom: 1px
-  .control-group
+  .form-group
     margin-bottom: 12px
     .control-label
       width: 120px
@@ -139,10 +145,10 @@ body.body-modal
   background-color: #f4f1ed
   border-color: #cccbe3
 
-.well-thin
-  margin-top: 6px
-  margin-bottom: 12px
-  padding: 6px
+// .well-thin
+//   margin-top: 6px
+//   margin-bottom: 12px
+//   padding: 6px
 
 .table-roster
   font-size: .8em
@@ -179,9 +185,9 @@ body.body-modal
   height: 100%
 
 .email-message-events
-  border: 2px solid #ccc
-  padding-top: 12px
-  padding-bottom: 12px
+  // border: 2px solid #ccc
+  padding-top: 2px
+  padding-bottom: 2px
   height: 140px
   overflow-y: scroll
 
@@ -219,3 +225,39 @@ legend
 legend + *
   -webkit-margin-top-collapse : separate
   margin-top                  : 20px
+
+.navbar-sidebar
+  background-color: #555
+
+  .navbar-brand
+    color: #ccc
+
+  .navbar-brand:hover
+    color: #ccc
+
+  .navbar-nav>li>a
+    color: #ccc
+
+  .navbar-nav>li>a:hover, .navbar-nav>li>a:focus
+    color: #fff
+
+  .navbar-toggle
+    border-color: #999
+
+@media (min-width: 768px)
+  .sidebar-nav .navbar .navbar-collapse
+    padding: 0
+    max-height: none
+
+  .sidebar-nav .navbar ul
+    float: none
+    display: block
+
+  .sidebar-nav .navbar li
+    float: none
+    display: block
+
+  .sidebar-nav .navbar li a
+    padding-top: 12px
+    padding-bottom: 12px
+

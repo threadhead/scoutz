@@ -3,41 +3,51 @@ require 'spec_helper'
 describe User do
 	it { should have_many(:phones) }
 	it { should have_many(:notifiers) }
-	it { should have_many(:adults) }
-	it { should have_many(:scouts) }
-	it { should have_many(:adult_scout_relationships) }
-	it { should have_many(:scout_adult_relationships) }
+  it { should have_and_belong_to_many(:scouts) }
+  it { should have_and_belong_to_many(:adults) }
+	# it { should have_many(:adults) }
+	# it { should have_many(:scouts) }
+	# it { should have_many(:adult_scout_relationships) }
+	# it { should have_many(:scout_adult_relationships) }
 	# it { should have_and_belong_to_many(:units) }
-
-  it { should validate_presence_of(:first_name) }
-  it { should validate_presence_of(:last_name) }
-
+  describe 'validators' do
+    before { FactoryGirl.create(:user) }
+    it { should validate_presence_of(:first_name) }
+    it { should validate_presence_of(:last_name) }
+    it { should validate_uniqueness_of(:sl_profile).allow_nil }
+  end
 
   it 'should be valid' do
     FactoryGirl.build(:user).should be_valid
   end
 
-  it 'should have an authentication token' do
-  	FactoryGirl.create(:user).authentication_token.empty?.should be_false
-  end
+  # it 'should have an authentication token' do
+  # 	FactoryGirl.create(:user).authentication_token.empty?.should be_false
+  # end
 
   describe 'The adult-scout relationships' do
   	it "adult can have many scouts" do
-  		adult = FactoryGirl.create(:user)
-  		scout1 = FactoryGirl.build(:user)
-  		scout2 = FactoryGirl.build(:user)
+  		adult = FactoryGirl.create(:adult)
+  		scout1 = FactoryGirl.build(:scout)
+  		scout2 = FactoryGirl.build(:scout)
   		adult.scouts << [scout1, scout2]
-  		adult.scouts.count.should eq(2)
-  		adult.scouts.first.id.should eq(scout1.id)
+  		expect(adult.scouts.count).to eq(2)
+      expect(adult.scouts).to include(scout1)
+  		expect(adult.scouts).to include(scout2)
+      expect(scout1.adults).to include(adult)
+      expect(scout2.adults).to include(adult)
   	end
 
   	it "scouts can have many adults" do
-  		scout = FactoryGirl.create(:user)
-  		adult1 = FactoryGirl.build(:user)
-  		adult2 = FactoryGirl.build(:user)
+  		scout = FactoryGirl.create(:scout)
+  		adult1 = FactoryGirl.build(:adult)
+  		adult2 = FactoryGirl.build(:adult)
   		scout.adults << [adult1, adult2]
-  		scout.adults.count.should eq(2)
-  		scout.adults.first.id.should eq(adult1.id)
+  		expect(scout.adults.count).to eq(2)
+      expect(scout.adults).to include(adult1)
+      expect(scout.adults).to include(adult2)
+      expect(adult1.scouts).to include(scout)
+  		expect(adult2.scouts).to include(scout)
   	end
   end
 

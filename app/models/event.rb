@@ -1,4 +1,6 @@
 class Event < ActiveRecord::Base
+  include EventCalendar
+
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
   has_and_belongs_to_many :users
@@ -9,6 +11,8 @@ class Event < ActiveRecord::Base
 
   validates :name, :start_at, :end_at, :message,
       presence: true
+
+  validates :sl_profile, uniqueness: { allow_nil: true }
 
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at
@@ -39,6 +43,7 @@ class Event < ActiveRecord::Base
     self.update_column(:attendee_count, event_signup_count)
   end
 
+
   def event_signup_count
     EventSignup.find_by_sql([
           "SELECT
@@ -53,6 +58,28 @@ class Event < ActiveRecord::Base
   def full_address
     "#{location_address1} #{}"
   end
+
+  def full_location
+    @full_location ||= [location_name, location_address1, location_address2, location_city, "#{location_state} #{location_zip_code}".strip].reject{ |a| a.blank? }.join(', ')
+  end
+
+
+  def event_list_name
+    "#{start_at.to_s(:short_ampm)} - #{name} (#{event_kind_details})"
+  end
+
+  def event_kind_details
+    if sub_unit_kind?
+      event_kind_sub_units
+    else
+      kind
+    end
+  end
+
+  def event_kind_sub_units
+    self.sub_units.map(&:name).join(', ')
+  end
+
 
   def after_signup_deadline?
     signup_deadline <= Time.zone.now
@@ -161,4 +188,5 @@ class Event < ActiveRecord::Base
     def generate_token
       SecureRandom.urlsafe_base64(12)
     end
+
 end

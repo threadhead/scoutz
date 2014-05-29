@@ -1,23 +1,26 @@
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
         = link_to(new_unit_scout_path(@unit), class: "btn btn-success") do
-          %i.icon-plus
+          %i.fa.fa-plus
           new scout
 
       %h2 Scouts in #{@unit.name}
 
 
-.row-fluid
-  .span9
+.row
+  .col-md-9
+    = render partial: 'layouts/flash', locals: {flash: flash}
+
     %table.table
       %thead
         %th
         %th Name
         %th= @unit.sub_unit_name
         %th Rank
-        %th Age
+        %th Leadership
+        %th.text-right Age
         %th Adults
 
       - @users.each do |scout|
@@ -28,7 +31,8 @@
           %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
           %td= scout.sub_unit.try(:name)
           %td= scout.rank
-          %td= scout.age
+          %td.col-md-2= scout.all_leadership_positions
+          %td.text-right= scout.age
           %td= unit_adults_link_list(@unit, scout.adults)
 
           / %td
@@ -36,14 +40,14 @@
           = #link_to 'Edit', edit_unit_scout_path(@unit, scout), class: 'btn btn-mini'
           = #link_to 'Destroy', unit_scout_path(@unit, scout), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini'
 
-  .span3
+  .col-md-3
     .well.well-boys
       %strong Rank Count
-      %ul.unstyled
+      %ul.list-unstyled
         - @unit.ranks.each do |rank|
           %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
 
       %strong #{@unit.sub_unit_name} Count
-      %ul.unstyled
+      %ul.list-unstyled
         - @unit.scout_sub_unit_count.each do |sub_unit|
           %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

@@ -1,7 +1,7 @@
 class EventSignup < ActiveRecord::Base
   include PublicActivity::Common
 
-  belongs_to :event
+  belongs_to :event, touch: true
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"
 
   # attr_accessible :adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id

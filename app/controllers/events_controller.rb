@@ -1,6 +1,7 @@
 class EventsController < ApplicationController
-  before_filter :auth_and_time_zone
-  before_filter :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
+  respond_to :html, :js
+  before_action :auth_and_time_zone
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
 
 
   def index
@@ -25,6 +26,7 @@ class EventsController < ApplicationController
       format.json { render json: @events }
       format.js
     end
+    # fresh_when last_modified: @events.maximum(:updated_at)
   end
 
   def calendar
@@ -33,8 +35,11 @@ class EventsController < ApplicationController
   end
 
   def show
-    @event_signups = @event.user_signups(current_user)
-    @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
+    if stale?(@event)
+      @event_signups = @event.user_signups(current_user)
+      @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
+      respond_with(@event)
+    end
   end
 
   def new

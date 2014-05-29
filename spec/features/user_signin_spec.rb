@@ -9,15 +9,6 @@ describe 'User signin ablility' do
     @ne_user = FactoryGirl.create(:user, email: nil)
   end
 
-  def sign_in_user(email, password)
-    visit new_user_session_path
-    within("#new_user") do
-      fill_in 'Email', with: email
-      fill_in 'Password', with: password
-    end
-    click_button 'Sign in'
-  end
-
   context 'users with email and password' do
     it 'signs in with correct credentials' do
       sign_in_user(@user.email, 'sekritsekrit')

@@ -1,4 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
+  before_action :configure_permitted_parameters
   layout 'modals'
 
   def new
@@ -19,4 +20,7 @@ class RegistrationsController < Devise::RegistrationsController
       sign_up_user_url
     end
 
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
+    end
 end

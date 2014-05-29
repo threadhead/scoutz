@@ -5,7 +5,7 @@ Scoutz::Application.configure do
   config.cache_classes = true
 
   # Eager load code on boot. This eager loads most of Rails and
-  # your application in memory, allowing both thread web servers
+  # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
   # Rake tasks automatically ignore this option for performance.
   config.eager_load = true
@@ -36,7 +36,7 @@ Scoutz::Application.configure do
   config.assets.version = '1.0'
 
   # Specifies the header that your server uses for sending files.
-  config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+  # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
@@ -66,7 +66,7 @@ Scoutz::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation can not be found).
+  # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
@@ -78,5 +78,30 @@ Scoutz::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { host: 'https://secure.scoutz.com/' }
+  # Do not dump schema after migrations.
+  config.active_record.dump_schema_after_migration = false
+
+
+  # config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              "smtp.mandrillapp.com",
+      port:                 2525, # ports 587 and 2525 are also supported with STARTTLS
+      enable_starttls_auto: true, # detects and uses STARTTLS
+      user_name:            ENV['MANDRILL_USERNAME'],
+      password:             ENV['MANDRILL_PASSWORD'], # SMTP password is any valid API key
+      authentication:       'login', # Mandrill supports 'plain' or 'login'
+      domain:               'scoutt.in', # your domain to identify your server when connecting
+    }
+
+  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in/' }
+
+
+  # execption notification
+  config.middleware.use ExceptionNotification::Rack,
+    :email => {
+      :email_prefix => "[SCOUTT.IN] ",
+      :sender_address => %{"scoutt.in notifier" <notifier@scoutt.in>},
+      :exception_recipients => %w{threadhead@gmail.com}
+    }
 end

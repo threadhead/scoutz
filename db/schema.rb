@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130808003431) do
+ActiveRecord::Schema.define(version: 20140520143324) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -93,6 +93,7 @@ ActiveRecord::Schema.define(version: 20130808003431) do
   add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token"
   add_index "email_messages", ["sent_at"], name: "index_email_messages_on_sent_at"
   add_index "email_messages", ["unit_id"], name: "index_email_messages_on_unit_id"
+  add_index "email_messages", ["updated_at"], name: "index_email_messages_on_updated_at"
   add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id"
 
   create_table "email_messages_events", id: false, force: true do |t|
@@ -157,6 +158,14 @@ ActiveRecord::Schema.define(version: 20130808003431) do
     t.integer  "attendee_count",    default: 0
     t.string   "signup_token"
     t.datetime "reminder_sent_at"
+    t.string   "ical"
+    t.integer  "ical_file_size"
+    t.string   "ical_content_type"
+    t.datetime "ical_updated_at"
+    t.integer  "ical_sequence",     default: 0
+    t.string   "ical_uuid"
+    t.string   "sl_profile"
+    t.string   "sl_uid"
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at"
@@ -167,6 +176,7 @@ ActiveRecord::Schema.define(version: 20130808003431) do
   add_index "events", ["signup_token"], name: "index_events_on_signup_token"
   add_index "events", ["start_at"], name: "index_events_on_start_at"
   add_index "events", ["unit_id"], name: "index_events_on_unit_id"
+  add_index "events", ["updated_at"], name: "index_events_on_updated_at"
 
   create_table "events_sub_units", id: false, force: true do |t|
     t.integer "event_id"
@@ -222,6 +232,7 @@ ActiveRecord::Schema.define(version: 20130808003431) do
     t.string   "time_zone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sl_uid"
   end
 
   create_table "units_users", id: false, force: true do |t|
@@ -229,8 +240,8 @@ ActiveRecord::Schema.define(version: 20130808003431) do
     t.integer "user_id"
   end
 
-  add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id"
-  add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id"
+  add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id", unique: true
+  add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id", unique: true
 
   create_table "user_relationships", id: false, force: true do |t|
     t.integer "adult_id"
@@ -258,7 +269,6 @@ ActiveRecord::Schema.define(version: 20130808003431) do
     t.integer  "failed_attempts",                 default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "first_name"
@@ -280,11 +290,6 @@ ActiveRecord::Schema.define(version: 20130808003431) do
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
     t.string   "signup_token"
-    t.string   "picture"
-    t.integer  "picture_file_size"
-    t.string   "picture_content_type"
-    t.string   "picture_original_file_name"
-    t.datetime "picture_updated_at"
     t.string   "sms_number"
     t.datetime "sms_number_verified_at"
     t.boolean  "blast_email",                     default: true
@@ -293,14 +298,21 @@ ActiveRecord::Schema.define(version: 20130808003431) do
     t.boolean  "event_reminder_sms"
     t.boolean  "signup_deadline_email",           default: true
     t.boolean  "signup_deadline_sms"
+    t.string   "picture"
+    t.integer  "picture_file_size"
+    t.string   "picture_content_type"
+    t.string   "picture_original_file_name"
+    t.datetime "picture_updated_at"
     t.datetime "sms_verification_sent_at"
+    t.string   "sl_profile"
+    t.string   "sl_uid"
+    t.string   "alternate_email"
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["deactivated_at"], name: "index_users_on_deactivated_at"
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["email"], name: "index_users_on_email"
   add_index "users", ["encrypted_password"], name: "index_users_on_encrypted_password"
   add_index "users", ["leadership_position"], name: "index_users_on_leadership_position"
   add_index "users", ["rank"], name: "index_users_on_rank"
@@ -311,5 +323,6 @@ ActiveRecord::Schema.define(version: 20130808003431) do
   add_index "users", ["sub_unit_id"], name: "index_users_on_sub_unit_id"
   add_index "users", ["type"], name: "index_users_on_type"
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
+  add_index "users", ["updated_at"], name: "index_users_on_updated_at"
 
 end

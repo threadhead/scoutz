@@ -1,16 +1,16 @@
 class User < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
+  # :confirmable,
   # :lockable, :timeoutable and :omniauthable, :validatable,
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable,
-         :token_authenticatable, :confirmable, :lockable, :timeoutable
+         :confirmable, :lockable, :timeoutable
 
   has_and_belongs_to_many :units
-  has_many :phones
+  has_many :phones, dependent: :destroy
   has_many :notifiers, dependent: :destroy
-  has_and_belongs_to_many :events
+  has_and_belongs_to_many :events, -> { uniq }
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
 
@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name
 
+  validates :sl_profile, uniqueness: { allow_nil: true }
+
   before_validation :strip_password_if_empty
   def strip_password_if_empty
     self.email = nil if email.blank?
@@ -35,7 +37,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
+  # validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
+  validate :image_size_validation, :if => "picture?"
+  def image_size_validation
+    errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+  end
+
+
 
 
   # don't use Devise validations
@@ -48,35 +56,37 @@ class User < ActiveRecord::Base
   # validates_length_of       :password, within: Devise.password_length, allow_blank: true
 
   # rails-4-ify the validations to allow for blank passwords and emails
-  validates :email, presence: true, uniqueness: true, unless: :email_blank?
-  def email_blank?
-    email.blank?
-  end
-  validates :email, format: Devise.email_regexp, allow_blank: true, if: :email_changed?
+  validates :email, presence: { allow_blank: true }, uniqueness: { allow_blank: true }
+  # validates :email, format: Devise.email_regexp, allow_blank: true, if: :email_changed?
 
   validates :password, allow_blank: true, confirmation: true, if: :password_required?
   validates :password, length: Devise.password_length, allow_blank: true
 
 
-  has_many     :adult_scout_relationships,
-               :class_name            => "UserRelationship",
-               :foreign_key           => :scout_id,
-               :dependent             => :destroy
-  has_many     :adults,
-               :through               => :adult_scout_relationships,
-               :source                => :adult
+  # this may help: http://stackoverflow.com/questions/15056000/rails-habtm-self-join-error
+  has_and_belongs_to_many :scouts, class_name: 'User', join_table: "user_relationships", foreign_key: "adult_id", association_foreign_key: 'scout_id'
+  has_and_belongs_to_many :adults, class_name: 'User', join_table: "user_relationships", foreign_key: "scout_id", association_foreign_key: 'adult_id'
 
-  has_many     :scout_adult_relationships,
-               :class_name            => "UserRelationship",
-               :foreign_key           => :adult_id,
-               :dependent             => :destroy
-  has_many     :scouts,
-               :through               => :scout_adult_relationships,
-               :source                => :scout
+  # this works, except for forms with related info (e.g. new adults assigning related scouts)
+  # has_many     :adult_scout_relationships,
+  #              :class_name            => "UserRelationship",
+  #              :foreign_key           => :scout_id,
+  #              :dependent             => :destroy
+  # has_many     :adults,
+  #              :through               => :adult_scout_relationships,
+  #              :source                => :adult
+
+  # has_many     :scout_adult_relationships,
+  #              :class_name            => "UserRelationship",
+  #              :foreign_key           => :adult_id,
+  #              :dependent             => :destroy
+  # has_many     :scouts,
+  #              :through               => :scout_adult_relationships,
+  #              :source                => :scout
 
 
 
-  before_save :ensure_authentication_token
+  # before_save :ensure_authentication_token
   before_create :ensure_signup_token
 
   def name
@@ -122,6 +132,10 @@ class User < ActiveRecord::Base
 
   def sms_number_verified
     sms_number_verified_at != nil
+  end
+
+  def all_leadership_positions
+    [leadership_position, additional_leadership_positions].reject(&:blank?).compact.join(', ')
   end
 
 

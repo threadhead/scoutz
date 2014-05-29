@@ -1,13 +1,18 @@
 class ScoutsController < ApplicationController
-  before_filter :auth_and_time_zone
-  before_filter :set_user, only: [:show, :edit, :update, :destroy]
-  before_filter :set_unit
+  etag { current_user.try :id }
+  # etag { current_customer.id }
+
+  before_action :auth_and_time_zone
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_unit
 
   def index
-    @users = @unit.scouts.includes(:sub_unit).by_name_lf
+    @users = @unit.scouts.includes(:sub_unit, :adults).by_name_lf
+    fresh_when last_modified: @users.maximum(:updated_at)
   end
 
   def show
+    fresh_when(@user)
   end
 
   def new
@@ -63,6 +68,6 @@ class ScoutsController < ApplicationController
     end
 
     def user_params
-      params.require(:scout).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :email)
+      params.require(:scout).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :remove_picture, :email)
     end
 end

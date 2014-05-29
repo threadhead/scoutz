@@ -31,12 +31,14 @@ module EventsHelper
   def sanitize_br(str)
     "#{sanitize(str)}#{add_break(str)}" if str
   end
+
   def add_break(str)
     str.blank? ? '' : '<br/>'.html_safe
   end
 
   def location_map_url_iframe(event)
-    event.location_map_url =~ /maps.google.com/ ? event.location_map_url + '&amp;output=embed' : event.location_map_url
+    m = event.location_map_url =~ /maps.google.com/ ? event.location_map_url + '&amp;output=embed' : event.location_map_url
+    m.html_safe
   end
 
 end

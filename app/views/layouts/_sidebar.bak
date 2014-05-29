@@ -1,0 +1,40 @@
+.list-group
+  = link_to dashboard_list_path, class: 'list-group-item' do
+    %i.fa.fa-list-alt
+    Event List
+
+  = link_to dashboard_calendar_path, class: 'list-group-item' do
+    %i.fa.fa-calendar
+    Event Calendar
+
+- @units.each do |unit|
+  .list-group
+    %h5.list-group-item= unit.name_unit
+
+    = link_to unit_scouts_path(unit), class: 'list-group-item' do
+      %i.fa.fa-user{style: "color: darkred;"}
+      Scouts
+
+    = link_to unit_adults_path(unit), class: 'list-group-item' do
+      %i.fa.fa-user{style: "color: olive;"}
+      Adults
+
+    = link_to '#', class: 'list-group-item', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
+      %i.fa.fa-envelope
+      Email Blast
+      %i.fa.fa-caret-down
+
+      .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
+        = link_to new_unit_email_message_path(unit), class: 'list-group-item' do
+          &nbsp;
+          %i.fa.fa-plus
+          New
+
+        = link_to unit_email_messages_path(unit), class: 'list-group-item' do
+          &nbsp;
+          %i.fa.fa-list
+          Sent
+
+    = link_to new_unit_event_path(unit), class: 'list-group-item' do
+      %i.fa.fa-plus
+      New Event

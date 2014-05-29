@@ -1,15 +1,16 @@
-.row-fluid
-  .span12
+.row
+  .col-md-12
     .page-header
       .pull-right
-        - #if @user.users.where(id: current_user).count > 0
-        = link_to(unit_adults_path(@unit), class: 'btn') do
-          %i.icon-large.icon-reply
-          #{@unit.name_unit} adults
+        .btn-group
+          - #if @user.users.where(id: current_user).count > 0
+          = link_to(unit_adults_path(@unit), class: 'btn btn-default') do
+            %i.fa.fa-reply
+            #{@unit.name_unit} adults
 
-        = link_to(edit_unit_adult_path(@unit, @user), class: 'btn') do
-          %i.icon-large.icon-edit
-          change
+          = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
+            %i.fa.fa-edit
+            change
 
         .btn-group
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
@@ -17,21 +18,21 @@
             %span.caret
           %ul.dropdown-menu.pull-right
             %li
-              = link_to(unit_adult_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
-                %i.icon-trash.icon-large
+              = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+                %i.fa.fa-trash-o
                 destroy #{@user.first_name}
 
             %li
               = link_to(new_unit_adult_path(@unit), class: "") do
-                %i.icon-large.icon-plus
+                %i.fa.fa-plus
                 new adult
 
       %h2 Adult: #{@user.full_name}
 
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-.row-fluid
-  .span8
+.row
+  .col-md-8
     .text-xlarge
       %table.table
         %tr
@@ -45,7 +46,7 @@
           %td
             %strong Position
           %td
-            = @user.leadership_position
+            = @user.all_leadership_positions
 
         %tr
           %td
@@ -70,6 +71,6 @@
             %strong Address
           %td
             %address= user_address_show(@user)
-  .span4
-    .well.well-thin
+  .col-md-4
+    .well.well-sm
       = image_tag @user.picture.url

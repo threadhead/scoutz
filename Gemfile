@@ -73,10 +73,10 @@ group :development, :test do
   # gem 'quiet_assets'
 	gem 'haml-rails'
 	# gem 'rspec-rails'
-  gem 'rspec', '> 3.0.0.beta2'
+  gem 'rspec', '> 3.0.0.beta2' # needed for now to trick guard-rspec
   gem 'rspec-rails', '~> 3.0.0.rc1'
-	gem 'ffi'
-	gem 'capybara'
+  gem 'factory_girl_rails'
+  gem 'capybara'
   gem 'awesome_print'
 
   gem 'vcr'
@@ -97,6 +97,7 @@ group :development do
   gem 'guard'
   gem 'guard-rspec', '~> 4.2.9', require: false
   gem 'guard-livereload', require: false
+  gem 'terminal-notifier-guard'
 
   # gem 'meta_request'
   gem 'rack-livereload'
@@ -109,18 +110,10 @@ end
 
 group :test do
   # gem 'rspec-activemodel-mocks' #will need this when going to rspec 3.0
-  # gem 'rake' # for travis-ci
-  gem 'minitest'
-  gem 'factory_girl_rails'
-  gem 'ffaker'
-  # gem 'spork-rails'
-  gem 'rb-fsevent'
-  gem 'terminal-notifier-guard'
   # gem 'vcr'
   # gem 'webmock', '<= 1.16'
 
 	gem 'shoulda-matchers', require: false
-
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
 	gem 'capybara-webkit'
   gem 'capybara-screenshot'

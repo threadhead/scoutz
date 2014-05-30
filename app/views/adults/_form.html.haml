@@ -28,67 +28,47 @@
 
   %fieldset
     %legend Notifications
-    = f.email_field :email, control_col: 'col-md-6'
+    = f.email_field :email, control_col: 'col-md-4'
     = f.form_group do
-      = f.check_box :send_reminders, label: 'send reminder before event deadlines and start times'
+      %hr
+      %p Text messages are sent via email-to-text services. Messages may not arrive from the same number.
+      = #f.check_box :send_reminders, label: 'send reminder before event deadlines and start times'
 
-    .control-group
-      = f.label :sms_number, class: 'control-label'
-      .controls
-        = f.phone_field :sms_number, class: 'span3'
-        .help-inline cell number to send text messages to
-        %br
-        %br
-        %p
-          = link_to 'Send Verification', sms_send_verification_path, remote: true, class: 'btn btn-default'
-        %p
-          - if @user.sms_number_verified
-            .badge Your SMS number has been verified.
-          - else
-            %span.red-color
-              %i.icon-warning-sign
-              You must reply to the verification text message to receive text messages.
+    = f.phone_field :sms_number, control_col: 'col-md-3', label: 'Mobile number', placeholder: 'XXX-XXX-XXXX'
+    = f.select :sms_provider, User.sms_providers, include_blank: true, control_col: 'col-md-3', label: 'Provider'
+    = f.form_group do
+      .help-block You must select a Provider if you would like to receive text messages. If you don't want to receive texts, leave blank.
+    -#= f.form_group do
+    -#  %p
+    -#    = link_to 'Send Verification', sms_send_verification_path, remote: true, class: 'btn btn-default'
+    -#  %p
+    -#    - if @user.sms_number_verified
+    -#      .badge Your SMS number has been verified.
+    -#    - else
+    -#      %span.red-color
+    -#        %i.icon-warning-sign
+    -#        You must reply to the verification text message to receive text messages.
 
-    .control-group
-      %span.control-label
-        Types
-      .controls
-        .span8
-          %p How you would like to receive notifications?
-          %br
-          %table.table.table-condensed
-            %tr
-              %th Email blasts
-              %td
-                = f.label :blast_email, class: 'checkbox' do
-                  = f.check_box :blast_email
-                  email
-              %td
-                = f.label :blast_sms, class: 'checkbox' do
-                  = f.check_box :blast_sms
-                  sms
-            %tr
-              %th Event reminders
-              %td
-                = f.label :event_reminder_email, class: 'checkbox' do
-                  = f.check_box :event_reminder_email
-                  email
-              %td
-                = f.label :event_reminder_sms, class: 'checkbox' do
-                  = f.check_box :event_reminder_sms
-                  sms
+    = f.form_group do
+      %p
+        %strong How you would like to receive notifications?
+      %table.table.table-condensed
+        %tr
+          %th Email blasts
+          %td= f.check_box :blast_email, label: 'email'
+          %td= f.check_box :blast_sms, label: 'sms'
+        %tr
+          %th Event reminders
+          %td= f.check_box :event_reminder_email, label: 'email'
+          %td= f.check_box :event_reminder_sms, label: 'sms'
 
-            %tr
-              %th Signup deadlines
-              %td
-                = f.label :signup_deadline_email, class: 'checkbox' do
-                  = f.check_box :signup_deadline_email
-                  email
-              %td
-                = f.label :signup_deadline_sms, class: 'checkbox' do
-                  = f.check_box :signup_deadline_sms
-                  sms
-          .help-block if you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email
+        %tr
+          %th Signup deadlines
+          %td= f.check_box :signup_deadline_email, label: 'email'
+          %td= f.check_box :signup_deadline_sms, label: 'sms'
+
+      .help-block Most text messages will contain a link to a page and a few words.
+      -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
 
 
   %fieldset

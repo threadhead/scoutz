@@ -7,7 +7,7 @@
           %i.fa.fa-reply
           back
 
-        - if @event.users.where(id: current_user).count == 0
+        - if @event.users.where(id: current_user).count == 1
           = link_to(edit_event_path(@event), class: 'btn btn-default') do
             %i.fa.fa-edit
             change
@@ -20,7 +20,7 @@
 
 
 .row
-  .col-md-10
+  .col-md-8
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
     - if @event.ical.present?
       .pull-right

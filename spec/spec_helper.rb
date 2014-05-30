@@ -41,6 +41,10 @@ RSpec.configure do |config|
   # config.include ViewMacros, :type => :view
   config.include Gmaps4railsHelpers
 
+
+  config.filter_run_including focus: true
+  config.run_all_when_everything_filtered = true
+
   # ## Mock Framework
   #
   # If you prefer to use mocha, flexmock or RR, uncomment the appropriate line:
@@ -64,6 +68,7 @@ RSpec.configure do |config|
     # This should effectively stop all creating ical files, which will happen in an after_save callback
     # on Event. To remove this stub, call: reset(Event)
     allow_any_instance_of(Event).to receive(:ical_valid?).and_return(false)
+    Google::UrlShortenerV1::Base.stub(:shorten).and_return("http://goo.gl/vZewJH")
   end
 
   config.after(:each) do

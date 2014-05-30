@@ -261,7 +261,7 @@ describe EmailMessage do
 
     context 'sending to all users in unit' do
       it 'returns count of all users in unit' do
-        @email_message.send_to_count.should be(1)
+        @email_message.send_to_count.should be(2) # @adult and @scout3
       end
     end
 

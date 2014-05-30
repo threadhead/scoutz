@@ -8,7 +8,7 @@ class EventMailer < ActionMailer::Base
 
     mail from: "noreply@scoutt.in",
          to: recipients,
-         subject: @event.reminder_subject
+         subject: @event.email_reminder_subject
 
   end
 end

@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include SmsNumber
   mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
   # :confirmable,
@@ -139,10 +140,23 @@ class User < ActiveRecord::Base
   end
 
 
+
   ## scopes
   scope :by_name_lf, -> { order('"users"."last_name" ASC, "users"."first_name" ASC') }
-  scope :with_email, -> { where('"users"."email" IS NOT NULL') }
-  scope :leaders, -> { where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL') }
+  # scope :with_email, -> { where('"users"."email" IS NOT NULL') }
+  scope :with_email, -> { where.not(email: '') }
+  scope :with_sms, -> { where.not(sms_number: '', sms_provider: '') }
+  # scope :leaders, -> { where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL') }
+  scope :leaders, -> { where(arel_table[:leadership_position].not_eq('').or(arel_table[:additional_leadership_positions].not_eq(''))) }
+  scope :gets_email_blast, -> { where(blast_email: true) }
+  scope :gets_sms_blast, -> { where(blast_sms: true) }
+  scope :gets_email_reminder, -> { where(event_reminder_email: true) }
+  scope :gets_sms_reminder, -> { where(event_reminder_sms: true) }
+  scope :gets_email_deadline, -> { where(signup_deadline_email: true) }
+  scope :gets_sms_deadline, -> { where(signup_deadline_sms: true) }
+
+
+
 
   protected
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb

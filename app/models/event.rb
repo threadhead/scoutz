@@ -1,5 +1,6 @@
 class Event < ActiveRecord::Base
   include EventCalendar
+  include EventReminders
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
@@ -102,47 +103,6 @@ class Event < ActiveRecord::Base
     event_signup_users.map(&:id)
   end
 
-  def self.send_reminders
-    events = Event.need_reminders
-    events.each do |event|
-      event.send_reminder
-    end
-  end
-
-  def self.need_reminders
-    Event.where(send_reminders: true, reminder_sent_at: nil).where('"events"."end_at" <= ?', 2.days.from_now)
-  end
-
-  def send_reminder
-    if signup_required
-      # emails will contain individual links for signup
-      recipients.each { |recipient| EventMailer.delay.reminder(self.id, recipient.email, recipient.id) }
-    else
-      EventMailer.delay.reminder(self.id, recipients_emails)
-    end
-    update_attribute(:reminder_sent_at, Time.zone.now)
-  end
-
-  def recipients
-    case kind
-    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
-      self.unit.users.with_email
-    when 'Den Event', 'Patrol Event'
-      sub_unit_users = []
-      self.sub_units.each { |su| sub_unit_users << su.users_with_emails }
-      sub_unit_users.flatten
-    when 'Leader Event'
-      self.unit.users.leaders.with_email
-    end
-  end
-
-  def recipients_emails
-    recipients.map(&:email)
-  end
-
-  def reminder_subject
-    "#{unit.email_name} #{name} - Reminder"
-  end
 
 
   # scopes

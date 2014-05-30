@@ -8,12 +8,17 @@ module Google
 
 
       def self.shorten(long_url)
-        response = ::RestClient.post(BASE_URL, post_params(long_url), REQUEST_HEADERS)
+        response = ::RestClient.post(BASE_URL + self.key, post_params(long_url), REQUEST_HEADERS)
         JSON.parse(response)['id']
       end
 
       def self.post_params(long_url)
-        {longUrl: long_url}.merge({key: api_key}).to_json
+        # {longUrl: long_url}.merge({key: api_key}).to_json
+        {longUrl: long_url}.to_json
+      end
+
+      def self.key
+        "?key=#{self.api_key}"
       end
 
       def self.api_key

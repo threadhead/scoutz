@@ -1,30 +1,33 @@
-RSpec::Matchers.define :have_errors_on do |attribute|
-  chain :with_message do |message|
-    @message = message
-  end
+# not used anymore, but let's keep it around in case
 
-  match do |model|
-    model.valid?
 
-    # @has_errors = model.errors.key?(attribute)
-    @has_errors = model.errors.include?(attribute)
+# RSpec::Matchers.define :have_errors_on do |attribute|
+#   chain :with_message do |message|
+#     @message = message
+#   end
 
-    if @message
-      @has_errors && model.errors[attribute].include?(@message)
-    else
-      @has_errors
-    end
-  end
+#   match do |model|
+#     model.valid?
 
-  failure_message_when_negated do |model|
-    if @message
-      "Validation errors #{model.errors[attribute].inspect} should include #{@message.inspect}"
-    else
-      "#{model.class} should have errors on attribute #{attribute.inspect}"
-    end
-  end
+#     # @has_errors = model.errors.key?(attribute)
+#     @has_errors = model.errors.include?(attribute)
 
-failure_message do |model|
-    "#{model.class} should not have an error on attribute #{attribute.inspect}"
-  end
-end
+#     if @message
+#       @has_errors && model.errors[attribute].include?(@message)
+#     else
+#       @has_errors
+#     end
+#   end
+
+#   failure_message_when_negated do |model|
+#     if @message
+#       "Validation errors #{model.errors[attribute].inspect} should include #{@message.inspect}"
+#     else
+#       "#{model.class} should have errors on attribute #{attribute.inspect}"
+#     end
+#   end
+
+# failure_message do |model|
+#     "#{model.class} should not have an error on attribute #{attribute.inspect}"
+#   end
+# end

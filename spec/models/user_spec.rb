@@ -10,6 +10,7 @@ describe User do
 	# it { should have_many(:adult_scout_relationships) }
 	# it { should have_many(:scout_adult_relationships) }
 	# it { should have_and_belong_to_many(:units) }
+
   describe 'validators' do
     before { FactoryGirl.create(:user) }
     it { should validate_presence_of(:first_name) }
@@ -112,6 +113,73 @@ describe User do
       user1.update_attributes(email: 'joe_something@yahool.net')
       user1.reload
       user1.email.should eq('joe_something@yahool.net')
+    end
+  end
+
+
+  context 'scopes' do
+    describe '.leaders' do
+      before(:all) do
+        @a1 = FactoryGirl.create(:adult, leadership_position: '')
+        @a2 = FactoryGirl.create(:adult, leadership_position: 'Scoutmaster')
+        @a3 = FactoryGirl.create(:adult, additional_leadership_positions: 'Quartermaster')
+        @s1 = FactoryGirl.create(:scout, additional_leadership_positions: '')
+        @s2 = FactoryGirl.create(:scout, leadership_position: 'Scoutmaster')
+        @s3 = FactoryGirl.create(:scout, additional_leadership_positions: 'Quartermaster')
+      end
+      after(:all) { [@a1, @a2, @a3, @s1, @s2, @s3].each {|d| d.delete } }
+
+      specify { expect(Adult.leaders.count).to eq(2) }
+      specify { expect(Adult.leaders).to include(@a3) }
+      specify { expect(Adult.leaders).to include(@a2) }
+      specify { expect(Adult.leaders).not_to include(@a1) }
+
+      specify { expect(Scout.leaders.count).to eq(2) }
+      specify { expect(Scout.leaders).to include(@s3) }
+      specify { expect(Scout.leaders).to include(@s2) }
+      specify { expect(Scout.leaders).not_to include(@s1) }
+    end
+
+    describe '.with_email' do
+      before(:all) do
+        @a1 = FactoryGirl.create(:adult)
+        @a2 = FactoryGirl.create(:adult, email: '')
+        @a3 = FactoryGirl.create(:adult, email: nil)
+        @s1 = FactoryGirl.create(:scout)
+        @s2 = FactoryGirl.create(:scout, email: 'adsf@gmail.com')
+      end
+      after(:all) { [@a1, @a2, @a3, @s1, @s2].each {|d| d.delete } }
+
+      specify { expect(Adult.with_email.count).to eq(1) }
+      specify { expect(Adult.with_email).to include(@a1) }
+      specify { expect(Adult.with_email).not_to include(@a2) }
+      specify { expect(Adult.with_email).not_to include(@a3) }
+
+      specify { expect(Scout.with_email.count).to eq(1) }
+      specify { expect(Scout.with_email).to include(@s2) }
+      specify { expect(Scout.with_email).not_to include(@s1) }
+    end
+
+    describe '.with_sms' do
+      describe 'only includes users with both sms_number and sms_provider' do
+        before(:all) do
+          @a1 = FactoryGirl.create(:adult)
+          @a2 = FactoryGirl.create(:adult, sms_number: '8885551212', sms_provider: 'Verizon')
+          @a3 = FactoryGirl.create(:adult, sms_number: '8885551212')
+          @s1 = FactoryGirl.create(:scout, sms_provider: 'Verizon')
+          @s2 = FactoryGirl.create(:scout, sms_number: '8885551212', sms_provider: 'Verizon')
+        end
+        after(:all) { [@a1, @a2, @a3, @s1, @s2].each {|d| d.delete } }
+
+        specify { expect(Adult.with_sms.count).to eq(1) }
+        specify { expect(Adult.with_sms).to include(@a2) }
+        specify { expect(Adult.with_sms).not_to include(@a1) }
+        specify { expect(Adult.with_sms).not_to include(@a3) }
+
+        specify { expect(Scout.with_sms.count).to eq(1) }
+        specify { expect(Scout.with_sms).to include(@s2) }
+        specify { expect(Scout.with_sms).not_to include(@s1) }
+      end
     end
   end
 

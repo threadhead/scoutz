@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140529232343) do
+ActiveRecord::Schema.define(version: 20140531025344) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -308,6 +308,7 @@ ActiveRecord::Schema.define(version: 20140529232343) do
     t.string   "sl_uid"
     t.string   "alternate_email"
     t.string   "sms_provider"
+    t.boolean  "sms_message",                     default: true
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"

@@ -56,16 +56,21 @@
         %tr
           %th Email blasts
           %td= f.check_box :blast_email, label: 'email'
-          %td= f.check_box :blast_sms, label: 'sms'
+          %td= #f.check_box :blast_sms, label: 'sms'
         %tr
           %th Event reminders
           %td= f.check_box :event_reminder_email, label: 'email'
           %td= f.check_box :event_reminder_sms, label: 'sms'
-
         %tr
-          %th Signup deadlines
-          %td= f.check_box :signup_deadline_email, label: 'email'
-          %td= f.check_box :signup_deadline_sms, label: 'sms'
+          %th SMS messages
+          %td= #f.check_box :event_reminder_email, label: 'email'
+          %td= f.check_box :sms_message, label: 'sms'
+      .help-block SMS messages are general messages sent by an adult to attendees of an event, a den/patrol, or the entire unit.
+
+      -# %tr
+      -#   %th Signup deadlines
+      -#   %td= f.check_box :signup_deadline_email, label: 'email'
+      -#   %td= f.check_box :signup_deadline_sms, label: 'sms'
 
       .help-block Most text messages will contain a link to a page and a few words.
       -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.

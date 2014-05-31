@@ -22,18 +22,19 @@ module EventReminders
 
 
   def send_reminder
-    sms_recipients.each { |recipient| TextMessage.delay.event_reminder(self.id, recipient.sms_email_address)}
+    send_sms_reminders
     if signup_required
       # emails will contain individual links for signup
-      # email_recipients.each { |recipient| EventMailer.delay.reminder(self.id, recipient.email, recipient.id) }
+      send_email_reminders
     else
       EventMailer.delay.reminder(self.id, recipients_emails)
     end
-    # update_attribute(:reminder_sent_at, Time.zone.now)
+    update_attribute(:reminder_sent_at, Time.zone.now)
   end
 
 
-  def email_recipients
+
+  def users_to_email
     case kind
     when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
       self.unit.users.with_email.gets_email_blast
@@ -46,7 +47,7 @@ module EventReminders
     end
   end
 
-  def sms_recipients
+  def users_to_sms
     case kind
     when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
       self.unit.users.with_sms.gets_sms_blast
@@ -60,12 +61,24 @@ module EventReminders
   end
 
 
+
+  def send_sms_reminders
+    users_to_sms.each { |recipient| TextMessage.delay.event_reminder(self.id, recipient.sms_email_address)}
+  end
+
+  def send_email_reminders
+    users_to_email.each { |recipient| EventMailer.delay.reminder(self.id, recipient.email, recipient.id) }
+  end
+
+
+
+
   def recipients_emails
-    email_recipients.map(&:email)
+    users_to_email.map(&:email)
   end
 
   def recipients_sms_emails
-    sms_recipients.map(&:sms_email_address)
+    users_to_sms.map(&:sms_email_address)
   end
 
 
@@ -76,7 +89,5 @@ module EventReminders
   def sms_reminder_subject
     "#{unit.email_name} #{name.truncate(26, separator: ' ')} - Reminder"
   end
-
-  private
 
 end

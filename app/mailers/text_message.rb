@@ -14,4 +14,13 @@ class TextMessage < ActionMailer::Base
     mail to: recipient_email,
          subject: @event.sms_reminder_subject
   end
+
+  def email_message(email_message_id, recipient_email)
+    @email_message = EmailMessage.find(email_message_id)
+
+    mail to: recipient_email,
+         subject: @email_message.sms_subject
+  end
+
+  end
 end

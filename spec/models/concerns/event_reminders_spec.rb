@@ -6,20 +6,20 @@ describe EventReminders do
 
   describe 'Event.need_reminders' do
     before do
-      @event1 = FactoryGirl.create(:event, start_at: Time.now, end_at: 1.days.from_now)
-      @event2 = FactoryGirl.create(:event, start_at: Time.now, end_at: 2.days.from_now)
-      @event3 = FactoryGirl.create(:event, start_at: Time.now, end_at: 3.days.from_now)
-      @event4 = FactoryGirl.create(:event, start_at: Time.now, end_at: 2.days.from_now+5)
-      @event5 = FactoryGirl.create(:event, start_at: Time.now, end_at: 2.days.from_now-5)
+      @event1 = FactoryGirl.create(:event, start_at: 1.days.from_now, end_at: 1.days.from_now+5)
+      @event2 = FactoryGirl.create(:event, start_at: 2.days.from_now, end_at: 2.days.from_now+5)
+      @event3 = FactoryGirl.create(:event, start_at: 3.days.from_now, end_at: 3.days.from_now+5)
+      @event4 = FactoryGirl.create(:event, start_at: 2.days.from_now+5, end_at: 2.days.from_now+10)
+      @event5 = FactoryGirl.create(:event, start_at: 2.days.from_now-5, end_at: 2.days.from_now)
     end
 
-    it 'returns events that end in 48 hours' do
+    it 'returns events that start in 48 hours' do
       expect(Event.needs_reminders).to include(@event1)
       expect(Event.needs_reminders).to include(@event2)
       expect(Event.needs_reminders).to include(@event5)
     end
 
-    it 'does not return events that end > 48 hours' do
+    it 'does not return events that start > 48 hours' do
       expect(Event.needs_reminders).not_to include(@event3)
       expect(Event.needs_reminders).not_to include(@event4)
     end
@@ -36,26 +36,26 @@ describe EventReminders do
   end
 
 
-  describe '.email_recipients' do
+  describe '.users_to_email' do
     it 'returns all unit members' do
       @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
-      expect(@event.email_recipients).to include(@adult)
-      expect(@event.email_recipients).not_to include(@scout1)
-      expect(@event.email_recipients).not_to include(@scout2)
+      expect(@event.users_to_email).to include(@adult)
+      expect(@event.users_to_email).not_to include(@scout1)
+      expect(@event.users_to_email).not_to include(@scout2)
     end
 
     it 'returns all unit leaders' do
       @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Leader Event')
-      expect(@event.email_recipients).to include(@adult)
-      expect(@event.email_recipients).not_to include(@scout1)
-      expect(@event.email_recipients).not_to include(@scout2)
+      expect(@event.users_to_email).to include(@adult)
+      expect(@event.users_to_email).not_to include(@scout1)
+      expect(@event.users_to_email).not_to include(@scout2)
     end
 
     it 'returns all selected sub unit members' do
       @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Den Event', sub_unit_ids: [@sub_unit1.id])
-      expect(@event.email_recipients).to include(@adult)
-      expect(@event.email_recipients).not_to include(@scout1)
-      expect(@event.email_recipients).not_to include(@scout2)
+      expect(@event.users_to_email).to include(@adult)
+      expect(@event.users_to_email).not_to include(@scout1)
+      expect(@event.users_to_email).not_to include(@scout2)
     end
   end
 

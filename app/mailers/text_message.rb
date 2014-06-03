@@ -21,6 +21,4 @@ class TextMessage < ActionMailer::Base
     mail to: recipient_email,
          subject: @email_message.sms_subject
   end
-
-  end
 end

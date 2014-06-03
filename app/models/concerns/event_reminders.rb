@@ -63,7 +63,7 @@ module EventReminders
 
 
   def send_sms_reminders
-    users_to_sms.each { |recipient| TextMessage.delay.event_reminder(self.id, recipient.sms_email_address)}
+    users_to_sms.each { |recipient| TextMessage.delay.event_reminder(self.id, recipient.sms_email_address) }
   end
 
   def send_email_reminders

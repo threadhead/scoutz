@@ -74,8 +74,8 @@ group :development, :test do
   # gem 'quiet_assets'
 	gem 'haml-rails'
 	# gem 'rspec-rails'
-  gem 'rspec', '> 3.0.0.beta2' # needed for now to trick guard-rspec
-  gem 'rspec-rails', '~> 3.0.0.rc1'
+  gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
+  gem 'rspec-rails'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'awesome_print'

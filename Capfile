@@ -19,6 +19,7 @@ require 'capistrano/rvm'
 # require 'capistrano/chruby'
 require 'capistrano/bundler'
 require 'capistrano/rails'
+require "whenever/capistrano"
 # require 'capistrano/rails/migrations'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.

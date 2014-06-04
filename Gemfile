@@ -99,6 +99,7 @@ group :development do
   gem 'guard-rspec', '~> 4.2.9', require: false
   gem 'guard-livereload', require: false
   gem 'terminal-notifier-guard'
+  gem 'whenever', :require => false
 
   # gem 'meta_request'
   gem 'rack-livereload'

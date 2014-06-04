@@ -6,8 +6,7 @@ module EventReminders
 
   module ClassMethods
     def send_reminders
-      events = Event.needs_reminders
-      events.each do |event|
+      Event.needs_reminders.each do |event|
         event.send_reminder
       end
     end

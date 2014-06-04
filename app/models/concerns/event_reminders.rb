@@ -37,26 +37,26 @@ module EventReminders
   def users_to_email
     case kind
     when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
-      self.unit.users.with_email.gets_email_blast
+      self.unit.users.gets_email_reminder
     when 'Den Event', 'Patrol Event'
       sub_unit_users = []
-      self.sub_units.each { |su| sub_unit_users << su.users_receiving_email_blast }
+      self.sub_units.each { |su| sub_unit_users << su.users_receiving_email_reminder }
       sub_unit_users.flatten
     when 'Leader Event'
-      self.unit.users.leaders.with_email.gets_email_blast
+      self.unit.users.leaders.gets_email_reminder
     end
   end
 
   def users_to_sms
     case kind
     when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
-      self.unit.users.with_sms.gets_sms_blast
+      self.unit.users.gets_sms_reminder
     when 'Den Event', 'Patrol Event'
       sub_unit_users = []
-      self.sub_units.each { |su| sub_unit_users << su.users_receiving_sms_blast }
+      self.sub_units.each { |su| sub_unit_users << su.users_receiving_sms_reminder }
       sub_unit_users.flatten
     when 'Leader Event'
-      self.unit.users.leaders.with_sms.gets_sms_blast
+      self.unit.users.leaders.gets_sms_reminder
     end
   end
 

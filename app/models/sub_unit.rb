@@ -22,11 +22,19 @@ class SubUnit < ActiveRecord::Base
   end
 
   def users_receiving_email_blast
-    adults.with_email.gets_email_blast + scouts.with_email.gets_email_blast
+    adults.gets_email_blast + scouts.gets_email_blast
   end
 
   def users_receiving_sms_blast
-    adults.with_sms.gets_sms_blast + scouts.with_sms.gets_sms_blast
+    adults.gets_sms_blast + scouts.gets_sms_blast
+  end
+
+  def users_receiving_email_reminder
+    adults.gets_email_reminder + scouts.gets_email_reminder
+  end
+
+  def users_receiving_sms_reminder
+    adults.gets_sms_reminder + scouts.gets_sms_reminder
   end
 
   # scopes

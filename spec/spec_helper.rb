@@ -44,6 +44,10 @@ RSpec.configure do |config|
 
   config.filter_run_including focus: true
   config.run_all_when_everything_filtered = true
+  # TODO: turn this on eventually
+  # config.expose_dsl_globally = false
+
+
 
   # ## Mock Framework
   #

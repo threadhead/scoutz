@@ -37,6 +37,7 @@ module Scoutlander
         end
 
         # massage some of the data
+        sl_rank(datum)
         sl_leadership(datum)
         datum.email = nil if datum.email.nil? || datum.email.downcase == "no email"
         datum.send_reminders = !datum.send_reminders.nil? && datum.send_reminders.include?("ON")
@@ -45,6 +46,10 @@ module Scoutlander
         person_page
       end
 
+      def sl_rank(datum)
+        return if datum.rank.blank?
+        datum.rank.gsub!(/ Rank/, '')
+      end
 
       def sl_leadership(datum)
         return if datum.leadership_position.blank?
@@ -107,6 +112,15 @@ module Scoutlander
         sub_unit = @unit.sub_units.where(name: datum.sub_unit).first
         if sub_unit
           resource.sub_unit = sub_unit
+        end
+      end
+
+      def add_user_to_unit(user)
+        if @unit.users.where(id: user.id).exists?
+          @logger.info "LINK USER TO UNIT: link exists"
+        else
+          @lobber.info "LINK USER TO UNIT: user_id: #{user.id}, unit_id: #{@unit.id}"
+          @unit.users << user
         end
       end
 

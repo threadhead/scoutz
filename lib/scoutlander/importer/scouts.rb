@@ -16,6 +16,14 @@ module Scoutlander
         @scouts
       end
 
+      def fetch_unit_scouts
+        fetch_unit_persons(:scout)
+      end
+
+      def fetch_scout_info(datum)
+        fetch_person_info(:scout, datum)
+      end
+
 
       def fetch_all_scout_info_and_create
         @logger.info "FETCH_ALL_SCOUT_INFO_AND_CREATE: start"
@@ -23,18 +31,18 @@ module Scoutlander
           fetch_scout_info(scout)
 
           begin
-            user = @unit.scouts.find_or_initialize_by(sl_profile: scout.sl_profile)
+            user = Scout.find_or_initialize_by(sl_profile: scout.sl_profile)
             add_to_sub_unit(user, scout)
             # puts user.inspect
             if user.new_record?
               @logger.info "CREATE_SCOUT: #{scout.name}, profile: #{scout.sl_profile}"
               user.update_attributes(scout.to_params)
-              @unit.users << user
             else
               @logger.info "UPDATE_SCOUT: #{user.name}"
               user.update_attributes(scout.to_params)
             end
 
+            add_user_to_unit(user)
             create_phones(user, scout)
 
           rescue ActiveRecord::RecordInvalid

@@ -64,7 +64,11 @@ begin
         Adult.where(email: 'threadhead@gmail.com').first.update_attributes(pass)
         Adult.where(email: 'rob@robmadden.com').first.update_attributes(pass)
         Adult.where(email: 'tasst01@hotmail.com').first.update_attributes(pass)
-        Adult.where(email: 'stoya.robert@orbital.com').first.update_attributes(pass)
+        user = Adult.where(email: 'stoya.robert@orbital.com').first
+        user.update_attributes(pass)
+        unless unit.users.where(id: user.id).exists?
+          user.units << unit
+        end
       end
     end
 rescue NameError

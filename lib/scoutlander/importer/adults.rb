@@ -16,6 +16,14 @@ module Scoutlander
         @adults
       end
 
+      def fetch_unit_adults
+        fetch_unit_persons(:adult)
+      end
+
+      def fetch_adult_info(datum)
+        fetch_person_info(:adult, datum)
+      end
+
       # in general, you would first scrape the 'Adult Search' table using .fetch_unit_adults
       #  this will poplulate the @adults array with basid name, uid (user id), and url (used to get details)
 
@@ -113,16 +121,17 @@ module Scoutlander
           fetch_adult_info_with_scout_links(adult)
 
           begin
-            user = @unit.adults.find_or_initialize_by(sl_profile: adult.sl_profile)
+            user = Adult.find_or_initialize_by(sl_profile: adult.sl_profile)
             if user.new_record?
               @logger.info "CREATE_ADULT: #{adult.name}, profile: #{adult.sl_profile}"
               user.update_attributes(adult.to_params)
-              @unit.users << user
+              # @unit.users << user
             else
               @logger.info "UPDATE_ADULT: #{user.name}"
               user.update_attributes(adult.to_params)
             end
 
+            add_user_to_unit(user)
             create_phones(user, adult)
             find_and_associate_scout(user, adult)
 

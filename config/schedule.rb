@@ -19,6 +19,8 @@
 
 # Learn more: http://github.com/javan/whenever
 
+set :output, '/home/karl/scoutz/shared/log/cron.log'
+
 every 30.minutes do
   runner "Event.delay.send_reminders"
 end

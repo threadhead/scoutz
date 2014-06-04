@@ -137,7 +137,7 @@ GEM
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
-    excon (0.34.0)
+    excon (0.35.0)
     execjs (2.1.0)
     factory_girl (4.4.0)
       activesupport (>= 3.0.0)

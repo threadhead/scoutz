@@ -68,12 +68,13 @@ gem 'jquery-rails'
 #fullCalendar is sensitive to the jQuery/jQuery UI version!
 gem 'jquery-ui-rails'
 # gem 'jquery-rails-cdn'
+gem 'whenever', :require => false
 
 group :development, :test do
   gem 'whiny_validation'
   # gem 'quiet_assets'
-	gem 'haml-rails'
-	# gem 'rspec-rails'
+  gem 'haml-rails'
+  # gem 'rspec-rails'
   gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
   gem 'rspec-rails'
   gem 'factory_girl_rails'
@@ -99,7 +100,6 @@ group :development do
   gem 'guard-rspec', '~> 4.2.9', require: false
   gem 'guard-livereload', require: false
   gem 'terminal-notifier-guard'
-  gem 'whenever', :require => false
 
   # gem 'meta_request'
   gem 'rack-livereload'

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Importer::Base do
+RSpec.describe Scoutlander::Importer::Base do
   let(:base) { Scoutlander::Importer::Base.new }
 
   describe '.find_collection_elements_with' do

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scout do
+RSpec.describe Scout do
   it 'should be valid' do
     FactoryGirl.build(:scout).should be_valid
   end

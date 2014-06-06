@@ -1,6 +1,6 @@
 # require 'spec_helper'
 
-# describe Scoutlander do
+# RSpec.describe Scoutlander do
 # 	describe 'find_url' do
 # 		it 'should return the uid from a url string' do
 # 			sl = Scoutlander::Importer.new('username', 'password')

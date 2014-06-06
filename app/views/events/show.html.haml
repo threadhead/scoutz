@@ -89,6 +89,9 @@
               %td
                 - unless @event_rosters.empty?
                   %p.right-aligned
+                    = link_to sms_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
+                      %i.fa.fa-phone
+                      SMS all attendees
                     = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
                       %i.fa.fa-envelope
                       Email all attendees

@@ -1,21 +1,23 @@
 require 'spec_helper'
 
-describe User do
-	it { should have_many(:phones) }
-	it { should have_many(:notifiers) }
-  it { should have_and_belong_to_many(:scouts) }
-  it { should have_and_belong_to_many(:adults) }
-	# it { should have_many(:adults) }
-	# it { should have_many(:scouts) }
-	# it { should have_many(:adult_scout_relationships) }
-	# it { should have_many(:scout_adult_relationships) }
-	# it { should have_and_belong_to_many(:units) }
+RSpec.describe User do
+	it { is_expected.to have_many(:phones) }
+  it { is_expected.to have_many(:notifiers) }
+  it { is_expected.to have_many(:email_messages) }
+	it { is_expected.to have_many(:sms_messages) }
+  it { is_expected.to have_and_belong_to_many(:scouts) }
+  it { is_expected.to have_and_belong_to_many(:adults) }
+	# it { is_expected.to have_many(:adults) }
+	# it { is_expected.to have_many(:scouts) }
+	# it { is_expected.to have_many(:adult_scout_relationships) }
+	# it { is_expected.to have_many(:scout_adult_relationships) }
+	# it { is_expected.to have_and_belong_to_many(:units) }
 
   describe 'validators' do
     before { FactoryGirl.create(:user) }
-    it { should validate_presence_of(:first_name) }
-    it { should validate_presence_of(:last_name) }
-    it { should validate_uniqueness_of(:sl_profile).allow_nil }
+    it { is_expected.to validate_presence_of(:first_name) }
+    it { is_expected.to validate_presence_of(:last_name) }
+    it { is_expected.to validate_uniqueness_of(:sl_profile).allow_nil }
   end
 
   it 'should be valid' do

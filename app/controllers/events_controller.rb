@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   respond_to :html, :js
   before_action :auth_and_time_zone
-  before_action :set_event, only: [:show, :edit, :update, :destroy, :email_attendees]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :email_attendees, :sms_attendees]
 
 
   def index
@@ -87,6 +87,12 @@ class EventsController < ApplicationController
                                             event_ids: @event.id,
                                             user_ids: @event.event_signup_user_ids.join(',')
                                             )
+  end
+
+  def sms_attendees
+    redirect_to new_unit_sms_message_path(@event.unit,
+                                          user_ids: @event.event_signup_user_ids.join(',')
+                                          )
   end
 
   private

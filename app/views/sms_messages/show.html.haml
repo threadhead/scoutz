@@ -1,0 +1,46 @@
+.row
+  .col-md-12
+    .page-header
+      .pull-right
+        = link_to(unit_sms_messages_path(@unit), class: 'btn btn-default') do
+          %i.fa.fa-reply
+          sent messages
+
+        = link_to(new_unit_sms_message_path(@unit), class: 'btn btn-success') do
+          %i.fa.fa-plus
+          new sms blast
+
+      %h2 SMS Message
+
+.row
+  .col-md-12
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sms_message}
+
+    .text-xlarge
+      %table.table
+        %tr
+          %td
+            %strong From
+          %td= @sms_message.sender.name
+
+        %tr
+          %td
+            %strong Recipients
+          %td
+            = @sms_message.send_to
+            %span.badge= @sms_message.send_to_count
+            - case @sms_message.send_to_option
+              - when 2
+                %br
+                %small
+                  %em= @sms_message.sub_units.map(&:name).join(', ')
+              - when 3
+                %br
+                %small
+                  %em= @sms_message.recipients.map(&:name_sms).join(', ')
+
+        %tr
+          %td
+            %strong Message
+          %td
+            .show-message= @sms_message.message.html_safe

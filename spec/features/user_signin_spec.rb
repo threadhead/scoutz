@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'User signin ablility' do
+RSpec.describe 'User signin ablility' do
   before(:all) { Capybara.default_driver = :rack_test }
 
   before(:all) do

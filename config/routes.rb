@@ -1,4 +1,5 @@
 Scoutz::Application.routes.draw do
+
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   get "events/index"
@@ -14,6 +15,7 @@ Scoutz::Application.routes.draw do
     end
     member do
       get 'email_attendees'
+      get 'sms_attendees'
     end
     resources :event_signups
     resources :email_event_signups
@@ -25,6 +27,7 @@ Scoutz::Application.routes.draw do
     resources :scouts
     resources :adults
     resources :email_messages
+    resources :sms_messages
     resources :users
   end
 

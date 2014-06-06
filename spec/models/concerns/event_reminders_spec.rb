@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventReminders do
+RSpec.describe EventReminders do
   before { stub_geocoding }
   before(:all) { adult_2units_2scout_3subunits }
 

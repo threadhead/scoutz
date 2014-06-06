@@ -279,6 +279,10 @@ GEM
       rspec-core (~> 3.0.0)
       rspec-expectations (~> 3.0.0)
       rspec-mocks (~> 3.0.0)
+    rspec-activemodel-mocks (1.0.0.beta1)
+      activemodel (>= 3.0)
+      activesupport (>= 3.0)
+      rspec-mocks (>= 2.99.0.beta2)
     rspec-core (3.0.0)
       rspec-support (~> 3.0.0)
     rspec-expectations (3.0.0)
@@ -433,6 +437,7 @@ DEPENDENCIES
   rails (= 4.1.1)
   rest-client
   rspec
+  rspec-activemodel-mocks
   rspec-rails
   sanitize
   sass-rails (~> 4.0.3)

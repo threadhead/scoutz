@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Event do
+RSpec.describe Event do
   before { stub_geocoding }
   before(:all) do
     adult_2units_2scout_3subunits

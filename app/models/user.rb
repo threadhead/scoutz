@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :events, -> { uniq }
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
+  has_many :sms_messages, dependent: :destroy
 
   before_save :update_picture_attributes
   before_create :save_original_filename
@@ -98,6 +99,10 @@ class User < ActiveRecord::Base
     "#{full_name} <#{email}>"
   end
 
+  def name_sms
+    "#{full_name} <#{sms_email_address}>"
+  end
+
   # def scout_ids(unit=nil)
   #   scouts = self.scouts.select('"users"."id"')
   #   scouts = scouts.joins(:units).where(units: {id: unit}) if unit
@@ -154,6 +159,7 @@ class User < ActiveRecord::Base
   scope :gets_sms_reminder, -> { with_sms.where(event_reminder_sms: true) }
   scope :gets_email_deadline, -> { with_email.where(signup_deadline_email: true) }
   scope :gets_sms_deadline, -> { with_sms.where(signup_deadline_sms: true) }
+  scope :gets_sms_message, -> { with_sms.where(sms_message: true) }
 
 
 

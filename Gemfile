@@ -77,6 +77,7 @@ group :development, :test do
   # gem 'rspec-rails'
   gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
   gem 'rspec-rails'
+  gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'awesome_print'

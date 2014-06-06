@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EmailMessage do
+RSpec.describe EmailMessage do
   before(:all) do
     adult_2units_2scout_3subunits
     @adult2 = FactoryGirl.create(:adult, email: nil)
@@ -23,18 +23,6 @@ describe EmailMessage do
       @email_message.should be_valid
     end
 
-    it 'invalid when no sub_unit_ids when send_to_sub_units selected' do
-      @email_message.send_to_option = 3
-      @email_message.should_not be_valid
-      expect(@email_message.errors.count).to eq(1)
-      expect(@email_message.errors).to include(:base)
-    end
-
-    it 'valid when sub_unit_ids when send_to_sub_units selected' do
-      @email_message.send_to_option = 3
-      @email_message.sub_unit_ids = [1]
-      @email_message.should be_valid
-    end
 
     it 'invalid when no user_ids when send_to_users selected' do
       @email_message.send_to_option = 4
@@ -166,29 +154,6 @@ describe EmailMessage do
   end
 
 
-  context 'send_to_xxx?' do
-    before { @email_message = FactoryGirl.build(:email_message) }
-
-    it 'returns true when send_to_unit' do
-      @email_message.send_to_option = 1
-      @email_message.send_to_unit?.should be
-    end
-
-    it 'returns true when send_to_leaders' do
-      @email_message.send_to_option = 2
-      @email_message.send_to_leaders?.should be
-    end
-
-    it 'returns true when send_to_sub_units' do
-      @email_message.send_to_option = 3
-      @email_message.send_to_sub_units?.should be
-    end
-
-    it 'returns true when send_to_users' do
-      @email_message.send_to_option = 4
-      @email_message.send_to_users?.should be
-    end
-  end
 
 
   context '.recipients' do

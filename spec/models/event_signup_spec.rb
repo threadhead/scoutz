@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EventSignup do
+RSpec.describe EventSignup do
   it { should belong_to(:event) }
   it { should belong_to(:scout) }
 

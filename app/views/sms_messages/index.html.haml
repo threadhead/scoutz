@@ -1,0 +1,33 @@
+.row
+  .col-md-12
+    .page-header
+      .pull-right
+        = link_to(new_unit_sms_message_path(@unit), class: "btn btn-success") do
+          %i.fa.fa-plus
+          new sms message
+
+      %h2 My Sent Messages
+      %blockquote
+        %h3= @unit.name_unit
+
+.row
+  .col-md-12
+    %table.table
+      %thead
+        %th Sent at
+        %th Sender
+        %th Recipients
+        %th Message
+        %th Actions
+
+      - @sms_messages.each do |sms_message|
+        %tr
+          %td
+            - if sms_message.sent_at
+              = sms_message.sent_at.to_s(:short_ampm)
+            - else
+              %em pending
+          %td= sms_message.sender.name
+          %td= sms_message.send_to
+          %td= sms_message.message
+          %td= link_to 'view', unit_sms_message_path(@unit, sms_message), class: 'btn btn-mini'

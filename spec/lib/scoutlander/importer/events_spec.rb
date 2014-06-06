@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Importer::Events do
+RSpec.describe Scoutlander::Importer::Events do
   before(:all) do
     @unit = FactoryGirl.create(:unit, unit_number: '603', unit_type: 'Boy Scouts', sl_uid: '3218')
     @user = FactoryGirl.create(:adult, first_name: 'Karl', last_name: 'Smith')

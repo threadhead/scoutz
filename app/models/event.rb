@@ -93,7 +93,7 @@ class Event < ActiveRecord::Base
   end
 
   def event_signup_users
-    scout_ids = self.event_signups.select('"event_signups"."scout_id"').map(&:scout_id)
+    scout_ids = self.event_signups.pluck(:scout_id)
     scouts_with_email = Scout.where(id: scout_ids).with_email
     adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: {scout_id: scout_ids})
     scouts_with_email + adults_with_email

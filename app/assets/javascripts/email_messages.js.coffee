@@ -10,7 +10,14 @@ jQuery ->
     })
 
   $("select#email_message_send_to_option").change ->
-    switch $(@).val()
+    handleSendToLists(@)
+
+  $("select#sms_message_send_to_option").change ->
+    handleSendToLists(@)
+
+
+  handleSendToLists = (sel) ->
+    switch $(sel).val()
       when "2"
         $("#email-leaders-list").collapse("show")
         $("#email-send-to-users-list").collapse("hide")
@@ -34,6 +41,10 @@ jQuery ->
 
 
   $("select#email_message_user_ids").select2({
+    placeholder: 'Select recipients'
+    })
+
+  $("select#sms_message_user_ids").select2({
     placeholder: 'Select recipients'
     })
 

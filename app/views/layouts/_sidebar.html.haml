@@ -63,6 +63,26 @@
                     Sent
 
           %li
+            = link_to '#', class: '', data: {toggle: 'collapse', target: "#sms-blast-#{unit.id}"} do
+              %i.fa.fa-phone
+              SMS Blast
+              %i.fa.fa-caret-down
+
+            .collapse{class: @mo_activity ? 'in' : '', id: "sms-blast-#{unit.id}"}
+              %ul.nav.navbar-nav
+                %li
+                  = link_to new_unit_sms_message_path(unit), class: '' do
+                    &nbsp;
+                    %i.fa.fa-plus
+                    New
+
+                %li
+                  = link_to unit_sms_messages_path(unit), class: '' do
+                    &nbsp;
+                    %i.fa.fa-list
+                    Sent
+
+          %li
             = link_to new_unit_event_path(unit), class: '' do
               %i.fa.fa-plus
               New Event

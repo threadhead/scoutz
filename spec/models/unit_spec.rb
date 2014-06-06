@@ -2,15 +2,17 @@ require 'spec_helper'
 
 RSpec.describe Unit do
   # it { should have_and_belong_to_many(:users) }
-  it { should have_many(:sub_units) }
-  it { should have_many(:events) }
+  it { is_expected.to have_many(:sub_units) }
+  it { is_expected.to have_many(:events) }
+  it { is_expected.to have_many(:email_messages) }
+  it { is_expected.to have_many(:sms_messages) }
 
-  it { should validate_presence_of(:unit_type) }
-  it { should validate_presence_of(:unit_number) }
-  it { should validate_presence_of(:time_zone) }
-  it { should validate_presence_of(:city) }
-  it { should validate_presence_of(:state) }
-  it { should validate_uniqueness_of(:sl_uid).allow_nil }
+  it { is_expected.to validate_presence_of(:unit_type) }
+  it { is_expected.to validate_presence_of(:unit_number) }
+  it { is_expected.to validate_presence_of(:time_zone) }
+  it { is_expected.to validate_presence_of(:city) }
+  it { is_expected.to validate_presence_of(:state) }
+  it { is_expected.to validate_uniqueness_of(:sl_uid).allow_nil }
 
 
   describe 'The units-users relationships' do

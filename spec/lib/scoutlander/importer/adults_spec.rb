@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Importer::Adults do
+RSpec.describe Scoutlander::Importer::Adults do
   before(:all) { @unit = FactoryGirl.create(:unit, sl_uid: '3218', unit_type: 'Boy Scouts') }
 
   describe '.fetch_unit_adults', :vcr do

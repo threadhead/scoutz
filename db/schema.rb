@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140531025344) do
+ActiveRecord::Schema.define(version: 20140606004542) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -213,6 +213,28 @@ ActiveRecord::Schema.define(version: 20140531025344) do
   end
 
   add_index "phones", ["user_id"], name: "index_phones_on_user_id"
+
+  create_table "sms_messages", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "unit_id"
+    t.text     "message"
+    t.datetime "sent_at"
+    t.string   "sub_unit_ids"
+    t.integer  "send_to_option", default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sms_messages", ["unit_id"], name: "index_sms_messages_on_unit_id"
+  add_index "sms_messages", ["user_id"], name: "index_sms_messages_on_user_id"
+
+  create_table "sms_messages_users", id: false, force: true do |t|
+    t.integer "sms_message_id"
+    t.integer "user_id"
+  end
+
+  add_index "sms_messages_users", ["sms_message_id", "user_id"], name: "index_sms_messages_users_on_sms_message_id_and_user_id"
+  add_index "sms_messages_users", ["user_id", "sms_message_id"], name: "index_sms_messages_users_on_user_id_and_sms_message_id"
 
   create_table "sub_units", force: true do |t|
     t.integer  "unit_id"

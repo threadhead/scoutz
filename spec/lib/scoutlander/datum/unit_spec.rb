@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Datum::Unit do
+RSpec.describe Scoutlander::Datum::Unit do
   let(:unit) { Scoutlander::Datum::Unit.new(state: 'AZ') }
   subject { unit }
 

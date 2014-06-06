@@ -23,18 +23,6 @@ RSpec.describe EmailMessage do
       @email_message.should be_valid
     end
 
-    it 'invalid when no sub_unit_ids when send_to_sub_units selected' do
-      @email_message.send_to_option = 3
-      @email_message.should_not be_valid
-      expect(@email_message.errors.count).to eq(1)
-      expect(@email_message.errors).to include(:base)
-    end
-
-    it 'valid when sub_unit_ids when send_to_sub_units selected' do
-      @email_message.send_to_option = 3
-      @email_message.sub_unit_ids = [1]
-      @email_message.should be_valid
-    end
 
     it 'invalid when no user_ids when send_to_users selected' do
       @email_message.send_to_option = 4

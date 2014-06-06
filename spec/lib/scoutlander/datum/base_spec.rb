@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Datum::Base do
+RSpec.describe Scoutlander::Datum::Base do
   let(:base) { Scoutlander::Datum::Base.new }
 
   describe '.delete_attributes' do

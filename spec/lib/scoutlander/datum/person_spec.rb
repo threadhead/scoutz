@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Datum::Person do
+RSpec.describe Scoutlander::Datum::Person do
   let(:person) { Scoutlander::Datum::Person.new(email: 'threadhead@gmail.com') }
   subject { person }
 

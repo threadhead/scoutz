@@ -19,9 +19,6 @@ class EmailMessagesController < ApplicationController
     options.merge!({event_ids: params[:event_ids].split(',')}) if params[:event_ids]
     @email_message = EmailMessage.new(options)
     4.times { @email_message.email_attachments.build }
-
-    # logger.info "em: #{@email_message.inspect}"
-    # logger.info "em_att: #{@email_message.email_attachmentsinspect}"
   end
 
   def edit
@@ -52,7 +49,7 @@ class EmailMessagesController < ApplicationController
 
   def destroy
     @email_message.destroy
-      redirect_to email_messages_url
+    redirect_to email_messages_url
   end
 
 

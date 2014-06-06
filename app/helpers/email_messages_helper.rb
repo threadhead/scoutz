@@ -3,6 +3,10 @@ module EmailMessagesHelper
     sub_unit.users_with_emails.map(&:name_email).join(', ')
   end
 
+  def sub_unit_sms(sub_unit)
+    sub_unit.users_with_sms.map(&:name_sms).join(', ')
+  end
+
   def recipient_display(email_message)
     case email_message.send_to_option
     when 1

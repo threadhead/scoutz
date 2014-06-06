@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Saver::EventAndSignups do
+RSpec.describe Scoutlander::Saver::EventAndSignups do
   before(:all) do
     @unit = FactoryGirl.create(:unit)
   end

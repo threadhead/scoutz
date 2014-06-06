@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Datum::Event do
+RSpec.describe Scoutlander::Datum::Event do
   let(:event) { Scoutlander::Datum::Event.new(attire: 'none') }
   subject { event }
 

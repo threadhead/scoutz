@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Scoutlander::Datum::EventSignup do
+RSpec.describe Scoutlander::Datum::EventSignup do
   let(:event_signup) { Scoutlander::Datum::EventSignup.new(scouts_attending: 1) }
   subject { event_signup }
 

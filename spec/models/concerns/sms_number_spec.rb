@@ -29,7 +29,7 @@ class Droid
 end
 
 
-describe 'SmsNumber Concern' do
+RSpec.describe 'SmsNumber Concern' do
   context 'Person class, with appropriate attributes' do
     let(:p) { Person.new }
 

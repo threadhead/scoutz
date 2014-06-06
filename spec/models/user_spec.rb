@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe User do
+RSpec.describe User do
 	it { should have_many(:phones) }
 	it { should have_many(:notifiers) }
   it { should have_and_belong_to_many(:scouts) }

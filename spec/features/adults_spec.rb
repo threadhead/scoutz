@@ -1,7 +1,7 @@
 require 'spec_helper'
 include Warden::Test::Helpers
 
-describe 'Adults' do
+RSpec.describe 'Adults' do
   before(:all) { Capybara.default_driver = :rack_test }
 
   before(:all) do

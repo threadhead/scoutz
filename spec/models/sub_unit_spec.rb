@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SubUnit do
+RSpec.describe SubUnit do
   it { should belong_to(:unit) }
   it { should have_and_belong_to_many(:events) }
   it { should have_many(:scouts) }

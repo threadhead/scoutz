@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EmailMessage do
+RSpec.describe EmailMessage do
   before(:all) do
     adult_2units_2scout_3subunits
     @adult2 = FactoryGirl.create(:adult, email: nil)
@@ -166,29 +166,6 @@ describe EmailMessage do
   end
 
 
-  context 'send_to_xxx?' do
-    before { @email_message = FactoryGirl.build(:email_message) }
-
-    it 'returns true when send_to_unit' do
-      @email_message.send_to_option = 1
-      @email_message.send_to_unit?.should be
-    end
-
-    it 'returns true when send_to_leaders' do
-      @email_message.send_to_option = 2
-      @email_message.send_to_leaders?.should be
-    end
-
-    it 'returns true when send_to_sub_units' do
-      @email_message.send_to_option = 3
-      @email_message.send_to_sub_units?.should be
-    end
-
-    it 'returns true when send_to_users' do
-      @email_message.send_to_option = 4
-      @email_message.send_to_users?.should be
-    end
-  end
 
 
   context '.recipients' do

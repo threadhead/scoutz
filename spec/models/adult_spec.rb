@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Adult do
+RSpec.describe Adult do
   before(:all) { adult_2units_2scout_3subunits }
 
   it 'should be valid' do

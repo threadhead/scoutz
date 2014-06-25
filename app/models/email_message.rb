@@ -118,5 +118,11 @@ class EmailMessage < ActiveRecord::Base
       whitelist[:elements] << "span"
       whitelist[:attributes]["span"] = ["style"]
       whitelist
+
+      # Sanitize::Config.merge(
+      #   Sanitize::Config::RELAXED,
+      #   elements: Sanitize::Config::RELAXED[:elements] + ['span'],
+      #   attributes: Sanitize::Config::RELAXED[:attributes]['span'] = ['style']
+      #   )
     end
 end

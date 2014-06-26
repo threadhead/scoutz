@@ -4,7 +4,7 @@ ruby '2.1.2'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.2'
 
 gem 'sqlite3'
 # gem 'pg'
@@ -67,7 +67,6 @@ gem 'jquery-rails'
 
 #fullCalendar is sensitive to the jQuery/jQuery UI version!
 gem 'jquery-ui-rails'
-# gem 'jquery-rails-cdn'
 gem 'whenever', :require => false
 
 group :development, :test do

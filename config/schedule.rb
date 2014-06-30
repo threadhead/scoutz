@@ -25,6 +25,6 @@ every 30.minutes do
   runner "Event.delay.send_reminders"
 end
 
-every :friday, at: '12:17pm' do
+every :friday, at: '9:17am' do
   rake "send_newsletter:weekly"
 end

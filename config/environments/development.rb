@@ -38,7 +38,8 @@ Scoutz::Application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.action_mailer.default_url_options = { host: 'scoutz.dev' }
+  config.action_mailer.default_url_options = { host: 'http://scoutz.dev' }
+  config.action_mailer.asset_host = 'http://scoutz.dev'
 
   # shows sql in console
   # ActiveRecord::Base.logger = Logger.new(STDOUT)

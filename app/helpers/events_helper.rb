@@ -7,14 +7,6 @@ module EventsHelper
     "#{event.start_at.to_s(:short_ampm)} - #{event.name} (#{event_kind_details(event)})"
   end
 
-  def event_kind_details(event)
-    if event.sub_unit_kind?
-      event_kind_sub_units(event)
-    else
-      event.kind
-    end
-  end
-
   def event_kind_sub_units(event)
     event.sub_units.map(&:name).join(', ')
   end

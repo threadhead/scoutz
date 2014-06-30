@@ -1,27 +1,26 @@
 class Newsletters < ActionMailer::Base
   default from: "noreply@scoutt.in"
 
-  def events_week(recipient_user_id)
-    set_user_units(recipient_user_id)
+  def weekly(unit_id)
+    set_unit_recipients(unit_id)
+    @events = @unit.events.from_today.where('start_at <= ?', 9.days.from_now.end_of_day).by_start
 
-    mail to: @recipient_user.email,
-         subject: "#{units_subject @units} Upcoming Events for the week of "
+    mail to: @recipients,
+         subject: "#{@unit.email_name} Upcoming Events for the week of "
   end
 
-  def events_month(recipient_user_id)
-    set_user_units(recipient_user_id)
+  def monthly(unit_id)
+    set_unit_recipients(unit_id)
 
-    mail to: "to@example.org"
+    mail to: @recipients,
+         subject: "#{@unit.email_name} Upcoming Events for the week of "
   end
 
 
   private
-    def set_user_units(recipient_user_id)
-      @recipient_user = User.find(recipient_user_id) if recipient_user_id
-      @units = @recipient_user.units
+    def set_unit_recipients(unit_id)
+      @unit = Unit.find(unit_id)
+      @recipients = @unit.users.gets_weekly_newsletter.pluck(:email)
     end
 
-    def units_subject(units)
-     units.map(&:email_name).join(', ')
-    end
 end

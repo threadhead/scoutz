@@ -1,8 +1,0 @@
-!!!
-%html
-  %head
-  %body
-    - @units.each do |unit|
-      %h3{style: "margin-bottom: 20px;"}= unit.name_unit
-      - unit.events.from_today.where('start_at <= ?', 8.days.from_now.end_of_day).by_start
-

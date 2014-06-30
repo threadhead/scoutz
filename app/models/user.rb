@@ -153,13 +153,17 @@ class User < ActiveRecord::Base
   scope :with_sms, -> { where.not(sms_number: '', sms_provider: '') }
   # scope :leaders, -> { where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL') }
   scope :leaders, -> { where(arel_table[:leadership_position].not_eq('').or(arel_table[:additional_leadership_positions].not_eq(''))) }
+
   scope :gets_email_blast, -> { with_email.where(blast_email: true) }
-  scope :gets_sms_blast, -> { with.smswhere(blast_sms: true) }
+  scope :gets_sms_blast, -> { with_sms.where(blast_sms: true) }
   scope :gets_email_reminder, -> { with_email.where(event_reminder_email: true) }
   scope :gets_sms_reminder, -> { with_sms.where(event_reminder_sms: true) }
   scope :gets_email_deadline, -> { with_email.where(signup_deadline_email: true) }
   scope :gets_sms_deadline, -> { with_sms.where(signup_deadline_sms: true) }
   scope :gets_sms_message, -> { with_sms.where(sms_message: true) }
+
+  scope :gets_weekly_newsletter, -> { with_email.where(weekly_newsletter_email: true) }
+  scope :gets_monthly_newsletter, -> { with_email.where(monthly_newsletter_email: true) }
 
 
 

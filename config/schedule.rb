@@ -24,3 +24,7 @@ set :output, '/home/karl/scoutz/shared/log/cron.log'
 every 30.minutes do
   runner "Event.delay.send_reminders"
 end
+
+every :friday, at: '12:17pm' do
+  rake "send_newsletter:weekly"
+end

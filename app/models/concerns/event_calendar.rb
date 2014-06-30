@@ -14,6 +14,10 @@ module EventCalendar
       event = Event.find(event_id)
       event.update_ical if event
     end
+
+    def update_all_ical
+      Event.pluck(:id).each{ |event_id| Event.delay(priority: -5).update_ical(event_id) }
+    end
   end
 
   def ical_valid?
@@ -34,7 +38,10 @@ module EventCalendar
         file = File.open(temp_file, 'w')
         file.write ical_string
         self.ical = file
+        update_ical_attributes
+        self.class.record_timestamps = false
         self.save!
+        self.class.record_timestamps = true
         file.close
       end
     end

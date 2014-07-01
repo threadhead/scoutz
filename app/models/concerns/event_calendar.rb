@@ -20,6 +20,9 @@ module EventCalendar
     end
   end
 
+
+
+
   def ical_valid?
     !(self.start_at.blank? || self.end_at.blank? || self.name.blank?)
   end

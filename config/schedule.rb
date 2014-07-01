@@ -18,6 +18,7 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
+job_type :rake_logged, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
 
 set :output, '/home/karl/scoutz/shared/log/cron.log'
 
@@ -26,9 +27,9 @@ every 30.minutes do
 end
 
 every :friday, at: '9:17am' do
-  rake "send_newsletter:weekly"
+  rake_logged "send_newsletter:weekly"
 end
 
 every :month, at: '12:17am' do
-  rake "send_newsletter:monthly"
+  rake_logged "send_newsletter:monthly"
 end

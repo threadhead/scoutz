@@ -112,8 +112,8 @@ class Event < ActiveRecord::Base
 
   scope :by_start, -> { order('start_at ASC') }
   scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }
-  scope :newsletter_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week)}
-  scope :in_next_month, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_month.end_of_month) }
+  scope :newsletter_next_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week)}
+  scope :newsletter_next_month, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_month.end_of_month) }
 
 
   # for calendar.js

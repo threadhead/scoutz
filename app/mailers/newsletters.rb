@@ -2,8 +2,9 @@ class Newsletters < ActionMailer::Base
   default from: "noreply@scoutt.in"
 
   def weekly(unit_id)
-    set_unit_recipients(unit_id)
-    @events = @unit.events.newsletter_week.by_start
+    set_unit(unit_id)
+    @recipients = @unit.users.gets_weekly_newsletter.pluck(:email)
+    @events = @unit.events.newsletter_next_week.by_start
     @subject = "Upcoming Events for the week of #{Time.zone.now.next_week.to_s(:draft_date)}"
 
     mail to: @recipients,
@@ -11,8 +12,9 @@ class Newsletters < ActionMailer::Base
   end
 
   def monthly(unit_id)
-    set_unit_recipients(unit_id)
-    @events = @unit.events.in_next_month.by_start
+    set_unit(unit_id)
+    @recipients = @unit.users.gets_monthly_newsletter.pluck(:email)
+    @events = @unit.events.newsletter_next_month.by_start
     @subject = "Upcoming Events for the month of #{Time.zone.now.next_month.strftime('%B %Y')}"
 
     mail to: @recipients,
@@ -22,9 +24,8 @@ class Newsletters < ActionMailer::Base
 
 
   private
-    def set_unit_recipients(unit_id)
+    def set_unit(unit_id)
       @unit = Unit.find(unit_id)
-      @recipients = @unit.users.gets_weekly_newsletter.pluck(:email)
     end
 
 end

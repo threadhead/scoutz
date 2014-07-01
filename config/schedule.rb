@@ -28,3 +28,7 @@ end
 every :friday, at: '9:17am' do
   rake "send_newsletter:weekly"
 end
+
+every :month, at: '12:17am' do
+  rake "send_newsletter:monthly"
+end

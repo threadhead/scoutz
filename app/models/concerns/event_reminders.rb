@@ -1,3 +1,5 @@
+require 'logger'
+
 module EventReminders
   extend ActiveSupport::Concern
 
@@ -5,8 +7,14 @@ module EventReminders
   end
 
   module ClassMethods
+    def reminder_logger
+      @@event_reminder_logger ||= Logger.new(File.join(Rails.root, 'log', 'event_reminders.log'))
+    end
+
     def send_reminders
-      Event.needs_reminders.each do |event|
+      events = Event.needs_reminders
+      Event.reminder_logger.info "#{events.size} events need reminders"
+      events.each do |event|
         event.send_reminder
       end
     end
@@ -21,11 +29,13 @@ module EventReminders
 
 
   def send_reminder
+    self.class.reminder_logger.info "  Reminders for (#{self.id}): #{self.name}"
     send_sms_reminders
     if signup_required
       # emails will contain individual links for signup
       send_email_reminders
     else
+      self.class.reminder_logger.info "    Sending email (group) reminders to: #{recipients_emails.join(', ')}"
       EventMailer.delay.reminder(self.id, recipients_emails)
     end
     update_attribute(:reminder_sent_at, Time.zone.now)
@@ -62,10 +72,12 @@ module EventReminders
 
 
   def send_sms_reminders
+    self.class.reminder_logger.info "    Sending SMS reminders to: #{recipients_sms_emails.join(', ')}"
     users_to_sms.each { |recipient| TextMessage.delay.event_reminder(self.id, recipient.sms_email_address) }
   end
 
   def send_email_reminders
+    self.class.reminder_logger.info "    Sending email (individual) reminders to: #{recipients_emails.join(', ')}"
     users_to_email.each { |recipient| EventMailer.delay.reminder(self.id, recipient.email, recipient.id) }
   end
 

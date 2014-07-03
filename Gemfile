@@ -4,7 +4,7 @@ ruby '2.1.2'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
-gem 'rails', '4.1.2'
+gem 'rails', '4.1.4'
 
 gem 'sqlite3'
 # gem 'pg'

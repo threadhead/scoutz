@@ -40,11 +40,13 @@ class Event < ActiveRecord::Base
   end
 
 
-  after_save :update_attendee_count
+  # DO NOT RE-ENABLE!
+  # now handled in after_save, after_destroy callback in EventSignup
+  # after_save :update_attendee_count
+
   def update_attendee_count
     self.update_column(:attendee_count, event_signup_count)
   end
-
 
   def event_signup_count
     EventSignup.find_by_sql([

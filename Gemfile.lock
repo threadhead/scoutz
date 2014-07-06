@@ -52,7 +52,6 @@ GEM
       slim (>= 1.3.6, < 3.0)
       terminal-table (~> 1.4)
     builder (3.2.2)
-    cancan (1.6.10)
     capistrano (3.2.1)
       i18n
       rake (>= 10.0.0)
@@ -251,6 +250,8 @@ GEM
       activerecord (>= 3.0)
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
+    pundit (0.2.3)
+      activesupport (>= 3.0.0)
     rack (1.5.2)
     rack-livereload (0.3.15)
       rack
@@ -398,7 +399,6 @@ DEPENDENCIES
   bootstrap_form
   bourbon
   brakeman
-  cancan
   capistrano
   capistrano-bundler
   capistrano-rails
@@ -435,6 +435,7 @@ DEPENDENCIES
   mini_magick
   non-stupid-digest-assets
   public_activity
+  pundit
   rack-livereload
   rails (= 4.1.4)
   rest-client

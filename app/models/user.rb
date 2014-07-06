@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :confirmable, :lockable, :timeoutable
 
+
+  enum role: {inactive: 0, basic:10, leader:20, admin: 30}
+
   has_and_belongs_to_many :units
   has_many :phones, dependent: :destroy
   has_many :notifiers, dependent: :destroy
@@ -128,11 +131,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_a_scout?
+  def scout?
     type == 'Scout'
   end
 
-  def is_an_adult?
+  def adult?
     type == 'Adult'
   end
 

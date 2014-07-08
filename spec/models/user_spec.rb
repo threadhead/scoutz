@@ -28,6 +28,8 @@ RSpec.describe User do
   # 	FactoryGirl.create(:user).authentication_token.empty?.should be_false
   # end
 
+
+
   describe 'The adult-scout relationships' do
   	it "adult can have many scouts" do
   		adult = FactoryGirl.create(:adult)
@@ -53,6 +55,9 @@ RSpec.describe User do
   		expect(adult2.scouts).to include(scout)
   	end
   end
+
+
+
 
   context 'creating' do
     describe 'successful when email is blank' do
@@ -108,6 +113,8 @@ RSpec.describe User do
     end
   end
 
+
+
   context 'updating' do
     it 'can update email address' do
       user1 = FactoryGirl.create(:user)
@@ -117,6 +124,8 @@ RSpec.describe User do
       user1.email.should eq('joe_something@yahool.net')
     end
   end
+
+
 
 
   context 'scopes' do
@@ -181,6 +190,49 @@ RSpec.describe User do
         specify { expect(Scout.with_sms.count).to eq(1) }
         specify { expect(Scout.with_sms).to include(@s2) }
         specify { expect(Scout.with_sms).not_to include(@s1) }
+      end
+    end
+  end
+
+
+  context 'roles' do
+    describe '.role_at_least' do
+      let(:user) { FactoryGirl.build(:user) }
+
+      describe 'returns true when role level is at or above' do
+        it 'basic' do
+          user.basic!
+          expect(user.role_at_least(:basic)).to eq(true)
+        end
+        it 'leader' do
+          user.leader!
+          expect(user.role_at_least(:basic)).to eq(true)
+          expect(user.role_at_least(:leader)).to eq(true)
+        end
+        it 'admin' do
+          user.admin!
+          expect(user.role_at_least(:basic)).to eq(true)
+          expect(user.role_at_least(:leader)).to eq(true)
+          expect(user.role_at_least(:admin)).to eq(true)
+        end
+      end
+
+      describe 'returns false when role level is below' do
+        it 'inactive' do
+          user.inactive!
+          expect(user.role_at_least(:basic)).to eq(false)
+          expect(user.role_at_least(:leader)).to eq(false)
+          expect(user.role_at_least(:admin)).to eq(false)
+        end
+        it 'basic' do
+          user.basic!
+          expect(user.role_at_least(:leader)).to eq(false)
+          expect(user.role_at_least(:admin)).to eq(false)
+        end
+        it 'leader' do
+          user.leader!
+          expect(user.role_at_least(:admin)).to eq(false)
+        end
       end
     end
   end

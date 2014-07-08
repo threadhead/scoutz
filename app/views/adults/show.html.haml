@@ -8,9 +8,10 @@
             %i.fa.fa-reply
             #{@unit.name_unit} adults
 
-          = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
-            %i.fa.fa-edit
-            change
+          - if policy(@user).edit?
+            = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              change
 
         .btn-group
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}

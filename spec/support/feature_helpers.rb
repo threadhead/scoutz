@@ -16,7 +16,7 @@ module FeatureHelpers
     @unit.sub_units << @sub_unit1
     @unit.sub_units << @sub_unit2
 
-    @user = FactoryGirl.create(:adult, first_name: 'Tara', last_name: 'Karl', leadership_position: 'Committee Chair')
+    @user = FactoryGirl.create(:adult, first_name: 'Tara', last_name: 'Karl', leadership_position: 'Committee Chair', role: 'admin')
     @user.units << @unit
     @scout1 = FactoryGirl.create(:scout, sub_unit: @sub_unit1)
     @user.scouts << @scout1

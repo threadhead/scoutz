@@ -1,4 +1,4 @@
-class AdultPolicy < ApplicationPolicy
+class ScoutPolicy < ApplicationPolicy
   def index?
     user_role_at_least_basic
   end
@@ -12,8 +12,8 @@ class AdultPolicy < ApplicationPolicy
   end
 
   def edit?
-    # can edit themself, or need to be an adult leader
-    user.id == record.id || adult_leader_or_above
+    # can edit themself, or need to be a leader
+    user.id == record.id || user_role_at_least_leader
   end
 
   def destroy?
@@ -27,9 +27,8 @@ class AdultPolicy < ApplicationPolicy
 
   def update?
     # can update themself, or need to be an adult leader
-    user.id == record.id || adult_leader_or_above
+    user.id == record.id || user_role_at_least_leader
   end
-
 
 
   class Scope < Struct.new(:user, :scope)

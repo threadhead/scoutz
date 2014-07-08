@@ -8,7 +8,7 @@
 
   = f.text_field :first_name, control_col: 'col-md-4'
   = f.text_field :last_name, control_col: 'col-md-4'
-  - if current_user.admin?
+  - if current_user.admin? && current_user.adult?
     = f.select :role, User.roles.keys.map{|r| [r.titleize, r]}, control_col: 'col-md-2'
   - else
     .form-group

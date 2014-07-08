@@ -1,12 +1,8 @@
 require 'spec_helper'
 
-RSpec.describe AdultPolicy do
-  # before(:all) do
-    @policy_resource = FactoryGirl.build_stubbed(:adult)
-  # end
-
+RSpec.describe ScoutPolicy do
   def self.options
-    { user: :adult, policy_class: AdultPolicy, policy_resource: FactoryGirl.build_stubbed(:adult) }
+    { user: :adult, policy_class: ScoutPolicy, policy_resource: FactoryGirl.build_stubbed(:scout) }
   end
 
   permissions :index? do
@@ -27,7 +23,8 @@ RSpec.describe AdultPolicy do
   permissions :edit? do
     permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
     permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
-    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :admin }) )
+    permission_granted_role_level_up(options.merge ({ user: :scout, role_level: :leader }) )
+    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
 
     it 'users can edit themselves' do
       user = FactoryGirl.build_stubbed(:scout)
@@ -49,8 +46,10 @@ RSpec.describe AdultPolicy do
   permissions :update? do
     permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
     permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+    permission_granted_role_level_up(options.merge ({ user: :scout, role_level: :leader }) )
+    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
 
-    it 'users can edit themselves' do
+    it 'users can update themselves' do
       user = FactoryGirl.build_stubbed(:scout)
       expect(ScoutPolicy).to permit(user, user)
     end

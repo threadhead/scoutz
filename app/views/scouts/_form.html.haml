@@ -8,6 +8,17 @@
 
   = f.text_field :first_name, control_col: 'col-md-3', placeholder: 'first name'
   = f.text_field :last_name, control_col: 'col-md-3', placeholder: 'last name'
+  - if current_user.admin? && current_user.adult?
+    = f.select :role, User.roles.keys.map{|r| [r.titleize, r]}, control_col: 'col-md-2'
+  - else
+    .form-group
+      = label_tag :role, nil, class: 'control-label col-md-3'
+      .col-md-2
+        = text_field_tag :role, @user.role, readonly: true, class: 'form-control'
+      .col-md-2
+        %span.fa-stack{data: {toggle: 'tooltip', placement: 'right'}, title: 'You must have admin rights to change roles'}
+          %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+          %i.fa.fa-question.fa-stack-1x.fa-inverse
 
   = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true, control_col: 'col-md-2'
   = f.select :rank, @unit.ranks, include_blank: true, control_col: 'col-md-2'

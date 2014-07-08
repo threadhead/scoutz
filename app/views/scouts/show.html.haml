@@ -8,24 +8,27 @@
             %i.fa.fa-reply
             #{@unit.name_unit} scouts
 
-          = link_to(edit_unit_scout_path(@unit, @user), class: 'btn btn-default') do
-            %i.fa.fa-edit
-            change
+          - if policy(@user).edit?
+            = link_to(edit_unit_scout_path(@unit, @user), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              change
 
         .btn-group
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
             actions
             %span.caret
           %ul.dropdown-menu.pull-right
-            %li
-              = link_to(unit_scout_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
-                %i.fa.fa-trash-o
-                destroy #{@user.first_name}
+            - if policy(@user).destroy?
+              %li
+                = link_to(unit_scout_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
+                  %i.fa.fa-trash-o
+                  destroy #{@user.first_name}
 
-            %li
-              = link_to(new_unit_scout_path(@unit), class: "") do
-                %i.fa.fa-plus
-                new scout
+            - if policy(@user).new?
+              %li
+                = link_to(new_unit_scout_path(@unit), class: "") do
+                  %i.fa.fa-plus
+                  new scout
 
       %h2 Scout: #{@user.full_name}
 

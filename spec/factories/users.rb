@@ -5,33 +5,36 @@ FactoryGirl.define do
 
   factory :user do
     email               { FactoryGirl.generate(:user_email) }
-    password            "sekritsekrit"
+    password            'sekritsekrit'
     confirmed_at        { 1.day.ago }
 
-    first_name          "Karl"
-    last_name           "Smith"
-    address1            "6730 Boulder Court South"
-    city                "Indianapolis"
-    state               "IN"
-    zip_code            "46217"
+    first_name          'Karl'
+    last_name           'Smith'
+    address1            '6730 Boulder Court South'
+    city                'Indianapolis'
+    state               'IN'
+    zip_code            '46217'
+    role                'leader'
   end
 
   factory :adult do
     email               { FactoryGirl.generate(:user_email) }
-    password            "sekritsekrit"
+    password            'sekritsekrit'
     confirmed_at        { 1.day.ago }
 
-    first_name          "Karl"
-    last_name           "Smith"
-    address1            "6730 Boulder Court South"
-    city                "Indianapolis"
-    state               "IN"
-    zip_code            "46217"
+    first_name          'Karl'
+    last_name           'Smith'
+    address1            '6730 Boulder Court South'
+    city                'Indianapolis'
+    state               'IN'
+    zip_code            '46217'
+    role                'leader'
   end
 
   factory :scout do
     first_name          'Bocephus'
     last_name           'Jones'
+    role                'basic'
   end
 
 end

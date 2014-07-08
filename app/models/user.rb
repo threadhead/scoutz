@@ -131,6 +131,8 @@ class User < ActiveRecord::Base
     end
   end
 
+
+  # ROLES
   def scout?
     type == 'Scout'
   end
@@ -138,6 +140,13 @@ class User < ActiveRecord::Base
   def adult?
     type == 'Adult'
   end
+
+  def role_at_least(role_q)
+    return false if role.nil?
+    User.roles[role_q.to_s] <= User.roles[role]
+  end
+
+
 
   def sms_number_verified
     sms_number_verified_at != nil

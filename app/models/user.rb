@@ -146,6 +146,14 @@ class User < ActiveRecord::Base
     User.roles[role_q.to_s] <= User.roles[role]
   end
 
+  def self.roles_at_and_above(role_q)
+    User.roles.select { |r| User.roles[r] >= User.roles[role_q.to_s] }
+  end
+
+  def self.roles_at_and_below(role_q)
+    User.roles.select { |r| User.roles[r] <= User.roles[role_q.to_s] }
+  end
+
 
 
   def sms_number_verified

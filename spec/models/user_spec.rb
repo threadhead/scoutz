@@ -196,9 +196,9 @@ RSpec.describe User do
 
 
   context 'roles' do
-    describe '.role_at_least' do
-      let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryGirl.build(:user) }
 
+    describe '.role_at_least' do
       describe 'returns true when role level is at or above' do
         it 'basic' do
           user.basic!
@@ -233,6 +233,32 @@ RSpec.describe User do
           user.leader!
           expect(user.role_at_least(:admin)).to eq(false)
         end
+      end
+    end
+
+    describe 'User.roles_at_and_above' do
+      specify { expect(User.roles_at_and_above(:basic)).to be_a(Hash) }
+
+      it 'returns roles at or below parameter' do
+        expect(User.roles_at_and_above(:leader).keys).to include('admin')
+        expect(User.roles_at_and_above(:leader).keys).to include('leader')
+      end
+      it 'does not return roles above parameter' do
+        expect(User.roles_at_and_above(:leader).keys).not_to include('basic')
+        expect(User.roles_at_and_above(:leader).keys).not_to include('inactive')
+      end
+    end
+
+    describe 'User.roles_at_and_below' do
+      specify { expect(User.roles_at_and_below(:basic)).to be_a(Hash) }
+
+      it 'returns roles at or below parameter' do
+        expect(User.roles_at_and_below(:basic).keys).to include('inactive')
+        expect(User.roles_at_and_below(:basic).keys).to include('basic')
+      end
+      it 'does not return roles above parameter' do
+        expect(User.roles_at_and_below(:basic).keys).not_to include('leader')
+        expect(User.roles_at_and_below(:basic).keys).not_to include('admin')
       end
     end
   end

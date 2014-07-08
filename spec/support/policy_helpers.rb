@@ -13,7 +13,7 @@ module PolicyHelpers
 
       describe "grants access #{user_type} role = #{role_level} and up" do
         user = FactoryGirl.build_stubbed(user_type)
-        roles_at_and_above(role_level).each do |role, val|
+        User.roles_at_and_above(role_level).each do |role, val|
           it "permission +granted+ #{user_type}.role = #{role}" do
             user.role = role
             expect(policy_class).to permit(user, policy_resource)
@@ -32,7 +32,7 @@ module PolicyHelpers
 
       describe "denies access #{user_type} below role = #{role_level}" do
         user = FactoryGirl.build_stubbed(user_type)
-        roles_at_and_below(role_level).each do |role, val|
+        User.roles_at_and_below(role_level).each do |role, val|
           it "permission -denied- #{user_type}.role = #{role}" do
             user.role = role
             expect(policy_class).not_to permit(user, policy_resource)
@@ -41,16 +41,5 @@ module PolicyHelpers
       end
     end
 
-
-    def roles_at_and_above(role_q)
-      User.roles.select { |r| User.roles[r] >= User.roles[role_q.to_s] }
-    end
-
-    def roles_at_and_below(role_q)
-      User.roles.select { |r| User.roles[r] <= User.roles[role_q.to_s] }
-    end
   end
-
-
-
 end

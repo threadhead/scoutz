@@ -12,9 +12,9 @@
     = f.select :role, User.roles.keys.map{|r| [r.titleize, r]}, control_col: 'col-md-2'
   - else
     .form-group
-      = label_tag :role, nil, class: 'control-label col-md-3'
+      = label_tag :adult_role, nil, class: 'control-label col-md-3'
       .col-md-2
-        = text_field_tag :role, @user.role, readonly: true, class: 'form-control'
+        = text_field_tag :adult_role, @user.role, readonly: true, class: 'form-control'
       .col-md-2
         %span.fa-stack{data: {toggle: 'tooltip', placement: 'right'}, title: 'You must have admin rights to change roles'}
           %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm

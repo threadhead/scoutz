@@ -1,18 +1,12 @@
-class ApplicationPolicy
-  attr_reader :user, :record
+class ApplicationPolicy < Struct.new(:user, :record)
 
-  def initialize(user, record)
-    @user = user
-    @record = record
-  end
-
-  def index?;     false;                                  end
-  def show?;      scope.where(id: record.id).exists?;     end
-  def create?;    false;                                  end
-  def new?;       create?;                                end
-  def update?;    false;                                  end
-  def edit?;      update?;                                end
-  def destroy?;   false;                                  end
+  def index?;     false;     end
+  def show?;      false;     end
+  def create?;    false;     end
+  def new?;       create?;   end
+  def update?;    false;     end
+  def edit?;      update?;   end
+  def destroy?;   false;     end
 
   def user_role_at_least_basic
     user.role_at_least(:basic)

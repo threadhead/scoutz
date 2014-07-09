@@ -1,4 +1,4 @@
-class EmailMessagePolicy < ApplicationPolicy
+class SmsMessagePolicy < ApplicationPolicy
   def index?
     # everyone can see their own messages
     true
@@ -33,4 +33,5 @@ class EmailMessagePolicy < ApplicationPolicy
       scope.where(user_id: user.id)
     end
   end
+
 end

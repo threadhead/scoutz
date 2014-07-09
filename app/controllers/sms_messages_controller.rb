@@ -3,32 +3,33 @@ class SmsMessagesController < ApplicationController
   before_action :set_unit
   before_action :set_sms_message, only: [:show, :edit, :update, :destroy]
   before_action :set_send_to_lists, only: [:new, :edit, :update]
+  after_action :verify_authorized, except: :index
+  after_action :verify_policy_scoped, only: :index
 
-  # GET /sms_messages
   def index
-    @sms_messages = SmsMessage.where(unit_id: @unit).where(user_id: current_user).includes(:sender).by_updated_at
+    @sms_messages = policy_scope(SmsMessage.where(unit_id: @unit)).includes(:sender).by_updated_at
     fresh_when last_modified: @sms_messages.maximum(:updated_at)
   end
 
-  # GET /sms_messages/1
   def show
+    authorize @sms_message
     fresh_when(@sms_message)
   end
 
-  # GET /sms_messages/new
   def new
     options = {}
     options.merge!({send_to_option: 4, user_ids: params[:user_ids].split(',')}) if params[:user_ids]
     @sms_message = SmsMessage.new(options)
+    authorize @sms_message
   end
 
-  # GET /sms_messages/1/edit
   def edit
+    authorize @sms_message
   end
 
-  # POST /sms_messages
   def create
     @sms_message = SmsMessage.new(sms_message_params)
+    authorize @sms_message
 
     if @sms_message.save
       @unit.sms_messages << @sms_message
@@ -41,8 +42,8 @@ class SmsMessagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /sms_messages/1
   def update
+    authorize @sms_message
     if @sms_message.update(sms_message_params)
       redirect_to @sms_message, notice: 'SMS message was successfully updated.'
     else
@@ -50,8 +51,8 @@ class SmsMessagesController < ApplicationController
     end
   end
 
-  # DELETE /sms_messages/1
   def destroy
+    authorize @sms_message
     @sms_message.destroy
     redirect_to sms_messages_url, notice: 'SMS message was successfully destroyed.'
   end

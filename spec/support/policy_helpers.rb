@@ -41,5 +41,34 @@ module PolicyHelpers
       end
     end
 
+  end # ClassMethods
+
+
+
+  RSpec.shared_examples 'adult admin access' do
+    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up( options.merge({user: :adult, role_level: :admin}))
+    permission_denied_role_level_down( options.merge({user: :adult, role_level: :leader}))
+    permission_denied_role_level_down( options.merge({user: :scout, role_level: :admin}))
   end
+
+  RSpec.shared_examples 'user leader access' do
+    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
+    permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+  end
+
+  RSpec.shared_examples 'user basic access' do
+    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up(options.merge ({ role_level: :basic }) )
+    permission_denied_role_level_down(options.merge ({ role_level: :inactive }) )
+  end
+
+  RSpec.shared_examples 'can access thier own' do
+    klass = self.parent.parent.described_class
+    it "users can #{self.parent.name.split('::').last.downcase} their own record" do
+      expect(klass).to permit(@user, @record)
+    end
+  end
+
 end

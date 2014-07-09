@@ -26,6 +26,10 @@ class ApplicationPolicy
     user.adult? && user_role_at_least_leader
   end
 
+  def adult_admin
+    user.admin? && user.adult?
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

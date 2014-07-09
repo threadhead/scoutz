@@ -1,57 +1,49 @@
 require 'spec_helper'
 
 RSpec.describe ScoutPolicy do
+  before(:all) do
+    # create @user/@record for the 'can access thier own' shared example
+    @user = FactoryGirl.create(:scout)
+    @record = @user
+  end
+
   def self.options
     { user: :adult, policy_class: ScoutPolicy, policy_resource: FactoryGirl.build_stubbed(:scout) }
   end
 
   permissions :index? do
-    permission_granted_role_level_up( options.merge ({ role_level: :basic }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :inactive }) )
+    it_behaves_like 'user basic access'
   end
 
   permissions :show? do
-    permission_granted_role_level_up(options.merge ({ role_level: :basic }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :inactive }) )
+    it_behaves_like 'user basic access'
   end
 
   permissions :new? do
-    permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+    it_behaves_like 'user leader access'
   end
 
   permissions :edit? do
-    permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+    it_behaves_like 'user leader access'
     permission_granted_role_level_up(options.merge ({ user: :scout, role_level: :leader }) )
     permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
 
-    it 'users can edit themselves' do
-      user = FactoryGirl.build_stubbed(:scout)
-      expect(ScoutPolicy).to permit(user, user)
-    end
+    it_behaves_like 'can access thier own'
   end
 
   permissions :destroy? do
-    permission_granted_role_level_up(options.merge ({ role_level: :admin }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :admin }) )
+    it_behaves_like 'adult admin access'
   end
 
   permissions :create? do
-    permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+    it_behaves_like 'user leader access'
   end
 
   permissions :update? do
-    permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+    it_behaves_like 'user leader access'
     permission_granted_role_level_up(options.merge ({ user: :scout, role_level: :leader }) )
     permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
 
-    it 'users can update themselves' do
-      user = FactoryGirl.build_stubbed(:scout)
-      expect(ScoutPolicy).to permit(user, user)
-    end
+    it_behaves_like 'can access thier own'
   end
 end

@@ -64,6 +64,11 @@ module PolicyHelpers
     permission_denied_role_level_down(options.merge ({ role_level: :inactive }) )
   end
 
+  RSpec.shared_examples 'no access' do
+    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_denied_role_level_down(options.merge ({ role_level: :admin }) )
+  end
+
   RSpec.shared_examples 'can access thier own' do
     klass = self.parent.parent.described_class
     it "users can #{self.parent.name.split('::').last.downcase} their own record" do

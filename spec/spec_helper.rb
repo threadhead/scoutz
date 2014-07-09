@@ -96,6 +96,12 @@ RSpec.configure do |config|
     EventSignup.delete_all
   end
 
+  config.after(:all) do
+    if Rails.env.test?
+      FileUtils.rm_rf(Dir["#{Rails.root}/spec/support/uploads"])
+    end
+  end
+
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -118,6 +124,18 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
 end
+
+if defined?(CarrierWave)
+  CarrierWave::Uploader::Base.descendants.each do |klass|
+    next if klass.anonymous?
+    klass.class_eval do
+      def cache_dir
+        "#{Rails.root}/spec/support/uploads/tmp"
+      end
+    end
+  end
+end
+
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr'

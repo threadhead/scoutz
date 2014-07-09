@@ -7,19 +7,6 @@ class EventPolicy < ApplicationPolicy
     user_role_at_least_basic
   end
 
-  def new?
-    user_role_at_least_leader
-  end
-
-  def edit?
-    user_role_at_least_leader || users_event?
-  end
-
-  def destroy?
-    # users can delete their own events, and adult admins as well
-    (user.admin? && user.adult?) || users_event?
-  end
-
   def create?
     user_role_at_least_leader
   end
@@ -27,6 +14,12 @@ class EventPolicy < ApplicationPolicy
   def update?
     user_role_at_least_leader || users_event?
   end
+
+  def destroy?
+    # users can delete their own events, and adult admins as well
+    adult_admin || users_event?
+  end
+
 
   def email_attendees?
     user_role_at_least_leader || users_event?

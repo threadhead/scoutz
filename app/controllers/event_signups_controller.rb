@@ -2,23 +2,29 @@ class EventSignupsController < ApplicationController
   before_action :auth_and_time_zone, except: [:from_email]
   before_action :set_event_signup, only: [:show, :edit, :update, :destroy]
   before_action :set_event, except: [:from_email]
+  after_action :verify_authorized
 
   def index
+    authorize EventSignup
     @event_signups = EventSignup.all
   end
 
   def show
+    authorize @event_signup
   end
 
   def new
     @event_signup = EventSignup.new
+    authorize @event_signup
   end
 
   def edit
+    authorize @event_signup
   end
 
   def create
     @event_signup = @event.event_signups.build(event_signup_params)
+    authorize @event_signup
 
     respond_to do |format|
       if @event_signup.save
@@ -34,6 +40,8 @@ class EventSignupsController < ApplicationController
 
 
   def update
+    authorize @event_signup
+
     respond_to do |format|
       if @event_signup.update_attributes(event_signup_params)
         format.html { redirect_for_signups }
@@ -46,6 +54,7 @@ class EventSignupsController < ApplicationController
   end
 
   def destroy
+    authorize @event_signup
     flash[:info] = "#{@event_signup.scout.full_name}'s sign up cancelled."
     create_activity(:destroy)
     @event_signup.destroy

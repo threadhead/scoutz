@@ -3,8 +3,8 @@ require 'spec_helper'
 RSpec.describe UserPolicy do
   before(:all) do
     # create @user/@record for the 'can access thier own' shared example
-    @user = FactoryGirl.create(:scout)
-    @record = FactoryGirl.create(:sms_message, sender: @user)
+    # @user = FactoryGirl.create(:scout)
+    # @record = FactoryGirl.create(:sms_message, sender: @user)
   end
 
 

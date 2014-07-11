@@ -1,6 +1,5 @@
 class ScoutsController < ApplicationController
   # etag { current_user.try :id }
-  # etag { current_customer.id }
 
   before_action :auth_and_time_zone
   before_action :set_user, only: [:show, :edit, :update, :destroy]

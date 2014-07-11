@@ -1,4 +1,6 @@
 class EmailMessagesController < ApplicationController
+  etag { current_user.try :id }
+
   before_action :auth_and_time_zone
   before_action :set_unit
   before_action :set_email_message, only: [:show, :edit, :update, :destroy]
@@ -9,7 +11,7 @@ class EmailMessagesController < ApplicationController
   def index
     # authorize EmailMessage
     @email_messages = policy_scope(EmailMessage.where(unit_id: @unit)).includes(:sender).by_updated_at
-    fresh_when last_modified: @email_messages.maximum(:updated_at)
+    fresh_when etag: current_user.try(:id), last_modified: @email_messages.maximum(:updated_at)
   end
 
   def show

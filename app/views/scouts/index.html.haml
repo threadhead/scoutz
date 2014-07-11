@@ -24,31 +24,34 @@
         %th.text-right Age
         %th Adults
 
-      - @users.each do |scout|
-        %tr
-          %td.user-picture
-            - if scout.picture.present?
-              %div.circle-picture{style: "background:url(#{scout.picture.thumb.url})"}
-          %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
-          %td= scout.sub_unit.try(:name)
-          %td= scout.rank
-          %td.col-md-2= scout.all_leadership_positions
-          %td.text-right= scout.age
-          %td= unit_adults_link_list(@unit, scout.adults)
+      = cache cache_key_for_users(@users) do
+        - @users.each do |scout|
+          %tr
+            %td.user-picture
+              - if scout.picture.present?
+                %div.circle-picture{style: "background:url(#{scout.picture.thumb.url})"}
+            %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
+            %td= scout.sub_unit.try(:name)
+            %td= scout.rank
+            %td.col-md-2= scout.all_leadership_positions
+            %td.text-right= scout.age
+            %td= unit_adults_link_list(@unit, scout.adults)
 
-          / %td
-          = #link_to 'Show', unit_scout_path(@unit, scout), class: 'btn btn-mini'
-          = #link_to 'Edit', edit_unit_scout_path(@unit, scout), class: 'btn btn-mini'
-          = #link_to 'Destroy', unit_scout_path(@unit, scout), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini'
+            / %td
+            = #link_to 'Show', unit_scout_path(@unit, scout), class: 'btn btn-mini'
+            = #link_to 'Edit', edit_unit_scout_path(@unit, scout), class: 'btn btn-mini'
+            = #link_to 'Destroy', unit_scout_path(@unit, scout), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini'
 
   .col-md-3
     .well.well-boys
-      %strong Rank Count
-      %ul.list-unstyled
-        - @unit.ranks.each do |rank|
-          %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
+      = cache [cache_key_for_users(@users), :rank_count] do
+        %strong Rank Count
+        %ul.list-unstyled
+          - @unit.ranks.each do |rank|
+            %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
 
-      %strong #{@unit.sub_unit_name} Count
-      %ul.list-unstyled
-        - @unit.scout_sub_unit_count.each do |sub_unit|
-          %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"
+      = cache [cache_key_for_users(@users), :sub_unit_count] do
+        %strong #{@unit.sub_unit_name} Count
+        %ul.list-unstyled
+          - @unit.scout_sub_unit_count.each do |sub_unit|
+            %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

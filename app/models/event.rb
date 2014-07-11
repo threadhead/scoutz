@@ -95,8 +95,15 @@ class Event < ActiveRecord::Base
 
   def user_signups(user)
     user.unit_scouts(self.unit).map do |scout|
-      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id)
+      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id, event_id: id)
     end
+  end
+
+  def scouts_without_signup
+    all_ids = unit.scouts.pluck(:id)
+    signed_up_ids = event_signups.pluck(:scout_id)
+    Scout.where(id: all_ids - signed_up_ids).by_name_lf
+    # unit.scouts.by_name_lf - Scout.where(id: event_signups.pluck(:scout_id))
   end
 
   def event_signup_users

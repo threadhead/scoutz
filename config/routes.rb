@@ -35,6 +35,7 @@ Scoutz::Application.routes.draw do
   resources :users
   resources :scouts
   resources :adults
+  resources :event_signups
 
   get "page/landing"
   get "page/terms_of_service"

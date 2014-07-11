@@ -19,6 +19,11 @@ module UsersHelper
     adult.sub_units(unit).map(&:name).join(', ')
   end
 
+  def options_for_user_roles
+    roles = current_user.adult? ? User.roles : User.roles_at_and_below(:leader)
+    roles.keys.map{|r| [r.titleize, r]}
+  end
+
 
   def birthdate_and_years_old(user)
     if user.birth

@@ -9,3 +9,5 @@ jQuery ->
     minuteGrid: 15,
     hourGrid: 6
     )
+
+  $("[data-toggle='tooltip']").tooltip()

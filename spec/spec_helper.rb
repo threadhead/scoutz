@@ -11,7 +11,7 @@ require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'capybara-screenshot/rspec'
-
+require 'pundit/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -40,6 +40,7 @@ RSpec.configure do |config|
   # config.include ModelMacros, :type => :model
   config.include ModelHelpers, type: :model
   config.include FeatureHelpers, type: :feature
+  config.include PolicyHelpers, type: :policy
 
   # config.include RequestMacros
   # config.include ViewMacros, :type => :view
@@ -95,6 +96,12 @@ RSpec.configure do |config|
     EventSignup.delete_all
   end
 
+  config.after(:all) do
+    if Rails.env.test?
+      FileUtils.rm_rf(Dir["#{Rails.root}/spec/support/uploads"])
+    end
+  end
+
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -117,6 +124,18 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
 end
+
+if defined?(CarrierWave)
+  CarrierWave::Uploader::Base.descendants.each do |klass|
+    next if klass.anonymous?
+    klass.class_eval do
+      def cache_dir
+        "#{Rails.root}/spec/support/uploads/tmp"
+      end
+    end
+  end
+end
+
 
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/vcr'

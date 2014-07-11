@@ -1,0 +1,2 @@
+= select_tag :add_signup, options_from_collection_for_select(event.scouts_without_signup, :id, :name_lf, { disabled: [0] }), prompt: '-- add signup --', data: { 'event-id' => event.id }, id: 'add-event-signup-select'
+= button_tag 'add', class: 'btn btn-default btn-xs', id: 'add-event-signup-button'

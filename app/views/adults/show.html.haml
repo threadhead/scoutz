@@ -8,24 +8,27 @@
             %i.fa.fa-reply
             #{@unit.name_unit} adults
 
-          = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
-            %i.fa.fa-edit
-            change
+          - if policy(@user).edit?
+            = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              change
 
         .btn-group
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
             actions
             %span.caret
           %ul.dropdown-menu.pull-right
-            %li
-              = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
-                %i.fa.fa-trash-o
-                destroy #{@user.first_name}
+            - if policy(@user).destroy?
+              %li
+                = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+                  %i.fa.fa-trash-o
+                  destroy #{@user.first_name}
 
-            %li
-              = link_to(new_unit_adult_path(@unit), class: "") do
-                %i.fa.fa-plus
-                new adult
+            - if policy(@user).new?
+              %li
+                = link_to(new_unit_adult_path(@unit), class: "") do
+                  %i.fa.fa-plus
+                  new adult
 
       %h2 Adult: #{@user.full_name}
 

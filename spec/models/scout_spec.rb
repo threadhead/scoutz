@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 RSpec.describe Scout do
-  it 'should be valid' do
-    FactoryGirl.build(:scout).should be_valid
-  end
+  specify { expect(FactoryGirl.build(:scout)).to be_valid }
+  specify { expect(FactoryGirl.build(:scout).type).to eq('Scout') }
 
-  it 'has type: \'Scout\'' do
-    FactoryGirl.build(:scout).type.should eq('Scout')
-  end
+  specify { expect(FactoryGirl.build(:scout).scout?).to eq(true) }
+  specify { expect(FactoryGirl.build(:scout).adult?).to eq(false) }
 end

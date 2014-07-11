@@ -1,6 +1,4 @@
 class UnitsController < ApplicationController
-  # GET /units
-  # GET /units.json
   def index
     @units = Unit.all
 
@@ -10,8 +8,6 @@ class UnitsController < ApplicationController
     end
   end
 
-  # GET /units/1
-  # GET /units/1.json
   def show
     @unit = Unit.find(params[:id])
 
@@ -25,13 +21,10 @@ class UnitsController < ApplicationController
     @unit = Unit.new(params[:unit])
   end
 
-  # GET /units/1/edit
   def edit
     @unit = Unit.find(params[:id])
   end
 
-  # POST /units
-  # POST /units.json
   def create
     @unit = Unit.new(params[:unit])
 
@@ -46,8 +39,6 @@ class UnitsController < ApplicationController
     end
   end
 
-  # PUT /units/1
-  # PUT /units/1.json
   def update
     @unit = Unit.find(params[:id])
 
@@ -62,8 +53,6 @@ class UnitsController < ApplicationController
     end
   end
 
-  # DELETE /units/1
-  # DELETE /units/1.json
   def destroy
     @unit = Unit.find(params[:id])
     @unit.destroy

@@ -2,6 +2,11 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_unit, only: [:show]
 
+  # this will effectively disable controler access to user records
+  # users should be accesses through adult or scout controllers
+  after_action :verify_authorized
+
+
   def index
     @users = User.all
   end

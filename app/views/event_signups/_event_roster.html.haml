@@ -1,9 +1,15 @@
 %tr
-  %td= event_roster.scout.name_lf
+  %td
+    = event_roster.scout.name_lf
+    - if policy(event_roster).update?
+      %br
+      = link_to 'edit/cancel', '#', class: 'btn btn-xs btn-default edit-event-signup-modal', data: {'event_signup_id' => event_roster.id}
+
   %td.text-grey
-    = "Siblings: #{event_roster.siblings_attending}"
-    %br
     = "Scout: #{event_roster.scouts_attending}"
     %br
+    = "Siblings: #{event_roster.siblings_attending}"
+    %br
     = "Adults: #{event_roster.adults_attending}"
+
   %td.signup-comment= event_roster.comment

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140628143025) do
+ActiveRecord::Schema.define(version: 20140706020853) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -274,12 +274,12 @@ ActiveRecord::Schema.define(version: 20140628143025) do
   add_index "user_relationships", ["scout_id", "adult_id"], name: "index_user_relationships_on_scout_id_and_adult_id"
 
   create_table "users", force: true do |t|
-    t.string   "email",                           default: ""
-    t.string   "encrypted_password",              default: ""
+    t.string   "email",                                       default: ""
+    t.string   "encrypted_password",                          default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                   default: 0
+    t.integer  "sign_in_count",                               default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -288,7 +288,7 @@ ActiveRecord::Schema.define(version: 20140628143025) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                 default: 0
+    t.integer  "failed_attempts",                             default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "created_at"
@@ -302,23 +302,23 @@ ActiveRecord::Schema.define(version: 20140628143025) do
     t.string   "zip_code"
     t.date     "birth"
     t.string   "leadership_role"
-    t.string   "role"
+    t.integer  "role",                            limit: 255, default: 0
     t.string   "time_zone"
     t.string   "type"
     t.integer  "sub_unit_id"
     t.string   "rank"
-    t.boolean  "send_reminders",                  default: true
+    t.boolean  "send_reminders",                              default: true
     t.datetime "deactivated_at"
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
     t.string   "signup_token"
     t.string   "sms_number"
     t.datetime "sms_number_verified_at"
-    t.boolean  "blast_email",                     default: true
+    t.boolean  "blast_email",                                 default: true
     t.boolean  "blast_sms"
-    t.boolean  "event_reminder_email",            default: true
+    t.boolean  "event_reminder_email",                        default: true
     t.boolean  "event_reminder_sms"
-    t.boolean  "signup_deadline_email",           default: true
+    t.boolean  "signup_deadline_email",                       default: true
     t.boolean  "signup_deadline_sms"
     t.string   "picture"
     t.integer  "picture_file_size"
@@ -330,9 +330,9 @@ ActiveRecord::Schema.define(version: 20140628143025) do
     t.string   "sl_uid"
     t.string   "alternate_email"
     t.string   "sms_provider"
-    t.boolean  "sms_message",                     default: true
-    t.boolean  "weekly_newsletter_email",         default: true
-    t.boolean  "monthly_newsletter_email",        default: true
+    t.boolean  "sms_message",                                 default: true
+    t.boolean  "weekly_newsletter_email",                     default: true
+    t.boolean  "monthly_newsletter_email",                    default: true
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"

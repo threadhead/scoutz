@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
+  include Pundit
   protect_from_forgery with: :exception
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   before_action :label_col_class
   def label_col_class
     @label_col_class = 'control-label col-md-4'
@@ -60,4 +62,9 @@ class ApplicationController < ActionController::Base
   #   end
   # end
 
+  def user_not_authorized
+    flash[:error] = "You are not authorized to perform this action."
+    render file: File.join(Rails.root, 'public', '403.html'), status: 403, layout: false
+    # redirect_to(request.referrer || root_path)
+  end
 end

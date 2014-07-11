@@ -1,11 +1,11 @@
 class DashboardController < ApplicationController
   before_action :auth_and_time_zone
+  after_action :verify_authorized
   # authorize_resource
 
   def index
-    authorize! :dashboard, :index
-    # event_finders
-    # @limit = params[:limit] ? params[:limit].to_i : 5
-    # @unit = Unit.find(params[:unit_id]) if params[:unit_id]
+    # policy for both dashboard_calendar and dashboard_list
+    authorize Dashboard
+    # authorize! :dashboard, :index
   end
 end

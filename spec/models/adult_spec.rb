@@ -3,13 +3,11 @@ require 'spec_helper'
 RSpec.describe Adult do
   before(:all) { adult_2units_2scout_3subunits }
 
-  it 'should be valid' do
-    expect(FactoryGirl.build(:adult, email: 'karl@gmail.com')).to be_valid
-  end
+  specify { expect(FactoryGirl.build(:adult, email: 'karl@gmail.com')).to be_valid }
 
-  it 'has type: \'Adult\'' do
-    expect(FactoryGirl.build(:adult, email: 'karl@gmail.com').type).to eq('Adult')
-  end
+  specify { expect(FactoryGirl.build(:adult, email: 'karl@gmail.com').type).to eq('Adult') }
+  specify { expect(FactoryGirl.build(:adult).adult?).to eq(true) }
+  specify { expect(FactoryGirl.build(:adult).scout?).to eq(false) }
 
 
   context '.sub_units' do

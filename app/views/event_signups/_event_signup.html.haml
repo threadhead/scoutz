@@ -5,8 +5,10 @@
         .col-md-12
           %p.xxlarge
             %strong Sign Up #{event_signup.scout.f_name_l_initial}
-          = form_for [event, event_signup], html: { class: 'form-horizontal' } do |f|
+          = form_for event_signup, html: { class: 'form-horizontal' }, remote: true do |f|
             = f.hidden_field :scout_id
+            = f.hidden_field :event_id
+
             .form-group
               = f.label :scouts_attending, 'scouts', class: @label_col_class
               .col-md-4
@@ -27,9 +29,9 @@
                 = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 95%;"
             %br
             .centered
-              = f.submit signup_submit(event_signup), name: 'event_signup_in_event_commit', class: 'btn btn-primary btn-sm'
               - unless event_signup.new_record?
-                = link_to "Cancel", event_event_signup_path(event, event_signup, event_signup_in_event_commit: 1), method: :delete, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+                = link_to "Cancel reservation", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+              = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'
 
 
         / .span2{style: "background-color: #ccc; height: 400px"}

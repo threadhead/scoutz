@@ -5,26 +5,32 @@ class AdultsController < ApplicationController
   before_action :auth_and_time_zone
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :set_unit
+  after_action :verify_authorized
 
   def index
+    authorize Adult
     @users = @unit.adults.includes(:sub_unit, :scouts).by_name_lf
     fresh_when last_modified: @users.maximum(:updated_at)
   end
 
   def show
+    authorize @user
     fresh_when(@user)
   end
 
   def new
     @user = Adult.new
+    authorize @user
   end
 
   def edit
+    authorize @user
     fresh_when(@user)
   end
 
   def create
     @user = Adult.new(user_params)
+    authorize @user
 
     respond_to do |format|
       if @user.save
@@ -39,6 +45,7 @@ class AdultsController < ApplicationController
   end
 
   def update
+    authorize @user
     params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
     respond_to do |format|
       if @user.update_attributes(user_params)
@@ -52,6 +59,7 @@ class AdultsController < ApplicationController
   end
 
   def destroy
+    authorize @user
     @user.destroy
     user_name = @user.full_name
     respond_to do |format|
@@ -72,6 +80,6 @@ class AdultsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :remove_picture, :email, :sms_number, :sms_provider, :blast_email, :blast_sms, :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms, :sms_message, :weekly_newsletter_email, :monthly_newsletter_email)
+      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :remove_picture, :email, :sms_number, :sms_provider, :blast_email, :blast_sms, :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms, :sms_message, :weekly_newsletter_email, :monthly_newsletter_email, :role)
     end
 end

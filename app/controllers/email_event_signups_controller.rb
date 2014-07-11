@@ -3,10 +3,12 @@ class EmailEventSignupsController < ApplicationController
   #
   # IMPORTANT do not allow access to data other than a single users signup!!!
   #
+  after_action :verify_authorized
 
   layout 'unauth'
 
   def index
+    authorize EmailEventSignupsController
     if !set_user_event_scout_signup
       # raise ActionDispatch::RoutingError.new('Not Found')
       render 'public/404', status: 404
@@ -53,6 +55,7 @@ class EmailEventSignupsController < ApplicationController
 
 
   def update
+    authorize EmailEventSignupsController
     if set_user_and_event
       @event_signup = EventSignup.find(params[:id])
       if @event_signup.update_attributes(params[:event_signup])
@@ -69,6 +72,7 @@ class EmailEventSignupsController < ApplicationController
 
 
   def create
+    authorize EmailEventSignupsController
     if set_user_and_event
       handle_event_signup_create
     else
@@ -77,10 +81,12 @@ class EmailEventSignupsController < ApplicationController
   end
 
   def new
+    authorize EmailEventSignupsController
     # you can't come here directly!!!
   end
 
   def destroy
+    authorize EmailEventSignupsController
     if set_user_event_scout_signup
       # @event_signup = EventSignup.find(params[:id])
       # @scout = @event_signup.scout
@@ -92,6 +98,7 @@ class EmailEventSignupsController < ApplicationController
   end
 
   def show
+    authorize EmailEventSignupsController
     if set_user_and_event
       @event_signup = EventSignup.find(params[:id])
     else
@@ -100,8 +107,12 @@ class EmailEventSignupsController < ApplicationController
   end
 
   def edit
+    authorize EmailEventSignupsController
     # you can't come here directly!!!
   end
+
+
+
 
   private
     def email_event_signups_params(params)

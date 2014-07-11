@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :confirmable, :lockable, :timeoutable
 
+
+  enum role: {inactive: 0, basic:10, leader:20, admin: 30}
+
   has_and_belongs_to_many :units
   has_many :phones, dependent: :destroy
   has_many :notifiers, dependent: :destroy
@@ -128,13 +131,30 @@ class User < ActiveRecord::Base
     end
   end
 
-  def is_a_scout?
+
+  # ROLES
+  def scout?
     type == 'Scout'
   end
 
-  def is_an_adult?
+  def adult?
     type == 'Adult'
   end
+
+  def role_at_least(role_q)
+    return false if role.nil?
+    User.roles[role_q.to_s] <= User.roles[role]
+  end
+
+  def self.roles_at_and_above(role_q)
+    User.roles.select { |r| User.roles[r] >= User.roles[role_q.to_s] }
+  end
+
+  def self.roles_at_and_below(role_q)
+    User.roles.select { |r| User.roles[r] <= User.roles[role_q.to_s] }
+  end
+
+
 
   def sms_number_verified
     sms_number_verified_at != nil

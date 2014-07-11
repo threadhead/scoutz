@@ -11,13 +11,17 @@ class AttachmentUploader < CarrierWave::Uploader::Base
   # include Sprockets::Helpers::IsolatedHelper
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
+  # storage :file
   # storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    if Rails.env.test?
+      "#{Rails.root}/spec/support/uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    else
+      "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    end
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:

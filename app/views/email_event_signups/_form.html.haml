@@ -25,7 +25,7 @@
 
 .form-group
   .col-md-12.centered
-    = f.submit signup_submit(@event_signup), class: 'btn btn-primary'
     - unless @event_signup.new_record?
       &nbsp;
       = link_to "Cancel reservation", event_email_event_signup_path(@event, @event_signup, user_token: @user.signup_token, event_token: @event.signup_token, scout_id: @scout.id), method: :delete, class: 'btn btn-warning'
+    = f.submit signup_submit(@event_signup), class: 'btn btn-primary'

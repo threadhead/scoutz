@@ -1,5 +1,5 @@
 class AdultsController < ApplicationController
-  etag { current_user.try :id }
+  # etag { current_user.try :id }
   # etag { current_customer.id }
 
   before_action :auth_and_time_zone
@@ -10,12 +10,12 @@ class AdultsController < ApplicationController
   def index
     authorize Adult
     @users = @unit.adults.includes(:sub_unit, :scouts).by_name_lf
-    fresh_when last_modified: @users.maximum(:updated_at)
+    # fresh_when last_modified: @users.maximum(:updated_at)
   end
 
   def show
     authorize @user
-    fresh_when(@user)
+    # fresh_when(@user)
   end
 
   def new
@@ -25,7 +25,7 @@ class AdultsController < ApplicationController
 
   def edit
     authorize @user
-    fresh_when(@user)
+    # fresh_when(@user)
   end
 
   def create

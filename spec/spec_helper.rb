@@ -6,7 +6,7 @@ SimpleCov.start 'rails'
 
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
-RSpec.configure { |c| c.deprecation_stream = File.open(File.join(Rails.root, 'log', 'rspec_deprecations.log'), 'w') }
+RSpec.configure { |c| c.deprecation_stream = File.join(Rails.root, 'log', 'rspec_deprecations.log') }
 
 require 'shoulda/matchers'
 require 'capybara/rails'

@@ -4,18 +4,30 @@
   %body
     %h2{style: "margin-bottom: 20px;"}= @unit.name
     %p= @subject
-    %table{style: "border-collapse: collapse;"}
-      %tr{style: "background-color: darkslategray; color: white;"}
-        %th{style: "text-align: left; padding: 12px;"} Event
-        %th{style: "text-align: left; padding: 12px;"} Dates
-        %th{style: "text-align: left; padding: 12px;"} RSVP
-        %th{style: "text-align: left; padding: 12px;"} iCal
-      - @events.each do |event|
-        %tr{style: "#{cycle '', 'background: whitesmoke;'}"}
-          %td{style: "padding: 8px;"}= link_to event.name, event_url(event)
-          %td{style: "padding: 8px; font-size: 0.8em;"}
-            = "s: #{event.start_at.to_s(:short_ampm)}"
-            %br
-            = "e: #{event.end_at.to_s(:short_ampm)}"
-          %td{style: "padding: 8px;; font-size: 0.8em;"}= event.signup_required ? "by #{event.signup_deadline.to_s(:short_ampm)}" : ''
-          %td{style: "padding: 8px;"}= link_to image_tag('ical_email.png'), (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics"
+    %hr
+    - if @events.empty?
+      %h3{style: "padding: 20px;"} No scheduled events. Check #{link_to 'Scoutt.in', root_url} for future events.
+
+    -else
+      %table{style: "border-collapse: collapse;"}
+        %tr{style: "background-color: darkslategray; color: white;"}
+          %th{style: "text-align: left; padding: 12px;"} Event
+          %th{style: "text-align: left; padding: 12px;"} Dates
+          %th{style: "text-align: left; padding: 12px;"} RSVP
+          %th{style: "text-align: left; padding: 12px;"} iCal
+
+        - @events.each do |event|
+          %tr{style: "#{cycle '', 'background: whitesmoke;'}"}
+            %td{style: "padding: 8px;"}= link_to event.name, event_url(event)
+            %td{style: "padding: 8px; font-size: 0.8em;"}
+              = "s: #{event.start_at.to_s(:short_ampm)}"
+              %br
+              = "e: #{event.end_at.to_s(:short_ampm)}"
+            %td{style: "padding: 8px;; font-size: 0.8em;"}= event.signup_required ? "by #{event.signup_deadline.to_s(:short_ampm)}" : ''
+            %td{style: "padding: 8px;"}= link_to image_tag('ical_email.png'), (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics"
+
+    %br
+    %p{style: 'font-size: 0.7em;'}
+      Generated on #{Time.zone.now.to_s(:long_ampm)}
+      %br
+      All times #{Time.zone}

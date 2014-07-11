@@ -26,6 +26,7 @@ class Newsletters < ActionMailer::Base
   private
     def set_unit(unit_id)
       @unit = Unit.find(unit_id)
+      Time.zone = @unit.time_zone || "Pacific Time (US & Canada)"
     end
 
 end

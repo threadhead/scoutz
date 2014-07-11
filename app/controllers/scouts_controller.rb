@@ -1,6 +1,5 @@
 class ScoutsController < ApplicationController
-  etag { current_user.try :id }
-  # etag { current_customer.id }
+  # etag { current_user.try :id }
 
   before_action :auth_and_time_zone
   before_action :set_user, only: [:show, :edit, :update, :destroy]
@@ -10,12 +9,12 @@ class ScoutsController < ApplicationController
   def index
     authorize Scout
     @users = @unit.scouts.includes(:sub_unit, :adults).by_name_lf
-    fresh_when last_modified: @users.maximum(:updated_at)
+    # fresh_when last_modified: @users.maximum(:updated_at)
   end
 
   def show
     authorize @user
-    fresh_when(@user)
+    # fresh_when(@user)
   end
 
   def new

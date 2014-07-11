@@ -42,4 +42,10 @@ module UsersHelper
     sanitize(user_city_state_zip(user)) + add_break(user_city_state_zip(user))
   end
 
+
+  def cache_key_for_users(users)
+    count = users.count
+    max_updated_at = users.maximum(:updated_at).try(:utc).try(:to_s, :number)
+    "#{users.first.type.downcase}s/index-#{count}-#{max_updated_at}"
+  end
 end

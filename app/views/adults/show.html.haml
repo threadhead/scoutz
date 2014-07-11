@@ -34,46 +34,47 @@
 
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-.row
-  .col-md-8
-    .text-xlarge
-      %table.table
-        %tr
-          %td
-            / %strong= @user.sub_unit.unit.unit_type_title
-            %strong Unit
-          %td
-            = @unit.name
+= cache @user do
+  .row
+    .col-md-8
+      .text-xlarge
+        %table.table
+          %tr
+            %td
+              / %strong= @user.sub_unit.unit.unit_type_title
+              %strong Unit
+            %td
+              = @unit.name
 
-        %tr
-          %td
-            %strong Position
-          %td
-            = @user.all_leadership_positions
+          %tr
+            %td
+              %strong Position
+            %td
+              = @user.all_leadership_positions
 
-        %tr
-          %td
-            %strong Email
-          %td
-            = @user.email
+          %tr
+            %td
+              %strong Email
+            %td
+              = @user.email
 
-        %tr
-          %td
-            %strong= @unit.sub_unit_name.pluralize
-          %td
-            = @user.sub_units(@unit).map(&:name).join(', ')
+          %tr
+            %td
+              %strong= @unit.sub_unit_name.pluralize
+            %td
+              = @user.sub_units(@unit).map(&:name).join(', ')
 
-        %tr
-          %td
-            %strong Scouts
-          %td
-            = adult_scouts_link_list(@unit, @user)
+          %tr
+            %td
+              %strong Scouts
+            %td
+              = adult_scouts_link_list(@unit, @user)
 
-        %tr
-          %td
-            %strong Address
-          %td
-            %address= user_address_show(@user)
-  .col-md-4
-    .well.well-sm
-      = image_tag @user.picture.url
+          %tr
+            %td
+              %strong Address
+            %td
+              %address= user_address_show(@user)
+    .col-md-4
+      .well.well-sm
+        = image_tag @user.picture.url

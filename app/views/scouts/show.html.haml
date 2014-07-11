@@ -34,54 +34,55 @@
 
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-.row
-  .col-md-8
-    .text-xlarge
-      %table.table
-        %tr
-          %td
-            / %strong= @user.sub_unit.unit.unit_type_title
-            %strong Unit
-          %td
-            = @user.sub_unit.try(:unit).try(:name)
+= cache @user do
+  .row
+    .col-md-8
+      .text-xlarge
+        %table.table
+          %tr
+            %td
+              / %strong= @user.sub_unit.unit.unit_type_title
+              %strong Unit
+            %td
+              = @user.sub_unit.try(:unit).try(:name)
 
-        %tr
-          %td
-            %strong Rank
-          %td
-            = @user.rank
+          %tr
+            %td
+              %strong Rank
+            %td
+              = @user.rank
 
-        %tr
-          %td
-            %strong Position
-          %td
-            = @user.leadership_position
+          %tr
+            %td
+              %strong Position
+            %td
+              = @user.leadership_position
 
-        %tr
-          %td
-            %strong= @user.sub_unit.try(:unit).try(:sub_unit_name)
-          %td
-            = @user.sub_unit.try(:name)
+          %tr
+            %td
+              %strong= @user.sub_unit.try(:unit).try(:sub_unit_name)
+            %td
+              = @user.sub_unit.try(:name)
 
-        %tr
-          %td
-            %strong Birthday
-          %td= birthdate_and_years_old(@user)
+          %tr
+            %td
+              %strong Birthday
+            %td= birthdate_and_years_old(@user)
 
-        %tr
-          %td
-            %strong Parents
-          %td
-            = scout_adults_link_list(@unit, @user)
+          %tr
+            %td
+              %strong Parents
+            %td
+              = scout_adults_link_list(@unit, @user)
 
-        %tr
-          %td
-            %strong Address
-          %td
-            %address= user_address_show(@user)
-  .col-md-4
-    .well.well-sm
-      = image_tag @user.picture.url
+          %tr
+            %td
+              %strong Address
+            %td
+              %address= user_address_show(@user)
+    .col-md-4
+      .well.well-sm
+        = image_tag @user.picture.url
 
 
 / %tr

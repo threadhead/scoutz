@@ -1,88 +1,92 @@
-.sidebar-nav
-  .navbar.navbar-default.navbar-sidebar
-    .navbar-header
-      %span.visible-xs.navbar-brand Events
-      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#calendar-navbar-collapse")
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-
-    .navbar-collapse.collapse#calendar-navbar-collapse
-      %ul.nav.navbar-nav
-        %li
-          = link_to dashboard_list_path, class: '' do
-            %i.fa.fa-list-alt
-            Event List
-
-        %li
-          = link_to dashboard_calendar_path, class: '' do
-            %i.fa.fa-calendar
-            Event Calendar
-
-- @units.each do |unit|
+= cache [:sidebar, current_user] do
   .sidebar-nav
     .navbar.navbar-default.navbar-sidebar
       .navbar-header
-        %span.visible-xs.navbar-brand= unit.name_unit
-        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-#{unit.id}-navbar-collapse")
+        %span.visible-xs.navbar-brand Events
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#calendar-navbar-collapse")
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
 
-      .navbar-collapse.collapse{id: "unit-#{unit.id}-navbar-collapse"}
+      .navbar-collapse.collapse#calendar-navbar-collapse
         %ul.nav.navbar-nav
-          %li.hidden-xs.navbar-brand= unit.name_unit
           %li
-            = link_to unit_scouts_path(unit), class: '' do
-              %i.fa.fa-user{style: "color: #c00;"}
-              Scouts
-
-          %li
-            = link_to unit_adults_path(unit), class: '' do
-              %i.fa.fa-user{style: "color: #c0c000;"}
-              Adults
+            = link_to dashboard_list_path, class: '' do
+              %i.fa.fa-list-alt
+              Event List
 
           %li
-            = link_to '#', class: '', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
-              %i.fa.fa-envelope
-              Email Blast
-              %i.fa.fa-caret-down
+            = link_to dashboard_calendar_path, class: '' do
+              %i.fa.fa-calendar
+              Event Calendar
 
-            .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
-              %ul.nav.navbar-nav
-                %li
-                  = link_to new_unit_email_message_path(unit), class: '' do
-                    &nbsp;
-                    %i.fa.fa-plus
-                    New
+  - @units.each do |unit|
+    .sidebar-nav
+      .navbar.navbar-default.navbar-sidebar
+        .navbar-header
+          %span.visible-xs.navbar-brand= unit.name_unit
+          %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-#{unit.id}-navbar-collapse")
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
 
-                %li
-                  = link_to unit_email_messages_path(unit), class: '' do
-                    &nbsp;
-                    %i.fa.fa-list
-                    Sent
+        .navbar-collapse.collapse{id: "unit-#{unit.id}-navbar-collapse"}
+          %ul.nav.navbar-nav
+            %li.hidden-xs.navbar-brand= unit.name_unit
+            %li
+              = link_to unit_scouts_path(unit), class: '' do
+                %i.fa.fa-user{style: "color: #c00;"}
+                Scouts
 
-          %li
-            = link_to '#', class: '', data: {toggle: 'collapse', target: "#sms-blast-#{unit.id}"} do
-              %i.fa.fa-phone
-              SMS Blast
-              %i.fa.fa-caret-down
+            %li
+              = link_to unit_adults_path(unit), class: '' do
+                %i.fa.fa-user{style: "color: #c0c000;"}
+                Adults
 
-            .collapse{class: @mo_activity ? 'in' : '', id: "sms-blast-#{unit.id}"}
-              %ul.nav.navbar-nav
-                %li
-                  = link_to new_unit_sms_message_path(unit), class: '' do
-                    &nbsp;
-                    %i.fa.fa-plus
-                    New
+            - if policy(EmailMessage).create?
+              %li
+                = link_to '#', class: '', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
+                  %i.fa.fa-envelope
+                  Email Blast
+                  %i.fa.fa-caret-down
 
-                %li
-                  = link_to unit_sms_messages_path(unit), class: '' do
-                    &nbsp;
-                    %i.fa.fa-list
-                    Sent
+                .collapse{class: @mo_activity ? 'in' : '', id: "email-blast-#{unit.id}"}
+                  %ul.nav.navbar-nav
+                    %li
+                      = link_to new_unit_email_message_path(unit), class: '' do
+                        &nbsp;
+                        %i.fa.fa-plus
+                        New
 
-          %li
-            = link_to new_unit_event_path(unit), class: '' do
-              %i.fa.fa-plus
-              New Event
+                    %li
+                      = link_to unit_email_messages_path(unit), class: '' do
+                        &nbsp;
+                        %i.fa.fa-list
+                        Sent
+
+            - if policy(SmsMessage).create?
+              %li
+                = link_to '#', class: '', data: {toggle: 'collapse', target: "#sms-blast-#{unit.id}"} do
+                  %i.fa.fa-phone
+                  SMS Blast
+                  %i.fa.fa-caret-down
+
+                .collapse{class: @mo_activity ? 'in' : '', id: "sms-blast-#{unit.id}"}
+                  %ul.nav.navbar-nav
+                    %li
+                      = link_to new_unit_sms_message_path(unit), class: '' do
+                        &nbsp;
+                        %i.fa.fa-plus
+                        New
+
+                    %li
+                      = link_to unit_sms_messages_path(unit), class: '' do
+                        &nbsp;
+                        %i.fa.fa-list
+                        Sent
+
+            - if policy(Event).create?
+              %li
+                = link_to new_unit_event_path(unit), class: '' do
+                  %i.fa.fa-plus
+                  New Event

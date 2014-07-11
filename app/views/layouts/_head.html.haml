@@ -1,25 +1,27 @@
-%meta{:charset => "utf-8"}
-%meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
-%meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
-%title= content_for?(:title) ? yield(:title) : "Scoutz"
 = csrf_meta_tags
 
-/ HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
-/ WARNING: Respond.js doesn't work if you view the page via file://
-/[if lt IE 9]
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+= cache :head do
+  %meta{:charset => "utf-8"}
+  %meta{:content => "IE=Edge,chrome=1", "http-equiv" => "X-UA-Compatible"}
+  %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+  %title= content_for?(:title) ? yield(:title) : "Scoutz"
 
-= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
-= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
-= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.css"
-= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css"
-= stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2-bootstrap.css"
-= stylesheet_link_tag "application", :media => "all"
+  / HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
+  / WARNING: Respond.js doesn't work if you view the page via file://
+  /[if lt IE 9]
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 
-= #jquery_include_tag :google
-= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '144x144'
-= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '114x114'
-= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '72x72'
-= favicon_link_tag 'apple-touch-icon-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png'
-= favicon_link_tag '/favicon.ico', rel: 'shortcut icon'
+  = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css"
+  = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css"
+  = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.css"
+  = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css"
+  = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2-bootstrap.css"
+  = stylesheet_link_tag "application", :media => "all"
+
+  = #jquery_include_tag :google
+  = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '144x144'
+  = favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '114x114'
+  = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '72x72'
+  = favicon_link_tag 'apple-touch-icon-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png'
+  = favicon_link_tag '/favicon.ico', rel: 'shortcut icon'

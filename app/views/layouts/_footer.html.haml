@@ -1,8 +1,9 @@
-%footer
-  .container-fluid
-    .row
-      .col-md-12
-        %p.pull-right
-          &copy; #{Time.now.year}, Karl Smith
-          %br
-          %small All rights reserved.
+= cache :footer do
+  %footer
+    .container-fluid
+      .row
+        .col-md-12
+          %p.pull-right
+            &copy; #{Time.now.year}, Karl Smith
+            %br
+            %small All rights reserved.

@@ -24,11 +24,12 @@
 
       = cache cache_key_for_users(@users) do
         - @users.each do |adult|
-          %tr
-            %td.user-picture
-              - if adult.picture.present?
-                %div.circle-picture{style: "background:url(#{adult.picture.thumb.url})"}
-            %td= link_to adult.name_lf, unit_adult_path(@unit, adult)
-            / %td= adult_sub_units_list(@unit, adult)
-            %td= adult.all_leadership_positions
-            %td= unit_scouts_link_list(@unit, adult.unit_scouts(@unit))
+          = cache adult do
+            %tr
+              %td.user-picture
+                - if adult.picture.present?
+                  %div.circle-picture{style: "background:url(#{adult.picture.thumb.url})"}
+              %td= link_to adult.name_lf, unit_adult_path(@unit, adult)
+              / %td= adult_sub_units_list(@unit, adult)
+              %td= adult.all_leadership_positions
+              %td= unit_scouts_link_list(@unit, adult.unit_scouts(@unit))

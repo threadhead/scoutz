@@ -8,12 +8,12 @@ class SmsMessagesController < ApplicationController
 
   def index
     @sms_messages = policy_scope(SmsMessage.where(unit_id: @unit)).includes(:sender).by_updated_at
-    fresh_when last_modified: @sms_messages.maximum(:updated_at)
+    # fresh_when last_modified: @sms_messages.maximum(:updated_at)
   end
 
   def show
     authorize @sms_message
-    fresh_when(@sms_message)
+    # fresh_when(@sms_message)
   end
 
   def new

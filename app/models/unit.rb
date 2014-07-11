@@ -11,11 +11,11 @@ class Unit < ActiveRecord::Base
   has_many :attachment_files, as: :assetable
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
-  # attr_accessible :city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes
 
   validates_presence_of :unit_type, :unit_number, :time_zone, :state, :city
-
   validates :sl_uid, uniqueness: { allow_nil: true }
+
+
 
   def name
     "#{unit_type.singularize} #{unit_type_title} #{unit_number}"

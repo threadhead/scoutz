@@ -22,9 +22,9 @@
         %th Leadership
         %th Scouts
 
-      = cache cache_key_for_users(@users) do
+      = cache ["unit-#{@unit.id}", cache_key_for_users(@users)] do
         - @users.each do |adult|
-          = cache adult do
+          = cache ["unit-#{@unit.id}", adult] do
             %tr
               %td.user-picture
                 - if adult.picture.present?

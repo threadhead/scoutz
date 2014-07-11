@@ -4,8 +4,8 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require 'devise'
  *= require 'gmaps4rails'
- *= require jquery.ui.datepicker
- *= require jquery.ui.slider
+ *= require jquery-ui/datepicker
+ *= require jquery-ui/slider
  *= require 'jquery-ui-timepicker-addon'
  *= require rails_bootstrap_forms
  *= require 'screen'

@@ -12,6 +12,7 @@ class SignUpController < ApplicationController
   end
 
   def create_unit
+    remove_new_sub_unit_attributes
     @unit = Unit.new(unit_params)
     if @unit.save
       current_user.units << @unit
@@ -31,8 +32,12 @@ class SignUpController < ApplicationController
   end
 
   private
+    def remove_new_sub_unit_attributes
+      params[:unit][:sub_units_attributes].delete('new_sub_unit')
+    end
+
     def unit_params
-      params.require(:unit).permit(:unit_type, :unit_number, :city, :state, :time_zone, {sub_units_attributes: []})
+      params.require(:unit).permit(:unit_type, :unit_number, :city, :state, :time_zone, sub_units_attributes: [])
     end
 
 end

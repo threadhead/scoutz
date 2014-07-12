@@ -28,6 +28,7 @@ class AdultsController < ApplicationController
   end
 
   def create
+    remove_new_phone_attribute
     @user = Adult.new(user_params)
     authorize @user
 
@@ -45,7 +46,7 @@ class AdultsController < ApplicationController
 
   def update
     authorize @user
-    params[:adult][:phones_attributes].delete('new_phone')
+    remove_new_phone_attribute
     params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
     logger.info pp(params)
     respond_to do |format|
@@ -77,6 +78,10 @@ class AdultsController < ApplicationController
 
     def set_unit
       @unit = current_user.units.where(id: params[:unit_id]).first
+    end
+
+    def remove_new_phone_attribute
+      params[:adult][:phones_attributes].delete('new_phone')
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

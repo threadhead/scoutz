@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140706020853) do
+ActiveRecord::Schema.define(version: 20140711204712) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -206,7 +206,7 @@ ActiveRecord::Schema.define(version: 20140706020853) do
 
   create_table "phones", force: true do |t|
     t.integer  "user_id"
-    t.string   "kind"
+    t.integer  "kind",       limit: 255, default: 0
     t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"

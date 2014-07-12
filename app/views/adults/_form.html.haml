@@ -38,6 +38,34 @@
 
 
   %fieldset
+    %legend Phone numbers
+    = f.form_group do
+      = button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
+    = f.fields_for :phones do |f_phone|
+      = f_phone.form_group do
+        .col-md-2
+          = f_phone.select :kind, options_for_phones, hide_label: true, layout: :default
+        .col-md-3.col-md-offset-1
+          = f_phone.phone_field :number, hide_label: true, layout: :default
+        .col-md-2.col-md-offset-1
+          = f_phone.check_box :_destroy, label: 'remove'
+
+    #add-a-phone
+
+    #new-phone-fields.hidden
+      = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
+        = h_phone.form_group do
+          .col-md-2
+            = h_phone.select :kind, options_for_phones, hide_label: true, layout: :default
+          .col-md-3.col-md-offset-1
+            = h_phone.phone_field :number, hide_label: true, layout: :default
+          .col-md-2.col-md-offset-1
+            = h_phone.check_box :_destroy, label: 'remove'
+
+
+
+
+  %fieldset
     %legend Notifications
     = f.email_field :email, control_col: 'col-md-4'
     = f.form_group do

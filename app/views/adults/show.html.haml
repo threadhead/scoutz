@@ -56,7 +56,15 @@
             %td
               %strong Email
             %td
-              = @user.email
+              = mail_to @user.email
+
+          %tr
+            %td
+              %strong Phones
+            %td
+              - @user.phones.each do |phone|
+                #{phone.kind}: #{number_to_phone phone.number}
+                %br
 
           %tr
             %td

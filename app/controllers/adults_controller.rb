@@ -45,7 +45,9 @@ class AdultsController < ApplicationController
 
   def update
     authorize @user
+    params[:adult][:phones_attributes].delete('new_phone')
     params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
+    logger.info pp(params)
     respond_to do |format|
       if @user.update_attributes(user_params)
         format.html { redirect_to unit_adult_path(@unit, @user), notice: "#{@user.full_name} was successfully updated." }
@@ -79,6 +81,6 @@ class AdultsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, {scout_ids: []}, :picture, :remove_picture, :email, :sms_number, :sms_provider, :blast_email, :blast_sms, :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms, :sms_message, :weekly_newsletter_email, :monthly_newsletter_email, :role)
+      params.require(:adult).permit(:first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders, :adult_ids, :picture, :remove_picture, :email, :sms_number, :sms_provider, :blast_email, :blast_sms, :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms, :sms_message, :weekly_newsletter_email, :monthly_newsletter_email, :role, phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [])
     end
 end

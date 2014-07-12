@@ -31,7 +31,7 @@
     .well.well-lg
       %h4 Setup Your New Unit
       %p &nbsp;
-      = form_for @unit, url: sign_up_new_unit_path, html: { class: 'form-horizontal' } do |f|
+      = form_for @unit, url: sign_up_new_unit_path, method: :get, html: { class: 'form-horizontal' } do |f|
         .form-group
           = f.label :unit_type, 'Type', class: 'control-label col-md-4'
           .col-md-8

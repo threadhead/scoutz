@@ -14,7 +14,7 @@ class Adult < User
   def handle_relations_update(unit, update)
     # We need the ability to update adult/scout relationships using the standard controller methods
 
-    # Unfortunately, when an adults is edited it will show the names of related scouts that exist for
+    # Unfortunately, when an adult is edited it will show the names of related scouts that exist for
     #  the unit the adult is being edited under. The retuned "scout_ids" will not contain scouts from
     #  other units, and thus they will be removed from the relationship BAD!
 

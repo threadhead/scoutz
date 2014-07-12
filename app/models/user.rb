@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
 
-  enum role: {inactive: 0, basic:10, leader:20, admin: 30}
+  enum role: {inactive: 0, basic: 10, leader: 20, admin: 30}
 
   has_and_belongs_to_many :units
   has_many :phones, dependent: :destroy

@@ -20,7 +20,7 @@
           %ul.dropdown-menu.pull-right
             - if policy(@user).destroy?
               %li
-                = link_to(unit_scout_path(@unit, @user), method: :delete, confirm: 'Are you sure?', class: "") do
+                = link_to(unit_scout_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
                   %i.fa.fa-trash-o
                   destroy #{@user.first_name}
 
@@ -68,6 +68,14 @@
             %td
               %strong Birthday
             %td= birthdate_and_years_old(@user)
+
+          %tr
+            %td
+              %strong Phones
+            %td
+              - @user.phones.each do |phone|
+                #{phone.kind}: #{number_to_phone phone.number}
+                %br
 
           %tr
             %td

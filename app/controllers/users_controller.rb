@@ -1,65 +1,26 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_unit, only: [:show]
+  # etag { current_user.try :id }
 
-  # this will effectively disable controler access to user records
-  # users should be accesses through adult or scout controllers
+  before_action :auth_and_time_zone
+  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_unit
   after_action :verify_authorized
 
 
-  def index
-    @users = User.all
-  end
-
   def show
-    case @user.type
-    when "Adult"
-      redirect_to unit_adult_url(@unit, @user)
-    when "Scout"
-      redirect_to unit_scout_url(@unit, @user)
-    end
-  end
-
-  def new
-    @user = User.new
+    authorize @user
+    # logger.info "CONTROLLER_TYPE: #{controller_type}"
   end
 
   def edit
+    authorize @user
   end
 
-  def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+  def new(ar_model)
+    @user = ar_model.new
+    authorize @user
   end
 
-  def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
-    end
-  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -71,8 +32,31 @@ class UsersController < ApplicationController
       @unit = current_user.units.where(id: params[:unit_id]).first
     end
 
+    def remove_new_phone_attribute
+      params[controller_type][:phones_attributes].delete('new_phone')
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email)
+      params.require(controller_type).permit(
+            :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :email,
+            :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :role,
+            :send_reminders,
+            :picture, :remove_picture,
+            :sms_number, :sms_provider,
+            :blast_email, :blast_sms, :sms_message,
+            :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms,
+            :weekly_newsletter_email, :monthly_newsletter_email,
+            phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [], adult_ids: []
+            )
     end
+
+    def controller_type
+      self.is_a?(ScoutsController) ? :scout : :adult
+    end
+
+    # def ar_model
+    #   self.is_a?(ScoutsController) ? Scout : Adult
+    # end
+
 end

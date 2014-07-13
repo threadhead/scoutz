@@ -36,12 +36,10 @@ class EventsController < ApplicationController
   end
 
   def show
-    if stale?(@event)
-      @event_signups = @event.user_signups(current_user)
-      @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
-      respond_with(@event)
-    end
     authorize @event
+    @event_signups = @event.user_signups(current_user)
+    @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
+    # respond_with(@event)
   end
 
   def new

@@ -1,38 +1,39 @@
-.row
-  .col-md-12
-    .well.well-sm
-      .row
-        .col-md-12
-          %p.xxlarge
-            %strong Sign Up #{event_signup.scout.f_name_l_initial}
-          = form_for event_signup, html: { class: 'form-horizontal' }, remote: true do |f|
-            = f.hidden_field :scout_id
-            = f.hidden_field :event_id
+= cache event_signup do
+  .row
+    .col-md-12
+      .well.well-sm
+        .row
+          .col-md-12
+            %p.xxlarge
+              %strong Sign Up #{event_signup.scout.f_name_l_initial}
+            = form_for event_signup, html: { class: 'form-horizontal' }, remote: true do |f|
+              = f.hidden_field :scout_id
+              = f.hidden_field :event_id
 
-            .form-group
-              = f.label :scouts_attending, 'scouts', class: @label_col_class
-              .col-md-4
-                = f.select :scouts_attending, [0,1], {}, {class: 'form-control'}
+              .form-group
+                = f.label :scouts_attending, 'scouts', class: @label_col_class
+                .col-md-4
+                  = f.select :scouts_attending, [0,1], {}, {class: 'form-control'}
 
-            .form-group
-              = f.label :siblings_attending, 'siblings', class: @label_col_class
-              .col-md-4
-                = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+              .form-group
+                = f.label :siblings_attending, 'siblings', class: @label_col_class
+                .col-md-4
+                  = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
 
-            .form-group
-              = f.label :adults_attending, 'adults', class: @label_col_class
-              .col-md-4
-                = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+              .form-group
+                = f.label :adults_attending, 'adults', class: @label_col_class
+                .col-md-4
+                  = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
 
-            .row
-              .col-md-10.col-md-offset-1.centered
-                = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 95%;"
-            %br
-            .centered
-              - unless event_signup.new_record?
-                = link_to "Cancel reservation", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
-              = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'
+              .row
+                .col-md-10.col-md-offset-1.centered
+                  = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 95%;"
+              %br
+              .centered
+                - unless event_signup.new_record?
+                  = link_to "Cancel reservation", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+                = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'
 
 
-        / .span2{style: "background-color: #ccc; height: 400px"}
-        /   .rotated-name2= event_signup.scout.full_name.split('').join("<br/>").html_safe
+          / .span2{style: "background-color: #ccc; height: 400px"}
+          /   .rotated-name2= event_signup.scout.full_name.split('').join("<br/>").html_safe

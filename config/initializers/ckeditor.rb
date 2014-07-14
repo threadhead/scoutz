@@ -19,6 +19,7 @@ Ckeditor.setup do |config|
   # Setup authorization to be run as a before filter
   # By default: there is no authorization.
   # config.authorize_with :cancan
+  config.authorize_with :pundit
 
   # Asset model classes
   # config.picture_model { Ckeditor::Picture }

@@ -1,0 +1,22 @@
+= form_for @merit_badge do |f|
+  - if @merit_badge.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@merit_badge.errors.count, "error")} prohibited this merit_badge from being saved:"
+      %ul
+        - @merit_badge.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :mb_org_url
+    = f.text_field :mb_org_url
+  .field
+    = f.label :mb_org_worksheet_pdf_url
+    = f.text_field :mb_org_worksheet_pdf_url
+  .field
+    = f.label :mb_org_worksheet_doc_url
+    = f.text_field :mb_org_worksheet_doc_url
+  .actions
+    = f.submit 'Save'

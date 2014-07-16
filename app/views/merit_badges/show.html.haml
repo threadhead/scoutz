@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @merit_badge.name
+%p
+  %b Mb org url:
+  = @merit_badge.mb_org_url
+%p
+  %b Mb org worksheet pdf url:
+  = @merit_badge.mb_org_worksheet_pdf_url
+%p
+  %b Mb org worksheet doc url:
+  = @merit_badge.mb_org_worksheet_doc_url
+
+= link_to 'Edit', edit_merit_badge_path(@merit_badge)
+\|
+= link_to 'Back', merit_badges_path

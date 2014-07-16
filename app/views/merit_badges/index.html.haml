@@ -1,0 +1,25 @@
+%h1 Listing merit_badges
+
+%table
+  %tr
+    %th Name
+    %th Mb org url
+    %th Mb org worksheet pdf url
+    %th Mb org worksheet doc url
+    %th
+    %th
+    %th
+
+  - @merit_badges.each do |merit_badge|
+    %tr
+      %td= merit_badge.name
+      %td= merit_badge.mb_org_url
+      %td= merit_badge.mb_org_worksheet_pdf_url
+      %td= merit_badge.mb_org_worksheet_doc_url
+      %td= link_to 'Show', merit_badge
+      %td= link_to 'Edit', edit_merit_badge_path(merit_badge)
+      %td= link_to 'Destroy', merit_badge, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Merit badge', new_merit_badge_path

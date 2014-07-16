@@ -1,5 +1,7 @@
 Scoutz::Application.routes.draw do
 
+  resources :merit_badges
+
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   get "events/index"

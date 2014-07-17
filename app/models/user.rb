@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
+  has_and_belongs_to_many :merit_badges
   accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a["number"].blank? }
 
   before_save :update_picture_attributes

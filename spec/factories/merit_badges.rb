@@ -2,9 +2,7 @@
 
 FactoryGirl.define do
   factory :merit_badge do
-    name "MyString"
-    mb_org_url "MyString"
-    mb_org_worksheet_pdf_url "MyString"
-    mb_org_worksheet_doc_url "MyString"
+    name            "Engineering"
+    eagle_required  true
   end
 end

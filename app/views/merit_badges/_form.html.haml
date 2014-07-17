@@ -1,22 +1,26 @@
-= form_for @merit_badge do |f|
-  - if @merit_badge.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@merit_badge.errors.count, "error")} prohibited this merit_badge from being saved:"
-      %ul
-        - @merit_badge.errors.full_messages.each do |msg|
-          %li= msg
+.row
+  .col-md-9
+    .alert.alert-info
+      %i.fa.fa-info-circle
+      You may only change counselors for your Troop
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :mb_org_url
-    = f.text_field :mb_org_url
-  .field
-    = f.label :mb_org_worksheet_pdf_url
-    = f.text_field :mb_org_worksheet_pdf_url
-  .field
-    = f.label :mb_org_worksheet_doc_url
-    = f.text_field :mb_org_worksheet_doc_url
-  .actions
-    = f.submit 'Save'
+    = bootstrap_form_for [@unit, @merit_badge], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
+      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
+
+      = f.text_field :name, disabled: true
+      = f.text_field :year_created, disabled: true
+      = f.form_group do
+        = f.check_box :eagle_required, disabled: true
+
+      %fieldset
+        %legend Merit Badge Counselors
+        = f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Counselors', help: ''}, multiple: true
+
+
+      = f.form_group do
+        = f.primary
+        = link_to 'Cancel', unit_merit_badges_path(@unit), class: 'btn btn-default'
+
+  .col-md-3
+    .well.well-sm.centered
+      = image_tag @merit_badge.patch_image_url

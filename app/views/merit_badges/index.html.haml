@@ -1,25 +1,38 @@
-%h1 Listing merit_badges
+.row
+  .col-md-12
+    .page-header
 
-%table
-  %tr
-    %th Name
-    %th Mb org url
-    %th Mb org worksheet pdf url
-    %th Mb org worksheet doc url
-    %th
-    %th
-    %th
+      %h2
+        Merit Badges
+        %span.xlarge.badge= @merit_badges.count
 
-  - @merit_badges.each do |merit_badge|
-    %tr
-      %td= merit_badge.name
-      %td= merit_badge.mb_org_url
-      %td= merit_badge.mb_org_worksheet_pdf_url
-      %td= merit_badge.mb_org_worksheet_doc_url
-      %td= link_to 'Show', merit_badge
-      %td= link_to 'Edit', edit_merit_badge_path(merit_badge)
-      %td= link_to 'Destroy', merit_badge, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
+.row
+  .col-md-10
+    = render partial: 'layouts/flash', locals: {flash: flash}
 
-= link_to 'New Merit badge', new_merit_badge_path
+    %table.table
+      %tr
+        %th
+        %th Name
+        / %th Created
+        %th Eagle Req?
+        %th Counselors
+
+      = cache ["unit-#{@unit.id}", cache_key_for_merit_badges(@merit_badges)] do
+        - @merit_badges.each do |merit_badge|
+          = cache ["unit-#{@unit.id}", merit_badge] do
+            %tr
+              %td
+                = image_tag merit_badge.patch_image_url, class: 'merit-badge-patch-thumb'
+              %td
+                %span.xlarge= link_to merit_badge.name, unit_merit_badge_path(@unit, merit_badge)
+              / %td= merit_badge.year_created
+              %td
+                - if merit_badge.eagle_required
+                  = image_tag image_url('eagle_scout_sm.jpg')
+              %td
+                - merit_badge.counselors(@unit).each do |adult|
+                  = link_to adult.name, [@unit, adult]
+                  %br
+

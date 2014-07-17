@@ -3,7 +3,7 @@ class CreateMeritBadges < ActiveRecord::Migration
     create_table :merit_badges do |t|
       t.string :name
       t.string :year_created
-      t.boolan :eagle_required, default: false
+      t.boolean :eagle_required, default: false
       t.boolean :discontinued, default: false
       t.string :bsa_advancement_id
       t.string :patch_image_url

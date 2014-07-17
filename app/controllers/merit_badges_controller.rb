@@ -1,48 +1,51 @@
 class MeritBadgesController < ApplicationController
+  before_action :auth_and_time_zone
   before_action :set_merit_badge, only: [:show, :edit, :update, :destroy]
+  before_action :set_unit
+  after_action :verify_authorized
 
-  # GET /merit_badges
   def index
-    @merit_badges = MeritBadge.all
+    authorize MeritBadge
+    @merit_badges = MeritBadge.by_name.all
   end
 
-  # GET /merit_badges/1
   def show
+    authorize @merit_badge
   end
 
-  # GET /merit_badges/new
   def new
-    @merit_badge = MeritBadge.new
+    authorize MeritBadge
+    # @merit_badge = MeritBadge.new
   end
 
-  # GET /merit_badges/1/edit
   def edit
+    authorize @merit_badge
   end
 
-  # POST /merit_badges
   def create
-    @merit_badge = MeritBadge.new(merit_badge_params)
-
-    if @merit_badge.save
-      redirect_to @merit_badge, notice: 'Merit badge was successfully created.'
-    else
-      render :new
-    end
+    authorize MeritBadge
+    # @merit_badge = MeritBadge.new(merit_badge_params)
+    # if @merit_badge.save
+    #   redirect_to @merit_badge, notice: 'Merit badge was successfully created.'
+    # else
+    #   render :new
+    # end
   end
 
-  # PATCH/PUT /merit_badges/1
   def update
+    authorize @merit_badge
     if @merit_badge.update(merit_badge_params)
-      redirect_to @merit_badge, notice: 'Merit badge was successfully updated.'
+      @merit_badge.touch
+      redirect_to unit_merit_badge_url(@unit, @merit_badge), notice: 'Merit badge was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /merit_badges/1
   def destroy
-    @merit_badge.destroy
-    redirect_to merit_badges_url, notice: 'Merit badge was successfully destroyed.'
+    authorize @merit_badge
+    # @merit_badge.destroy
+    # redirect_to merit_badges_url, notice: 'Merit badge was successfully destroyed.'
   end
 
   private
@@ -51,8 +54,13 @@ class MeritBadgesController < ApplicationController
       @merit_badge = MeritBadge.find(params[:id])
     end
 
+    def set_unit
+      @unit = current_user.units.where(id: params[:unit_id]).first
+    end
+
+
     # Only allow a trusted parameter "white list" through.
     def merit_badge_params
-      params.require(:merit_badge).permit(:name, :mb_org_url, :mb_org_worksheet_pdf_url, :mb_org_worksheet_doc_url)
+      params.require(:merit_badge).permit(user_ids: [])
     end
 end

@@ -30,19 +30,19 @@ module MbDotOrg
           merit_badge = MbDotOrg::Datum::MeritBadge.new
 
           first_td = row.children.search('td').first
-          merit_badge.name = first_td.children.at('a')[:title]
+          merit_badge.name = clean_string first_td.children.at('a')[:title]
           merit_badge.mb_org_url = mb_dot_org_url first_td.children.at('a')[:href]
 
           row.children.search('td').last.children.search('a').each do |link|
             case link.text
             when "PDF"
-              merit_badge.mb_org_worksheet_pdf_url = mb_dot_org_url link[:href]
+              merit_badge.mb_org_worksheet_pdf_url = link[:href]
             when "DOCX"
-              merit_badge.mb_org_worksheet_doc_url = mb_dot_org_url link[:href]
+              merit_badge.mb_org_worksheet_doc_url = link[:href]
             end
           end
 
-          fetch_merit_badge_info(merit_badge)
+          fetch_merit_badge_info_and_create(merit_badge)
           @merit_badges << merit_badge
         end
       end
@@ -52,9 +52,27 @@ module MbDotOrg
         "http://meritbadge.org#{rel_url}"
       end
 
+      def fetch_merit_badge_info_and_create(datum)
+        fetch_merit_badge_info(datum)
+
+        begin
+          merit_badge = MeritBadge.find_or_initialize_by(name: datum.name)
+          if merit_badge.new_record?
+            @logger.info "  CREATE_MERIT_BADGE: #{datum.name}"
+            merit_badge.update_attributes(datum.to_params)
+          else
+            @logger.info "  UPDATE_MERIT_BADGE: #{datum.name}, merit_badge_id: #{merit_badge.id}"
+            merit_badge.update_attributes(datum.to_params)
+          end
+
+        rescue ActiveRecord::RecordInvalid
+          @logger.error "    ActiveRecord::RecordInvalid: #{merit_badge.inspect}"
+        end
+
+      end
+
 
       def fetch_merit_badge_info(datum)
-        puts "FETCH_MERIT_BADGE_INFO: #{datum.name}"
         @agent ||= ::Mechanize.new
         page = @agent.get datum.mb_org_url
         @logger.info "  -> GET '#{datum.mb_org_url}', status: #{page.code}"
@@ -76,10 +94,8 @@ module MbDotOrg
       end
 
       def mb_eagle_required(datum)
-        puts "eagle_required: #{datum.eagle_required}"
         datum.eagle_required = !(datum.eagle_required.downcase =~ /elective/)
       end
-
 
     end
   end

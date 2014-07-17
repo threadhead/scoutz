@@ -1,6 +1,5 @@
 Scoutz::Application.routes.draw do
 
-  resources :merit_badges
 
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
@@ -31,6 +30,7 @@ Scoutz::Application.routes.draw do
     resources :email_messages
     resources :sms_messages
     resources :users
+    resources :merit_badges
   end
 
   post 'units/new' => 'units#new'

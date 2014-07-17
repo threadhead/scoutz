@@ -11,3 +11,8 @@ jQuery ->
     )
 
   $("[data-toggle='tooltip']").tooltip()
+
+  $("select#select_default_unit").change ->
+    if $(@).val()
+      console.log $(@).val()
+      $(@).closest('form').submit()

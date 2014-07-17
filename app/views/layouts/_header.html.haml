@@ -14,3 +14,89 @@
           %li= #select_tag("My Units", options_from_collection_for_select(current_user.units, :id, :unit_number))
         - else
           %li= link_to 'Sign in', new_user_session_path
+
+.navbar.navbar-default
+  .container-fluid
+    .navbar-header
+      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-navbar-collapse")
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      = link_to @current_unit.name_unit, '/', class: 'navbar-brand'
+
+    .navbar-collapse.collapse{id: "unit-#{@current_unit.id}-navbar-collapse"}
+      %ul.nav.navbar-nav
+        %li
+          = link_to unit_scouts_path(@current_unit), class: '' do
+            %i.fa.fa-user{style: "color: #c00;"}
+            Scouts
+
+        %li
+          = link_to unit_adults_path(@current_unit), class: '' do
+            %i.fa.fa-user{style: "color: #c0c000;"}
+            Adults
+
+        - if @current_unit.unit_type == "Boy Scouts"
+          %li
+            = link_to unit_merit_badges_path(@current_unit) do
+              %i.fa.fa-graduation-cap
+              MB Counselors
+
+        - if policy(EmailMessage).create?
+          %li
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+              %i.fa.fa-envelope
+              Email Blast
+              %i.fa.fa-caret-down
+
+            %ul.dropdown-menu
+              %li
+                = link_to unit_email_messages_path(@current_unit), class: '' do
+                  My Sent Email
+              %li
+                = link_to new_unit_email_message_path(@current_unit), class: '' do
+                  %i.fa.fa-plus
+                  New
+
+
+        - if policy(SmsMessage).create?
+          %li
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+              %i.fa.fa-phone
+              SMS Blast
+              %i.fa.fa-caret-down
+
+            %ul.dropdown-menu
+              %li
+                = link_to unit_sms_messages_path(@current_unit), class: '' do
+                  My Sent SMS
+              %li
+                = link_to new_unit_sms_message_path(@current_unit), class: '' do
+                  %i.fa.fa-plus
+                  New
+
+
+        %li
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+            %i.fa.fa-calendar
+            Events
+            %i.fa.fa-caret-down
+
+          %ul.dropdown-menu
+            %li
+              = link_to dashboard_list_path, class: '' do
+                Event List
+
+            %li
+              = link_to dashboard_calendar_path, class: '' do
+                Event Calendar
+
+            - if policy(Event).create?
+              %li
+                = link_to new_unit_event_path(@current_unit), class: '' do
+                  %i.fa.fa-plus
+                  New Event
+
+      = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-right' do
+        .form-group
+          = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short), prompt: 'change unit', class: 'form-control'

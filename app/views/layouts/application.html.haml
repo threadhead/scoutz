@@ -10,10 +10,7 @@
 
     .container-fluid
       .row
-        .col-md-2
-          = render 'layouts/sidebar'
-
-        .col-md-10
+        .col-md-12
           = yield
 
     - #cache('application/footer') do

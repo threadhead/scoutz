@@ -31,6 +31,9 @@ Scoutz::Application.routes.draw do
     resources :sms_messages
     resources :users
     resources :merit_badges
+    collection do
+      get 'change_default_unit'
+    end
   end
 
   post 'units/new' => 'units#new'

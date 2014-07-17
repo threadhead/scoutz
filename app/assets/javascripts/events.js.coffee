@@ -5,13 +5,17 @@
 jQuery ->
   $('#calendar').fullCalendar({
     dayClick: ->
-      alert 'clicked a day!',
+      alert 'clicked a day!'
     header: {
       left: 'title',
       center: '',
       right: 'today prev,next month,basicWeek,agendaWeek'
       },
-    events: '/events.json',
+    events: {
+      url: '/events.json',
+      data: ->
+        unit_id: $("input#current_unit_id").val()
+      },
     theme: false,
     height: 600
 

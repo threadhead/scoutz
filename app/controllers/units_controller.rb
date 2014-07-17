@@ -63,6 +63,12 @@ class UnitsController < ApplicationController
     end
   end
 
+  def change_default_unit
+    session[:current_unit_id] = params[:select_default_unit]
+    @current_unit = current_user.units.where(id: session[:current_unit_id]).first
+    redirect_to unit_scouts_url(@current_unit)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_unit

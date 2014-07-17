@@ -133,6 +133,11 @@
     = f.text_field :zip_code, control_col: 'col-md-2'
 
   %fieldset
+    %legend Merit Badge Counselor
+    = f.collection_select :merit_badge_ids, MeritBadge.all, :id, :name, {label: 'Counselor for', control_col: 'col-md-6'}, multiple: true
+
+
+  %fieldset
     %legend Scouts
     = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {control_col: 'col-md-6', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout', label: 'Scouts'}, multiple: true
 

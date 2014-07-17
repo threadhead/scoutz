@@ -43,6 +43,12 @@
                 %i.fa.fa-user{style: "color: #c0c000;"}
                 Adults
 
+            - if unit.unit_type == "Boy Scouts"
+              %li
+                = link_to unit_merit_badges_path(unit) do
+                  %i.fa.fa-graduation-cap
+                  MB Counselors
+
             - if policy(EmailMessage).create?
               %li
                 = link_to '#', class: '', data: {toggle: 'collapse', target: "#email-blast-#{unit.id}"} do
@@ -90,3 +96,4 @@
                 = link_to new_unit_event_path(unit), class: '' do
                   %i.fa.fa-plus
                   New Event
+

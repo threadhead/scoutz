@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140711204712) do
+ActiveRecord::Schema.define(version: 20140716232154) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
@@ -193,6 +193,30 @@ ActiveRecord::Schema.define(version: 20140711204712) do
 
   add_index "events_users", ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
   add_index "events_users", ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
+
+  create_table "merit_badges", force: true do |t|
+    t.string   "name"
+    t.string   "year_created"
+    t.boolean  "eagle_required",           default: false
+    t.boolean  "discontinued",             default: false
+    t.string   "bsa_advancement_id"
+    t.string   "patch_image_url"
+    t.string   "mb_org_url"
+    t.string   "mb_org_worksheet_pdf_url"
+    t.string   "mb_org_worksheet_doc_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "merit_badges", ["name"], name: "index_merit_badges_on_name"
+
+  create_table "merit_badges_users", id: false, force: true do |t|
+    t.integer "merit_badge_id"
+    t.integer "user_id"
+  end
+
+  add_index "merit_badges_users", ["merit_badge_id", "user_id"], name: "index_merit_badges_users_on_merit_badge_id_and_user_id"
+  add_index "merit_badges_users", ["user_id", "merit_badge_id"], name: "index_merit_badges_users_on_user_id_and_merit_badge_id"
 
   create_table "notifiers", force: true do |t|
     t.integer  "user_id"

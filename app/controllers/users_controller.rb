@@ -47,7 +47,7 @@ class UsersController < ApplicationController
             :blast_email, :blast_sms, :sms_message,
             :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms,
             :weekly_newsletter_email, :monthly_newsletter_email,
-            phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [], adult_ids: []
+            phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [], adult_ids: [], merit_badge_ids: []
             )
     end
 

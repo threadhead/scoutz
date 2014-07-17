@@ -68,6 +68,12 @@
 
           %tr
             %td
+              %strong Address
+            %td
+              %address= user_address_show(@user)
+
+          %tr
+            %td
               %strong= @unit.sub_unit_name.pluralize
             %td
               = @user.sub_units(@unit).map(&:name).join(', ')
@@ -80,9 +86,12 @@
 
           %tr
             %td
-              %strong Address
+              %strong MB Counselor
             %td
-              %address= user_address_show(@user)
+              - @user.merit_badges.by_name.each do |merit_badge|
+                = link_to merit_badge.name, [@unit, merit_badge]
+                %br
+
     .col-md-4
       .well.well-sm
         = image_tag @user.picture.url

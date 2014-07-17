@@ -1,12 +1,15 @@
 jQuery ->
   $("select#scout_adult_ids").select2({
-    placeholder: 'Select parents'
+    placeholder: 'Select parents...'
     })
 
   $("select#adult_scout_ids").select2({
-    placeholder: 'Select scouts'
+    placeholder: 'Select scouts...'
     })
 
+  $("select#adult_merit_badge_ids").select2({
+    placeholder: 'Select merit badges...'
+    })
 
   # $('div.remove-phone').on('click', 'button.remove-phone-button', ->
   #     removeUserPhone(@)

@@ -1,0 +1,75 @@
+.row
+  .col-md-12
+    .page-header
+      .pull-right
+        .btn-group
+          = link_to(:back, class: 'btn btn-default') do
+            %i.fa.fa-reply
+            back
+
+          = link_to unit_merit_badges_path(@unit), class: 'btn btn-default' do
+            %i.fa.fa-graduation-cap
+            #{@unit.name_unit} MB counselors
+
+          - if policy(@merit_badge).edit?
+            = link_to(edit_unit_merit_badge_path(@unit, @merit_badge), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              change
+
+
+      %h2 Merit Badge: #{@merit_badge.name}
+
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
+
+= cache ["unit-#{@unit.id}", @merit_badge] do
+  .row
+    .col-md-9
+      .text-xlarge
+        %table.table
+          %tr
+            %td
+              %strong Name
+            %td
+              = @merit_badge.name
+
+          %tr
+            %td
+              %strong Created
+            %td
+              = @merit_badge.year_created
+
+          %tr
+            %td
+              %strong Eagle Required?
+            %td
+              = @merit_badge.eagle_required ? 'yes' : 'no'
+
+          %tr
+            %td
+              %strong More Info
+            %td
+              = link_to "#{@merit_badge.name} on MeritBadge.org", @merit_badge.mb_org_url
+
+          %tr
+            %td
+              %strong Worksheets
+            %td
+              = link_to @merit_badge.mb_org_worksheet_pdf_url, target: "_blank" do
+                Adobe PDF
+                %i.fa.fa-file-pdf-o.fa-large
+              %br
+              = link_to @merit_badge.mb_org_worksheet_doc_url, target: "_blank" do
+                MS Word
+                %i.fa.fa-file-word-o.fa-large
+
+          %tr
+            %td
+              %strong Counselors
+            %td
+              - @merit_badge.counselors(@unit).each do |adult|
+                = link_to adult.name, [@unit, adult]
+                %br
+
+    .col-md-3
+      .well.well-sm.centered
+        = image_tag @merit_badge.patch_image_url

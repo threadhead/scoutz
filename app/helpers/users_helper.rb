@@ -35,6 +35,14 @@ module UsersHelper
     "#{user.city}#{user.city.blank? ? '' : ', '}#{user.state} #{user.zip_code}".strip
   end
 
+  def corrected_unit_user_path(unit, user)
+    if user.adult?
+      unit_adult_path(unit, user)
+    else
+      unit_scout_path(unit, user)
+    end
+  end
+
 
   def user_address_show(user)
     sanitize(user.address1.to_s) + add_break(user.address1) +

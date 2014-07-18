@@ -75,9 +75,10 @@ RSpec.describe Event do
 
 
   describe '.as_json' do
-    before do
+    before(:all) do
       @time = Time.zone.now
-      @event = FactoryGirl.create(:event, start_at: @time, end_at: @time+1)
+      @unit = FactoryGirl.create(:unit)
+      @event = FactoryGirl.build_stubbed(:event, unit: @unit, start_at: @time, end_at: @time+1)
     end
     subject { @event.as_json }
 
@@ -88,7 +89,7 @@ RSpec.describe Event do
     specify { expect(subject[:recurring]).to be_falsy }
     specify { expect(subject[:start]).to eq(@time.rfc822) }
     specify { expect(subject[:end]).to eq((@time+1).rfc822) }
-    specify { expect(subject[:url]).to eq("/events/#{@event.id}") }
+    specify { expect(subject[:url]).to eq("/units/#{@unit.id}/events/#{@event.id}") }
   end
 
   describe '.after_signup_deadline?' do

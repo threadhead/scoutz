@@ -10,8 +10,8 @@
     .collapse.navbar-collapse#scoutz-navbar-collapse
       %ul.nav.navbar-nav.pull-right
         - if current_user
-          %li
-            = link_to '#', data: {toggle: "dropdown"}, class: 'dropdown-toggle' do
+          %li.dropdown
+            = link_to '#', data: {toggle: 'dropdown', hover: 'dropdown'}, class: 'dropdown-toggle' do
               = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
               %span.user-info
                 %small Welcome,
@@ -20,11 +20,11 @@
 
             %ul.dropdown-menu
               %li
-                = link_to '#' do
+                = link_to unit_user_path(@unit, current_user) do
                   %i.fa.fa-user
                   Profile
               %li
-                = link_to '#' do
+                = link_to edit_unit_user_password_path(@unit, current_user) do
                   %i.fa.fa-key
                   Change Password
               %li.divider
@@ -65,7 +65,7 @@
 
         - if policy(EmailMessage).create?
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               %i.fa.fa-envelope
               Email Blast
               %i.fa.fa-caret-down
@@ -82,7 +82,7 @@
 
         - if policy(SmsMessage).create?
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               %i.fa.fa-phone
               SMS Blast
               %i.fa.fa-caret-down
@@ -98,7 +98,7 @@
 
 
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {hover: 'dropdown'} do
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
             %i.fa.fa-calendar
             Events
             %i.fa.fa-caret-down

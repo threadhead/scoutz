@@ -21,6 +21,10 @@ class EventPolicy < ApplicationPolicy
   end
 
 
+  def calendar?
+    user_role_at_least_basic
+  end
+
   def email_attendees?
     user_role_at_least_leader || users_event?
   end

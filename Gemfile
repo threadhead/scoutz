@@ -34,6 +34,7 @@ gem 'ckeditor'
 gem 'public_activity' #, git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
 gem "non-stupid-digest-assets"
 gem 'bootstrap_form'
+gem 'kaminari'
 
 # add these gems to help with the transition:
 # gem 'protected_attributes'

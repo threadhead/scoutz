@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # etag { current_user.try :id }
 
   before_action :auth_and_time_zone
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password]
   after_action :verify_authorized
 
   def show

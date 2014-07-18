@@ -1,9 +1,4 @@
 Scoutz::Application.routes.draw do
-
-  get 'user_passwords/edit'
-
-  get 'user_passwords/update'
-
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   # get "events/index"

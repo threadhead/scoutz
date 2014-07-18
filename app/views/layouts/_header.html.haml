@@ -119,9 +119,10 @@
                   New Event
 
 
-      = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-right' do
-        .form-group
-          = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short), prompt: 'change unit', class: 'form-control'
+      - if @units.size > 1
+        = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-right' do
+          .form-group
+            = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short), prompt: 'change unit', class: 'form-control'
 
       %ul.nav.navbar-nav.navbar-right
         %li

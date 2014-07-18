@@ -60,7 +60,7 @@
 
   - if event.signup_required
     %div#signup
-    - if @recipient_user && @recipient_user.is_an_adult?
+    - if @recipient_user && @recipient_user.adult?
       - scouts = @recipient_user.unit_scouts(event.unit)
     - else
       - scouts = @recipient_user.blank? ? [] : [@recipient_user]

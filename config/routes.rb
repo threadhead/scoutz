@@ -1,5 +1,9 @@
 Scoutz::Application.routes.draw do
 
+  get 'user_passwords/edit'
+
+  get 'user_passwords/update'
+
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   # get "events/index"
@@ -12,6 +16,10 @@ Scoutz::Application.routes.draw do
   resources :events do
     resources :event_signups
     resources :email_event_signups
+    member do
+      get 'email_attendees'
+      get 'sms_attendees'
+    end
   end
 
   resources :sub_units
@@ -20,21 +28,14 @@ Scoutz::Application.routes.draw do
       collection do
         get 'calendar'
       end
-      member do
-        get 'email_attendees'
-        get 'sms_attendees'
-      end
     end
     resources :scouts
     resources :adults
     resources :email_messages
     resources :sms_messages
-    resources :users do
-      member do
-        get 'edit_password'
-      end
-    end
+    resources :users
     resources :merit_badges
+    resources :user_passwords
     collection do
       get 'change_default_unit'
     end

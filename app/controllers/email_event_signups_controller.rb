@@ -11,7 +11,7 @@ class EmailEventSignupsController < ApplicationController
     authorize EmailEventSignupsController
     if !set_user_event_scout_signup
       # raise ActionDispatch::RoutingError.new('Not Found')
-      render 'public/404', status: 404
+      render 'public/404', status: 404, layout: false
 
     elsif params[:cancel_reservation] == 'true'
       if @event_signup.new_record?
@@ -131,6 +131,7 @@ class EmailEventSignupsController < ApplicationController
     def set_user_and_event
       @user = User.find_by_signup_token(params[:user_token])
       @event = Event.find_by_signup_token(params[:event_token])
+      @unit = @event.unit if @event
       !@user.blank? && !@event.blank?
     end
 

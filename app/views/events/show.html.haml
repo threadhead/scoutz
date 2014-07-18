@@ -3,7 +3,7 @@
   .col-md-12
     .page-header
       .pull-right
-        = link_to(dashboard_list_path, class: 'btn btn-default') do
+        = link_to(unit_events_path(@unit), class: 'btn btn-default') do
           %i.fa.fa-reply
           back
 
@@ -29,8 +29,7 @@
           %i.fa.fa-calendar
           ical file
 
-
-    %p.xxlarge= @event.unit.name
+    %p &nbsp;
     .text-xlarge
       %table.table
         %tr

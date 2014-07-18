@@ -28,7 +28,7 @@
             %tr
               %td.user-picture
                 - if adult.picture.present?
-                  %div.circle-picture{style: "background:url(#{adult.picture.thumb.url})"}
+                  %div.circle-picture.circle-picture-sm{style: "background:url(#{adult.picture.thumb.url})"}
               %td= link_to adult.name_lf, unit_adult_path(@unit, adult)
               / %td= adult_sub_units_list(@unit, adult)
               %td= adult.all_leadership_positions

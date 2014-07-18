@@ -1,0 +1,21 @@
+.navbar.navbar-fixed-top.navbar-inverse
+  .container-fluid
+    .navbar-header
+      %a.navbar-brand(href="/") Scout.in
+
+    %ul.nav.navbar-nav.navbar-right
+      - if current_user
+        %li
+          = link_to destroy_user_session_path, method: :delete do
+            %i.fa.fa-power-off
+            Sign out
+
+        %li
+          = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
+          %span.user-info
+            %small Welcome,
+            = current_user.first_name
+
+
+      - else
+        %li= link_to 'Sign in', new_user_session_path

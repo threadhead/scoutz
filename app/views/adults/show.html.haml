@@ -92,6 +92,7 @@
                 = link_to merit_badge.name, [@unit, merit_badge]
                 %br
 
-    .col-md-4
-      .well.well-sm
-        = image_tag @user.picture.url
+    .col-md-3.col-md-offset-1
+      .panel.panel-default
+        .panel-body.centered
+          = image_tag @user.picture.url, class: 'circle-picture'

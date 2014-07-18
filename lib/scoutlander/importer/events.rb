@@ -62,7 +62,7 @@ module Scoutlander
         datum.kind_sub_units = event_page.search("#{td_id}txtSubUnit").text
         sub_units_parse(datum)
 
-        # datum.name = event_page.search("td#")
+        datum.name = event_page.search("#{td_id}txtEventName").text
         organizer_name = event_page.search("#{td_id}txtOrganizer").text
         datum.organizer_user = find_organizer(organizer_name)
         datum.send_reminders = !!(event_page.search("#{td_id}txtEventReminders").text =~ /ON/)

@@ -137,7 +137,7 @@ RSpec.describe 'Adults' do
     it 'clicking unit_name adults returns to adult list' do
       click_link 'Pack 134 adults'
 
-      expect(page).to have_text('Adults in Cub Scout Pack 134')
+      expect(page).to have_text('Adults in Pack 134')
       expect(page.current_path).to eq(unit_adults_path(@unit))
     end
 

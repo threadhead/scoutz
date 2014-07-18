@@ -1,4 +1,6 @@
 class UnitsController < ApplicationController
+  before_action :auth_and_time_zone
+
   def index
     @units = Unit.all
 
@@ -64,15 +66,15 @@ class UnitsController < ApplicationController
   end
 
   def change_default_unit
-    session[:current_unit_id] = params[:select_default_unit]
-    @current_unit = current_user.units.where(id: session[:current_unit_id]).first
-    redirect_to unit_scouts_url(@current_unit)
+    redirect_to unit_events_url(@unit)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_unit
-      @unit = Unit.find(params[:id])
+      params[:unit_id] = params[:id]
+      super
+      # @unit = Unit.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

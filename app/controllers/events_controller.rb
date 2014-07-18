@@ -5,22 +5,23 @@ class EventsController < ApplicationController
   after_action :verify_authorized
 
   def index
-    # event_finders
-    # if params[:unit_id]
-    #   @unit = Unit.find(params[:unit_id])
-    #   @events = @unit.events.by_start
-    # else
-    #   @events = @events.joins(unit: :users).where(users: {id: current_user.id}).by_start
-    # end
-    # @events = @events.time_range(params[:start], params[:end]) if (params[:start] && params[:end])
     authorize Event
-    if params[:unit_id]
-      @limit = (params[:limit] || 5).to_i
-      @unit = current_user.units.where(id: params[:unit_id]).first
+    # this was used the the combined dashboard_list and dashboard_calendar
+    # if params[:unit_id]
+    #   @limit = (params[:limit] || 5).to_i
+    #   @unit = current_user.units.where(id: params[:unit_id]).first
+    # else
+    #   @events = Event.joins(unit: :users).where(users: {id: current_user.id}).by_start
+    # end
+
+    @events = Event.joins(unit: :users).where(units: {id: @unit.id}).where(users: {id: current_user.id})
+
+    if (params[:start] && params[:end])
+      @events = @events.time_range(params[:start], params[:end])
     else
-      @events = Event.joins(unit: :users).where(users: {id: current_user.id}).by_start
-      @events = @events.time_range(params[:start], params[:end]) if (params[:start] && params[:end])
+      @events = @events.from_today.by_start.page(params[:page])
     end
+
 
     respond_to do |format|
       format.html
@@ -31,8 +32,7 @@ class EventsController < ApplicationController
   end
 
   def calendar
-    calendar_events(params)
-    render json: @events
+    authorize Event
   end
 
   def show

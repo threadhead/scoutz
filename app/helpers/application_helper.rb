@@ -33,4 +33,12 @@ module ApplicationHelper
   def shorten_url(url)
     Google::UrlShortenerV1::Base.shorten(url)
   end
+
+  def user_picture_url(user)
+    if user.picture.present?
+      image_url user.picture.thumb.url
+    else
+      image_url 'default_user_thumb.jpg'
+    end
+  end
 end

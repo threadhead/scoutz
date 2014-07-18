@@ -1,7 +1,6 @@
 class MeritBadgesController < ApplicationController
   before_action :auth_and_time_zone
   before_action :set_merit_badge, only: [:show, :edit, :update, :destroy]
-  before_action :set_unit
   after_action :verify_authorized
 
   def index

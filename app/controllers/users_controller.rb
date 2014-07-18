@@ -2,10 +2,8 @@ class UsersController < ApplicationController
   # etag { current_user.try :id }
 
   before_action :auth_and_time_zone
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :set_unit
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password]
   after_action :verify_authorized
-
 
   def show
     authorize @user
@@ -26,10 +24,6 @@ class UsersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
-    end
-
-    def set_unit
-      @unit = current_user.units.where(id: params[:unit_id]).first
     end
 
     def remove_new_phone_attribute

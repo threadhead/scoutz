@@ -1,0 +1,31 @@
+.row
+  .col-md-12
+    .page-header
+      %h2 Change Your Password
+
+
+.row
+  .col-md-offset-2.col-md-6
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+
+.row
+  .col-md-offset-2.col-md-4
+    .panel.panel-info
+      .panel-heading
+        %h3.panel-title Change your password
+      .panel-body
+        = bootstrap_form_for @user, url: "/units/#{@unit.id}/user_passwords/#{@user.id}" do |f|
+          = f.password_field :current_password, hide_label: true, placeholder: 'current password'
+          %hr
+          = f.password_field :password, hide_label: true, placeholder: 'new password'
+          = f.password_field :password_confirmation, hide_label: true, placeholder: 'reenter new password'
+          .help-block passwords can be 8-128 characters, numbers, and !@#$%^&*
+
+          %h3 &nbsp;
+          = f.primary 'Update Password'
+          = link_to 'Cancel', :back, class: 'btn btn-default'
+
+  .col-md-3.col-md-offset-3
+    .panel.panel-default
+      .panel-body.centered
+        = image_tag @user.picture.url, class: 'circle-picture'

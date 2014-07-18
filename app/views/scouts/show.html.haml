@@ -88,9 +88,12 @@
               %strong Address
             %td
               %address= user_address_show(@user)
-    .col-md-4
-      .well.well-sm
-        = image_tag @user.picture.url
+
+    .col-md-3.col-md-offset-1
+      .panel.panel-default
+        .panel-body.centered
+          = image_tag @user.picture.url, class: 'circle-picture'
+
 
 
 / %tr

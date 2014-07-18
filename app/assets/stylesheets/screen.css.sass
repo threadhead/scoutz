@@ -1,16 +1,69 @@
 @import "bourbon"
 
+
+#navbar-fixed-lower
+  top: 50px
+  right: 0
+  left: 0
+  border-width: 0 0 1px
+  border-radius: 0
+  position: fixed
+  z-index: 1020
+  -webkit-transform: translate3d(0,0,0)
+
 // .navbar .navbar-inner
 //   padding-left: 20px
 .circle-picture
-  width: 40px
-  height: 40px
   display: inline-block
   border-radius: 50%
   border: 1px solid grey
   position: relative
   top: 3px
   box-shadow: 0px 0px 3px #444
+
+.circle-picture-sm
+  width: 40px
+  height: 40px
+
+.user-picture
+  padding-top: 6px
+  margin: 0 8px 0 8px
+
+.user-info
+  max-width: 100px
+  display: inline-block
+  overflow: hidden
+  text-overflow: ellipsis
+  white-space: nowrap
+  text-align: left
+  vertical-align: top
+  line-height: 15px
+  position: relative
+  top: 8px
+  color: white
+  small
+    display: block
+
+#scoutz-navbar-collapse > ul > li > a
+  // background-color: #2e6589
+  // color: #FFF
+  display: block
+  line-height: inherit
+  text-align: center
+  height: 100%
+  width: auto
+  min-width: 50px
+  padding: 0 8px
+  position: relative
+
+.user-caret
+  display: inline-block
+  font-size: 18px
+  color: #FFF
+  text-align: center
+  width: 20px
+  vertical-align: middle
+
 
 .table th, .table td
   vertical-align: middle
@@ -250,6 +303,11 @@ legend + *
 
   .navbar-toggle
     border-color: #999
+
+
+// ul.nav li.dropdown:hover > ul.dropdown-menu
+//   display: block
+
 
 i.tooltip_circle
   color: cornflowerblue

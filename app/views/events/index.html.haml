@@ -2,35 +2,34 @@
   .col-md-12
     .page-header
       .pull-right
-        = link_to(new_event_path, class: "btn btn-success") do
-          %i.fa.fa-plus
-          new event
+        - if policy(Event).new?
+          = link_to(new_unit_event_path(@unit), class: "btn btn-success") do
+            %i.fa.fa-plus
+            new event
 
-      %h2 Events
+      %h2 #{@unit.name} Upcoming Events
 
 
 .row
-  .col-md-12
-    %table.table
-      %tr
-        %th Kind
-        %th Name
-        %th Start
-        %th End
-        %th Signup required
-        %th Actions
+  .col-md-9
+    = render partial: 'layouts/flash', locals: {flash: flash}
 
-      - @events.each do |event|
-        %tr
-          %td= event.kind
-          %td= event.name
-          %td= event.start_at.to_s(:short_ampm)
-          %td= event.end_at.to_s(:short_ampm)
-          %td= event.signup_required
-          %td= link_to 'Show', event
-          %td= link_to 'Edit', edit_event_path(event)
-          %td= link_to 'Destroy', event, confirm: 'Are you sure?', method: :delete
-.row
-  .col-md-12
-    %hr
-    #calendar
+    - @events.each do |event|
+      = cache ["unit-#{@unit.id}", event] do
+        %p
+          = link_to event_list_name(event), unit_event_path(@unit, event)
+          - if event.signup_required
+            %span.label.label-default #{event.attendee_count} going
+            %smaller
+              %em signup ends in #{distance_of_time_in_words_to_now(event.signup_deadline)}
+
+    = paginate @events, theme: 'bootstrap'
+
+  .col-md-3
+    .panel.panel-default
+      .panel-heading #{@unit.unit_type_title} Activity
+      .panel-body
+        %ul.list-unstyled
+          = cache [@unit, @unit.activities.limit(10).first] do
+            - @unit.activities.limit(10).each do |activity|
+              = render_activity activity

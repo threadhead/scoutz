@@ -71,6 +71,8 @@ RSpec.describe 'Email Event Signup' do
 
     end
 
+
+
     context 'event signup has passed' do
 
       before { @event.update_attribute(:signup_deadline, 1.day.ago) }

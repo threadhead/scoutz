@@ -1,42 +1,45 @@
 Scoutz::Application.routes.draw do
-
-
   mount Ckeditor::Engine => '/ckeditor'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
-  get "events/index"
+  # get "events/index"
 
-  get "dashboard_list" => "dashboard_list#index"
-  get "dashboard_calendar" => "dashboard_calendar#index"
-  get "dashboard/index" => "dashboard_list#index"
+  # get "dashboard_list" => "dashboard_list#index"
+  # get "dashboard_calendar" => "dashboard_calendar#index"
+  # get "dashboard/index" => "dashboard_list#index"
 
   get "events/index"
   resources :events do
-    collection do
-      get 'calendar'
-    end
+    resources :event_signups
+    resources :email_event_signups
     member do
       get 'email_attendees'
       get 'sms_attendees'
     end
-    resources :event_signups
-    resources :email_event_signups
   end
 
   resources :sub_units
   resources :units do
-    resources :events
+    resources :events do
+      collection do
+        get 'calendar'
+      end
+    end
     resources :scouts
     resources :adults
     resources :email_messages
     resources :sms_messages
     resources :users
     resources :merit_badges
+    resources :user_passwords
+    collection do
+      get 'change_default_unit'
+    end
   end
 
   post 'units/new' => 'units#new'
-  resources :users
-  resources :scouts
-  resources :adults
+  # resources :users
+  # resources :scouts
+  # resources :adults
   resources :event_signups
 
   get "page/landing"

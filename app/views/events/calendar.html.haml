@@ -1,0 +1,15 @@
+.row
+  .col-md-12
+    .page-header
+      .pull-right
+        - if policy(Event).new?
+          = link_to(new_unit_event_path(@unit), class: "btn btn-success") do
+            %i.fa.fa-plus
+            new event
+
+      %h2 #{@unit.name} Event Calendar
+
+.row
+  .col-md-12
+    = hidden_field_tag :current_unit_id, @unit.id
+    #calendar

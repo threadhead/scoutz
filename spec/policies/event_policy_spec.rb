@@ -19,6 +19,10 @@ RSpec.describe EventPolicy do
     it_behaves_like 'user basic access'
   end
 
+  permissions :calendar? do
+    it_behaves_like 'user basic access'
+  end
+
   permissions :new? do
     it_behaves_like 'user leader access'
   end

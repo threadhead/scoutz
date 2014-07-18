@@ -2,7 +2,6 @@ class EmailMessagesController < ApplicationController
   # etag { current_user.try :id }
 
   before_action :auth_and_time_zone
-  before_action :set_unit
   before_action :set_email_message, only: [:show, :edit, :update, :destroy]
   before_action :set_send_to_lists, only: [:new, :edit, :update]
   after_action :verify_authorized, except: :index
@@ -67,10 +66,6 @@ class EmailMessagesController < ApplicationController
   private
     def set_email_message
       @email_message = EmailMessage.find(params[:id])
-    end
-
-    def set_unit
-      @unit = current_user.units.where(id: params[:unit_id]).first
     end
 
     def set_send_to_lists

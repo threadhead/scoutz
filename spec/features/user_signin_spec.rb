@@ -4,7 +4,9 @@ RSpec.describe 'User signin ablility' do
   before(:all) { Capybara.default_driver = :rack_test }
 
   before(:all) do
+    @unit = FactoryGirl.create(:unit)
     @user = FactoryGirl.create(:user)
+    @user.units << @unit
     @np_user = FactoryGirl.create(:user, password: nil)
     @ne_user = FactoryGirl.create(:user, email: nil)
   end

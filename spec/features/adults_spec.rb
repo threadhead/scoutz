@@ -176,7 +176,7 @@ RSpec.describe 'Adults' do
       visit unit_adult_path(@unit, @user2)
       click_link 'change'
 
-      within "form" do
+      within "form#edit_adult_#{@user2.id}" do
         fill_in 'adult_first_name', with: 'Fionula'
         fill_in 'adult_additional_leadership_positions', with: 'Jester'
       end

@@ -30,7 +30,7 @@
             %tr
               %td.user-picture
                 - if scout.picture.present?
-                  %div.circle-picture{style: "background:url(#{scout.picture.thumb.url})"}
+                  %div.circle-picture.circle-picture-sm{style: "background:url(#{scout.picture.thumb.url})"}
               %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
               %td= scout.sub_unit.try(:name)
               %td= scout.rank

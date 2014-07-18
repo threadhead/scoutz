@@ -13,6 +13,18 @@ class ApplicationController < ActionController::Base
     authenticate_user!
     Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
     @units = current_user.units if current_user
+    set_unit
+
+    # logger.info "CURRENT_UNIT_ID: #{session[:current_unit_id]}"
+    # @current_unit = @units.where(id: session[:current_unit_id]).first || @units.first
+    # logger.info "current_unit: #{@current_unit.name}"
+  end
+
+
+  def set_unit
+    unit_id = params[:unit_id] || session[:current_unit_id]
+    @unit = current_user.units.where(id: unit_id).first || @units.first
+    session[:current_unit_id] = @unit.id
   end
 
   # def unit_events_index(params)

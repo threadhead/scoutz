@@ -1,6 +1,5 @@
 class SmsMessagesController < ApplicationController
   before_action :auth_and_time_zone
-  before_action :set_unit
   before_action :set_sms_message, only: [:show, :edit, :update, :destroy]
   before_action :set_send_to_lists, only: [:new, :edit, :update]
   after_action :verify_authorized, except: :index
@@ -58,10 +57,6 @@ class SmsMessagesController < ApplicationController
   end
 
   private
-    def set_unit
-      @unit = current_user.units.where(id: params[:unit_id]).first
-    end
-
     def set_send_to_lists
       @leaders = @unit.users.leaders.gets_sms_message.by_name_lf
       @sub_units = @unit.sub_units.by_name

@@ -61,8 +61,6 @@ class Event < ActiveRecord::Base
 
 
 
-
-
   def full_address
     "#{location_address1} #{}"
   end
@@ -142,7 +140,8 @@ class Event < ActiveRecord::Base
       :end => self.end_at.rfc822,
       :allDay => false,
       :recurring => false,
-      :url => Rails.application.routes.url_helpers.unit_event_path(unit, id)
+      :url => Rails.application.routes.url_helpers.unit_event_path(unit, id),
+      color: unit.unit_type == "Boy Scouts" ? 'darkkhaki' : 'midnightblue'
     }
   end
 

@@ -1,8 +1,6 @@
 class SubUnitsController < ApplicationController
   before_action :auth_and_time_zone
 
-  # GET /sub_units
-  # GET /sub_units.json
   def index
     @sub_units = SubUnit.all
 
@@ -12,8 +10,6 @@ class SubUnitsController < ApplicationController
     end
   end
 
-  # GET /sub_units/1
-  # GET /sub_units/1.json
   def show
     @sub_unit = SubUnit.find(params[:id])
 
@@ -23,8 +19,6 @@ class SubUnitsController < ApplicationController
     end
   end
 
-  # GET /sub_units/new
-  # GET /sub_units/new.json
   def new
     @sub_unit = SubUnit.new
 
@@ -34,13 +28,10 @@ class SubUnitsController < ApplicationController
     end
   end
 
-  # GET /sub_units/1/edit
   def edit
     @sub_unit = SubUnit.find(params[:id])
   end
 
-  # POST /sub_units
-  # POST /sub_units.json
   def create
     @sub_unit = SubUnit.new(params[:sub_unit])
 
@@ -55,8 +46,6 @@ class SubUnitsController < ApplicationController
     end
   end
 
-  # PUT /sub_units/1
-  # PUT /sub_units/1.json
   def update
     @sub_unit = SubUnit.find(params[:id])
 
@@ -71,8 +60,6 @@ class SubUnitsController < ApplicationController
     end
   end
 
-  # DELETE /sub_units/1
-  # DELETE /sub_units/1.json
   def destroy
     @sub_unit = SubUnit.find(params[:id])
     @sub_unit.destroy

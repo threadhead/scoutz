@@ -13,6 +13,7 @@ class UserPasswordsController < ApplicationController
       sign_in @user, :bypass => true
       redirect_to unit_adult_path(@unit, @user), notice: "Your password was successfully updated."
     else
+      clean_up_passwords @user
       render action: 'edit'
     end
   end

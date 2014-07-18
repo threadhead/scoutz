@@ -3,20 +3,20 @@
   .col-md-12
     .page-header
       .pull-right
-        = link_to(unit_events_path(@unit), class: 'btn btn-default') do
+        = link_to unit_events_path(@unit), class: 'btn btn-default' do
           %i.fa.fa-reply
-          back
+          event list
 
         - if policy(@event).update?
-          = link_to(edit_event_path(@event), class: 'btn btn-default') do
+          = link_to edit_event_path(@event), class: 'btn btn-default' do
             %i.fa.fa-edit
             change
         - if policy(@event).new?
-          = link_to(new_event_path, class: "btn btn-success") do
+          = link_to new_event_path, class: "btn btn-success" do
             %i.fa.fa-plus
             new event
 
-      %h2 #{@event.name}
+      %h2= @event.name
 
 
 .row

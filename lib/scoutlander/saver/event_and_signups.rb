@@ -50,24 +50,33 @@ module Scoutlander
         #    we want to make sure that is at least one good signup
 
         ActiveRecord::Base.transaction do
-          # delete all the existing signups if there are signups to update
+          # find all the existing signups, to be removed after creation of new signups
           existing_signups = @event.event_signups.all.load
-          # @event.event_signups.destroy_all unless @datum.event_signups.empty?
 
           at_least_one_signup = false
           @datum.event_signups.each do |signup|
             if signup.valid?
               scout = Scout.where(sl_profile: signup.sl_profile).first
-              @event.event_signups.create(signup.to_params.merge({scout_id: scout.id})) if scout
+              if scout
+                @event.event_signups.create(signup.to_params.merge({scout_id: scout.id}))
+                @logger.info "CREATE_EVENT_SIGNUP: #{@datum.name}, scout profile: #{signup.sl_profile}, s:#{signup.scouts_attending}, sib:#{signup.siblings_attending}, a:#{signup.adults_attending}"
+
+              else
+                @logger.info "CANCELLED EVENT_SIGNUP: scout not found, #{@datum.name}, profile: #{@datum.sl_profile}"
+              end
+
               at_least_one_signup = true
             end
           end
 
           if at_least_one_signup
+            @logger.info "REMOVE_EXISTING_EVENT_SIGNUPS: #{@datum.name}, count: #{existing_signups.size}"
             existing_signups.destroy_all
+          else
+            @logger.info "ROLLBACK - EVENT_SIGNUPS: #{@datum.name}, there was not at least one new signup imported"
+           raise ActiveRecord::Rollback
           end
 
-         raise ActiveRecord::Rollback unless at_least_one_signup
         end
       end
 

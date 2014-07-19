@@ -25,16 +25,18 @@ module Scoutlander
           @logger.info "FETCH_UNIT_EVENTS(url): #{url}"
           events_page = @agent.get url
           rows = events_page.search('table#ctl00_mainContent_CalendarView_EventListView_tblEventList tr')[2..-1]
-          rows.each do |row|
-            event = Scoutlander::Datum::Event.new
+          if rows
+            rows.each do |row|
+              event = Scoutlander::Datum::Event.new
 
-            event.name = row.children.children[1].text
-            event.sl_url = row.children.children[1]['href']
-            event.sl_uid = uid_from_url(event.sl_url)
-            event.sl_profile = profile_from_url(event.sl_url)
+              event.name = row.children.children[1].text
+              event.sl_url = row.children.children[1]['href']
+              event.sl_uid = uid_from_url(event.sl_url)
+              event.sl_profile = profile_from_url(event.sl_url)
 
-            @events << event
-            @logger.info "DATUM::EVENT(created): #{event.name}, #{event.sl_url}"
+              @events << event
+              @logger.info "DATUM::EVENT(created): #{event.name}, #{event.sl_url}"
+            end
           end
         end
       end
@@ -110,13 +112,13 @@ module Scoutlander
 
 
       def find_response_amounts(row, datum)
-        datum.siblings_attending = response_value row, 'Scout'
-        datum.adults_attending = response_value row, 'Sibling'
-        datum.scouts_attending = response_value row, 'Adult'
+        datum.scouts_attending = response_value row, 'Scout'
+        datum.siblings_attending = response_value row, 'Sibling'
+        datum.adults_attending = response_value row, 'Adult'
       end
 
       def response_value(row, attending)
-        td = row.search('td table tr').at("td:contains(#{attending})")
+        td = row.search('td table tr').at("td:contains('#{attending}')")
         return 0 if td.nil?
         td.next.text.to_i
       end

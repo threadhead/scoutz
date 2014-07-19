@@ -103,9 +103,9 @@ module Scoutlander
 
 
       def create_phones(resource, datum)
-        resource.phones.create(kind: 'Home', number: datum.home_phone ) unless datum.home_phone.blank?
-        resource.phones.create(kind: 'Work', number: datum.work_phone ) unless datum.work_phone.blank?
-        resource.phones.create(kind: 'Mobile', number: datum.cell_phone ) unless datum.cell_phone.blank?
+        resource.phones.create(kind: 'home', number: datum.home_phone ) unless datum.home_phone.blank?
+        resource.phones.create(kind: 'work', number: datum.work_phone ) unless datum.work_phone.blank?
+        resource.phones.create(kind: 'mobile', number: datum.cell_phone ) unless datum.cell_phone.blank?
       end
 
       def add_to_sub_unit(resource, datum)
@@ -119,7 +119,7 @@ module Scoutlander
         if @unit.users.where(id: user.id).exists?
           @logger.info "LINK USER TO UNIT: link exists"
         else
-          @lobber.info "LINK USER TO UNIT: user_id: #{user.id}, unit_id: #{@unit.id}"
+          @logger.info "LINK USER TO UNIT: user_id: #{user.id}, unit_id: #{@unit.id}"
           @unit.users << user
         end
       end

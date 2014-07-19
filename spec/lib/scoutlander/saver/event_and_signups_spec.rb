@@ -65,10 +65,10 @@ RSpec.describe Scoutlander::Saver::EventAndSignups do
       end
 
       it 'does not save signups without matching scout' do
-        expect(@event.event_signups.count).to eq(1)
+        signup_ids = @event.event_signups.pluck(:id)
         @signup.sl_profile = '777666'
         event_saver.create_or_update_event_signups
-        expect(@event.event_signups.count).to eq(0)
+        expect(@event.event_signups.pluck(:id)).to eq(signup_ids)
       end
     end
 

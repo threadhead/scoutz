@@ -1,0 +1,2 @@
+:plain
+  $("div#merit-badge-index").html("#{escape_javascript(render partial: 'merit_badges/index', locals: {unit: @unit, merit_badges: @merit_badges, merit_badges_count: @merit_badges_count, searching: @searching})}");

@@ -1,4 +1,5 @@
 class Adult < User
+
   # associated sub_units (dens, patrols, etc.) through their associated scouts, optionally restricted by unit
   def sub_units(unit=nil)
     scout_ids = self.scouts.select('"users"."id"')

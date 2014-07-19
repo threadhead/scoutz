@@ -1,0 +1,25 @@
+- if users.size > 0
+  %table.table.table-outside-bordered
+    %tr
+      %th
+      %th Name
+      %th Leadership
+      %th Scouts
+
+    = #cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
+    = cache ["unit-#{unit.id}", cache_key_for_users(users)] do
+      - users.each do |adult|
+        = cache ["unit-#{unit.id}", adult] do
+          %tr
+            %td.centered
+              - if adult.picture.present?
+                = image_tag adult.picture.thumb.url, class: 'circle-picture'
+
+            %td= link_to adult.name_lf, unit_adult_path(unit, adult)
+            %td= adult.all_leadership_positions
+            %td= unit_scouts_link_list(unit, adult.unit_scouts(unit))
+
+  %small showing #{users.size} of #{users_count}
+
+-else
+  %h1.centered no results found

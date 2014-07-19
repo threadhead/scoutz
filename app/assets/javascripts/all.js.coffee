@@ -12,6 +12,29 @@ jQuery ->
 
   $("[data-toggle='tooltip']").tooltip()
 
+
+  # $("input.search-typeahead").typeahead({
+  #     minLength: 0,
+  #     hint: false
+  #   },
+  #   {
+  #     source: (source, cb) ->
+  #       searchUrl = $("input#search_action").val()
+  #       console.log searchUrl + source
+  #       $.getScript(searchUrl + source)
+  #   })
+
+  $("input.search-typeahead").autocomplete({
+      minLength: 0,
+      autoFocus: true,
+      source: (request, response) ->
+        searchUrl = $("input#search_action").val()
+        console.log searchUrl + request.term
+        $.getScript(searchUrl + request.term )
+    })
+
+  # $("input.search-typeahead").delay(100).focus()
+
   $("select#select_default_unit").change ->
     if $(@).val()
       #console.log $(@).val()

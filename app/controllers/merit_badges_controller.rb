@@ -5,7 +5,13 @@ class MeritBadgesController < ApplicationController
 
   def index
     authorize MeritBadge
-    @merit_badges = MeritBadge.by_name.all
+    @merit_badges = MeritBadge.by_name
+    @merit_badges_count = MeritBadge.count
+    if params[:search_typeahead] && !params[:search_typeahead].blank?
+      @merit_badges = MeritBadge.name_contains(params[:search_typeahead]).by_name
+      @searching = true
+    end
+
   end
 
   def show

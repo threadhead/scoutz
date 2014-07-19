@@ -1,0 +1,30 @@
+- if merit_badges.size > 0
+  %table.table
+    %tr
+      %th
+      %th Name
+      / %th Created
+      %th Eagle Req?
+      %th Counselors
+
+      = cache ["unit-#{unit.id}", cache_key_for_merit_badges(merit_badges)] do
+        - merit_badges.each do |merit_badge|
+          = cache ["unit-#{unit.id}", merit_badge] do
+            %tr
+              %td
+                = image_tag merit_badge.patch_image_url, class: 'merit-badge-patch-thumb'
+              %td
+                %span.xlarge= link_to merit_badge.name, unit_merit_badge_path(unit, merit_badge)
+              / %td= merit_badge.year_created
+              %td
+                - if merit_badge.eagle_required
+                  = image_tag image_url('eagle_scout_sm.jpg')
+              %td
+                - merit_badge.counselors(unit).each do |adult|
+                  = link_to adult.name, [unit, adult]
+                  %br
+
+  %small showing #{merit_badges.size} of #{merit_badges_count}
+
+-else
+  %h1.centered no results found

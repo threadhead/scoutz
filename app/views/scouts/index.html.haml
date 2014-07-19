@@ -1,58 +1,42 @@
 .row
-  .col-md-12
-    .page-header
-      .pull-right
-        - if policy(Scout).new?
-          = link_to(new_unit_scout_path(@unit), class: "btn btn-success") do
-            %i.fa.fa-plus
-            new scout
-
-      %h2 Scouts in #{@unit.name_unit}
-
-
-.row
   .col-md-9
     = render partial: 'layouts/flash', locals: {flash: flash}
 
-    %table.table
-      %thead
-        %th
-        %th Name
-        %th= @unit.sub_unit_name
-        %th Rank
-        %th Leadership
-        %th.text-right Age
-        %th Adults
+    .panel.panel-index-table.panel-default
+      .panel-heading
+        %span.xxlarge
+          %i.fa.fa-group
+          Scouts in #{@unit.name_unit}
 
-      = cache ["unit-#{@unit.id}", cache_key_for_users(@users)] do
-        - @users.each do |scout|
-          = cache ["unit-#{@unit.id}", scout] do
-            %tr
-              %td.user-picture
-                - if scout.picture.present?
-                  %div.circle-picture.circle-picture-sm{style: "background:url(#{scout.picture.thumb.url})"}
-              %td= link_to scout.name_lf, unit_scout_path(@unit, scout)
-              %td= scout.sub_unit.try(:name)
-              %td= scout.rank
-              %td.col-md-2= scout.all_leadership_positions
-              %td.text-right= scout.age
-              %td= unit_adults_link_list(@unit, scout.adults)
+      .panel-body
+        .panel-nav
+          - if policy(Scout).new?
+            .pull-right
+              = link_to(new_unit_scout_path(@unit), class: "btn btn-default") do
+                %i.fa.fa-plus
+                new scout
 
-              / %td
-              = #link_to 'Show', unit_scout_path(@unit, scout), class: 'btn btn-mini'
-              = #link_to 'Edit', edit_unit_scout_path(@unit, scout), class: 'btn btn-mini'
-              = #link_to 'Destroy', unit_scout_path(@unit, scout), confirm: 'Are you sure?', method: :delete, class: 'btn btn-danger btn-mini'
+          = cache ["unit-#{@unit.id}", ":search"] do
+            = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/scouts.js?search_typeahead="}
+
+
+        #scout-index
+          = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count}
+
 
   .col-md-3
-    .well.well-boys
-      = cache ["unit-#{@unit.id}", :rank_count, cache_key_for_users(@users)] do
-        %strong Rank Count
-        %ul.list-unstyled
-          - @unit.ranks.each do |rank|
-            %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
+    = cache ["unit-#{@unit.id}", :rank_count, cache_key_for_users(@users)] do
+      .panel.panel-index-table.panel-default
+        .panel-heading Rank Count (all)
+        .panel-body
+          %ul.list-unstyled
+            - @unit.ranks.each do |rank|
+              %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
 
-      = cache ["unit-#{@unit.id}", :sub_unit_count, cache_key_for_users(@users) ] do
-        %strong #{@unit.sub_unit_name} Count
-        %ul.list-unstyled
-          - @unit.scout_sub_unit_count.each do |sub_unit|
-            %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"
+    = cache ["unit-#{@unit.id}", :sub_unit_count, cache_key_for_users(@users) ] do
+      .panel.panel-index-table.panel-default
+        .panel-heading #{@unit.sub_unit_name} Count (all)
+        .panel-body
+          %ul.list-unstyled
+            - @unit.scout_sub_unit_count.each do |sub_unit|
+              %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"

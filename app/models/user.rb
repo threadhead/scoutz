@@ -189,7 +189,7 @@ class User < ActiveRecord::Base
   scope :gets_weekly_newsletter, -> { with_email.where(weekly_newsletter_email: true) }
   scope :gets_monthly_newsletter, -> { with_email.where(monthly_newsletter_email: true) }
 
-  scope :name_contains, ->(n) { where("users.first_name LIKE ? OR users.last_name LIKE ?", "%#{n}%", "%#{n}%") }
+  scope :name_contains, ->(n) { where("users.first_name ILIKE ? OR users.last_name ILIKE ?", "%#{n}%", "%#{n}%") }
 
 
 

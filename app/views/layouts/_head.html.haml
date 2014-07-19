@@ -17,7 +17,6 @@
   = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.0.2/fullcalendar.css"
   = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2.min.css"
   = stylesheet_link_tag "//cdnjs.cloudflare.com/ajax/libs/select2/3.5.0/select2-bootstrap.css"
-  = stylesheet_link_tag "application", :media => "all"
 
   = #jquery_include_tag :google
   = favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '144x144'
@@ -25,3 +24,5 @@
   = favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png', sizes: '72x72'
   = favicon_link_tag 'apple-touch-icon-precomposed.png', rel: 'apple-touch-icon-precomposed', type: 'image/png'
   = favicon_link_tag '/favicon.ico', rel: 'shortcut icon'
+
+= stylesheet_link_tag "application", :media => "all"

@@ -1,4 +1,4 @@
-# require "spec_helper"
+# require "rails_helper"
 
 # RSpec.describe Newsletters, :type => :mailer do
 #   describe "events_week" do

@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe "event_signups/show" do
 #   before(:each) do

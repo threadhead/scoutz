@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Unit do
   # it { should have_and_belong_to_many(:users) }

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Datum::Person do
   let(:person) { Scoutlander::Datum::Person.new(email: 'threadhead@gmail.com') }

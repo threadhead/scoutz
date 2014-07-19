@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe 'Email Event Signup' do
   before(:all) { Capybara.default_driver = :rack_test }

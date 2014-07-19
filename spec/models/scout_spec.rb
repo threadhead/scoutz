@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scout do
   specify { expect(FactoryGirl.build(:scout)).to be_valid }

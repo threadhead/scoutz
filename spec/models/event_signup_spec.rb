@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe EventSignup do
   it { should belong_to(:event) }

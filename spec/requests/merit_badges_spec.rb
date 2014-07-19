@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # RSpec.describe "MeritBadges", :type => :request do
 #   describe "GET /merit_badges" do

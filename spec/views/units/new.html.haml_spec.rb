@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe "units/new" do
 #   before(:each) do

@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # RSpec.describe "merit_badges/new", :type => :view do
 #   before(:each) do

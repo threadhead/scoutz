@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Datum::EventSignup do
   let(:event_signup) { Scoutlander::Datum::EventSignup.new(scouts_attending: 1) }

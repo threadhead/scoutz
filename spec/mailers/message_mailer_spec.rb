@@ -1,4 +1,4 @@
-# require "spec_helper"
+# require "rails_helper"
 
 # describe MessageMailer do
 #   describe "email_blast" do

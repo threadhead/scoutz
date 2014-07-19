@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Datum::Event do
   let(:event) { Scoutlander::Datum::Event.new(attire: 'none') }

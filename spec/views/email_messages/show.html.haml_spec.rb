@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe "email_messages/show" do
 #   before(:each) do

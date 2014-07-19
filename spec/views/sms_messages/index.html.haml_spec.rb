@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # RSpec.describe "sms_messages/index", :type => :view do
 #   before(:each) do

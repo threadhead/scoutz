@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe "sub_units/show" do
 #   before(:each) do

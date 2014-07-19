@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Importer::Units do
   describe '.available_names_uids', :vcr do

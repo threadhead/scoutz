@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Datum::SubUnit do
   let(:sub_unit) { Scoutlander::Datum::SubUnit.new(name: 'Blip') }

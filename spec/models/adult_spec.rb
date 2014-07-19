@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Adult do
   before(:all) { adult_2units_2scout_3subunits }

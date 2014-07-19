@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe "page/terms_of_service.html.haml" do
 #   pending "add some examples to (or delete) #{__FILE__}"

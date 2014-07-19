@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe ActiveSupport::TimeWithZone do
 #   # ['Arizona', 'Alaska', 'Indiana (East)', 'Midway Island', 'Hawaii'].each do |tz|

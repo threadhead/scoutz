@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Datum::Base do
   let(:base) { Scoutlander::Datum::Base.new }

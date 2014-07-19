@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Scoutlander::Datum::Unit do
   let(:unit) { Scoutlander::Datum::Unit.new(state: 'AZ') }

@@ -1,4 +1,4 @@
-# require 'spec_helper'
+# require 'rails_helper'
 
 # describe "EmailMessages" do
 #   describe "GET /email_messages" do

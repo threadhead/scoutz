@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe SmsMessage do
   let(:sms_message) { FactoryGirl.build(:sms_message) }

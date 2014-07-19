@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe Phone do
   let(:phone) { FactoryGirl.build(:home_phone, user_id: 999) }

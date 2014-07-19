@@ -1,46 +1,24 @@
 .row
   .col-md-12
-    .page-header
-      .pull-right
-        - if policy(Adult).new?
-          = link_to(new_unit_adult_path(@unit), class: "btn btn-success") do
-            %i.fa.fa-plus
-            new adult
-
-      %h2 Adults in #{@unit.name_unit}
-
-
-
-.row
-  .col-md-12
-    .nav.navbar-default
-      .container-fluid
-        .navbar-form.navbar-left
-          = form_tag '', class: 'form-search' do
-            .form-group
-              = search_field_tag :search, '', class: 'form-control'
-            = button_tag type: 'submit', class: 'btn btn-default' do
-              %i.fa.fa-search
-.row
-  .col-md-10
     = render partial: 'layouts/flash', locals: {flash: flash}
 
-    %table.table
-      %tr
-        %th
-        %th Name
-        / %th= @unit.sub_unit_name
-        %th Leadership
-        %th Scouts
+    .panel.panel-index-table.panel-default
+      .panel-heading
+        %span.xxlarge
+          %i.fa.fa-group
+          Adults in #{@unit.name_unit}
 
-      = cache ["unit-#{@unit.id}", cache_key_for_users(@users)] do
-        - @users.each do |adult|
-          = cache ["unit-#{@unit.id}", adult] do
-            %tr
-              %td.user-picture
-                - if adult.picture.present?
-                  %div.circle-picture.circle-picture-sm{style: "background:url(#{adult.picture.thumb.url})"}
-              %td= link_to adult.name_lf, unit_adult_path(@unit, adult)
-              / %td= adult_sub_units_list(@unit, adult)
-              %td= adult.all_leadership_positions
-              %td= unit_scouts_link_list(@unit, adult.unit_scouts(@unit))
+      .panel-body
+        .panel-nav
+          - if policy(Adult).new?
+            .pull-right
+              = link_to(new_unit_adult_path(@unit), class: "btn btn-default") do
+                %i.fa.fa-plus
+                new adult
+
+          = cache ["unit-#{@unit.id}", ":search"] do
+            = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/adults.js?search_typeahead="}
+
+
+        #adult-index
+          = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}

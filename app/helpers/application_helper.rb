@@ -41,4 +41,8 @@ module ApplicationHelper
       image_url 'default_user_thumb.jpg'
     end
   end
+
+  def table_scout_panel(unit)
+    @unit.unit_type.gsub(/\s/, '').underscore.dasherize
+  end
 end

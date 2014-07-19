@@ -3,6 +3,11 @@ class AdultsController < UsersController
   def index
     authorize Adult
     @users = @unit.adults.includes(:sub_unit, :scouts).by_name_lf
+    @users_count = @unit.adults.count
+    if params[:search_typeahead] && !params[:search_typeahead].blank?
+      @users = @users.name_contains(params[:search_typeahead])
+      @searching = true
+    end
     # fresh_when last_modified: @users.maximum(:updated_at)
   end
 

@@ -9,4 +9,6 @@ class MeritBadge < ActiveRecord::Base
   end
 
   scope :by_name, -> { order(name: :asc) }
+  scope :name_contains, ->(n) { where("merit_badges.name LIKE ?", "%#{n}%") }
+
 end

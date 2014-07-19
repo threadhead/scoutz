@@ -1,0 +1,8 @@
+%form.form-inline
+  = hidden_field_tag :search_action, search_url
+  .form-group
+    .input-group
+      %span.input-group-addon
+        %i.fa.fa-search
+      = search_field_tag :search_typeahead, '', class: 'form-control search-typeahead', placeholder: 'search', autofocus: true
+

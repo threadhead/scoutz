@@ -96,7 +96,7 @@ module Scoutlander
           event_signup = Scoutlander::Datum::EventSignup.new
           event_signup.sl_profile = find_response_link_profile(row)
           find_response_amounts(row, event_signup)
-          event_signup.comment = clean_string row.at('td[6]').try(:text)
+          event_signup.comment = clean_string row.at('td[5]').try(:text)
           event_signup.inspected = true
 
           datum.add_signup event_signup

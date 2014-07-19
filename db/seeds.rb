@@ -17,7 +17,7 @@ unit2 = Unit.create(unit_type: 'Boy Scouts', unit_number: '818', city: 'Scottsda
 log_item(unit2)
 
 
-user1 = Adult.create(email: 'threadhead@gmail.com', password: 'pack1134', role: 'admin', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona', confirmed_at: 1.day.ago)
+user1 = Adult.create(email: 'threadhead@gmail.com', password: 'pack1134', role: 'admin', first_name: 'Karl', last_name: 'Smith', time_zone: 'Arizona', sl_profile: '244778', confirmed_at: 1.day.ago)
 log_item(user1, 2)
 
 scout1 = Scout.create(first_name: 'Aydan', last_name: 'Smith', time_zone: 'Arizona', birth: '2002-12-19'.to_date, rank: 'Webelos I')
@@ -29,7 +29,7 @@ user1.scouts << [scout1, scout2]
 
 
 
-user2 = Adult.create(email: 'rob@robmadden.com', password: 'pack1134', role: 'leader', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona', confirmed_at: 1.day.ago)
+user2 = Adult.create(email: 'rob@robmadden.com', password: 'pack1134', role: 'leader', first_name: 'Rob', last_name: 'Madden', time_zone: 'Arizona', sl_profile: '244791', confirmed_at: 1.day.ago)
 log_item(user2, 2)
 
 scout3 = Scout.create(first_name: 'Matthew', last_name: 'Madden', time_zone: 'Arizona', birth: '2002-02-02'.to_date, rank: 'Webelos I')

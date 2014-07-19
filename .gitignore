@@ -23,6 +23,7 @@
 /public/images/dog_in_collar.jpg
 /public/uploads/**
 /config/database.yml
+/config/database.bak
 /coverage/**
 /public/assets/*.gz
 /public/assets/*.js

@@ -11,7 +11,13 @@ begin
       desc "import troop 603"
       task :import_troop_603_vcr => [:environment] do
         WebMock.enable! # disabled in development.rb
-        unit = Unit.find_by_unit_number('603')
+        unit = Unit.find_or_create_by(unit_number: '603') do |u|
+          u.unit_type = 'Boy Scouts'
+          u.city = 'Scottsdale'
+          u.state = 'AZ'
+          u.time_zone = 'Arizona'
+        end
+        unit.update_attributes(sl_uid: '3218')
 
         # # scrape and import sub units
         sub_unit_importer = Scoutlander::Importer::SubUnits.new(
@@ -60,15 +66,18 @@ begin
         VCR.use_cassette('fetch_unit_events') { event_importer.fetch_unit_events }
         VCR.use_cassette('fetch_all_event_info_and_create') { event_importer.fetch_all_event_info_and_create }
 
-        pass = {password: 'pack1134', password_confirmation: 'pack1134'}
+        pass = {password: 'pack1134', password_confirmation: 'pack1134', confirmed_at: 1.day.ago}
         Adult.where(email: 'threadhead@gmail.com').first.update_attributes(pass)
         Adult.where(email: 'rob@robmadden.com').first.update_attributes(pass)
         Adult.where(email: 'tasst01@hotmail.com').first.update_attributes(pass)
         user = Adult.where(email: 'stoya.robert@orbital.com').first
+
+        # add rob stoya to the unit
         user.update_attributes(pass)
         unless unit.users.where(id: user.id).exists?
           user.units << unit
         end
+
       end
     end
 rescue NameError

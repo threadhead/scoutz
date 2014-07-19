@@ -6,11 +6,9 @@
       .page-header
         .form-inline
           - if controller.action_name == 'new'
-            .pull-left
-              %h2.form-title #{controller.action_name.titleize} Event for: &nbsp;&nbsp;
-            = f.collection_select :unit_id, current_user.units, :id, :name, {hide_label: true, layout: :default}
+            %h2 New Event for #{@unit.name}
           - else
-            %h2 Edit Event for #{@unit.name}
+            %h2 Edit Event
 
   .row
     .col-md-9

@@ -6,8 +6,8 @@ gem 'dotenv-deployment'
 
 gem 'rails', '4.1.4'
 
-gem 'sqlite3'
-# gem 'pg'
+# gem 'sqlite3'
+gem 'pg'
 
 # gem 'thin'
 # gem 'rake'

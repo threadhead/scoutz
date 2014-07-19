@@ -43,8 +43,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @unit = params[:unit_id] ? Unit.find(params[:unit_id]) : Unit.first
-    @event = Event.new(unit_id: @unit.id, start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
+    @event = Event.new(start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
     @sub_unit_ids = []
     authorize @event
   end
@@ -56,14 +55,13 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
+    # @event = Event.new(event_params)
+    @event = @unit.events.build(event_params)
     authorize @event
-    # @unit = Unit.find(params[:unit_id]) if params[:unit_id]
-    # @event = @unit.events.build(params[:event])
 
     if @event.save
       current_user.events << @event
-      redirect_to @event, notice: 'Event was successfully created.'
+      redirect_to unit_event_url(@unit, @event), notice: 'Event was successfully created.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :new
@@ -73,7 +71,7 @@ class EventsController < ApplicationController
   def update
     authorize @event
     if @event.update_attributes(event_params)
-      redirect_to @event, notice: 'Event was successfully updated.'
+      redirect_to unit_event_url(@unit, @event), notice: 'Event was successfully updated.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
       render :edit
@@ -84,7 +82,7 @@ class EventsController < ApplicationController
     authorize @event
     @event.destroy
 
-    redirect_to events_url
+    redirect_to unit_events_url(@unit)
   end
 
   def email_attendees

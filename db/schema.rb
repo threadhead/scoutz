@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20140716232154) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
     t.string   "trackable_type"
@@ -27,10 +30,10 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.integer  "unit_id"
   end
 
-  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type"
-  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type"
-  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type"
-  add_index "activities", ["unit_id"], name: "index_activities_on_unit_id"
+  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
+  add_index "activities", ["unit_id"], name: "index_activities_on_unit_id", using: :btree
 
   create_table "ckeditor_assets", force: true do |t|
     t.integer  "unit_id"
@@ -46,8 +49,8 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable"
-  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type"
+  add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
+  add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0
@@ -63,7 +66,7 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority"
+  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
   create_table "email_attachments", force: true do |t|
     t.integer  "email_message_id"
@@ -75,7 +78,7 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "email_attachments", ["email_message_id"], name: "index_email_attachments_on_email_message_id"
+  add_index "email_attachments", ["email_message_id"], name: "index_email_attachments_on_email_message_id", using: :btree
 
   create_table "email_messages", force: true do |t|
     t.integer  "user_id"
@@ -90,27 +93,27 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.string   "id_token"
   end
 
-  add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token"
-  add_index "email_messages", ["sent_at"], name: "index_email_messages_on_sent_at"
-  add_index "email_messages", ["unit_id"], name: "index_email_messages_on_unit_id"
-  add_index "email_messages", ["updated_at"], name: "index_email_messages_on_updated_at"
-  add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id"
+  add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token", using: :btree
+  add_index "email_messages", ["sent_at"], name: "index_email_messages_on_sent_at", using: :btree
+  add_index "email_messages", ["unit_id"], name: "index_email_messages_on_unit_id", using: :btree
+  add_index "email_messages", ["updated_at"], name: "index_email_messages_on_updated_at", using: :btree
+  add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
   create_table "email_messages_events", id: false, force: true do |t|
     t.integer "email_message_id"
     t.integer "event_id"
   end
 
-  add_index "email_messages_events", ["email_message_id", "event_id"], name: "index_email_messages_events_on_email_message_id_and_event_id"
-  add_index "email_messages_events", ["event_id", "email_message_id"], name: "index_email_messages_events_on_event_id_and_email_message_id"
+  add_index "email_messages_events", ["email_message_id", "event_id"], name: "index_email_messages_events_on_email_message_id_and_event_id", using: :btree
+  add_index "email_messages_events", ["event_id", "email_message_id"], name: "index_email_messages_events_on_event_id_and_email_message_id", using: :btree
 
   create_table "email_messages_users", id: false, force: true do |t|
     t.integer "email_message_id"
     t.integer "user_id"
   end
 
-  add_index "email_messages_users", ["email_message_id", "user_id"], name: "index_email_messages_users_on_email_message_id_and_user_id"
-  add_index "email_messages_users", ["user_id", "email_message_id"], name: "index_email_messages_users_on_user_id_and_email_message_id"
+  add_index "email_messages_users", ["email_message_id", "user_id"], name: "index_email_messages_users_on_email_message_id_and_user_id", using: :btree
+  add_index "email_messages_users", ["user_id", "email_message_id"], name: "index_email_messages_users_on_user_id_and_email_message_id", using: :btree
 
   create_table "event_signups", force: true do |t|
     t.integer  "event_id"
@@ -124,11 +127,11 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "event_signups", ["adults_attending"], name: "index_event_signups_on_adults_attending"
-  add_index "event_signups", ["event_id"], name: "index_event_signups_on_event_id"
-  add_index "event_signups", ["scout_id", "event_id"], name: "index_event_signups_on_scout_id_and_event_id"
-  add_index "event_signups", ["scouts_attending"], name: "index_event_signups_on_scouts_attending"
-  add_index "event_signups", ["siblings_attending"], name: "index_event_signups_on_siblings_attending"
+  add_index "event_signups", ["adults_attending"], name: "index_event_signups_on_adults_attending", using: :btree
+  add_index "event_signups", ["event_id"], name: "index_event_signups_on_event_id", using: :btree
+  add_index "event_signups", ["scout_id", "event_id"], name: "index_event_signups_on_scout_id_and_event_id", using: :btree
+  add_index "event_signups", ["scouts_attending"], name: "index_event_signups_on_scouts_attending", using: :btree
+  add_index "event_signups", ["siblings_attending"], name: "index_event_signups_on_siblings_attending", using: :btree
 
   create_table "events", force: true do |t|
     t.integer  "unit_id"
@@ -168,31 +171,31 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.string   "sl_uid"
   end
 
-  add_index "events", ["end_at"], name: "index_events_on_end_at"
-  add_index "events", ["reminder_sent_at"], name: "index_events_on_reminder_sent_at"
-  add_index "events", ["send_reminders"], name: "index_events_on_send_reminders"
-  add_index "events", ["signup_deadline"], name: "index_events_on_signup_deadline"
-  add_index "events", ["signup_required"], name: "index_events_on_signup_required"
-  add_index "events", ["signup_token"], name: "index_events_on_signup_token"
-  add_index "events", ["start_at"], name: "index_events_on_start_at"
-  add_index "events", ["unit_id"], name: "index_events_on_unit_id"
-  add_index "events", ["updated_at"], name: "index_events_on_updated_at"
+  add_index "events", ["end_at"], name: "index_events_on_end_at", using: :btree
+  add_index "events", ["reminder_sent_at"], name: "index_events_on_reminder_sent_at", using: :btree
+  add_index "events", ["send_reminders"], name: "index_events_on_send_reminders", using: :btree
+  add_index "events", ["signup_deadline"], name: "index_events_on_signup_deadline", using: :btree
+  add_index "events", ["signup_required"], name: "index_events_on_signup_required", using: :btree
+  add_index "events", ["signup_token"], name: "index_events_on_signup_token", using: :btree
+  add_index "events", ["start_at"], name: "index_events_on_start_at", using: :btree
+  add_index "events", ["unit_id"], name: "index_events_on_unit_id", using: :btree
+  add_index "events", ["updated_at"], name: "index_events_on_updated_at", using: :btree
 
   create_table "events_sub_units", id: false, force: true do |t|
     t.integer "event_id"
     t.integer "sub_unit_id"
   end
 
-  add_index "events_sub_units", ["event_id", "sub_unit_id"], name: "index_events_sub_units_on_event_id_and_sub_unit_id"
-  add_index "events_sub_units", ["sub_unit_id", "event_id"], name: "index_events_sub_units_on_sub_unit_id_and_event_id"
+  add_index "events_sub_units", ["event_id", "sub_unit_id"], name: "index_events_sub_units_on_event_id_and_sub_unit_id", using: :btree
+  add_index "events_sub_units", ["sub_unit_id", "event_id"], name: "index_events_sub_units_on_sub_unit_id_and_event_id", using: :btree
 
   create_table "events_users", id: false, force: true do |t|
     t.integer "event_id"
     t.integer "user_id"
   end
 
-  add_index "events_users", ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id"
-  add_index "events_users", ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id"
+  add_index "events_users", ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id", using: :btree
+  add_index "events_users", ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id", using: :btree
 
   create_table "merit_badges", force: true do |t|
     t.string   "name"
@@ -208,15 +211,15 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "merit_badges", ["name"], name: "index_merit_badges_on_name"
+  add_index "merit_badges", ["name"], name: "index_merit_badges_on_name", using: :btree
 
   create_table "merit_badges_users", id: false, force: true do |t|
     t.integer "merit_badge_id"
     t.integer "user_id"
   end
 
-  add_index "merit_badges_users", ["merit_badge_id", "user_id"], name: "index_merit_badges_users_on_merit_badge_id_and_user_id"
-  add_index "merit_badges_users", ["user_id", "merit_badge_id"], name: "index_merit_badges_users_on_user_id_and_merit_badge_id"
+  add_index "merit_badges_users", ["merit_badge_id", "user_id"], name: "index_merit_badges_users_on_merit_badge_id_and_user_id", using: :btree
+  add_index "merit_badges_users", ["user_id", "merit_badge_id"], name: "index_merit_badges_users_on_user_id_and_merit_badge_id", using: :btree
 
   create_table "notifiers", force: true do |t|
     t.integer  "user_id"
@@ -226,17 +229,17 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "notifiers", ["user_id"], name: "index_notifiers_on_user_id"
+  add_index "notifiers", ["user_id"], name: "index_notifiers_on_user_id", using: :btree
 
   create_table "phones", force: true do |t|
     t.integer  "user_id"
-    t.integer  "kind",       limit: 255, default: 0
     t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "kind",       default: 0
   end
 
-  add_index "phones", ["user_id"], name: "index_phones_on_user_id"
+  add_index "phones", ["user_id"], name: "index_phones_on_user_id", using: :btree
 
   create_table "sms_messages", force: true do |t|
     t.integer  "user_id"
@@ -249,16 +252,16 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "sms_messages", ["unit_id"], name: "index_sms_messages_on_unit_id"
-  add_index "sms_messages", ["user_id"], name: "index_sms_messages_on_user_id"
+  add_index "sms_messages", ["unit_id"], name: "index_sms_messages_on_unit_id", using: :btree
+  add_index "sms_messages", ["user_id"], name: "index_sms_messages_on_user_id", using: :btree
 
   create_table "sms_messages_users", id: false, force: true do |t|
     t.integer "sms_message_id"
     t.integer "user_id"
   end
 
-  add_index "sms_messages_users", ["sms_message_id", "user_id"], name: "index_sms_messages_users_on_sms_message_id_and_user_id"
-  add_index "sms_messages_users", ["user_id", "sms_message_id"], name: "index_sms_messages_users_on_user_id_and_sms_message_id"
+  add_index "sms_messages_users", ["sms_message_id", "user_id"], name: "index_sms_messages_users_on_sms_message_id_and_user_id", using: :btree
+  add_index "sms_messages_users", ["user_id", "sms_message_id"], name: "index_sms_messages_users_on_user_id_and_sms_message_id", using: :btree
 
   create_table "sub_units", force: true do |t|
     t.integer  "unit_id"
@@ -268,7 +271,7 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "updated_at"
   end
 
-  add_index "sub_units", ["unit_id"], name: "index_sub_units_on_unit_id"
+  add_index "sub_units", ["unit_id"], name: "index_sub_units_on_unit_id", using: :btree
 
   create_table "units", force: true do |t|
     t.string   "unit_type"
@@ -286,24 +289,24 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.integer "user_id"
   end
 
-  add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id", unique: true
-  add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id", unique: true
+  add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id", unique: true, using: :btree
+  add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id", unique: true, using: :btree
 
   create_table "user_relationships", id: false, force: true do |t|
     t.integer "adult_id"
     t.integer "scout_id"
   end
 
-  add_index "user_relationships", ["adult_id", "scout_id"], name: "index_user_relationships_on_adult_id_and_scout_id"
-  add_index "user_relationships", ["scout_id", "adult_id"], name: "index_user_relationships_on_scout_id_and_adult_id"
+  add_index "user_relationships", ["adult_id", "scout_id"], name: "index_user_relationships_on_adult_id_and_scout_id", using: :btree
+  add_index "user_relationships", ["scout_id", "adult_id"], name: "index_user_relationships_on_scout_id_and_adult_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                                       default: ""
-    t.string   "encrypted_password",                          default: ""
+    t.string   "email",                           default: ""
+    t.string   "encrypted_password",              default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                               default: 0
+    t.integer  "sign_in_count",                   default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -312,7 +315,7 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",                             default: 0
+    t.integer  "failed_attempts",                 default: 0
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "created_at"
@@ -326,23 +329,22 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.string   "zip_code"
     t.date     "birth"
     t.string   "leadership_role"
-    t.integer  "role",                            limit: 255, default: 0
     t.string   "time_zone"
     t.string   "type"
     t.integer  "sub_unit_id"
     t.string   "rank"
-    t.boolean  "send_reminders",                              default: true
+    t.boolean  "send_reminders",                  default: true
     t.datetime "deactivated_at"
     t.string   "leadership_position"
     t.string   "additional_leadership_positions"
     t.string   "signup_token"
     t.string   "sms_number"
     t.datetime "sms_number_verified_at"
-    t.boolean  "blast_email",                                 default: true
+    t.boolean  "blast_email",                     default: true
     t.boolean  "blast_sms"
-    t.boolean  "event_reminder_email",                        default: true
+    t.boolean  "event_reminder_email",            default: true
     t.boolean  "event_reminder_sms"
-    t.boolean  "signup_deadline_email",                       default: true
+    t.boolean  "signup_deadline_email",           default: true
     t.boolean  "signup_deadline_sms"
     t.string   "picture"
     t.integer  "picture_file_size"
@@ -354,25 +356,26 @@ ActiveRecord::Schema.define(version: 20140716232154) do
     t.string   "sl_uid"
     t.string   "alternate_email"
     t.string   "sms_provider"
-    t.boolean  "sms_message",                                 default: true
-    t.boolean  "weekly_newsletter_email",                     default: true
-    t.boolean  "monthly_newsletter_email",                    default: true
+    t.boolean  "sms_message",                     default: true
+    t.boolean  "weekly_newsletter_email",         default: true
+    t.boolean  "monthly_newsletter_email",        default: true
+    t.integer  "role",                            default: 0
   end
 
-  add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions"
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
-  add_index "users", ["deactivated_at"], name: "index_users_on_deactivated_at"
-  add_index "users", ["email"], name: "index_users_on_email"
-  add_index "users", ["encrypted_password"], name: "index_users_on_encrypted_password"
-  add_index "users", ["leadership_position"], name: "index_users_on_leadership_position"
-  add_index "users", ["rank"], name: "index_users_on_rank"
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  add_index "users", ["role"], name: "index_users_on_role"
-  add_index "users", ["send_reminders"], name: "index_users_on_send_reminders"
-  add_index "users", ["signup_token"], name: "index_users_on_signup_token"
-  add_index "users", ["sub_unit_id"], name: "index_users_on_sub_unit_id"
-  add_index "users", ["type"], name: "index_users_on_type"
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true
-  add_index "users", ["updated_at"], name: "index_users_on_updated_at"
+  add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions", using: :btree
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
+  add_index "users", ["deactivated_at"], name: "index_users_on_deactivated_at", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", using: :btree
+  add_index "users", ["encrypted_password"], name: "index_users_on_encrypted_password", using: :btree
+  add_index "users", ["leadership_position"], name: "index_users_on_leadership_position", using: :btree
+  add_index "users", ["rank"], name: "index_users_on_rank", using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["role"], name: "index_users_on_role", using: :btree
+  add_index "users", ["send_reminders"], name: "index_users_on_send_reminders", using: :btree
+  add_index "users", ["signup_token"], name: "index_users_on_signup_token", using: :btree
+  add_index "users", ["sub_unit_id"], name: "index_users_on_sub_unit_id", using: :btree
+  add_index "users", ["type"], name: "index_users_on_type", using: :btree
+  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+  add_index "users", ["updated_at"], name: "index_users_on_updated_at", using: :btree
 
 end

@@ -24,6 +24,10 @@ end
 namespace :merit_badges do
   desc "import merit badges"
   task :import => [:environment] do
+    if defined?(WebMock)
+      WebMock.disable!
+    end
+
     mb = MbDotOrg::Importer::MeritBadges.new
     mb.fetch_merit_badges
   end

@@ -25,7 +25,9 @@ RSpec.describe Scoutlander::Importer::Scouts do
 
     context 'unloaded attributes' do
       [ :sub_unit, :leadership_position, :additional_leadership_positions, :security_level, :email, :alternate_email, :send_reminders, :home_phone, :work_phone, :cell_phone, :address1, :city, :state, :zip_code, :rank].each do |attr|
-        specify { expect(subject.send(attr)).to be_nil }
+        it "attribute #{attr} is nil" do
+          expect(subject.send(attr)).to be_nil
+        end
       end
     end
   end

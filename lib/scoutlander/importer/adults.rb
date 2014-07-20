@@ -124,13 +124,12 @@ module Scoutlander
             user = Adult.find_or_initialize_by(sl_profile: adult.sl_profile)
             if user.new_record?
               @logger.info "CREATE_ADULT: #{adult.name}, profile: #{adult.sl_profile}"
-              user.update_attributes(adult.to_params)
-              # @unit.users << user
             else
               @logger.info "UPDATE_ADULT: #{user.name}"
-              user.update_attributes(adult.to_params)
             end
 
+            user.update_attributes(adult.to_params)
+            disable_all_notifications(user)
             add_user_to_unit(user)
             create_phones(user, adult)
             find_and_associate_scout(user, adult)
@@ -143,11 +142,13 @@ module Scoutlander
       end
 
 
+
+      # We are counting on the importing of Scouts to be done first.
       def find_and_associate_scout(resource, adult)
         # puts "adult: #{adult.inspect}"
         adult.relations.each do |scout|
           rel_user = resource.scouts.where(sl_profile: scout.sl_profile).first
-          # puts "rel_user: #{rel_user.inspect}"
+
           # if the adult(user) -> scout relationship does not exist, create it
           if rel_user.nil?
             related = Scout.where(sl_profile: scout.sl_profile).first

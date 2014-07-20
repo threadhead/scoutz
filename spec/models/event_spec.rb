@@ -102,7 +102,23 @@ RSpec.describe Event do
 
     it 'return false when signup has NOT passed' do
       @event.signup_deadline = 3.seconds.from_now
-      expect(@event.after_signup_deadline?).to be_falsy
+      expect(@event.after_signup_deadline?).to eq(false)
+    end
+  end
+
+  describe '.disable_reminder_if_old' do
+    let(:event) { FactoryGirl.build(:event) }
+
+    it 'sets reminder_sent_at to epoch if it starts more than 2 days ago' do
+      event.start_at = 2.days.ago
+      event.disable_reminder_if_old
+      expect(event.reminder_sent_at).to be_within(2).of(Time.at(0))
+    end
+
+    it 'does nothing to reminder_sent_at if it starts less than 2 days ago' do
+      event.start_at = 1.days.ago
+      event.disable_reminder_if_old
+      expect(event.reminder_sent_at).to be_nil
     end
   end
 

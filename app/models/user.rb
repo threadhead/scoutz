@@ -193,6 +193,24 @@ class User < ActiveRecord::Base
 
 
 
+  def turn_all_notification_off
+    self.send_reminders = false
+    self.blast_email = false
+    self.blast_sms = false
+    self.event_reminder_email = false
+    self.event_reminder_sms = false
+    self.signup_deadline_email = false
+    self.signup_deadline_sms = false
+    self.weekly_newsletter_email = false
+    self.monthly_newsletter_email = false
+    self.sms_messag = false
+  end
+
+  def turn_off_all_notifications!
+    turn_off_all_notifications
+    self.save
+  end
+
 
 
   protected

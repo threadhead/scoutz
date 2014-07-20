@@ -130,6 +130,13 @@ class Event < ActiveRecord::Base
   scope :newsletter_next_month, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_month.end_of_month) }
 
 
+  def disable_reminder_if_old
+    if start_at <= 2.days.ago
+      self.reminder_sent_at = Time.at(0).to_datetime
+    end
+  end
+
+
   # for calendar.js
   def as_json(options = {})
     {

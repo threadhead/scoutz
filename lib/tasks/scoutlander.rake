@@ -19,6 +19,7 @@ begin
         end
         unit.update_attributes(sl_uid: '3218')
 
+
         # # scrape and import sub units
         sub_unit_importer = Scoutlander::Importer::SubUnits.new(
                                     email: 'threadhead@gmail.com',
@@ -37,7 +38,8 @@ begin
         scout_importer = Scoutlander::Importer::Scouts.new(
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
-                            unit: unit
+                            unit: unit,
+                            disable_all_notifications: true
                             )
 
         VCR.use_cassette('fetch_unit_persons(:scout)') { scout_importer.fetch_unit_scouts }
@@ -49,7 +51,8 @@ begin
         adult_importer = Scoutlander::Importer::Adults.new(
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
-                            unit: unit
+                            unit: unit,
+                            disable_all_notifications: true
                             )
 
         VCR.use_cassette('fetch_unit_persons(:adult)') { adult_importer.fetch_unit_adults }

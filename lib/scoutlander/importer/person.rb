@@ -2,6 +2,18 @@ module Scoutlander
   module Importer
     class Person < Scoutlander::Importer::Base
 
+      def initialize(options={})
+        super(options)
+        @disable_all_notifications = options[:disable_all_notifications] || false
+      end
+
+
+      def disable_all_notifications(user)
+        if @disable_all_notifications
+          user.turn_off_all_notifications!
+        end
+      end
+
       def profile_name(kind)
         case kind
         when :scout

@@ -36,12 +36,12 @@ module Scoutlander
             # puts user.inspect
             if user.new_record?
               @logger.info "CREATE_SCOUT: #{scout.name}, profile: #{scout.sl_profile}"
-              user.update_attributes(scout.to_params)
             else
               @logger.info "UPDATE_SCOUT: #{user.name}"
-              user.update_attributes(scout.to_params)
             end
 
+            user.update_attributes(scout.to_params)
+            disable_all_notifications(user)
             add_user_to_unit(user)
             create_phones(user, scout)
 

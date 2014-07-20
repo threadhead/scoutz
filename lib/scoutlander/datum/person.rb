@@ -27,31 +27,10 @@ module Scoutlander
           :sl_profile,
           :relations,
           :parent,
-
-          :blast_email,
-          :blast_sms,
-          :event_reminder_email,
-          :event_reminder_sms,
-          :signup_deadline_email,
-          :signup_deadline_sms,
-          :weekly_newsletter_email,
-          :monthly_newsletter_email,
-          :sms_message
         ]
         create_setters_getters_instance_variables(options)
         @relations = []
         @parent = nil
-
-        @blast_email = false
-        @blast_sms = false
-        @event_reminder_email = false
-        @event_reminder_sms = false
-        @signup_deadline_email = false
-        @signup_deadline_sms = false
-        @weekly_newsletter_email = false
-        @monthly_newsletter_email = false
-        @sms_message = false
-
       end
 
       def name

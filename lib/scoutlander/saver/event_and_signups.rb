@@ -16,11 +16,14 @@ module Scoutlander
 
           if @event.new_record?
             @logger.info "CREATE_EVENT: #{@datum.name}, profile: #{@datum.sl_profile}"
+            @event.update_attributes(@datum.to_params)
+            @event.disable_reminder_if_old
+            @event.save
           else
             @logger.info "UPDATE_EVENT: #{@datum.name}"
+            @event.update_attributes(@datum.to_params)
           end
 
-          @event.update_attributes(@datum.to_params)
           create_or_update_sub_units
           create_or_update_event_signups
 

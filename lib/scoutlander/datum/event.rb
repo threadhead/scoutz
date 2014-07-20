@@ -28,20 +28,10 @@ module Scoutlander
             :message,
             :fees,
             :event_signups,
-            :reminder_sent_at
           ]
 
         create_setters_getters_instance_variables(options)
         @event_signups = []
-        @reminder_sent_at = Time.at(0).to_datetime
-      end
-
-      def reminder_sent_at
-        if @start_at >= 2.days.ago
-          Time.at(0).to_datetime
-        else
-          nil
-        end
       end
 
       def add_signup(event_signup)

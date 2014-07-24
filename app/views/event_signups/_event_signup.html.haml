@@ -1,4 +1,4 @@
-= cache event_signup do
+= cache_unless event_signup.new_record?, event_signup do
   .row
     .col-md-12
       .well.well-sm

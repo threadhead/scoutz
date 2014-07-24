@@ -12,30 +12,34 @@ class EventPolicy < ApplicationPolicy
   end
 
   def update?
-    user_role_at_least_leader || users_event?
+    user_role_at_least_leader || event_owner?
   end
 
   def destroy?
     # users can delete their own events, and adult admins as well
-    adult_admin || users_event?
+    adult_admin || event_owner?
   end
 
+
+  def add_signups?
+    adult_leader_or_above || event_owner?
+  end
 
   def calendar?
     user_role_at_least_basic
   end
 
   def email_attendees?
-    user_role_at_least_leader || users_event?
+    user_role_at_least_leader || event_owner?
   end
 
   def sms_attendees?
-    user_role_at_least_leader || users_event?
+    user_role_at_least_leader || event_owner?
   end
 
 
 
-  def users_event?
+  def event_owner?
     record.users.where(id: user.id).exists?
   end
 

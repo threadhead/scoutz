@@ -56,4 +56,9 @@ RSpec.describe EventPolicy do
     it_behaves_like 'can access thier own'
   end
 
+  permissions :add_signups? do
+    it_behaves_like 'can access thier own'
+    it_behaves_like 'adult leader access'
+  end
+
 end

@@ -93,7 +93,7 @@ class Event < ActiveRecord::Base
 
   def user_signups(user)
     user.unit_scouts(self.unit).map do |scout|
-      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id, event_id: id)
+      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id, event_id: self.id)
     end
   end
 

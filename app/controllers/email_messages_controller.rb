@@ -69,9 +69,9 @@ class EmailMessagesController < ApplicationController
     end
 
     def set_send_to_lists
-      @leaders = @unit.users.leaders.with_email.by_name_lf
+      @leaders = @unit.users.leaders.gets_email_blast.by_name_lf
       @sub_units = @unit.sub_units.by_name
-      @unit_users = @unit.users.with_email.by_name_lf
+      @unit_users = @unit.users.gets_email_blast.by_name_lf
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

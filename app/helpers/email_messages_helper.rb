@@ -1,10 +1,10 @@
 module EmailMessagesHelper
   def sub_unit_emails(sub_unit)
-    sub_unit.users_with_emails.map(&:name_email).join(', ')
+    sub_unit.users_receiving_email_blast.map(&:name_email).join(', ')
   end
 
   def sub_unit_sms(sub_unit)
-    sub_unit.users_with_sms.map(&:name_sms).join(', ')
+    sub_unit.users_receiving_sms_blast.map(&:name_sms).join(', ')
   end
 
   def recipient_display(email_message)

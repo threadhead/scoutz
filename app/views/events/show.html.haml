@@ -98,7 +98,7 @@
                         %i.fa.fa-envelope
                         Email all attendees
 
-                - if policy(EventSignup).update? && @event.signup_required && !@event.after_signup_deadline?
+                - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
                   %p#event-signup-add
                     = render partial: 'event_signups/signup_add', locals: { event: @event }
 

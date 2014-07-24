@@ -12,18 +12,22 @@ class EventSignupPolicy < ApplicationPolicy
   end
 
   def update?
-    adult_admin || users_signup? || event_owner?
+    adult_admin || event_owner? || users_signup?
   end
 
   def destroy?
     # users can delete their own events, and adult admins as well
-    adult_admin || users_signup? || event_owner?
+    adult_admin || event_owner? || users_signup?
   end
 
 
 
   def users_signup?
-    EventSignup.where(id: record.id).where(scout_id: user.scouts).exists?
+    if record.respond_to?(:id)
+      EventSignup.where(id: record.id).where(scout_id: user.scouts).exists?
+    else
+      true
+    end
   end
 
   def event_owner?

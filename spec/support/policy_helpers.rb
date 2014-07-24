@@ -52,6 +52,13 @@ module PolicyHelpers
     permission_denied_role_level_down( options.merge({user: :scout, role_level: :admin}))
   end
 
+  RSpec.shared_examples 'adult leader access' do
+    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up( options.merge({user: :adult, role_level: :leader}))
+    permission_denied_role_level_down( options.merge({user: :adult, role_level: :basic}))
+    permission_denied_role_level_down( options.merge({user: :scout, role_level: :admin}))
+  end
+
   RSpec.shared_examples 'user leader access' do
     raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
     permission_granted_role_level_up(options.merge ({ role_level: :leader }) )

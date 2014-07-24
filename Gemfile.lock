@@ -29,8 +29,6 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
-    attr_searchable (0.0.5)
-      treetop
     awesome_print (1.2.0)
     bcrypt (3.1.7)
     better_errors (1.1.0)
@@ -404,7 +402,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  attr_searchable
   awesome_print
   better_errors
   binding_of_caller

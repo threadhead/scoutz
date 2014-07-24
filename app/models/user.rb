@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include SmsNumber
+  # include AttrSearchable
   mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
   # :confirmable,
@@ -11,7 +12,8 @@ class User < ActiveRecord::Base
 
   enum role: {inactive: 0, basic: 10, leader: 20, admin: 30}
 
-
+  # attr_searchable :first_name, :last_name
+  # attr_searchable scout: [ 'users.first_name', 'users.last_name']
 
   has_and_belongs_to_many :units
   has_many :phones, dependent: :destroy

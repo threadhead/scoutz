@@ -21,8 +21,6 @@ jQuery ->
 
     })
 
-  window.bindEventSignupEditButtons()
-  window.bindAddEventSignupSelect()
 
   $("select#event_kind").change ->
     # switch $(@).val()
@@ -61,17 +59,8 @@ jQuery ->
           })
     })
 
-@bindEventSignupEditButtons = ->
-  $("a.edit-event-signup-modal").off("click")
-  $("a.edit-event-signup-modal").click ->
-    eventSignupId = $(@).data("event-signup-id")
-    $.getScript("/event_signups/#{eventSignupId}/edit.js", (data, textStatus, jqxhr) ->
-      $("div#event-signup-modal-form").modal()
-      )
 
-@bindAddEventSignupSelect = ->
-  $("button#add-event-signup-button").off("click")
-  $("button#add-event-signup-button").click ->
+  $("#event-signup-add").on("click", "button#add-event-signup-button", ->
     scoutId = $("select#add-event-signup-select").val()
     eventId = $("select#add-event-signup-select").data("event-id")
     if scoutId
@@ -79,4 +68,11 @@ jQuery ->
       $.getScript("/event_signups/new.js?scout_id=#{scoutId}&event_id=#{eventId}", (data, textStatus, jqxhr) ->
         $("div#event-signup-modal-form").modal()
         )
+    )
 
+  $("table#event-signup-roster").on("click", "a.edit-event-signup-modal", ->
+    eventSignupId = $(@).data("event-signup-id")
+    $.getScript("/event_signups/#{eventSignupId}/edit.js", (data, textStatus, jqxhr) ->
+      $("div#event-signup-modal-form").modal()
+      )
+    )

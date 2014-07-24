@@ -1,7 +1,7 @@
 class EventSignupsController < ApplicationController
-  before_action :auth_and_time_zone, except: [:from_email]
+  before_action :auth_and_time_zone
   before_action :set_event_signup, only: [:show, :edit, :update, :destroy]
-  before_action :set_event, except: [:from_email, :edit, :update]
+  before_action :set_event, except: [:create, :edit, :update]
   after_action :verify_authorized
 
   def index
@@ -29,6 +29,7 @@ class EventSignupsController < ApplicationController
 
     respond_to do |format|
       if @event_signup.save
+        flash.now[:info] = "#{@event_signup.scout.full_name} is now registered."
         create_activity(:create)
         # format.html { redirect_for_signups }
         # format.json { render json: @event_signup, status: :created, location: @event_signup }
@@ -47,7 +48,7 @@ class EventSignupsController < ApplicationController
 
     respond_to do |format|
       if @event_signup.update_attributes(event_signup_params)
-        flash[:info] = "#{@event_signup.scout.full_name}'s sign up changed."
+        flash.now[:info] = "#{@event_signup.scout.full_name}'s sign up changed."
 
         # format.html { redirect_for_signups }
         # format.json { head :no_content }
@@ -62,7 +63,7 @@ class EventSignupsController < ApplicationController
 
   def destroy
     authorize @event_signup
-    flash[:info] = "#{@event_signup.scout.full_name}'s sign up cancelled."
+    flash.now[:info] = "#{@event_signup.scout.full_name}'s sign up cancelled."
     create_activity(:destroy)
     @event_signup.destroy
     respond_to do |format|
@@ -82,11 +83,12 @@ class EventSignupsController < ApplicationController
 
     def set_event
       @event = Event.find(params[:event_id]) if params[:event_id]
+      @event ||= @event_signup.event
     end
 
-    def set_unit
-      @unit = current_user.units.where(id: params[:unit_id]).first
-    end
+    # def set_unit
+    #   @unit = current_user.units.where(id: params[:unit_id]).first
+    # end
 
     def set_signups_rosters(event)
       @event_signups = event.user_signups(current_user)

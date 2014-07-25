@@ -134,7 +134,7 @@
 
   %fieldset
     %legend Merit Badge Counselor
-    = f.collection_select :merit_badge_ids, MeritBadge.all, :id, :name, {label: 'Counselor for', control_col: 'col-md-6'}, multiple: true
+    = f.collection_select :merit_badge_ids, MeritBadge.by_name.all, :id, :name, {label: 'Counselor for', control_col: 'col-md-6'}, multiple: true
 
 
   %fieldset

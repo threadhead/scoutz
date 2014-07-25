@@ -29,6 +29,7 @@ class MeritBadgesController < ApplicationController
 
   def create
     authorize MeritBadge
+    set_counselor_attributes
     # @merit_badge = MeritBadge.new(merit_badge_params)
     # if @merit_badge.save
     #   redirect_to @merit_badge, notice: 'Merit badge was successfully created.'
@@ -39,7 +40,16 @@ class MeritBadgesController < ApplicationController
 
   def update
     authorize @merit_badge
-    if @merit_badge.update(merit_badge_params)
+    set_counselor_attributes(@merit_badge)
+    logger.info "params: #{pp params}"
+
+    begin
+      merit_badge_update = @merit_badge.update(merit_badge_params)
+    rescue ActiveRecord::RecordNotUnique
+      @merit_badge.errors.add(:base, "Merit badges for each user muse be unique")
+    end
+
+    if merit_badge_update
       @merit_badge.touch
       redirect_to unit_merit_badge_url(@unit, @merit_badge), notice: 'Merit badge was successfully updated.'
     else
@@ -66,6 +76,17 @@ class MeritBadgesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def merit_badge_params
-      params.require(:merit_badge).permit(user_ids: [])
+      params.require(:merit_badge).permit(counselors_attributes: [:id, :user_id, :unit_id, :_destroy])
     end
+
+    def set_counselor_attributes(merit_badge=nil)
+      user_ids = params[:merit_badge].extract!(:user_ids)
+
+      params[:merit_badge][:counselors_attributes] = MeritBadge.create_counselors_attributes(
+                                                                       merit_badge: merit_badge,
+                                                                       unit: @unit,
+                                                                       user_ids: user_ids['user_ids']
+                                                                       )
+    end
+
 end

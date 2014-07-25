@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140716232154) do
+ActiveRecord::Schema.define(version: 20140725142515) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,19 @@ ActiveRecord::Schema.define(version: 20140716232154) do
 
   add_index "ckeditor_assets", ["assetable_type", "assetable_id"], name: "idx_ckeditor_assetable", using: :btree
   add_index "ckeditor_assets", ["assetable_type", "type", "assetable_id"], name: "idx_ckeditor_assetable_type", using: :btree
+
+  create_table "counselors", force: true do |t|
+    t.integer  "merit_badge_id"
+    t.integer  "user_id"
+    t.integer  "unit_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "counselors", ["merit_badge_id", "user_id", "unit_id"], name: "index_counselors_on_merit_badge_id_and_user_id_and_unit_id", unique: true, using: :btree
+  add_index "counselors", ["merit_badge_id"], name: "index_counselors_on_merit_badge_id", using: :btree
+  add_index "counselors", ["unit_id"], name: "index_counselors_on_unit_id", using: :btree
+  add_index "counselors", ["user_id"], name: "index_counselors_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0
@@ -212,14 +225,6 @@ ActiveRecord::Schema.define(version: 20140716232154) do
   end
 
   add_index "merit_badges", ["name"], name: "index_merit_badges_on_name", using: :btree
-
-  create_table "merit_badges_users", id: false, force: true do |t|
-    t.integer "merit_badge_id"
-    t.integer "user_id"
-  end
-
-  add_index "merit_badges_users", ["merit_badge_id", "user_id"], name: "index_merit_badges_users_on_merit_badge_id_and_user_id", using: :btree
-  add_index "merit_badges_users", ["user_id", "merit_badge_id"], name: "index_merit_badges_users_on_user_id_and_merit_badge_id", using: :btree
 
   create_table "notifiers", force: true do |t|
     t.integer  "user_id"

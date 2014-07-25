@@ -66,8 +66,8 @@
             %td
               %strong Counselors
             %td
-              - @merit_badge.counselors(@unit).each do |adult|
-                = link_to adult.name, [@unit, adult]
+              - @merit_badge.counselors.unit(@unit).each do |counselor|
+                = link_to counselor.user.name, [@unit, counselor.user]
                 %br
 
     .col-md-3

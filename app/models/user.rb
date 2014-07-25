@@ -16,13 +16,26 @@ class User < ActiveRecord::Base
   # attr_searchable scout: [ 'users.first_name', 'users.last_name']
 
   has_and_belongs_to_many :units
-  has_many :phones, dependent: :destroy
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events, -> { uniq }
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
   has_and_belongs_to_many :merit_badges
+
+  has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
+    def unit(unit_id)
+      where(counselors:{unit_id: unit_id})
+    end
+  end
+  has_many :merit_badges, through: :counselors, autosave: true do
+    def unit(unit_id)
+      where(counselors:{unit_id: unit_id})
+    end
+  end
+  accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['merit_badge_id'].blank? }, allow_destroy: true
+
+  has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a["number"].blank? }
 
   before_save :update_picture_attributes
@@ -211,6 +224,47 @@ class User < ActiveRecord::Base
   def turn_off_all_notifications!
     turn_off_all_notifications
     self.save
+  end
+
+
+  # use by UsersController to create the counselors_attributes hash
+  def self.create_counselors_attributes(user: nil, unit:, merit_badge_ids: merit_badge_ids)
+    # {"0"=>{"unit_id"=>"15", "merit_badge_id"=>"22"}, "1"=>{"unit_id"=>"15", "merit_badge_id"=>"22"}}}
+
+    # use only unique, non-empty values (helps with validation)
+    mb_ids_uniq = merit_badge_ids.reject(&:empty?).uniq
+    idx = 0
+    h = Hash.new
+
+    if user
+      user.counselors.unit(unit.id).each do |c|
+        # if the existing counselor's meritbadge exists in the array of mb_ids_uniq, set _destroy -> '0'
+        # if the existing counselor's meritbadge does not exist in the array of mb_ids_uniq, then mark it for deletion, _destroy -> '1'
+        dest = mb_ids_uniq.include?(c.merit_badge_id.to_s) ? '0' : '1'
+
+        h["#{idx}"] = {
+                        'id' => "#{c.id}",
+                        'unit_id' => "#{c.unit_id}",
+                        'merit_badge_id' => "#{c.merit_badge_id}",
+                        '_destroy' => dest
+                      }
+        idx += 1
+      end
+    end
+
+    # get the difference in mertibadge ids from what currently exists. the diff will be NEW records to create
+    mb_diff = user.nil? ? mb_ids_uniq :  (mb_ids_uniq - user.counselors.unit(unit.id).map{|c| c.merit_badge_id.to_s})
+    # puts "md_diff: #{mb_diff.inspect}"
+    mb_diff.each do |mbi|
+      h["#{idx}"] = {
+                      'unit_id' => "#{unit.id}",
+                      'merit_badge_id' => mbi,
+                      '_destroy' => '0'
+                    }
+      idx += 1
+    end
+
+    h
   end
 
 

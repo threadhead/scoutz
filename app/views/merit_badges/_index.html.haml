@@ -20,8 +20,8 @@
                 - if merit_badge.eagle_required
                   = image_tag image_url('eagle_scout_sm.jpg')
               %td
-                - merit_badge.counselors(unit).each do |adult|
-                  = link_to adult.name, [unit, adult]
+                - merit_badge.counselors.unit(unit).each do |counselor|
+                  = link_to counselor.user.name, [unit, counselor.user]
                   %br
 
   %small showing #{merit_badges.size} of #{merit_badges_count}

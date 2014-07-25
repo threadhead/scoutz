@@ -88,7 +88,7 @@
             %td
               %strong MB Counselor
             %td
-              - @user.merit_badges.by_name.each do |merit_badge|
+              - @user.merit_badges.unit(@unit.id).by_name.each do |merit_badge|
                 = link_to merit_badge.name, [@unit, merit_badge]
                 %br
 

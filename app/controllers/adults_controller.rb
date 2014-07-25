@@ -15,10 +15,18 @@ class AdultsController < UsersController
 
   def create
     remove_new_phone_attribute
+    set_counselor_attributes
     @user = Adult.new(user_params)
     authorize @user
 
-    if @user.save
+    begin
+      user_save = @user.save
+    rescue ActiveRecord::RecordNotUnique
+      @user.errors.add(:base, "Merit badges for each user muse be unique")
+    end
+
+
+    if user_save
       @unit.users << @user
       redirect_to unit_adult_path(@unit, @user), notice: "#{@user.full_name} was successfully created."
     else
@@ -29,9 +37,16 @@ class AdultsController < UsersController
   def update
     authorize @user
     remove_new_phone_attribute
+    set_counselor_attributes(@user)
     params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
 
-    if @user.update_attributes(user_params)
+    begin
+      user_update = @user.update(user_params)
+    rescue ActiveRecord::RecordNotUnique
+      @user.errors.add(:base, "Merit badges for each user muse be unique")
+    end
+
+    if user_update
       redirect_to unit_adult_path(@unit, @user), notice: "#{@user.full_name} was successfully updated."
     else
       render action: 'edit'
@@ -44,5 +59,17 @@ class AdultsController < UsersController
     @user.destroy
     redirect_to unit_adults_path(@unit), notice: "#{user_name}, and all associated data, was permanently deleted."
   end
+
+  private
+    def set_counselor_attributes(user=nil)
+      merit_badge_ids = params[:adult].extract!(:merit_badge_ids)
+
+      params[:adult][:counselors_attributes] = User.create_counselors_attributes(
+                                                                       user: user,
+                                                                       unit: @unit,
+                                                                       merit_badge_ids: merit_badge_ids['merit_badge_ids']
+                                                                       )
+    end
+
 
 end

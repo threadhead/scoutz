@@ -14,6 +14,9 @@ RSpec.describe 'User signin ablility' do
   context 'users with email and password' do
     it 'signs in with correct credentials' do
       sign_in_user(@user.email, 'sekritsekrit')
+      page.find('a', text: 'Welcome, Karl').click
+      # page.all('a').each{|a| puts a.text}
+      # screenshot_and_open_image
       page.should have_link('Sign out')
     end
 

@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'rails_vcr_helper'
 
 RSpec.describe Scoutlander::Importer::Events do
   before(:all) do

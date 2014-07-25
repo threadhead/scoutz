@@ -11,6 +11,7 @@ RSpec.configure { |c| c.deprecation_stream = File.join(Rails.root, 'log', 'rspec
 require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara-screenshot'
 require 'capybara-screenshot/rspec'
 require 'pundit/rspec'
 
@@ -135,13 +136,4 @@ if defined?(CarrierWave)
       end
     end
   end
-end
-
-
-VCR.configure do |c|
-  c.cassette_library_dir = 'spec/vcr'
-  c.hook_into :webmock
-  c.configure_rspec_metadata!
-  c.filter_sensitive_data('<SCOUTLANDER_PASSWORD>') { ENV['SCOUTLANDER_PASSWORD'] }
-  c.default_cassette_options = { record: :new_episodes }
 end

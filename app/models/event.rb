@@ -119,8 +119,11 @@ class Event < ActiveRecord::Base
 
   # scopes
   def self.time_range(start_date, end_date)
+    st = DateTime.parse(start_date)
+    ed = DateTime.parse(end_date)
+    where('("events"."start_at" BETWEEN ? AND ?) OR ("events"."end_at" BETWEEN ? AND ?)', st, ed, st, ed)
     # where('start_at >= ? AND start_at <= ?', Event.format_time(start_date), Event.format_time(end_date))
-    where(start_at: DateTime.parse(start_date)..DateTime.parse(end_date))
+    # where(start_at: DateTime.parse(start_date)..DateTime.parse(end_date))
   end
 
   scope :by_start, -> { order('start_at ASC') }

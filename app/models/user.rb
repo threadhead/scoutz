@@ -208,7 +208,7 @@ class User < ActiveRecord::Base
 
 
 
-  def turn_all_notification_off
+  def turn_off_all_notifications
     self.send_reminders = false
     self.blast_email = false
     self.blast_sms = false
@@ -218,7 +218,7 @@ class User < ActiveRecord::Base
     self.signup_deadline_sms = false
     self.weekly_newsletter_email = false
     self.monthly_newsletter_email = false
-    self.sms_messag = false
+    self.sms_message = false
   end
 
   def turn_off_all_notifications!

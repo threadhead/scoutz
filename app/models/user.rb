@@ -21,7 +21,6 @@ class User < ActiveRecord::Base
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
-  has_and_belongs_to_many :merit_badges
 
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)

@@ -63,7 +63,7 @@ class EventSignupsController < ApplicationController
 
   def destroy
     authorize @event_signup
-    flash.now[:info] = "#{@event_signup.scout.full_name}'s sign up cancelled."
+    flash.now[:notice] = "#{@event_signup.scout.full_name}'s sign up cancelled."
     create_activity(:destroy)
     @event_signup.destroy
     respond_to do |format|

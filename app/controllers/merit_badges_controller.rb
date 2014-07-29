@@ -80,6 +80,7 @@ class MeritBadgesController < ApplicationController
     end
 
     def set_counselor_attributes(merit_badge=nil)
+      return unless params[:merit_badge].has_key?(:user_ids)
       user_ids = params[:merit_badge].extract!(:user_ids)
 
       params[:merit_badge][:counselors_attributes] = MeritBadge.create_counselors_attributes(

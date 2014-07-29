@@ -134,7 +134,14 @@
 
   %fieldset
     %legend Merit Badge Counselor
-    = f.collection_select :merit_badge_ids, MeritBadge.by_name.all, :id, :name, {label: 'Counselor for', control_col: 'col-md-6'}, multiple: true
+    .form-group
+      = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-3'
+      .col-md-6
+        - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
+        = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'
+        .help-block counselor for merit badges in #{@unit.name_unit}
+
+    = #f.collection_select :merit_badge_ids, MeritBadge.by_name.all, :id, :name, {label: 'Counselor for', control_col: 'col-md-6'}, multiple: true
 
 
   %fieldset

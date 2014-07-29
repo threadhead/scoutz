@@ -17,14 +17,17 @@ class Unit < ActiveRecord::Base
 
 
 
+  # example: "Cub Scout Pack 134", "Boy Scout Troop 603"
   def name
     "#{unit_type.singularize} #{unit_type_title} #{unit_number}"
   end
 
+  # example: "CS Pack 134", "BS Troop 603"
   def name_short
     "#{unit_type_short} #{unit_type_title} #{unit_number}"
   end
 
+  # example: "Pack 134", "Troop 603"
   def name_unit
     "#{unit_type_title} #{unit_number}"
   end

@@ -14,7 +14,14 @@
 
       %fieldset
         %legend Merit Badge Counselors
-        = f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Counselors', help: ''}, multiple: true
+        .form-group
+          = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-3'
+          .col-md-8
+            - merit_badge_adult_ids = @merit_badge.counselors.unit(@unit.id).pluck(:user_id)
+            = select_tag "merit_badge[user_ids][]", options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids'
+            .help-block counselors for #{@merit_badge.name} in #{@unit.name_unit}
+
+        = #f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Counselors', help: ''}, multiple: true
 
 
       = f.form_group do

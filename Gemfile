@@ -35,6 +35,7 @@ gem 'public_activity' #, git: 'https://github.com/pokonski/public_activity.git',
 gem "non-stupid-digest-assets"
 gem 'bootstrap_form'
 gem 'kaminari'
+gem 'acts_as_list'
 # gem 'attr_searchable'
 
 # add these gems to help with the transition:

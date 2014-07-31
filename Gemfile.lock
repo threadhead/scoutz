@@ -27,6 +27,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    acts_as_list (0.4.0)
+      activerecord (>= 3.0)
     addressable (2.3.6)
     arel (5.0.1.20140414130214)
     awesome_print (1.2.0)
@@ -403,6 +405,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_list
   awesome_print
   better_errors
   binding_of_caller

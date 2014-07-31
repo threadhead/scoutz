@@ -1,0 +1,20 @@
+= bootstrap_form_for [@unit, @page], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
+
+  .page-header
+    .form-inline
+      - if controller.action_name == 'new'
+        %h2 New Page for #{@unit.name}
+      - else
+        %h2 Edit Page
+
+  = f.text_field :title, autofocus: true, help: 'less than 48 characters', control_col: 'col-md-4'
+  = f.form_group :public, help: 'public pages can be seen by anyone without login' do
+    = f.check_box :public
+
+  = f.text_area :body, class: 'ckeditor', help: 'you can change the order in which pages appear after you save this page'
+
+  = f.form_group do
+    = f.primary
+    = link_to 'Cancel', unit_pages_path(@unit), class: 'btn btn-default'
+

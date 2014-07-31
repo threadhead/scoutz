@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   include SmsNumber
+  include SentientUser
   # include AttrSearchable
   mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
@@ -21,6 +22,7 @@ class User < ActiveRecord::Base
   belongs_to :sub_unit
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
+  has_many :pages
 
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)

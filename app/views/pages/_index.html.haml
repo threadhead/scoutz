@@ -1,0 +1,31 @@
+%table.table.table-outside-bordered
+  %tr
+    %th Reorder
+    %th Title
+    %th Last Change
+    %th Created by
+    %th Public
+
+  = cache ["unit-#{unit.id}", cache_key_for_pages(pages)] do
+    - pages.each do |page|
+      = cache ["unit-#{unit.id}", page] do
+        %tr
+          %td
+            = link_to move_higher_unit_page_path(@unit, page) do
+              %i.fa.fa-arrow-up.green-color
+            %br
+            = link_to move_lower_unit_page_path(@unit, page) do
+              %i.fa.fa-arrow-down.red-color
+
+          %td
+            = link_to page.title, [@unit, page], class: 'xlarge'
+            %br/
+            = link_to 'show', [@unit, page], class: 'small'
+            %span.small= '|'
+            = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
+
+          %td= page.updated_at.to_s(:short_ampm)
+
+          %td= page.created_by.try(:name)
+
+          %td= page.public ? 'Yes' : 'No'

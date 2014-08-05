@@ -185,4 +185,12 @@ end
     log_item(event_signup, 10)
   end
 
+
+# and some pages too!
+unit1.pages.create(title: 'Merit Badges', body: '<h1>About Merit Badges</h1><p>Type some stuff here...</p>')
+unit1.pages.create(title: 'Eagle Scouts', body: '<h1>About Eagle Scouts</h1><p>Type some stuff here...</p>')
+unit2.pages.create(title: 'Merit Badges', body: '<h1>About Merit Badges</h1><p>Type some stuff here...</p>')
+unit2.pages.create(title: 'Eagle Scouts', body: '<h1>About Eagle Scouts</h1><p>Type some stuff here...</p>')
+
+
 end

@@ -5,7 +5,7 @@ class Page < ActiveRecord::Base
   belongs_to :created_by, class_name: 'User', foreign_key: 'user_id'
   acts_as_list scope: :unit
 
-  validates :title, presence: true
+  validates :title, presence: true, length: {in: 1..48}
   validates :body, presence: true
 
   before_save :sanitize_body

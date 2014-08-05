@@ -2,11 +2,8 @@
 
 FactoryGirl.define do
   factory :page do
-    postion 1
-    title "MyString"
-    body "MyText"
-    unit nil
-    user nil
-    public false
+    title     "Hippety Page"
+    body      "<h1>MyText</h1>"
+    public    false
   end
 end

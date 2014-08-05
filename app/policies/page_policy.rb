@@ -4,7 +4,11 @@ class PagePolicy < ApplicationPolicy
   end
 
   def show?
-    user_role_at_least_basic
+    user_role_at_least_basic || record.public
+  end
+
+  def show_admin?
+    user_role_at_least_leader
   end
 
   def create?

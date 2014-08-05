@@ -96,6 +96,8 @@ RSpec.configure do |config|
     Phone.delete_all
     UserRelationship.delete_all
     EventSignup.delete_all
+    Page.delete_all
+    MeritBadge.delete_all
   end
 
   config.after(:all) do

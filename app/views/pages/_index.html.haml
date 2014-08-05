@@ -18,9 +18,9 @@
               %i.fa.fa-arrow-down.red-color
 
           %td
-            = link_to page.title, [@unit, page], class: 'xlarge'
+            = link_to page.title, show_admin_unit_page_path(@unit, page), class: 'xlarge'
             %br/
-            = link_to 'show', [@unit, page], class: 'small'
+            = link_to 'show', show_admin_unit_page_path(@unit, page), class: 'small'
             %span.small= '|'
             = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
 

@@ -23,6 +23,7 @@ Scoutz::Application.routes.draw do
       member do
         get 'move_higher'
         get 'move_lower'
+        get 'show_admin'
       end
     end
     resources :user_passwords

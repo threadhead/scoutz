@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :auth_and_time_zone
-  before_action :set_page, only: [:show, :edit, :update, :destroy, :move_higher, :move_lower]
+  before_action :set_page, only: [:show, :show_admin, :edit, :update, :destroy, :move_higher, :move_lower]
   after_action :verify_authorized
 
 
@@ -12,6 +12,10 @@ class PagesController < ApplicationController
 
   # GET /pages/1
   def show
+    authorize @page
+  end
+
+  def show_admin
     authorize @page
   end
 
@@ -32,7 +36,7 @@ class PagesController < ApplicationController
     authorize @page
 
     if @page.save
-      redirect_to [@unit, @page], notice: 'Page was successfully created.'
+      redirect_to show_admin_unit_page_url(@unit, @page), notice: 'Page was successfully created.'
     else
       render :new
     end
@@ -42,7 +46,7 @@ class PagesController < ApplicationController
   def update
     authorize @page
     if @page.update(page_params)
-      redirect_to [@unit, @page], notice: 'Page was successfully updated.'
+      redirect_to show_admin_unit_page_url(@unit, @page), notice: 'Page was successfully updated.'
     else
       render :edit
     end
@@ -82,6 +86,6 @@ class PagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def page_params
-      params.require(:page).permit(:postion, :title, :body, :public)
+      params.require(:page).permit(:title, :body, :public)
     end
 end

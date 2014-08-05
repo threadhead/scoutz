@@ -1,0 +1,63 @@
+.row
+  .col-md-12
+    .page-header
+      .pull-right
+        .btn-group
+          = link_to(unit_pages_path(@unit), class: 'btn btn-default') do
+            %i.fa.fa-reply
+            #{@unit.name_unit} pages
+
+          - if policy(@page).edit?
+            = link_to(edit_unit_page_path(@unit, @page), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              change
+
+        .btn-group
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
+            - if policy(@page).destroy?
+              %li
+                = link_to(unit_page_path(@unit, @page), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+                  %i.fa.fa-trash-o
+                  destroy #{@page.title}
+
+            - if policy(@page).new?
+              %li
+                = link_to(new_unit_page_path(@unit), class: "") do
+                  %i.fa.fa-plus
+                  new page
+
+      %h2 Page: #{@page.title}
+
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
+
+= cache ["unit-#{@unit.id}", @page] do
+  .row
+    .col-md-8
+      .text-xlarge
+        %table.table
+          %tr
+            %td.td-label Public
+            %td= @page.public ? 'Yes' : 'No'
+
+          %tr
+            %td.td-label Created by
+            %td= @page.created_by.try(:name)
+
+          %tr
+            %td.td-label Last update
+            %td= @page.updated_at.to_s(:short_ampm)
+
+          %tr
+            %td.td-label Updates
+            %td
+              %span.small= simple_format @page.update_history
+
+  .row
+    .col-md-10.col-md-offset-1
+      %h4 How this page will appear:
+      .panel.panel-default
+        .panel-body= @page.body.html_safe
+

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140725142515) do
+ActiveRecord::Schema.define(version: 20140730205158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -235,6 +235,23 @@ ActiveRecord::Schema.define(version: 20140725142515) do
   end
 
   add_index "notifiers", ["user_id"], name: "index_notifiers_on_user_id", using: :btree
+
+  create_table "pages", force: true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "position"
+    t.integer  "unit_id"
+    t.integer  "user_id"
+    t.boolean  "public"
+    t.text     "update_history"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "pages", ["position"], name: "index_pages_on_position", using: :btree
+  add_index "pages", ["public"], name: "index_pages_on_public", using: :btree
+  add_index "pages", ["unit_id"], name: "index_pages_on_unit_id", using: :btree
+  add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
 
   create_table "phones", force: true do |t|
     t.integer  "user_id"

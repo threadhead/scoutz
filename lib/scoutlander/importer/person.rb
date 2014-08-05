@@ -67,8 +67,8 @@ module Scoutlander
         return if datum.leadership_position.blank?
 
         roles = datum.leadership_position.split(', ')
-        # the first leadership postion may be from a selection option
-        # if so, then set leaderhip_postion to that option and additional_leadership_positions to the rest
+        # the first leadership position may be from a selection option
+        # if so, then set leaderhip_position to that option and additional_leadership_positions to the rest
         if @unit.adult_leadership_positions.include?(roles.first) || @unit.scout_leadership_positions.include?(roles.first)
           datum.leadership_position = roles.first
           roles.delete_at(0)

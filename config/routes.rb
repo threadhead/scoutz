@@ -7,17 +7,6 @@ Scoutz::Application.routes.draw do
   # get "dashboard_calendar" => "dashboard_calendar#index"
   # get "dashboard/index" => "dashboard_list#index"
 
-  get "events/index"
-  resources :events do
-    resources :event_signups
-    resources :email_event_signups
-    member do
-      get 'email_attendees'
-      get 'sms_attendees'
-    end
-  end
-
-  resources :sub_units
   resources :units do
     resources :events do
       collection do
@@ -30,11 +19,30 @@ Scoutz::Application.routes.draw do
     resources :sms_messages
     resources :users
     resources :merit_badges
+    resources :pages do
+      member do
+        get 'move_higher'
+        get 'move_lower'
+        get 'show_admin'
+      end
+    end
     resources :user_passwords
     collection do
       get 'change_default_unit'
     end
   end
+
+  get "events/index"
+  resources :events do
+    resources :event_signups
+    resources :email_event_signups
+    member do
+      get 'email_attendees'
+      get 'sms_attendees'
+    end
+  end
+
+  resources :sub_units
 
   post 'units/new' => 'units#new'
   # resources :users

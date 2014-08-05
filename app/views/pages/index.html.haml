@@ -1,0 +1,22 @@
+.row
+  .col-md-12
+    = render partial: 'layouts/flash', locals: {flash: flash}
+
+    .panel.panel-index-table.panel-default
+      .panel-heading
+        %span.xxlarge
+          %i.fa.fa-file-text-o
+          Pages in #{@unit.name_unit}
+
+      .panel-body
+        .panel-nav
+          - if policy(Page).new?
+            .pull-right
+              = link_to(new_unit_page_path(@unit), class: "btn btn-default") do
+                %i.fa.fa-plus
+                new page
+          %h4 These pages will be shown to all users under the Pages menu in the order below.
+
+        %p &nbsp;
+        #page-index
+          = render partial: 'index', locals: {unit: @unit, pages: @pages}

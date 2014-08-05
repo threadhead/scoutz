@@ -1,0 +1,17 @@
+= cache ["unit-#{@unit.id}", @page] do
+  .row
+    .col-md-12
+      .page-header
+        %h2= @page.title
+
+  .row
+    .col-md-10.col-md-offset-1
+      .panel.panel-default
+        .panel-body= @page.body.html_safe
+      %p.small Last changed: #{@page.updated_at.to_s(:short_ampm)}
+      - if policy(@page).edit?
+        %p
+          = link_to 'edit', edit_unit_page_path(@unit, @page), class: 'small'
+          %span.small= '|'
+          = link_to 'reorder', unit_pages_path(@unit), class: 'small'
+

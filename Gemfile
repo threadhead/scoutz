@@ -29,7 +29,7 @@ gem 'mechanize'
 gem 'wicked'
 # gem 'slodown'
 gem 'sanitize', '~> 2.1.0'
-gem 'ckeditor'
+# gem 'ckeditor'
 # gem 'gmaps4rails'
 gem 'public_activity' #, git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
 gem "non-stupid-digest-assets"

@@ -1,6 +1,6 @@
 # encoding: utf-8
 class CkeditorPictureUploader < CarrierWave::Uploader::Base
-  include Ckeditor::Backend::CarrierWave
+  # include Ckeditor::Backend::CarrierWave
 
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick
@@ -32,7 +32,7 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-  process :read_dimensions
+  # process :read_dimensions
 
   # Create different versions of your uploaded files:
   version :thumb do
@@ -46,6 +46,18 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    Ckeditor.image_file_types
+    %w(jpg jpeg gif png)
   end
+
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
+
+  protected
+    def secure_token
+      # SecureRandom.uuid
+      var = :"@#{mounted_as}_secure_token"
+      model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+    end
+
 end

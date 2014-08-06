@@ -1,4 +1,5 @@
 = bootstrap_form_for [@unit, @page], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+  = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
 
   .page-header
@@ -12,7 +13,7 @@
   = f.form_group :public, help: 'public pages can be seen by anyone without login' do
     = f.check_box :public
 
-  = f.text_area :body, class: 'ckeditor', help: 'you can change the order in which pages appear after you save this page'
+  = f.text_area :body, id: 'ckeditor', help: 'you can change the order in which pages appear after you save this page'
 
   = f.form_group do
     = f.primary

@@ -1,5 +1,10 @@
 Scoutz::Application.routes.draw do
-  mount Ckeditor::Engine => '/ckeditor'
+  # mount Ckeditor::Engine => '/ckeditor'
+  namespace :ckeditor do
+    resources :pictures, :only => [:index, :create, :destroy]
+    resources :attachment_files, :only => [:index, :create, :destroy]
+  end
+
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   # get "events/index"
 

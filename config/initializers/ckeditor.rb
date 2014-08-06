@@ -1,39 +1,39 @@
-# Use this hook to configure ckeditor
-Ckeditor.setup do |config|
-  # ==> ORM configuration
-  # Load and configure the ORM. Supports :active_record (default), :mongo_mapper and
-  # :mongoid (bson_ext recommended) by default. Other ORMs may be
-  # available as additional gems.
-  require "ckeditor/orm/active_record"
+# # Use this hook to configure ckeditor
+# Ckeditor.setup do |config|
+#   # ==> ORM configuration
+#   # Load and configure the ORM. Supports :active_record (default), :mongo_mapper and
+#   # :mongoid (bson_ext recommended) by default. Other ORMs may be
+#   # available as additional gems.
+#   require "ckeditor/orm/active_record"
 
-  # Allowed image file types for upload.
-  # Set to nil or [] (empty array) for all file types
-  # By default: %w(jpg jpeg png gif tiff)
-  # config.image_file_types = ["jpg", "jpeg", "png", "gif", "tiff"]
+#   # Allowed image file types for upload.
+#   # Set to nil or [] (empty array) for all file types
+#   # By default: %w(jpg jpeg png gif tiff)
+#   # config.image_file_types = ["jpg", "jpeg", "png", "gif", "tiff"]
 
-  # Allowed attachment file types for upload.
-  # Set to nil or [] (empty array) for all file types
-  # By default: %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
-  # config.attachment_file_types = ["doc", "docx", "xls", "odt", "ods", "pdf", "rar", "zip", "tar", "swf"]
+#   # Allowed attachment file types for upload.
+#   # Set to nil or [] (empty array) for all file types
+#   # By default: %w(doc docx xls odt ods pdf rar zip tar tar.gz swf)
+#   # config.attachment_file_types = ["doc", "docx", "xls", "odt", "ods", "pdf", "rar", "zip", "tar", "swf"]
 
-  # Setup authorization to be run as a before filter
-  # By default: there is no authorization.
-  # config.authorize_with :cancan
-  config.authorize_with :pundit
+#   # Setup authorization to be run as a before filter
+#   # By default: there is no authorization.
+#   # config.authorize_with :cancan
+#   config.authorize_with :pundit
 
-  # Asset model classes
-  # config.picture_model { Ckeditor::Picture }
-  # config.attachment_file_model { Ckeditor::AttachmentFile }
+#   # Asset model classes
+#   # config.picture_model { Ckeditor::Picture }
+#   # config.attachment_file_model { Ckeditor::AttachmentFile }
 
-  # Paginate assets
-  # By default: 24
-  # config.default_per_page = 24
+#   # Paginate assets
+#   # By default: 24
+#   # config.default_per_page = 24
 
-  # Customize ckeditor assets path
-  # By default: nil
-  # config.asset_path = "http://www.example.com/assets/ckeditor/"
+#   # Customize ckeditor assets path
+#   # By default: nil
+#   # config.asset_path = "http://www.example.com/assets/ckeditor/"
 
-  # to reduce asset compile time
-  config.assets_languages = ['en']
-  config.assets_plugins = ['image', 'attachment']
-end
+#   # to reduce asset compile time
+#   config.assets_languages = ['en']
+#   config.assets_plugins = ['image', 'attachment']
+# end

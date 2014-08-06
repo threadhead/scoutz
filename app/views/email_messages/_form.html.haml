@@ -49,7 +49,7 @@
     = f.form_group do
       from: #{current_user.email}
     %p= f.text_field :subject, hide_label: true, control_col: 'col-md-10', placeholder: 'subject'
-    %p= f.text_area :message, class: 'ckeditor', hide_label: true, control_col: 'col-md-10'
+    %p= f.text_area :message, id: 'ckeditor', hide_label: true, control_col: 'col-md-10'
 
   = f.form_group do
     = f.primary 'Send email blast'

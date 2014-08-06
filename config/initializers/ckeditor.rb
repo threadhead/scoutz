@@ -35,5 +35,5 @@ Ckeditor.setup do |config|
 
   # to reduce asset compile time
   config.assets_languages = ['en']
-  config.assets_plugins = ['image', 'smiley']
+  config.assets_plugins = ['image', 'attachment']
 end

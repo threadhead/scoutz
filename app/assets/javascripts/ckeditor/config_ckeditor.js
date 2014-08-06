@@ -10,7 +10,7 @@ CKEDITOR.config.toolbar_Easy =
     // { name: 'links', items : [ 'Link','Unlink','Anchor' ] },
     { name: 'links', items : [ 'Link','Unlink'] },
     // { name: 'insert', items : [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ] },
-    { name: 'insert', items : [ 'Image','Table','HorizontalRule'] },
+    { name: 'insert', items : [ 'Image', 'Attachment', 'Table', 'HorizontalRule'] },
     // { name: 'tools', items : [ 'Maximize', 'ShowBlocks','-','About' ] },
     // { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl' ] },
     { name: 'paragraph', items : [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ] },

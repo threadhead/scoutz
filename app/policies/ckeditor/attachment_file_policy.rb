@@ -1,10 +1,10 @@
-class Ckeditor::AttachmentFilePolicy < ApplicationPolicy
-  # attr_reader :user, :attachment
+class Ckeditor::AttachmentFilePolicy
+  attr_reader :user, :attachment
 
-  # def initialize(user, attachment)
-  #   @user = user
-  #   @attachment = attachment
-  # end
+  def initialize(user, attachment)
+    @user = user
+    @attachment = attachment
+  end
 
   def index?
     true and ! @user.nil?
@@ -15,6 +15,6 @@ class Ckeditor::AttachmentFilePolicy < ApplicationPolicy
   end
 
   def destroy?
-    @record.assetable_id == @user.id
+    @attachment.assetable_id == @user.id
   end
 end

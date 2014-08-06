@@ -18,7 +18,7 @@ class Ckeditor::Asset < ActiveRecord::Base
 
   before_save :set_unit_id
   def set_unit_id
-    # self.unit_id = assetable.try(:unit_id)
-    self.unit_id = Unit.first.id
+    self.unit_id = assetable.try(:unit_id)
+    # self.unit_id = Unit.first.id
   end
 end

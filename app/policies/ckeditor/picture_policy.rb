@@ -1,10 +1,10 @@
-class Ckeditor::PicturePolicy < ApplicationPolicy
-  # attr_reader :user, :picture
+class Ckeditor::PicturePolicy
+  attr_reader :user, :picture
 
-  # def initialize(user, picture)
-  #   @user = user
-  #   @picture = picture
-  # end
+  def initialize(user, picture)
+    @user = user
+    @picture = picture
+  end
 
   def index?
     true and ! @user.nil?
@@ -15,6 +15,6 @@ class Ckeditor::PicturePolicy < ApplicationPolicy
   end
 
   def destroy?
-    @record.assetable_id == @user.id
+    @picture.assetable_id == @user.id
   end
 end

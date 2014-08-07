@@ -1,6 +1,7 @@
 class SmsMessage < ActiveRecord::Base
   include SendToOptions
   include SubUnitIds
+  include AttributeSanitizer
 
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
@@ -14,11 +15,7 @@ class SmsMessage < ActiveRecord::Base
     errors.add(:base, "You must select at least 1 adult or scout recipient") if user_ids.empty?
   end
 
-
-  before_save :sanitize_message
-  def sanitize_message
-    self.message = Sanitize.clean(message, whitelist)
-  end
+  sanitize_attributes :message
 
   def send_to_count
     recipients.blank? ? 0 : recipients.count
@@ -63,10 +60,4 @@ class SmsMessage < ActiveRecord::Base
 
   #scopes
   scope :by_updated_at, -> { order(updated_at: :desc) }
-
-  private
-    def whitelist
-      Sanitize::Config::RESTRICTED
-    end
-
 end

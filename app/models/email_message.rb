@@ -1,6 +1,7 @@
 class EmailMessage < ActiveRecord::Base
   include SendToOptions
   include SubUnitIds
+  include AttributeSanitizer
 
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
@@ -14,6 +15,7 @@ class EmailMessage < ActiveRecord::Base
   validates :message, presence: true
   validates :subject, presence: true
 
+  sanitize_attributes :message
 
   validate :has_selected_users, if: :send_to_users?
   def has_selected_users
@@ -86,13 +88,6 @@ class EmailMessage < ActiveRecord::Base
 
 
 
-  before_save :sanitize_message
-  def sanitize_message
-    self.message = Sanitize.clean(message, whitelist)
-  end
-
-
-
   #scopes
   scope :by_updated_at, -> { order(updated_at: :desc) }
 
@@ -113,16 +108,4 @@ class EmailMessage < ActiveRecord::Base
       SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
     end
 
-    def whitelist
-      whitelist = Sanitize::Config::RELAXED
-      whitelist[:elements] << "span"
-      whitelist[:attributes]["span"] = ["style"]
-      whitelist
-
-      # Sanitize::Config.merge(
-      #   Sanitize::Config::RELAXED,
-      #   elements: Sanitize::Config::RELAXED[:elements] + ['span'],
-      #   attributes: Sanitize::Config::RELAXED[:attributes]['span'] = ['style']
-      #   )
-    end
 end

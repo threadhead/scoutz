@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   include EventCalendar
   include EventReminders
+  include AttributeSanitizer
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
@@ -22,6 +23,8 @@ class Event < ActiveRecord::Base
     end
   end
 
+  sanitize_attributes :message
+
 
   def gmaps4rails_address
     #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
@@ -33,11 +36,6 @@ class Event < ActiveRecord::Base
   end
 
   before_create :ensure_signup_token
-
-  before_save :sanitize_message
-  def sanitize_message
-    self.message = Sanitize.clean(message, Sanitize::Config::RELAXED)
-  end
 
 
   # DO NOT RE-ENABLE!

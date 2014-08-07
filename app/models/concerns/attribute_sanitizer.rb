@@ -31,6 +31,12 @@ module AttributeSanitizer
       whitelist[:elements] << "span"
       whitelist[:attributes][:all] << "style"
       whitelist
+      # Sanitize::Config.merge(
+      #   Sanitize::Config::RELAXED,
+      #   elements: Sanitize::Config::RELAXED[:elements] + ['span'],
+      #   attributes: Sanitize::Config::RELAXED[:attributes]['span'] = ['style']
+      #   )
+
     end
 
 end

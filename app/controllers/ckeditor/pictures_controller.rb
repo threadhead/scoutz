@@ -2,11 +2,12 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
 
   def index
     authorize Ckeditor::Picture
-    @pictures = Ckeditor::Picture.find_all(ckeditor_pictures_scope)
-    @pictures = Ckeditor::Paginatable.new(@pictures).page(params[:page])
+    @pictures = Ckeditor::Picture.order(updated_at: :desc)
+    # @pictures = Ckeditor::Paginatable.new(@pictures).page(params[:page])
 
-    respond_with(@pictures, :layout => @pictures.first_page?)
+    respond_with(@pictures, :layout => false)
   end
+
 
   def create
     h = Hash.new
@@ -28,20 +29,17 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
     render text: body
   end
 
+
   def destroy
     authorize @picture
     @picture.destroy
     respond_with(@picture, :location => pictures_path)
   end
 
-  protected
 
+
+  protected
     def find_asset
       @picture = Ckeditor::Picture.get!(params[:id])
-    end
-
-    def authorize_resource
-      model = (@picture || Ckeditor::Picture)
-      @authorization_adapter.try(:authorize, params[:action], model)
     end
 end

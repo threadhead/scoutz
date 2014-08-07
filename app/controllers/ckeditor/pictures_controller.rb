@@ -2,10 +2,10 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
 
   def index
     authorize Ckeditor::Picture
-    @pictures = Ckeditor::Picture.order(updated_at: :desc)
+    @pictures = Ckeditor::Picture.where(unit_id: @unit.id).order(updated_at: :desc)
     # @pictures = Ckeditor::Paginatable.new(@pictures).page(params[:page])
 
-    respond_with(@pictures, :layout => false)
+    respond_with(@pictures, layout: 'ckeditor/application')
   end
 
 
@@ -33,13 +33,14 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
   def destroy
     authorize @picture
     @picture.destroy
-    respond_with(@picture, :location => pictures_path)
+    redirect_to ckeditor_pictures_url
+    # respond_with(@picture, :location => pictures_path)
   end
 
 
 
   protected
     def find_asset
-      @picture = Ckeditor::Picture.get!(params[:id])
+      @picture = Ckeditor::Picture.find(params[:id])
     end
 end

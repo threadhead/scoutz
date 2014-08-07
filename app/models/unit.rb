@@ -8,8 +8,8 @@ class Unit < ActiveRecord::Base
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
   has_many :pages, -> { order(position: :asc) }, dependent: :destroy
-  has_many :pictures, as: :assetable
-  has_many :attachment_files, as: :assetable
+  has_many :pictures, as: :assetable, dependent: :destroy
+  has_many :attachment_files, as: :assetable, dependent: :destroy
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
 

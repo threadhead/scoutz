@@ -3,7 +3,7 @@ class Ckeditor::Asset < ActiveRecord::Base
   self.table_name = "ckeditor_assets"
 
   belongs_to :assetable, :polymorphic => true
-  belongs_to :unit, dependent: :destroy
+  belongs_to :unit
   belongs_to :user
 
   # delegate :url, :current_path, :content_type, to: :data

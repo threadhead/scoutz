@@ -1,9 +1,11 @@
 class Ckeditor::BaseController < ApplicationController
+  before_action :auth_and_time_zone
+  before_action :find_asset, :only => [:destroy]
+  after_action :verify_authorized
 
   respond_to :html, :json
   # layout 'ckeditor/application'
 
-  before_filter :find_asset, :only => [:destroy]
 
   protected
 

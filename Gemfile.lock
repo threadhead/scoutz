@@ -352,6 +352,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    sqlite3 (1.3.9)
     sshkit (1.5.1)
       colorize
       net-scp (>= 1.1.2)
@@ -462,6 +463,7 @@ DEPENDENCIES
   simplecov
   spring
   spring-commands-rspec
+  sqlite3
   state_machine
   terminal-notifier-guard
   twilio-ruby

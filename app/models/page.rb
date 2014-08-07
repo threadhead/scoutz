@@ -1,5 +1,6 @@
 class Page < ActiveRecord::Base
   include TrackableUpdates
+  include AttributeSanitizer
 
   belongs_to :unit
   belongs_to :created_by, class_name: 'User', foreign_key: 'user_id'
@@ -8,17 +9,5 @@ class Page < ActiveRecord::Base
   validates :title, presence: true, length: {in: 1..48}
   validates :body, presence: true
 
-  before_save :sanitize_body
-  def sanitize_body
-    self.body = Sanitize.clean(body, whitelist)
-  end
-
-
-  private
-    def whitelist
-      whitelist = Sanitize::Config::RELAXED
-      whitelist[:elements] << "span"
-      whitelist[:attributes]["span"] = ["style"]
-      whitelist
-    end
+  sanitize_attributes(:body)
 end

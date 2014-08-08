@@ -12,6 +12,8 @@
   = f.text_field :title, autofocus: true, help: 'less than 48 characters', control_col: 'col-md-4'
   = f.form_group :public, help: 'public pages can be seen by anyone without login' do
     = f.check_box :public
+  = f.form_group :front_page, help: 'front pages will be shown below your unit home page, but not on mobile devices' do
+    = f.check_box :front_page
 
   = f.text_area :body, id: 'ckeditor', help: 'you can change the order in which pages appear after you save this page'
 

@@ -10,4 +10,5 @@ class Page < ActiveRecord::Base
   validates :body, presence: true
 
   sanitize_attributes(:body)
+  scope :front_pages, -> { where(front_page: true) }
 end

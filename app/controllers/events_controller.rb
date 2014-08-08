@@ -19,8 +19,9 @@ class EventsController < ApplicationController
     if (params[:start] && params[:end])
       @events = @events.time_range(params[:start], params[:end])
     else
-      @events = @events.from_today.by_start.page(params[:page])
+      @events = @events.from_today.by_start.page(params[:page]).per(10)
     end
+    @pages = @unit.pages.front_pages
 
 
     respond_to do |format|

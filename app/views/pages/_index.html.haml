@@ -5,6 +5,7 @@
     %th Last Change
     %th Created by
     %th Public
+    %th Front
 
   = cache ["unit-#{unit.id}", cache_key_for_pages(pages)] do
     - pages.each do |page|
@@ -28,4 +29,10 @@
 
           %td= page.created_by.try(:name)
 
-          %td= page.public ? 'Yes' : 'No'
+          %td
+            - if page.public
+              %i.fa.fa-check
+
+          %td
+            - if page.front_page
+              %i.fa.fa-check

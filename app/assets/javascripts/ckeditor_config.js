@@ -44,9 +44,6 @@ CKEDITOR.editorConfig = function( config ) {
     { name: 'about', items: [ 'About' ] }
   ];
 
-  // config.removeDialogTabs = 'image:advanced';
-  // config.removeDialogTabs = 'link:advanced';
-
 
   // The location of an external file browser, that should be launched when "Browse Server" button is pressed.
   config.filebrowserBrowseUrl = "/ckeditor/attachment_files";
@@ -126,6 +123,7 @@ CKEDITOR.editorConfig = function( config ) {
     var content, upload;
 
     if (CKEDITOR.tools.indexOf(['link', 'image', 'attachment', 'flash'], dialogName) > -1) {
+      // remove the advanced tabs
       dialogDefinition.removeContents('advanced');
 
       content = (dialogDefinition.getContents('Upload') || dialogDefinition.getContents('upload'));

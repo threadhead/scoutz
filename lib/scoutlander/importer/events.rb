@@ -88,7 +88,7 @@ module Scoutlander
         datum.attire = event_page.search("#{td_id}txtAttire").text
         datum.attire = sl_attire(datum.attire[0])
 
-        datum.message = sanitize_text event_page.search("#{td_id}txtMessage").children.to_s
+        datum.message = event_page.search("#{td_id}txtMessage").children.to_s
         datum.fees = event_page.search("#{td_id}txtFees").text
 
         t = event_page.search("table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants>tr")
@@ -245,20 +245,6 @@ module Scoutlander
       def sl_kind(str)
         @unit.event_kinds[str.to_i]
       end
-
-      private
-        def sanitize_text(text)
-          Sanitize.clean(text, whitelist)
-        end
-
-        def whitelist
-          whitelist = Sanitize::Config::RELAXED
-          whitelist[:elements] << "span"
-          whitelist[:elements] << "div"
-          whitelist[:attributes]["span"] = ["style"]
-          whitelist[:attributes]["div"] = ["style"]
-          whitelist
-        end
 
 
     end

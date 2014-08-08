@@ -1,0 +1,12 @@
+!!! 5
+%html(lang="en")
+  %head
+    = render 'layouts/head'
+
+  %body{ style: "padding-top: 0px !important;" }
+    .container-fluid
+      .row
+        .col-md-12
+          = yield
+
+    = render 'layouts/js'

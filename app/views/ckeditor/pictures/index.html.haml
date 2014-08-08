@@ -1,0 +1,9 @@
+= hidden_field_tag :ckeditor_func_num, params['CKEditorFuncNum']
+
+.pull-right
+  = link_to 'Close', '#', class: 'btn btn-default', id: 'close-window'
+
+%h3 Select file to use
+#fileupload.gal-holder
+  .fileupload-list{"data-endless" => "true"}
+    = render :partial => 'ckeditor/shared/asset', :collection => @pictures

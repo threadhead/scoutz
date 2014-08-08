@@ -9,6 +9,7 @@
  *= require 'jquery-ui-timepicker-addon'
  *= require rails_bootstrap_forms
  *= require 'screen'
+ *= require 'ckeditor'
  *= require_self
 */
 

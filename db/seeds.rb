@@ -184,13 +184,10 @@ end
     event_signup.create_activity :create, unit_id: unit2.id, parameters: {event_id: event.id, scout_id: rnd_scouts[t].id}
     log_item(event_signup, 10)
   end
-
+end
 
 # and some pages too!
 unit1.pages.create(title: 'Merit Badges', body: '<h1>About Merit Badges</h1><p>Type some stuff here...</p>')
 unit1.pages.create(title: 'Eagle Scouts', body: '<h1>About Eagle Scouts</h1><p>Type some stuff here...</p>')
 unit2.pages.create(title: 'Merit Badges', body: '<h1>About Merit Badges</h1><p>Type some stuff here...</p>')
 unit2.pages.create(title: 'Eagle Scouts', body: '<h1>About Eagle Scouts</h1><p>Type some stuff here...</p>')
-
-
-end

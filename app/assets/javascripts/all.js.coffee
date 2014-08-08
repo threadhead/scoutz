@@ -1,9 +1,5 @@
 jQuery ->
-  # focus_field = $('input:text:visible:first')
-  # focus_field.focus()
-  # focus_field.select()
-
-  $('.datetime-picker').datetimepicker(
+  $(".datetime-picker").datetimepicker(
     dateFormat: 'yy-mm-dd',
     stepMinute: 15,
     minuteGrid: 15,
@@ -13,23 +9,12 @@ jQuery ->
   $("[data-toggle='tooltip']").tooltip()
 
 
-  # $("input.search-typeahead").typeahead({
-  #     minLength: 0,
-  #     hint: false
-  #   },
-  #   {
-  #     source: (source, cb) ->
-  #       searchUrl = $("input#search_action").val()
-  #       console.log searchUrl + source
-  #       $.getScript(searchUrl + source)
-  #   })
-
   $("input.search-typeahead").autocomplete({
       minLength: 0,
       autoFocus: true,
       source: (request, response) ->
         searchUrl = $("input#search_action").val()
-        console.log searchUrl + request.term
+        # console.log searchUrl + request.term
         $.getScript(searchUrl + request.term )
     })
 
@@ -74,14 +59,3 @@ jQuery ->
     b = $("#navbar-fixed-lower").position().top - 2 + $("#navbar-fixed-lower").outerHeight()
     #console.log "  navbar lower-position: #{b}"
     $("body").css("padding-top", "#{b}px")
-
-
-#  $('.navbar-lower').affix({
-#    offset: {top: 50}
-#    })
-
-  # this could be used to get dropdown on nav menus, but clicked menus will remain open
-  # becuase of the odd behavior, used the bootstrap_dropdown_hover.js
-  #  $('ul.nav li.dropdown').hover ->
-  #    $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(), ->
-  #      $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut()

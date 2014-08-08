@@ -14,11 +14,13 @@ class Page < ActiveRecord::Base
   end
 
 
+  scope :front_pages, -> { where(front_page: true) }
+
   private
     def whitelist
       whitelist = Sanitize::Config::RELAXED
       whitelist[:elements] << "span"
-      whitelist[:attributes]["span"] = ["style"]
+      whitelist[:attributes][:all] << "style"
       whitelist
     end
 end

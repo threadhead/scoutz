@@ -33,3 +33,19 @@
           = cache [@unit, @unit.activities.limit(10).first] do
             - @unit.activities.limit(10).each do |activity|
               = render_activity activity
+
+.row
+  .col-md-10.col-md-offset-1.hidden-xs
+    = cache ["unit-#{@unit.id}", :event_index, cache_key_for_pages(@pages)] do
+      - @pages.each do |page|
+        = cache ["unit-#{@unit.id}", :event_index,  page] do
+          .panel.panel-default
+            .panel-heading
+              .panel-title= page.title
+            .panel-body= page.body.html_safe
+            .panel-footer
+              .small Last changed: #{page.updated_at.to_s(:short_ampm)}
+              - if policy(page).edit?
+                = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
+                %span.small= '|'
+                = link_to 'reorder', unit_pages_path(@unit), class: 'small'

@@ -1,7 +1,5 @@
 # encoding: utf-8
 class CkeditorAttachmentFileUploader < CarrierWave::Uploader::Base
-  include Ckeditor::Backend::CarrierWave
-
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
@@ -35,6 +33,16 @@ class CkeditorAttachmentFileUploader < CarrierWave::Uploader::Base
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list
-    Ckeditor.attachment_file_types
+    %w(doc docx xls xlsx ppt pptx odt ods pdf rar zip tar tar.gz swf txt csv tab)
   end
+
+  def filename
+    "#{secure_token}.#{file.extension}" if original_filename.present?
+  end
+
+  protected
+    def secure_token
+      var = :"@#{mounted_as}_secure_token"
+      model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+    end
 end

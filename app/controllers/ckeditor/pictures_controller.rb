@@ -3,7 +3,6 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
   def index
     authorize Ckeditor::Picture
     @pictures = Ckeditor::Picture.where(unit_id: @unit.id).order(updated_at: :desc)
-    # @pictures = Ckeditor::Paginatable.new(@pictures).page(params[:page])
 
     respond_with(@pictures, layout: 'ckeditor/application')
   end

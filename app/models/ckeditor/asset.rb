@@ -1,12 +1,12 @@
 class Ckeditor::Asset < ActiveRecord::Base
-  # include Ckeditor::Orm::ActiveRecord::AssetBase
   self.table_name = "ckeditor_assets"
 
   belongs_to :assetable, :polymorphic => true
   belongs_to :unit
   belongs_to :user
 
-  # delegate :url, :current_path, :content_type, to: :data
+  before_save :update_picture_attributes
+  before_create :save_original_filename
 
   # validates_presence_of :data
   validates :data,
@@ -20,10 +20,18 @@ class Ckeditor::Asset < ActiveRecord::Base
   #   errors.add(:data, "should be less than 5M") if data.size > 5.0.megabytes.to_i
   # end
 
+  protected
+    def update_picture_attributes
+      if data.present? #&& data_changed?
+        self.data_content_type = data.file.content_type
+        self.data_file_size = data.file.size
+      end
+    end
 
-  # before_save :set_unit_id
-  # def set_unit_id
-  #   self.unit_id = assetable.try(:unit_id)
-  #   # self.unit_id = Unit.first.id
-  # end
+    def save_original_filename
+      if data.present?
+        self.data_original_file_name = data.file.original_filename
+      end
+    end
+
 end

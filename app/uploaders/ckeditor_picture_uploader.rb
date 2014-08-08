@@ -1,7 +1,5 @@
 # encoding: utf-8
 class CkeditorPictureUploader < CarrierWave::Uploader::Base
-  # include Ckeditor::Backend::CarrierWave
-
   # Include RMagick or ImageScience support:
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
@@ -61,7 +59,6 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
 
   protected
     def secure_token
-      # SecureRandom.uuid
       var = :"@#{mounted_as}_secure_token"
       model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
     end

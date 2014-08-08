@@ -4,7 +4,11 @@
       %i.fa.fa-trash-o
 
   .fileupload-file.gal-inner-holder
-    .img= image_tag asset.data.thumb.url, title: asset.data_file_name
+    - if asset.data.try(:thumb)
+      .img= image_tag asset.data.thumb.url, title: asset.data_file_name
+    - else
+      -# .img= image_tag data_thumb_image(asset), title: asset.data_file_name, height: '96px'
+      .img= data_thumb_image(asset).html_safe
     .img-data
       .img-name= asset.data_original_file_name
       .time-size

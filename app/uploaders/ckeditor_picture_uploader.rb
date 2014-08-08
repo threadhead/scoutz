@@ -32,7 +32,13 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   #   # do something
   # end
 
-  # process :read_dimensions
+  process :read_dimensions
+
+  def read_dimensions
+    if file && model
+      model.width, model.height = ::MiniMagick::Image.open(file.file)[:dimensions]
+    end
+  end
 
   # Create different versions of your uploaded files:
   version :thumb do

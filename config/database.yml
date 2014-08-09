@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: scoutz_production
-  username: postg
-  password: <%= ENV['POSTG_DATABASE_PASSWORD'] %>
+  # username: postg
+  # password: <%= ENV['POSTG_DATABASE_PASSWORD'] %>

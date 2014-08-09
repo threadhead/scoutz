@@ -14,5 +14,7 @@
 //= require jquery-ui/slider
 //= require jquery-ui/datepicker
 //= require jquery-ui/autocomplete
+//= require jquery-ui-sliderAccess
+//= require jquery-ui-timepicker-addon
 //= stub ckeditor_config.js
 //= require_tree .

@@ -49,7 +49,7 @@
           #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
             .well.well-sm
               %strong.large Select #{@unit.sub_unit_name}s in event
-              = f.check_boxes_collection :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true, control_col: 'col-md-12'
+              = f.collection_check_boxes :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true, control_col: 'col-md-12'
 
   .row
     .col-md-12

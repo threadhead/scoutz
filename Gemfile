@@ -70,7 +70,7 @@ gem 'bourbon'
 gem 'jquery-rails'
 
 #fullCalendar is sensitive to the jQuery/jQuery UI version!
-gem 'jquery-ui-rails'
+# gem 'jquery-ui-rails'
 gem 'whenever', :require => false
 
 group :development, :test do

@@ -22,8 +22,12 @@
             = link_to page.title, show_admin_unit_page_path(@unit, page), class: 'xlarge'
             %br/
             = link_to 'show', show_admin_unit_page_path(@unit, page), class: 'small'
-            %span.small= '|'
-            = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
+            - if policy(page).edit?
+              %span.small= '|'
+              = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
+            - if policy(page).destroy?
+              %span.small= '|'
+              = link_to 'delete', [@unit, page], method: :delete, data: {confirm: 'Are you sure?'}, class: 'small red-color'
 
           %td= page.updated_at.to_s(:short_ampm)
 

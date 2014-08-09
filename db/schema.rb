@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140808123310) do
+ActiveRecord::Schema.define(version: 20140809182959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -244,11 +244,11 @@ ActiveRecord::Schema.define(version: 20140808123310) do
     t.integer  "position"
     t.integer  "unit_id"
     t.integer  "user_id"
-    t.boolean  "public"
+    t.boolean  "public",         default: false
     t.text     "update_history"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "front_page"
+    t.boolean  "front_page",     default: false
   end
 
   add_index "pages", ["position"], name: "index_pages_on_position", using: :btree

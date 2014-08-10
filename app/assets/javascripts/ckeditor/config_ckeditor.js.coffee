@@ -1,2 +1,1 @@
-jQuery ->
-  CKEDITOR.replace('ckeditor', { customConfig: '/assets/ckeditor_config.js' })
+CKEDITOR.replace('ckeditor', { customConfig: '/assets/ckeditor_config.js' })

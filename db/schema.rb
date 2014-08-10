@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140809182959) do
+ActiveRecord::Schema.define(version: 20140810005230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -297,6 +297,18 @@ ActiveRecord::Schema.define(version: 20140809182959) do
   end
 
   add_index "sub_units", ["unit_id"], name: "index_sub_units_on_unit_id", using: :btree
+
+  create_table "unit_positions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "unit_id"
+    t.string   "leadership"
+    t.string   "additional"
+    t.integer  "role",       default: 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "unit_positions", ["user_id", "unit_id"], name: "index_unit_positions_on_user_id_and_unit_id", using: :btree
 
   create_table "units", force: true do |t|
     t.string   "unit_type"

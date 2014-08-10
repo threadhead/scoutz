@@ -69,7 +69,7 @@ class EmailMessage < ActiveRecord::Base
     when 1
       self.unit.users.gets_email_blast
     when 2
-      self.unit.users.leaders.gets_email_blast
+      self.unit.users.unit_leaders(self.unit).gets_email_blast
     when 3
       # su_users = []
       # sub_units.each { |su| su_users << su.users_receiving_email_blast }

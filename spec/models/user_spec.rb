@@ -130,26 +130,31 @@ RSpec.describe User do
 
 
   context 'scopes' do
-    describe '.leaders' do
+    describe '.unit_leaders' do
       before(:all) do
-        @a1 = FactoryGirl.create(:adult, leadership_position: '')
-        @a2 = FactoryGirl.create(:adult, leadership_position: 'Scoutmaster')
-        @a3 = FactoryGirl.create(:adult, additional_leadership_positions: 'Quartermaster')
-        @s1 = FactoryGirl.create(:scout, additional_leadership_positions: '')
-        @s2 = FactoryGirl.create(:scout, leadership_position: 'Scoutmaster')
-        @s3 = FactoryGirl.create(:scout, additional_leadership_positions: 'Quartermaster')
+        @u1 = FactoryGirl.build_stubbed(:unit)
+        @a1 = FactoryGirl.create(:adult)
+        @a2 = FactoryGirl.create(:adult)
+        @a2.unit_positions.create(unit_id: @u1.id, leadership: 'Scoutmaster')
+        @a3 = FactoryGirl.create(:adult)
+        @a3.unit_positions.create(unit_id: @u1.id, additional: 'Quartermaster')
+        @s1 = FactoryGirl.create(:scout)
+        @s2 = FactoryGirl.create(:scout)
+        @s2.unit_positions.create(unit_id: @u1.id, leadership: 'Scoutmaster')
+        @s3 = FactoryGirl.create(:scout)
+        @s3.unit_positions.create(unit_id: @u1.id, additional: 'Quartermaster')
       end
-      after(:all) { [@a1, @a2, @a3, @s1, @s2, @s3].each {|d| d.delete } }
+      after(:all) { [@u1, @a1, @a2, @a3, @s1, @s2, @s3].each {|d| d.delete } }
 
-      specify { expect(Adult.leaders.count).to eq(2) }
-      specify { expect(Adult.leaders).to include(@a3) }
-      specify { expect(Adult.leaders).to include(@a2) }
-      specify { expect(Adult.leaders).not_to include(@a1) }
+      specify { expect(Adult.unit_leaders(@u1).count).to eq(2) }
+      specify { expect(Adult.unit_leaders(@u1)).to include(@a3) }
+      specify { expect(Adult.unit_leaders(@u1)).to include(@a2) }
+      specify { expect(Adult.unit_leaders(@u1)).not_to include(@a1) }
 
-      specify { expect(Scout.leaders.count).to eq(2) }
-      specify { expect(Scout.leaders).to include(@s3) }
-      specify { expect(Scout.leaders).to include(@s2) }
-      specify { expect(Scout.leaders).not_to include(@s1) }
+      specify { expect(Scout.unit_leaders(@u1).count).to eq(2) }
+      specify { expect(Scout.unit_leaders(@u1)).to include(@s3) }
+      specify { expect(Scout.unit_leaders(@u1)).to include(@s2) }
+      specify { expect(Scout.unit_leaders(@u1)).not_to include(@s1) }
     end
 
     describe '.with_email' do

@@ -52,7 +52,7 @@ module EventReminders
       self.sub_units.each { |su| sub_unit_users << su.users_receiving_email_reminder }
       sub_unit_users.flatten
     when 'Leader Event'
-      self.unit.users.leaders.gets_email_reminder
+      self.unit.users.unit_leaders(self.unit).gets_email_reminder
     end
   end
 
@@ -65,7 +65,7 @@ module EventReminders
       self.sub_units.each { |su| sub_unit_users << su.users_receiving_sms_reminder }
       sub_unit_users.flatten
     when 'Leader Event'
-      self.unit.users.leaders.gets_sms_reminder
+      self.unit.users.unit_leaders(self.unit).gets_sms_reminder
     end
   end
 

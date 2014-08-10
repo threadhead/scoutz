@@ -56,11 +56,11 @@
             %td
               %strong Position
             %td
-              = @user.leadership_position
+              = all_leadership_positions(@unit, @user)
 
           %tr
             %td
-              %strong= @user.sub_unit.try(:unit).try(:sub_unit_name)
+              %strong= @unit.sub_unit_name
             %td
               = @user.sub_unit.try(:name)
 

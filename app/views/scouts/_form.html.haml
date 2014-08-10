@@ -22,9 +22,13 @@
 
   = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true, control_col: 'col-md-4'
   = f.select :rank, @unit.ranks, include_blank: true, control_col: 'col-md-2'
-  = f.select :leadership_position, @unit.scout_leadership_positions, include_blank: true, control_col: 'col-md-4'
 
-  = f.text_field :additional_leadership_positions, class: 'form-control', placeholder: 'additional leadership positions', control_col: 'col-md-6', hide_label: true
+
+  = f.fields_for :unit_positions, @user.unit_positions.unit(@unit) || UnitPosition.new do |ff|
+    = ff.hidden_field :unit_id, value: @unit.id
+    = ff.select :leadership, @unit.scout_leadership_positions, include_blank: true, control_col: 'col-md-4'
+    = ff.text_field :additional, class: 'form-control', placeholder: 'additional leadership positions', control_col: 'col-md-6', hide_label: true
+
 
   = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
 
@@ -77,7 +81,7 @@
 
   %fieldset
     %legend Parents (adults)
-    = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Parents', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout'}, multiple: true, style: "width: 500px"
+    = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Parents', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout'}, {multiple: true, style: "width: 500px"}
 
 
   = f.form_group do

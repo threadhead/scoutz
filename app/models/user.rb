@@ -26,12 +26,12 @@ class User < ActiveRecord::Base
 
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)
-      where(counselors:{unit_id: unit_id})
+      where(counselors: {unit_id: unit_id})
     end
   end
   has_many :merit_badges, through: :counselors, autosave: true do
     def unit(unit_id)
-      where(counselors:{unit_id: unit_id})
+      where(counselors: {unit_id: unit_id})
     end
   end
   accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['merit_badge_id'].blank? }, allow_destroy: true
@@ -39,14 +39,20 @@ class User < ActiveRecord::Base
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a["number"].blank? }
 
+  has_many :unit_positions, inverse_of: :user, dependent: :destroy do
+    def unit(unit_id)
+      where(unit_positions: {unit_id: unit_id}).first
+    end
+  end
+  accepts_nested_attributes_for :unit_positions
+
+
+
+
   before_save :update_picture_attributes
   before_create :save_original_filename
 
-  # Setup accessible (or protected) attributes for your model
-  # attr_accessible :email, :password, :password_confirmation, :remember_me
-  # attr_accessible :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone
-  # attr_accessible :birth, :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :send_reminders
-  # attr_accessible :adult_ids, :scout_ids
+
 
   validates_presence_of :first_name, :last_name
 
@@ -180,9 +186,9 @@ class User < ActiveRecord::Base
     sms_number_verified_at != nil
   end
 
-  def all_leadership_positions
-    [leadership_position, additional_leadership_positions].reject(&:blank?).compact.join(', ')
-  end
+  # def all_leadership_positions
+  #   [leadership_position, additional_leadership_positions].reject(&:blank?).compact.join(', ')
+  # end
 
 
 
@@ -192,7 +198,7 @@ class User < ActiveRecord::Base
   scope :with_email, -> { where.not(email: '') }
   scope :with_sms, -> { where.not(sms_number: '', sms_provider: '') }
   # scope :leaders, -> { where('"users"."leadership_position" IS NOT NULL OR "users"."additional_leadership_positions" IS NOT NULL') }
-  scope :leaders, -> { where(arel_table[:leadership_position].not_eq('').or(arel_table[:additional_leadership_positions].not_eq(''))) }
+  # scope :leaders, -> { where(arel_table[:leadership_position].not_eq('').or(arel_table[:additional_leadership_positions].not_eq(''))) }
 
   scope :gets_email_blast, -> { with_email.where(blast_email: true) }
   scope :gets_sms_blast, -> { with_sms.where(blast_sms: true) }
@@ -207,6 +213,10 @@ class User < ActiveRecord::Base
 
   scope :name_contains, ->(n) { where("users.first_name ILIKE ? OR users.last_name ILIKE ?", "%#{n}%", "%#{n}%") }
 
+  def self.unit_leaders(unit)
+    t = UnitPosition.arel_table
+    joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where( t[:leadership].not_eq('').or(t[:additional].not_eq('')) )
+  end
 
 
   def turn_off_all_notifications

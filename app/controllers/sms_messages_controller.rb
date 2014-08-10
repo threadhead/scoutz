@@ -58,7 +58,7 @@ class SmsMessagesController < ApplicationController
 
   private
     def set_send_to_lists
-      @leaders = @unit.users.leaders.gets_sms_message.by_name_lf
+      @leaders = @unit.users.unit_leaders(@unit).gets_sms_message.by_name_lf
       @sub_units = @unit.sub_units.by_name
       @unit_users = @unit.users.gets_sms_message.by_name_lf
     end

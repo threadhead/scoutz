@@ -69,7 +69,7 @@ class EmailMessagesController < ApplicationController
     end
 
     def set_send_to_lists
-      @leaders = @unit.users.leaders.gets_email_blast.by_name_lf
+      @leaders = @unit.users.unit_leaders(@unit).gets_email_blast.by_name_lf
       @sub_units = @unit.sub_units.by_name
       @unit_users = @unit.users.gets_email_blast.by_name_lf
     end

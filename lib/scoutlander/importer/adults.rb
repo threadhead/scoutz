@@ -131,6 +131,7 @@ module Scoutlander
             user.update_attributes(adult.to_params)
             disable_all_notifications(user)
             add_user_to_unit(user)
+            add_unit_positions(user, adult)
             create_phones(user, adult)
             find_and_associate_scout(user, adult)
 

@@ -43,6 +43,7 @@ module Scoutlander
             user.update_attributes(scout.to_params)
             disable_all_notifications(user)
             add_user_to_unit(user)
+            add_unit_positions(user, scout)
             create_phones(user, scout)
 
           rescue ActiveRecord::RecordInvalid

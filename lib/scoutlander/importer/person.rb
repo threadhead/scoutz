@@ -136,6 +136,11 @@ module Scoutlander
         end
       end
 
+      def add_unit_positions(resource, datum)
+        unit_position = UnitPosition.find_or_initialize_by(unit_id: @unit.id, user_id: resource.id)
+        unit_position.update_attributes(leadership: datum.leadership_position, additional: datum.additional_leadership_positions)
+      end
+
     end
   end
 end

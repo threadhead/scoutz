@@ -29,7 +29,7 @@ module Scoutz
     # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     # config.assets.precompile += ['jquery.js']
-    config.assets.precompile += ['ckeditor_config.js']
+    config.assets.precompile += ['ckeditor_config.js', 'ckeditor/config_ckeditor.js']
 
 
     # Override layout for devise controllers

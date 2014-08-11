@@ -13,5 +13,6 @@
 //= require jquery_ujs
 //= require jquery-ui-sliderAccess
 //= require jquery-ui-timepicker-addon
+//= stub ckeditor/config_ckeditor.js
 //= stub ckeditor_config.js
 //= require_tree .

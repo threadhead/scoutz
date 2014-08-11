@@ -20,8 +20,11 @@
           %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
           %i.fa.fa-question.fa-stack-1x.fa-inverse
 
-  = f.select :leadership_position, @unit.adult_leadership_positions, include_blank: true, control_col: 'col-md-4'
-  = f.text_field :additional_leadership_positions, hide_label: true, control_col: 'col-md-6', placeholder: 'additional leadership positions'
+  = f.fields_for :unit_positions, @user.unit_positions.unit(@unit) || UnitPosition.new do |ff|
+    = ff.hidden_field :unit_id, value: @unit.id
+    = ff.select :leadership, @unit.adult_leadership_positions, include_blank: true, control_col: 'col-md-4'
+    = ff.text_field :additional, class: 'form-control', placeholder: 'additional leadership positions', control_col: 'col-md-6', hide_label: true
+
 
   = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
 

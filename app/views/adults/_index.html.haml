@@ -16,7 +16,7 @@
                 = image_tag adult.picture.thumb.url, class: 'circle-picture'
 
             %td= link_to adult.name_lf, unit_adult_path(unit, adult)
-            %td= adult.all_leadership_positions
+            %td= all_leadership_positions(@unit, adult)
             %td= unit_scouts_link_list(unit, adult.unit_scouts(unit))
 
   %small showing #{users.size} of #{users_count}

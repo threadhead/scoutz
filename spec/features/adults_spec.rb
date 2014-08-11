@@ -44,8 +44,8 @@ RSpec.describe 'Adults' do
 
         within 'form#new_adult' do
           fill_in 'Email', with: 'rusty.balls@aol.com'
-          select 'Webmaster', from: 'Leadership position'
-          fill_in 'adult_additional_leadership_positions', with: 'Joker'
+          select 'Webmaster', from: 'adult_unit_positions_attributes_0_leadership'
+          fill_in 'adult_unit_positions_attributes_0_additional', with: 'Joker'
           select '1955', from: 'adult_birth_1i'
           select 'February', from: 'adult_birth_2i'
           select '14', from: 'adult_birth_3i'
@@ -178,7 +178,7 @@ RSpec.describe 'Adults' do
 
       within "form#edit_adult_#{@user2.id}" do
         fill_in 'adult_first_name', with: 'Fionula'
-        fill_in 'adult_additional_leadership_positions', with: 'Jester'
+        fill_in 'adult[unit_positions_attributes][0][additional]', with: 'Jester'
       end
     end
 

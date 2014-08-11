@@ -7,7 +7,6 @@ class UsersController < ApplicationController
 
   def show
     authorize @user
-    # logger.info "CONTROLLER_TYPE: #{controller_type}"
   end
 
   def edit
@@ -17,6 +16,7 @@ class UsersController < ApplicationController
   def new(ar_model)
     @user = ar_model.new
     authorize @user
+    # @user.unit_positions.create(unit_id: @unit.id)
   end
 
 
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     def user_params
       params.require(controller_type).permit(
             :first_name, :last_name, :address1, :address2, :city, :state, :zip_code, :time_zone, :birth, :email,
-            :rank, :leadership_position, :additional_leadership_positions, :sub_unit_id, :role,
+            :rank, :sub_unit_id, :role,
             :send_reminders,
             :picture, :remove_picture,
             :sms_number, :sms_provider,
@@ -43,7 +43,8 @@ class UsersController < ApplicationController
             :event_reminder_email, :event_reminder_sms, :signup_deadline_email, :signup_deadline_sms,
             :weekly_newsletter_email, :monthly_newsletter_email,
             phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [], adult_ids: [],
-            counselors_attributes: [:id, :merit_badge_id, :unit_id, :_destroy]
+            counselors_attributes: [:id, :merit_badge_id, :unit_id, :_destroy],
+            unit_positions_attributes: [:id, :leadership, :additional, :unit_id]
             )
     end
 

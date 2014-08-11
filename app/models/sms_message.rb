@@ -27,7 +27,7 @@ class SmsMessage < ActiveRecord::Base
     when 1
       self.unit.users.gets_sms_message
     when 2
-      self.unit.users.leaders.gets_sms_message
+      self.unit.users.unit_leaders(self.unit).gets_sms_message
     when 3
       # su_users = []
       # sub_units.each { |su| su_users << su.users_receiving_sms_message }

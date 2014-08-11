@@ -44,7 +44,7 @@ module Scoutlander
       end
 
       def to_params
-        to_params_without(:inspected, :sub_unit, :relations, :parent, :security_level, :home_phone, :work_phone, :cell_phone, :sl_url)
+        to_params_without(:inspected, :sub_unit, :relations, :parent, :security_level, :home_phone, :work_phone, :cell_phone, :sl_url, :leadership_position, :additional_leadership_positions)
       end
 
     end

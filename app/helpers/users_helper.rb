@@ -24,6 +24,12 @@ module UsersHelper
     roles.keys.map{|r| [r.titleize, r]}
   end
 
+  def all_leadership_positions(unit, user)
+    user_positions = user.unit_positions.unit(unit.id)
+    return '' unless user_positions
+    [user_positions.leadership, user.unit_positions.unit(unit.id).additional].reject(&:blank?).compact.join(', ')
+  end
+
 
   def birthdate_and_years_old(user)
     if user.birth

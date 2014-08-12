@@ -6,16 +6,13 @@ gem 'dotenv-deployment'
 
 gem 'rails', '4.1.4'
 
-# gem 'sqlite3'
 gem 'pg'
 
-# gem 'thin'
 # gem 'rake'
 
 gem 'devise'
 # gem 'devise-async'
 gem 'haml'
-# gem 'cancan'
 gem 'pundit'
 gem 'state_machine'
 gem 'carrierwave'
@@ -38,13 +35,8 @@ gem 'kaminari'
 gem 'acts_as_list'
 # gem 'attr_searchable'
 
-# add these gems to help with the transition:
-# gem 'protected_attributes'
-# gem 'rails-observers'
-# gem 'actionpack-page_caching'
-# gem 'actionpack-action_caching'
 
-gem 'twilio-ruby'
+#gem 'twilio-ruby'
 gem 'rest-client'
 gem 'icalendar'
 

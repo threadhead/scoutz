@@ -1,6 +1,16 @@
+%p
+  = link_to unit_pages_path(@unit, active: true) do
+    active
+    %span.badge= @unit.pages.active.count
+  |
+  =link_to unit_pages_path(@unit, active: false) do
+    inactive
+    %span.badge= @unit.pages.deactivated.count
+
 %table.table.table-outside-bordered
   %tr
     %th Reorder
+    %th Active
     %th Title
     %th Last Change
     %th Created by
@@ -10,14 +20,20 @@
   = cache ["unit-#{unit.id}", cache_key_for_pages(pages)] do
     - pages.each do |page|
       = cache ["unit-#{unit.id}", page] do
-        %tr
+        %tr{class: ('warning' if page.deactivated?)}
           %td
-            = link_to move_higher_unit_page_path(@unit, page) do
-              %i.fa.fa-arrow-up.green-color
-            %br
-            = link_to move_lower_unit_page_path(@unit, page) do
-              %i.fa.fa-arrow-down.red-color
+            - if page.active?
+              = link_to move_higher_unit_page_path(@unit, page) do
+                %i.fa.fa-arrow-up.green-color
+              %br
+              = link_to move_lower_unit_page_path(@unit, page) do
+                %i.fa.fa-arrow-down.red-color
 
+          %td
+            - if page.active?
+              %span.label.label-success active
+            - else
+              %span.label.label-warning inactive
           %td
             = link_to page.title, show_admin_unit_page_path(@unit, page), class: 'xlarge'
             %br/
@@ -25,9 +41,16 @@
             - if policy(page).edit?
               %span.small= '|'
               = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
-            - if policy(page).destroy?
+            - if policy(page).deactivate?
+              %span.small= '|'
+              - if page.active?
+                = link_to 'deactivate', deactivate_unit_page_path(@unit, page), method: :delete, class: 'small orange-color'
+              - else
+                = link_to 'activate', activate_unit_page_path(@unit, page), method: :patch, class: 'small green-color'
+            - if policy(page).destroy? && page.deactivated?
               %span.small= '|'
               = link_to 'delete', [@unit, page], method: :delete, data: {confirm: 'Are you sure?'}, class: 'small red-color'
+
 
           %td= page.updated_at.to_s(:short_ampm)
 
@@ -40,3 +63,8 @@
           %td
             - if page.front_page
               %i.fa.fa-check
+
+%p.help-block
+  inactive pages will not be shown to users, keep them around to use later
+  %br
+  to delete a page, you must first make deactivate it

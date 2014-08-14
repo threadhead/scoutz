@@ -124,7 +124,7 @@
                   New Event
 
 
-        - if @unit.pages.count > 0 || policy(Page).index?
+        - if @unit.pages.active.count > 0 || policy(Page).index?
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               %i.fa.fa-file-text-o
@@ -132,12 +132,12 @@
               %i.fa.fa-caret-down
 
             %ul.dropdown-menu
-              - @unit.pages.each do |page|
+              - @unit.pages.active.each do |page|
                 %li= link_to page.title, [@unit, page]
 
               - if policy(Page).index?
                 %li.divider
-                %li= link_to 'List/Reorder', unit_pages_path(@unit)
+                %li= link_to 'Edit/Reorder', unit_pages_path(@unit)
 
 
 

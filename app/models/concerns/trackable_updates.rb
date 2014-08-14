@@ -10,9 +10,9 @@ module TrackableUpdates
     if self.column_names.include?('update_history')
       include ActiveModel::Dirty
       before_save :history_update, if: :changed?
-      # if self.ancestors.include?(Deactivatable)
-      #   after_deactivation :history_deactivated
-      # end
+      if self.ancestors.include?(Deactivatable)
+        after_deactivation :history_deactivated
+      end
     end
   end
 

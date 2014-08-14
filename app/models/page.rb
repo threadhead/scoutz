@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
   include TrackableUpdates
   include AttributeSanitizer
+  include Deactivatable
 
   belongs_to :unit
   belongs_to :created_by, class_name: 'User', foreign_key: 'user_id'
@@ -10,5 +11,7 @@ class Page < ActiveRecord::Base
   validates :body, presence: true
 
   sanitize_attributes(:body)
-  scope :front_pages, -> { where(front_page: true) }
+
+  scope :front_pages, -> { active.where(front_page: true) }
+  scope :public_pages, -> { active.where(public: true) }
 end

@@ -26,6 +26,8 @@ Scoutz::Application.routes.draw do
     resources :merit_badges
     resources :pages do
       member do
+        delete 'deactivate'
+        patch 'activate'
         get 'move_higher'
         get 'move_lower'
         get 'show_admin'

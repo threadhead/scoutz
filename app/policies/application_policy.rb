@@ -1,12 +1,14 @@
 class ApplicationPolicy < Struct.new(:user, :record)
 
-  def index?;     false;     end
-  def show?;      false;     end
-  def create?;    false;     end
-  def new?;       create?;   end
-  def update?;    false;     end
-  def edit?;      update?;   end
-  def destroy?;   false;     end
+  def index?;       false;     end
+  def show?;        false;     end
+  def create?;      false;     end
+  def new?;         create?;   end
+  def update?;      false;     end
+  def edit?;        update?;   end
+  def destroy?;     false;     end
+  def deactivate?;  update?;   end
+  def activate?;    update?;   end
 
   def user_role_at_least_basic
     user.role_at_least(:basic)

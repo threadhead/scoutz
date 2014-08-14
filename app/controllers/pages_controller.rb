@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   before_action :auth_and_time_zone
-  before_action :set_page, only: [:show, :show_admin, :edit, :update, :destroy, :move_higher, :move_lower]
+  before_action :set_page, except: [:index, :new, :create]
   after_action :verify_authorized
 
 
@@ -56,7 +56,22 @@ class PagesController < ApplicationController
   def destroy
     authorize @page
     @page.destroy
-    redirect_to unit_pages_url(@unit), notice: 'Page was successfully destroyed.'
+    redirect_to unit_pages_url(@unit), notice: 'Page was successfully deleted.'
+  end
+
+  def deactivate
+    authorize @page
+    @page.remove_from_list
+    @page.deactivate!
+    redirect_to unit_pages_url(@unit), notice: "The #{@page.title} page was successfully deactivated."
+  end
+
+  def activate
+    authorize @page
+    @page.activate!
+    @page.insert_at(999999)
+    @page.move_to_bottom
+    redirect_to unit_pages_url(@unit), notice: "The #{@page.title} page was activated and moved to the bottom."
   end
 
 
@@ -64,14 +79,14 @@ class PagesController < ApplicationController
     authorize @page
     @page.move_higher
     set_pages
-    render :index
+    render :index, notice: "The #{@page.title} page was moved up one position."
   end
 
   def move_lower
     authorize @page
     @page.move_lower
     set_pages
-    render :index
+    render :index, notice: "The #{@page.title} page was moved down one position."
   end
 
   private

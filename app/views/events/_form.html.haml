@@ -40,7 +40,7 @@
         = f.text_field :location_state, label: 'State', control_col: 'col-md-3'
         = f.text_field :location_zip_code, label: 'Zip', control_col: 'col-md-3'
 
-        = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL'
+        = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL', help: "if you don't enter a map url, the above address will be used to display a map"
 
     .col-md-3
       .row
@@ -55,9 +55,9 @@
     .col-md-12
       %fieldset
         %legend Details
-        %br
-        = text_area_tag 'event[message]', @event.message, id: 'ckeditor'
-        %br
+        .col-md-10.col-md-offset-2
+          = text_area_tag 'event[message]', @event.message, id: 'ckeditor'
+          %br
 
   .row
     .col-md-9

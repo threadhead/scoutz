@@ -147,7 +147,11 @@ class User < ActiveRecord::Base
   end
 
   def f_name_l_initial
-    "#{first_name} #{last_name[0,1]}."
+    "#{first_name} #{last_name[0]}."
+  end
+
+  def initials
+    "#{first_name[0]}#{last_name[0]}".upcase
   end
 
   def age
@@ -216,6 +220,11 @@ class User < ActiveRecord::Base
   def self.unit_leaders(unit)
     t = UnitPosition.arel_table
     joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where( t[:leadership].not_eq('').or(t[:additional].not_eq('')) )
+  end
+
+  def self.meta_search(unit_scope: nil, keywords:)
+    meta_users = unit_scope.nil? ? User.all : unit_scope.users
+    meta_users.name_contains(keywords)
   end
 
 

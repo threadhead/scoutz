@@ -129,6 +129,14 @@ class Event < ActiveRecord::Base
   scope :from_today, -> { where('start_at >= ? OR end_at >= ?', Time.zone.now.beginning_of_day, Time.zone.now.beginning_of_day) }
   scope :newsletter_next_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week)}
   scope :newsletter_next_month, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_month.end_of_month) }
+  scope :contains_search, ->(n) { where("events.name ILIKE ? OR events.location_name ILIKE ? OR events.message ILIKE ?", "%#{n}%", "%#{n}%", "%#{n}%") }
+
+  def self.meta_search(unit_scope: nil, keywords:)
+    meta_events = unit_scope.nil? ? Event.all : unit_scope.events
+    meta_events.contains_search(keywords)
+  end
+
+
 
 
   def disable_reminder_if_old

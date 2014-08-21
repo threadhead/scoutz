@@ -16,7 +16,7 @@
           %tr
             %td.centered
               - if scout.picture.present?
-                .circle-picture.circle-picture-sm{style: "background:url(#{scout.picture.thumb.url});"}
+                = image_tag scout.picture.thumb.url, class: 'circle-picture circle-picture-sm'
               - else
                 .initial-circle.initial-circle-scout= scout.initials
 

@@ -74,6 +74,8 @@ Scoutz::Application.routes.draw do
   put "sms/send_verification"
   # resources :after_signup
 
+  get "meta_search" => "meta_search#index"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

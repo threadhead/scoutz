@@ -1,5 +1,16 @@
 .row
   .col-md-12
+    %br
+    %form.form-inline
+      .form-group
+        .input-group
+          %span.input-group-addon
+            %i.fa.fa-search
+          = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search', autofocus: true
+
+
+.row
+  .col-md-12
     .page-header
       .pull-right
         - if policy(Event).new?
@@ -8,6 +19,8 @@
             new event
 
       %h2 #{@unit.name_unit} Upcoming Events
+
+
 
 
 .row

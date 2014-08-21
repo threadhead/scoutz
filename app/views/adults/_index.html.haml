@@ -13,7 +13,9 @@
           %tr
             %td.centered
               - if adult.picture.present?
-                = image_tag adult.picture.thumb.url, class: 'circle-picture'
+                = image_tag adult.picture.thumb.url, class: 'circle-picture circle-picture-sm'
+              - else
+                .initial-circle.initial-circle-adult= adult.initials
 
             %td= link_to adult.name_lf, unit_adult_path(unit, adult)
             %td= all_leadership_positions(@unit, adult)

@@ -76,3 +76,11 @@ jQuery ->
       $("div#event-signup-modal-form").modal()
       )
     )
+
+
+  $("input.search-meta").autocomplete({
+    source: "/meta_search"
+    })
+  .autocomplete("instance")._renderItem = (ul, item) ->
+      $("<li>").append("<b>" + item.title + "</b>" + "<hr class='hr-li-autocomplete'>").appendTo(ul)
+

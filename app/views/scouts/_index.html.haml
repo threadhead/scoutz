@@ -14,9 +14,12 @@
       - users.each do |scout|
         = cache ["unit-#{unit.id}", scout] do
           %tr
-            %td.user-picture
+            %td.centered
               - if scout.picture.present?
-                %div.circle-picture.circle-picture-sm{style: "background:url(#{scout.picture.thumb.url})"}
+                .circle-picture.circle-picture-sm{style: "background:url(#{scout.picture.thumb.url});"}
+              - else
+                .initial-circle.initial-circle-scout= scout.initials
+
             %td= link_to scout.name_lf, unit_scout_path(unit, scout)
             %td= scout.sub_unit.try(:name)
             %td= scout.rank

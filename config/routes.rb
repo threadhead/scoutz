@@ -1,10 +1,5 @@
 Scoutz::Application.routes.draw do
-  # mount Ckeditor::Engine => '/ckeditor'
-  namespace :ckeditor do
-    resources :pictures, :only => [:index, :create, :destroy]
-    resources :attachment_files, :only => [:index, :create, :destroy]
-  end
-
+  get 'meta_search' => 'meta_search#index'
   devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
   # get "events/index"
 
@@ -51,10 +46,12 @@ Scoutz::Application.routes.draw do
 
   resources :sub_units
 
+  namespace :ckeditor do
+    resources :pictures, :only => [:index, :create, :destroy]
+    resources :attachment_files, :only => [:index, :create, :destroy]
+  end
+
   post 'units/new' => 'units#new'
-  # resources :users
-  # resources :scouts
-  # resources :adults
   resources :event_signups
 
   get "page/landing"

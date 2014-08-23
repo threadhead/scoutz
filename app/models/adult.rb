@@ -36,4 +36,23 @@ class Adult < User
     # the differential
     ( all - (sub_unit - update_clean) + (update_clean - sub_unit)).uniq
   end
+
+
+  def self.meta_search(unit_scope: nil, keywords:)
+    meta_users = unit_scope.nil? ? Adult.all : unit_scope.adults
+    meta_users.pg_meta_search(keywords)
+  end
+
+
+  def meta_search_json(unit_scope:)
+    { resource: 'adult',
+      initials: initials,
+      id: id,
+      name: name,
+      desc: unit_positions.unit(unit_scope.id).try(:leadership) || '',
+      url: Rails.application.routes.url_helpers.unit_adult_path(unit_scope, id)
+    }
+  end
+
+
 end

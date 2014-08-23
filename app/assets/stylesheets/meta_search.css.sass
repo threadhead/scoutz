@@ -3,7 +3,7 @@
   position: absolute
   top: 100%
   left: 0
-  z-index: 1000
+  z-index: 5000
   float: left
   display: none
   min-width: 160px
@@ -49,7 +49,10 @@ hr.hr-li-autocomplete
 .ui-menu-item.ui-state-focus
   background: none
 
-.ui-autocomplete-category
-  margin-top: 6px
+li.ui-autocomplete-category
+  padding: 3px 15px
+  // margin-top: 12px !important
   font-weight: bold
   background: #ddd
+  &:not(:first-child)
+    margin-top: 24px

@@ -28,7 +28,7 @@ jQuery ->
       $.each items, (index, item) ->
         li = undefined
         unless item.resource == currentCategory
-          ul.append "<li class='ui-autocomplete-category ui-menu-item'>" + toTitleCase(item.resource + 's') + "</li>"
+          ul.append "<li class='ui-autocomplete-category'>" + toTitleCase(item.resource + 's') + "</li>"
           currentCategory = item.resource
 
 

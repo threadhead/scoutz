@@ -33,6 +33,8 @@ gem "non-stupid-digest-assets"
 gem 'bootstrap_form'
 gem 'kaminari'
 gem 'acts_as_list'
+gem 'pg_search'
+# gem 'textacular', require: 'textacular/searchable'
 # gem 'attr_searchable'
 
 

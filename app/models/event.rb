@@ -2,6 +2,7 @@ class Event < ActiveRecord::Base
   include EventCalendar
   include EventReminders
   include AttributeSanitizer
+  include PgSearch
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
@@ -24,6 +25,23 @@ class Event < ActiveRecord::Base
   end
 
   sanitize_attributes :message
+
+
+
+  def meta_search_json(unit_scope:)
+    { resource: 'event',
+      initials: 'E',
+      id: id,
+      name: name,
+      desc: "#{start_at.to_s(:short_ampm)}",
+      url: Rails.application.routes.url_helpers.unit_event_path(unit_scope, id)
+    }
+  end
+
+  def self.meta_search_json(events)
+    events.map{ |event| event.meta_search_json }.to_json
+  end
+
 
 
   def gmaps4rails_address
@@ -124,16 +142,26 @@ class Event < ActiveRecord::Base
     # where(start_at: DateTime.parse(start_date)..DateTime.parse(end_date))
   end
 
+
   scope :by_start, -> { order('start_at ASC') }
   # scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }
   scope :from_today, -> { where('start_at >= ? OR end_at >= ?', Time.zone.now.beginning_of_day, Time.zone.now.beginning_of_day) }
   scope :newsletter_next_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week)}
   scope :newsletter_next_month, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_month.end_of_month) }
-  scope :contains_search, ->(n) { where("events.name ILIKE ? OR events.location_name ILIKE ? OR events.message ILIKE ?", "%#{n}%", "%#{n}%", "%#{n}%") }
+  # scope :contains_search, ->(n) { where("events.name ILIKE ? OR events.location_name ILIKE ? OR events.message ILIKE ?", "%#{n}%", "%#{n}%", "%#{n}%") }
+  # scope :contains_search, ->(n) { where("to_tsvector('english', name) @@ to_tsquery('english', ?)", n) }
+
+  pg_search_scope :pg_meta_search,
+    against: { name: 'A', location_name: 'B', message: 'C' },
+    using: {
+             tsearch: { dictionary: 'english', any_word: true, prefix: true },
+             trigram: { threshold: 0.5 }
+           }
 
   def self.meta_search(unit_scope: nil, keywords:)
     meta_events = unit_scope.nil? ? Event.all : unit_scope.events
-    meta_events.contains_search(keywords)
+    # meta_events.from_today.contains_search(keywords).by_start
+    meta_events.from_today.pg_meta_search(keywords)
   end
 
 

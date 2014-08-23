@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   include SmsNumber
   include SentientUser
+  include PgSearch
+
   # include AttrSearchable
   mount_uploader :picture, PictureUploader
   # Include default devise modules. Others available are:
@@ -196,6 +198,11 @@ class User < ActiveRecord::Base
 
 
 
+  def self.meta_search_json(users, unit_scope:)
+    users.map{ |user| user.meta_search_json(unit_scope: unit_scope) }.to_json
+  end
+
+
   ## scopes
   scope :by_name_lf, -> { order('"users"."last_name" ASC, "users"."first_name" ASC') }
   # scope :with_email, -> { where('"users"."email" IS NOT NULL') }
@@ -217,15 +224,20 @@ class User < ActiveRecord::Base
 
   scope :name_contains, ->(n) { where("users.first_name ILIKE ? OR users.last_name ILIKE ?", "%#{n}%", "%#{n}%") }
 
+  pg_search_scope :pg_meta_search,
+    against: [:first_name, :last_name],
+    using: {
+             tsearch: { dictionary: 'english', any_word: true, prefix: true },
+             trigram: { threshold: 0.5 }
+           }
+
+
+
   def self.unit_leaders(unit)
     t = UnitPosition.arel_table
     joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where( t[:leadership].not_eq('').or(t[:additional].not_eq('')) )
   end
 
-  def self.meta_search(unit_scope: nil, keywords:)
-    meta_users = unit_scope.nil? ? User.all : unit_scope.users
-    meta_users.name_contains(keywords)
-  end
 
 
   def turn_off_all_notifications

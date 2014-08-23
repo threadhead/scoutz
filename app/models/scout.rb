@@ -29,7 +29,7 @@ class Scout < User
       initials: initials,
       id: id,
       name: name,
-      desc: [rank, sub_unit.try(:name)].join(' - '),
+      desc: [rank, sub_unit.try(:name)].join(' - ') || '&nbsp;',
       url: Rails.application.routes.url_helpers.unit_scout_path(unit_scope, id)
     }
   end

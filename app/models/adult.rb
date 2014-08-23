@@ -49,7 +49,7 @@ class Adult < User
       initials: initials,
       id: id,
       name: name,
-      desc: unit_positions.unit(unit_scope.id).try(:leadership) || '',
+      desc: unit_positions.unit(unit_scope.id).try(:leadership) || '&nbsp;',
       url: Rails.application.routes.url_helpers.unit_adult_path(unit_scope, id)
     }
   end

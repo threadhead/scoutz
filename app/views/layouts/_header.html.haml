@@ -51,55 +51,88 @@
       = link_to @unit.name_unit, '/', class: 'navbar-brand'
 
     .navbar-collapse.collapse#unit-navbar-collapse
+      %form.navbar-form.navbar-left
+        .form-group
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-search
+            = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search... everything!'
+
+
+
       %ul.nav.navbar-nav
-        %li
-          = link_to unit_scouts_path(@unit) do
-            %i.fa.fa-user{style: "color: #c00;"}
-            Scouts
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            %i.fa.fa-user
+            People
+            %i.fa.fa-caret-down
 
-        %li
-          = link_to unit_adults_path(@unit) do
-            %i.fa.fa-user{style: "color: #c0c000;"}
-            Adults
+          %ul.dropdown-menu
+            %li
+              = link_to unit_scouts_path(@unit) do
+                %i.fa.fa-user{style: "color: #c00;"}
+                Scouts
 
-        - if @unit.unit_type == "Boy Scouts"
-          %li
-            = link_to unit_merit_badges_path(@unit) do
-              %i.fa.fa-graduation-cap
-              MB Counselors
+            %li
+              = link_to unit_adults_path(@unit) do
+                %i.fa.fa-user{style: "color: #c0c000;"}
+                Adults
 
-        - if policy(EmailMessage).create?
-          %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
-              %i.fa.fa-envelope
-              Email Blast
-              %i.fa.fa-caret-down
-
-            %ul.dropdown-menu
+            - if @unit.unit_type == "Boy Scouts"
               %li
-                = link_to unit_email_messages_path(@unit) do
-                  My Sent Email
-              %li
-                = link_to new_unit_email_message_path(@unit) do
-                  %i.fa.fa-plus
-                  New
+                = link_to unit_merit_badges_path(@unit) do
+                  %i.fa.fa-graduation-cap
+                  MB Counselors
 
 
-        - if policy(SmsMessage).create?
+
+        - if policy(EmailMessage).create? || policy(SmsMessage).create?
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               %i.fa.fa-phone
-              SMS Blast
+              Communications
               %i.fa.fa-caret-down
 
             %ul.dropdown-menu
-              %li
-                = link_to unit_sms_messages_path(@unit) do
-                  My Sent SMS
-              %li
-                = link_to new_unit_sms_message_path(@unit) do
-                  %i.fa.fa-plus
-                  New
+              - if policy(EmailMessage).create?
+                -# %li.dropdown
+                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+                -#     %i.fa.fa-envelope
+                -#     Email Blast
+                -#     %i.fa.fa-caret-down
+                %li.non-link-text
+                  %i.fa.fa-envelope
+                  %strong Email Blast
+                %li
+                  = link_to unit_email_messages_path(@unit) do
+                    My Sent Email
+                %li
+                  = link_to new_unit_email_message_path(@unit) do
+                    %i.fa.fa-plus
+                    New Email Blast
+                %li.divider
+
+
+              - if policy(SmsMessage).create?
+                -# %li.dropdown
+                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+                -#     %i.fa.fa-phone
+                -#     SMS Blast
+                -#     %i.fa.fa-caret-down
+
+                -# %ul.dropdown-menu
+                %li.non-link-text
+                  %i.fa.fa-mobile-phone.fa-lg
+                  %strong SMS Blast
+                %li
+                  = link_to unit_sms_messages_path(@unit) do
+                    My Sent SMS
+                %li
+                  = link_to new_unit_sms_message_path(@unit) do
+                    %i.fa.fa-plus
+                    New SMS Blast
+
+
 
 
         %li.dropdown
@@ -122,6 +155,7 @@
                 = link_to new_unit_event_path(@unit) do
                   %i.fa.fa-plus
                   New Event
+
 
 
         - if @unit.pages.active.count > 0 || policy(Page).index?

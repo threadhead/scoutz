@@ -8,6 +8,7 @@
  *= require rails_bootstrap_forms
  *= require screen
  *= require ckeditor
+ *= require meta_search
  *= require_self
 */
 

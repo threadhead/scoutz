@@ -16,4 +16,22 @@ class Scout < User
   def event_signup_up(event)
     EventSignup.where(scout_id: self.id, event_id: event.id).first
   end
+
+
+  def self.meta_search(unit_scope: nil, keywords:)
+    meta_users = unit_scope.nil? ? Scout.all : unit_scope.scouts
+    meta_users.pg_meta_search(keywords)
+  end
+
+
+  def meta_search_json(unit_scope:)
+    { resource: 'scout',
+      initials: initials,
+      id: id,
+      name: name,
+      desc: [rank, sub_unit.try(:name)].join(' - '),
+      url: Rails.application.routes.url_helpers.unit_scout_path(unit_scope, id)
+    }
+  end
+
 end

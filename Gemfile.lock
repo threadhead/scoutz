@@ -246,6 +246,10 @@ GEM
     ntlm-http (0.1.1)
     orm_adapter (0.5.0)
     pg (0.17.1)
+    pg_search (0.7.6)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     polyglot (0.3.5)
     pry (0.10.0)
       coderay (~> 1.1.0)
@@ -440,6 +444,7 @@ DEPENDENCIES
   mini_magick
   non-stupid-digest-assets
   pg
+  pg_search
   public_activity
   pundit
   quiet_assets

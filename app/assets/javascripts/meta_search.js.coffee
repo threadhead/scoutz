@@ -9,6 +9,8 @@ jQuery ->
   #   a += "<small><em>#{item.desc}</em></small>"
   #   # a += "<hr class='hr-li-autocomplete'>"
   #   $("<li data-url='#{item.url}'>").append($(a)).appendTo(ul)
+
+
   toTitleCase = (str) ->
     str.replace(/\w\S*/g, (txt) ->
       txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
@@ -45,14 +47,20 @@ jQuery ->
       $("<li data-url='#{item.url}'>").append($(a)).appendTo(ul)
 
   $("input.search-meta").catcomplete
-    source: "/meta_search"
+    source: (request, response) ->
+      searchUrl = $("input#meta_search_action").val()
+      $.getJSON(searchUrl + '&term=' + request.term, (data) ->
+        response(data)
+       )
+
     select: (event, ui) ->
-      # console.log event
-      # console.log ui
-      # console.log ui.item.url
       window.location.href = ui.item.url
+
     open: ->
       $(@).autocomplete("widget").width(300)
+
+    # response: (event, ui) ->
+    #   console.log this
 
 
   # $.ui.autocomplete.prototype._resizeMenu = ->

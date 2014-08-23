@@ -52,6 +52,7 @@
 
     .navbar-collapse.collapse#unit-navbar-collapse
       %form.navbar-form.navbar-left
+        = hidden_field_tag :meta_search_action, "/meta_search?unit_id=#{@unit.id}"
         .form-group
           .input-group
             %span.input-group-addon

@@ -74,7 +74,8 @@
               %strong Phones
             %td
               - @user.phones.each do |phone|
-                #{phone.kind}: #{number_to_phone phone.number}
+                #{phone.kind}:
+                = link_to (number_to_phone phone.number), "tel:1-#{number_to_phone phone.number}"
                 %br
 
           %tr

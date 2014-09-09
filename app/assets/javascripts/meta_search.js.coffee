@@ -23,7 +23,7 @@ jQuery ->
       @widget().menu "option", "items", "> :not(.ui-autocomplete-category)"
 
     _renderMenu: (ul, items) ->
-      console.log '_renderMenu'
+      # console.log '_renderMenu'
       that = this
       currentCategory = ""
 
@@ -45,6 +45,8 @@ jQuery ->
       a += "<small><em>#{item.desc}</em></small>"
       # a += "<hr class='hr-li-autocomplete'>"
       $("<li data-url='#{item.url}'>").append($(a)).appendTo(ul)
+
+
 
   $("input.search-meta").catcomplete
     source: (request, response) ->

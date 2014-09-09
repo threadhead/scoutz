@@ -9,8 +9,8 @@
       %th.text-right Age
       %th Adults
 
-    = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
     = #cache ["unit-#{unit.id}", cache_key_for_users(users)] do
+    = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
       - users.each do |scout|
         = cache ["unit-#{unit.id}", scout] do
           %tr

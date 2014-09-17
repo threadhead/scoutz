@@ -17,7 +17,7 @@ class Adult < User
 
     # Unfortunately, when an adult is edited it will show the names of related scouts that exist for
     #  the unit the adult is being edited under. The retuned "scout_ids" will not contain scouts from
-    #  other units, and thus they will be removed from the relationship BAD!
+    #  other units, and thus they will be removed from the relationship. BAD!
 
     # This method will calculate the correct differential necessary for proper updating of the Adult
     # example: all = ['1', '2', '3'], sub_unit = ['1'], update = ['1', '4']

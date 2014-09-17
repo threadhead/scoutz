@@ -46,6 +46,10 @@ class MeritBadge < ActiveRecord::Base
     meta_merit_badges.pg_meta_search(keywords)
   end
 
+  def self.meta_search_counselors(unit_scope: nil, keywords:)
+    MeritBadge.joins(:counselors).where(counselors: {unit_id: unit_scope.id, user_id: User.pg_meta_search(keywords).map(&:id)})
+  end
+
 
   def meta_search_json(unit_scope:)
     { resource: 'merit badge',

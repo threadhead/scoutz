@@ -3,7 +3,8 @@ lock '3.2.1'
 
 set :application, 'scoutz'
 # set :repo_url, 'git@example.com:me/my_repo.git'
-set :repo_url, 'git@github.com:threadhead/scoutz.git'
+set :repo_url, 'https://github.com/threadhead/scoutz.git'
+# set :repo_url, 'git@github.com:threadhead/scoutz.git'
 # set :local_repository, "file://."
 
 
@@ -12,7 +13,7 @@ set :repo_url, 'git@github.com:threadhead/scoutz.git'
 
 # Default deploy_to directory is /var/www/my_app
 # set :deploy_to, '/var/www/my_app'
-set :deploy_to, "/home/karl/scoutz"
+set :deploy_to, "/home/deploy/scoutz"
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -43,7 +44,7 @@ set :keep_releases, 20
 # set :git_shallow_clone, 1
 set :use_sudo, false
 # set :repository,  "."
-set :rvm_ruby_version, '2.1.2'      # Defaults to: 'default'
+set :rvm_ruby_version, '2.1.3'      # Defaults to: 'default'
 
 
 

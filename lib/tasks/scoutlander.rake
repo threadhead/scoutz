@@ -76,9 +76,11 @@ begin
         user = Adult.where(email: 'stoya.robert@orbital.com').first
 
         # add rob stoya to the unit
-        user.update_attributes(pass)
-        unless unit.users.where(id: user.id).exists?
-          user.units << unit
+        if user
+          user.update_attributes(pass)
+          unless unit.users.where(id: user.id).exists?
+            user.units << unit
+          end
         end
 
       end

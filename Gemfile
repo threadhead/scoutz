@@ -4,13 +4,13 @@ ruby '2.1.3'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
-gem 'rails', '4.1.6'
+gem 'rails', '~> 4.2.0.beta2'
 
 gem 'pg'
 
 # gem 'rake'
 
-gem 'devise'
+gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'lm-rails-4-2'
 # gem 'devise-async'
 gem 'haml'
 gem 'pundit'
@@ -50,7 +50,7 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 5.0.0.beta1'
 gem 'coffee-rails', '~> 4.0.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -61,18 +61,29 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'less-rails'
 
 gem 'bourbon'
-gem 'jquery-rails'
+gem 'jquery-rails', '~> 4.0.0.beta2'
 
 #fullCalendar is sensitive to the jQuery/jQuery UI version!
 # gem 'jquery-ui-rails'
 gem 'whenever', :require => false
 
 group :development, :test do
+    # Call 'debugger' anywhere in the code to stop execution and get a debugger console
+  # gem 'byebug'
+
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  # gem 'web-console', '~> 2.0.0.beta4'
+
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+
+
+  gem "spring-commands-rspec"
   gem 'whiny_validation'
   # gem 'quiet_assets'
   gem 'haml-rails'
   # gem 'rspec-rails'
-  gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
+  # gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
@@ -86,8 +97,6 @@ end
 
 group :development do
   gem 'quiet_assets'
-  gem 'spring'
-  gem "spring-commands-rspec"
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano' #, require: false

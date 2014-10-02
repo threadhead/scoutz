@@ -3,6 +3,8 @@ class SmsMessage < ActiveRecord::Base
   include SubUnitIds
   include AttributeSanitizer
 
+  serialize :sub_unit_ids, Array
+
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
   has_and_belongs_to_many :users

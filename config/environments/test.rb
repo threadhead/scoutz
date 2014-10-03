@@ -46,4 +46,8 @@ Scoutz::Application.configure do
   # allows rack:test to display error pages (i.e. 404)
   config.consider_all_requests_local = false
   config.action_dispatch.show_exceptions = true
+
+
+  ## User added
+  # config.active_job.queue_adapter = :test
 end

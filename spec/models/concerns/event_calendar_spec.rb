@@ -29,8 +29,7 @@ RSpec.describe 'EventCalendar' do
   describe '.update_ical_background' do
     it 'add an update_ical to the background queue' do
       d = double
-      expect(Event).to receive(:delay).and_return(d)
-      expect(d).to receive(:update_ical).with(@event.id)
+      expect(IcalFilesUpdateJob).to receive(:perform_later).with(@event)
       @event.update_ical_background
     end
   end

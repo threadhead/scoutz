@@ -47,15 +47,15 @@ class SmsMessage < ActiveRecord::Base
   end
 
 
-  def send_sms
-    recipients.each { |recipient| TextMessage.delay.sms_message(recipient.sms_email_address, self.id) }
-    self.update_attribute(:sent_at, Time.zone.now)
-  end
+  # def send_sms
+  #   recipients.each { |recipient| TextMessage.delay.sms_message(recipient.sms_email_address, self.id) }
+  #   self.update_attribute(:sent_at, Time.zone.now)
+  # end
 
-  def self.dj_send_sms(id)
-    sm = SmsMessage.find(id)
-    sm.send_sms if sm
-  end
+  # def self.dj_send_sms(id)
+  #   sm = SmsMessage.find(id)
+  #   sm.send_sms if sm
+  # end
 
 
 

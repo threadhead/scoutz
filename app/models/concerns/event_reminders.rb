@@ -11,13 +11,13 @@ module EventReminders
       @@event_reminder_logger ||= Logger.new(File.join(Rails.root, 'log', 'event_reminders.log'))
     end
 
-    def send_reminders
-      events = Event.needs_reminders
-      Event.reminder_logger.info "#{events.size} events need reminders"
-      events.each do |event|
-        event.send_reminder
-      end
-    end
+    # def send_reminders
+    #   events = Event.needs_reminders
+    #   Event.reminder_logger.info "#{events.size} events need reminders"
+    #   events.each do |event|
+    #     event.send_reminder
+    #   end
+    # end
 
 
     def needs_reminders
@@ -36,7 +36,7 @@ module EventReminders
       send_email_reminders
     else
       self.class.reminder_logger.info "    Sending email (group) reminders to: #{recipients_emails.join(', ')}"
-      EventMailer.delay.reminder(self.id, recipients_emails)
+      EventMailer.reminder(self, recipients_emails, nil).deliver_later
     end
     update_attribute(:reminder_sent_at, Time.zone.now)
   end
@@ -73,12 +73,12 @@ module EventReminders
 
   def send_sms_reminders
     self.class.reminder_logger.info "    Sending SMS reminders to: #{recipients_sms_emails.join(', ')}"
-    users_to_sms.each { |recipient| TextMessage.delay.event_reminder(self.id, recipient.sms_email_address) }
+    users_to_sms.each { |recipient| TextMessage.event_reminder(self, recipient.sms_email_address).deliver_later }
   end
 
   def send_email_reminders
     self.class.reminder_logger.info "    Sending email (individual) reminders to: #{recipients_emails.join(', ')}"
-    users_to_email.each { |recipient| EventMailer.delay.reminder(self.id, recipient.email, recipient.id) }
+    users_to_email.each { |recipient| EventMailer.reminder(self, recipient.email, recipient).deliver_later }
   end
 
 

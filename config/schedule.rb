@@ -23,7 +23,7 @@ job_type :rake_logged, "cd :path && :environment_variable=:environment bundle ex
 set :output, '/home/karl/scoutz/shared/log/cron.log'
 
 # every 30.minutes do
-#   runner "Event.delay.send_reminders"
+#   runner "EventRemindersJob.send_reminders_later"
 # end
 
 # every :friday, at: '9:17am' do

@@ -60,9 +60,12 @@ RSpec.describe SmsMessage do
       ActionMailer::Base.deliveries.clear
       u1 = FactoryGirl.build(:user, sms_number: '4445551111', sms_provider: 'Verizon')
       u2 = FactoryGirl.build(:user, sms_number: '4445552222', sms_provider: 'Verizon')
-      allow(sms_message).to receive(:recipients).and_return([u1, u2])
-      sms_message.save
-      sms_message.send_sms
+      # allow(sms_message).to receive(:recipients).and_return([u1, u2])
+      sms_message.users << u1
+      sms_message.users << u2
+      sms_message.update_attribute(:send_to_option, 4)
+      # sms_message.save
+      SmsMessagesJob.perform_later(sms_message)
     end
 
     specify { expect(sms_message.reload.sent_at).to be_within(5).of(Time.zone.now) }
@@ -70,13 +73,15 @@ RSpec.describe SmsMessage do
   end
 
 
-  describe 'SmsMessage.dj_send_sms' do
-    it 'finds the SmsMessage and call its send_sms' do
-      msm = mock_model SmsMessage
-      expect(SmsMessage).to receive(:find).exactly(1).times.and_return(msm)
-      expect(msm).to receive(:send_sms).exactly(1).times
-      SmsMessage.dj_send_sms(3)
-    end
-  end
+  ## not sure this is necessary any more
+
+  # describe 'SmsMessage.dj_send_sms' do
+  #   it 'finds the SmsMessage and call its send_sms' do
+  #     msm = mock_model SmsMessage
+  #     expect(SmsMessage).to receive(:find).exactly(1).times.and_return(msm)
+  #     expect(msm).to receive(:send_sms).exactly(1).times
+  #     SmsMessage.dj_send_sms(3)
+  #   end
+  # end
 
 end

@@ -25,7 +25,7 @@ module Notifiers
 
       def sms_number_verified
         unless @recipient_user.sms_number_verified
-          SmsUserMailer.delay.remind_verify(@recipient_user.id)
+          SmsUserMailer.remind_verify(@recipient_user.id).deliver_later
         end
         @recipient_user.sms_number_verified
       end

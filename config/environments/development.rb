@@ -48,6 +48,11 @@ Scoutz::Application.configure do
   # shows sql in console
   # ActiveRecord::Base.logger = Logger.new(STDOUT)
 
+
+  ## User added
+
+  config.active_job.queue_adapter = :inline
+
   config.action_mailer.delivery_method = :letter_opener
   # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {

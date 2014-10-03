@@ -76,6 +76,11 @@ Scoutz::Application.configure do
   config.active_record.dump_schema_after_migration = false
 
 
+
+  ## User added
+
+  config.active_job.queue_adapter = :delayed_job
+
   # config.action_mailer.delivery_method = :sendmail
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

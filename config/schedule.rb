@@ -20,7 +20,7 @@
 # Learn more: http://github.com/javan/whenever
 job_type :rake_logged, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
 
-set :output, '/home/karl/scoutz/shared/log/cron.log'
+set :output, '/home/deploy/scoutz/shared/log/cron.log'
 
 every 30.minutes do
   runner "Event.delay.send_reminders"

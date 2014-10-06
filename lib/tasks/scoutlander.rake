@@ -69,8 +69,9 @@ begin
         VCR.use_cassette('fetch_unit_events') { event_importer.fetch_unit_events }
         VCR.use_cassette('fetch_all_event_info_and_create') { event_importer.fetch_all_event_info_and_create }
 
-        pass = {password: 'pack1134', password_confirmation: 'pack1134', confirmed_at: 1.day.ago}
+        pass = {password: 'pack1134', password_confirmation: 'pack1134', confirmed_at: 1.day.ago, role: 20}
         Adult.where(email: 'threadhead@gmail.com').first.update_attributes(pass)
+        Adult.where(email: 'threadhead@gmail.com').first.update_attribute(:role, 30)
         Adult.where(email: 'rob@robmadden.com').first.update_attributes(pass)
         Adult.where(email: 'tasst01@hotmail.com').first.update_attributes(pass)
         user = Adult.where(email: 'stoya.robert@orbital.com').first

@@ -25,12 +25,14 @@ module Scoutlander
           :sl_url,
           :sl_uid,
           :sl_profile,
+          :role,
           :relations,
           :parent,
         ]
         create_setters_getters_instance_variables(options)
         @relations = []
         @parent = nil
+        @role = 'basic'
       end
 
       def name

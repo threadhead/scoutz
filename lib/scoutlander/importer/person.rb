@@ -33,7 +33,8 @@ module Scoutlander
           last_name: 'txtLastName',
           sub_unit: 'txtSubUnit',
           rank: 'txtRank',
-          security_level: 'txtSecurityLevel',
+          # security_level: 'txtSecurityLevel',
+          role: 'txtSecurityLevel',
           email: 'txtEmail',
           alternate_email: 'txtAltEmail',
           send_reminders: 'txtEventNotification',
@@ -51,6 +52,7 @@ module Scoutlander
         # massage some of the data
         sl_rank(datum)
         sl_leadership(datum)
+        sl_role(datum)
         datum.email = nil if datum.email.nil? || datum.email.downcase == "no email"
         datum.send_reminders = !datum.send_reminders.nil? && datum.send_reminders.include?("ON")
 
@@ -74,6 +76,17 @@ module Scoutlander
           roles.delete_at(0)
         end
         datum.additional_leadership_positions = roles.join(', ') unless roles.empty?
+      end
+
+      def sl_role(datum)
+        datum.role = case datum.role
+        when 'Leader Access'
+          'leader'
+        when 'Adult / Parent Access' || 'Scout Access'
+          'basic'
+        when 'Active - No Access' || 'InActive'
+          'inactive'
+        end
       end
 
 

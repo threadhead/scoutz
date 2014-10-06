@@ -86,6 +86,8 @@ module Scoutlander
           'basic'
         when 'Active - No Access' || 'InActive'
           'inactive'
+        else
+          'basic'
         end
       end
 

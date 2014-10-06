@@ -1,9 +1,9 @@
-= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
+= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
   .form-group
-    = f.label :unit, class: 'control-label col-md-3'
-    .col-md-6
+    = f.label :unit, class: 'control-label col-md-2'
+    .col-md-5
       .text-xlarge= @unit.name
 
   = f.text_field :first_name, control_col: 'col-md-4'
@@ -30,10 +30,9 @@
 
   %fieldset
     %legend Picture
-    .row
-      .col-md-offset-3.col-md-6
-        .well.well-sm
-          = image_tag @user.picture.url
+    = f.form_group do
+      .well.well-sm
+        = image_tag @user.picture.url
     = f.file_field :picture, hide_label: true
     = f.form_group do
       = f.check_box :remove_picture, label: 'remove picture'
@@ -71,14 +70,16 @@
   %fieldset
     %legend Notifications
     = f.email_field :email, control_col: 'col-md-4'
-    = f.form_group do
+    -# = f.form_group do
+    .col-md-offset-2.col-md-.clearfix
       %hr
       %p Text messages are sent via email-to-text services. Messages may not arrive from the same number.
       = #f.check_box :send_reminders, label: 'send reminder before event deadlines and start times'
 
     = f.phone_field :sms_number, control_col: 'col-md-3', label: 'Mobile number', placeholder: 'XXX-XXX-XXXX'
     = f.select :sms_provider, User.sms_providers, include_blank: true, control_col: 'col-md-3', label: 'Provider'
-    = f.form_group do
+    -# = f.form_group do
+    .col-md-offset-2.col-md-8.clearfix
       .help-block You must select a Provider if you would like to receive text messages. If you don't want to receive texts, leave blank.
     -#= f.form_group do
     -#  %p
@@ -90,7 +91,8 @@
     -#      %span.red-color
     -#        %i.icon-warning-sign
     -#        You must reply to the verification text message to receive text messages.
-
+    %p &nbsp;
+    %p &nbsp;
     = f.form_group do
       %p
         %strong How you would like to receive notifications?
@@ -138,7 +140,7 @@
   %fieldset
     %legend Merit Badge Counselor
     .form-group
-      = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-3'
+      = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-2'
       .col-md-6
         - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
         = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'

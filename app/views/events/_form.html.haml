@@ -1,4 +1,4 @@
-= bootstrap_form_for @event, layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
+= bootstrap_form_for @event, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
   .row
@@ -55,7 +55,7 @@
     .col-md-12
       %fieldset
         %legend Details
-        .col-md-10.col-md-offset-2
+        .col-md-10.col-md-offset-1
           = text_area_tag 'event[message]', @event.message, id: 'ckeditor'
           %br
 

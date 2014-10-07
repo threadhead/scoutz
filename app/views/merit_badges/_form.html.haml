@@ -4,7 +4,7 @@
       %i.fa.fa-info-circle
       You may only change counselors for your Troop
 
-    = bootstrap_form_for [@unit, @merit_badge], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
+    = bootstrap_form_for [@unit, @merit_badge], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
 
       = f.text_field :name, disabled: true
@@ -15,7 +15,7 @@
       %fieldset
         %legend Merit Badge Counselors
         .form-group
-          = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-3'
+          = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-2'
           .col-md-8
             - merit_badge_adult_ids = @merit_badge.counselors.unit(@unit.id).pluck(:user_id)
             = select_tag "merit_badge[user_ids][]", options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids'

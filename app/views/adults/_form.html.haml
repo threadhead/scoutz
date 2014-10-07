@@ -1,8 +1,8 @@
-= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
+= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
   .form-group
-    = f.label :unit, class: 'control-label col-md-3'
+    = f.label :unit, class: 'control-label col-md-2'
     .col-md-6
       .text-xlarge= @unit.name
 
@@ -31,7 +31,7 @@
   %fieldset
     %legend Picture
     .row
-      .col-md-offset-3.col-md-6
+      .col-md-offset-2.col-md-6
         .well.well-sm
           = image_tag @user.picture.url
     = f.file_field :picture, hide_label: true
@@ -138,7 +138,7 @@
   %fieldset
     %legend Merit Badge Counselor
     .form-group
-      = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-3'
+      = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-2'
       .col-md-6
         - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
         = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'

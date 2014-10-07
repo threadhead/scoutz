@@ -11,7 +11,7 @@
       %ul.nav.navbar-nav.pull-right
         - if current_user
           %li.dropdown
-            = link_to '#', data: {toggle: 'dropdown', hover: 'dropdown'}, class: 'dropdown-toggle' do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
               %span.user-info
                 %small Welcome,

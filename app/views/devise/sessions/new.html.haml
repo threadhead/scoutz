@@ -1,45 +1,36 @@
-.col-lg-6
+-# .col-lg-6
+-#   .modal-fade
+-#     .modal-dialog
+-#       .modal-content
+-#         .modal-header
+-#           %h2 New?
+
+-#         .modal-body
+-#           = link_to "Sign Up Today!", new_user_registration_path, class: 'btn btn-primary btn-large'
+
+.col-lg-6.col-lg-offset-3
   .modal-fade
     .modal-dialog
       .modal-content
         .modal-header
-          %h2 New?
-
-        .modal-body
-          = link_to "Sign Up Today!", new_user_registration_path, class: 'btn btn-primary btn-large'
-
-.col-lg-6
-  .modal-fade
-    .modal-dialog
-      .modal-content
-        .modal-header
-          %h2 Returning?
+          %h2 Welcome Back!
 
         .modal-body
           = render partial: 'layouts/flash', locals: {flash: flash}
 
-          = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'form-horizontal' }) do |f|
+          .row
+            .col-md-8.col-md-offset-2
+              = bootstrap_form_for resource, as: resource_name, url: session_path(resource_name) do |f|
 
-            .form-group
-              = f.label :email, class: @label_col_class
-              .col-md-6
-                = f.email_field :email, class: 'form-control', autofocus: true
+                = f.email_field :email, autofocus: true, placeholder: 'email', hide_label: true, class: 'input-lg'
+                = f.password_field :password, placeholder: 'password', hide_label: true, class: 'input-lg'
 
-            .form-group
-              = f.label :password, class: @label_col_class
-              .col-md-6
-                = f.password_field :password, class: 'form-control'
-
-            - if devise_mapping.rememberable?
-              .form-group
-                .col-md-offset-4.col-md-6
-                  = f.label :remember_me, class: 'checkbox' do
+                - if devise_mapping.rememberable?
+                  .centered
                     = f.check_box :remember_me, checked: true
-                    remember me
-
-            .form-group
-              .col-md-offset-4.col-md-6
-                = f.submit "Sign in", class: 'btn btn-primary'
+                %br
+                = f.submit "Sign in", class: 'btn btn-primary btn-block btn-lg'
+                %br
 
         .modal-footer
           = render partial: "devise/shared/links"

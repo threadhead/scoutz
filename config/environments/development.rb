@@ -59,8 +59,9 @@ Scoutz::Application.configure do
       Rack::Lock, Rack::LiveReload,
       min_delay: 500,
       max_delay: 10000,
-      port: 35729,
+      live_reload_port: 35729,
       host: 'localhost',
+      no_swf: true,
       ignore: [ %r{dont/modify\.html$} ]
     )
 

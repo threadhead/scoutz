@@ -47,8 +47,8 @@ Scoutz::Application.routes.draw do
   resources :sub_units
 
   namespace :ckeditor do
-    resources :pictures, :only => [:index, :create, :destroy]
-    resources :attachment_files, :only => [:index, :create, :destroy]
+    resources :pictures, only: [:index, :create, :destroy]
+    resources :attachment_files, only: [:index, :create, :destroy]
   end
 
   post 'units/new' => 'units#new'
@@ -129,7 +129,8 @@ Scoutz::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'dashboard_list#index'
+  # root to: => 'dashboard_list#index'
+  root to: 'page#landing'
 
   # See how all your routes lay out with "rake routes"
 

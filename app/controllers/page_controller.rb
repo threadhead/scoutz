@@ -1,7 +1,8 @@
 class PageController < ApplicationController
-  before_action :auth_and_time_zone
+  # before_action :auth_and_time_zone
 
   def landing
+    render :landing, layout: 'page'
   end
 
   def terms_of_service

@@ -16,7 +16,7 @@ gem 'haml'
 gem 'pundit'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog' #, '< 1.9.0'
+gem 'fog', require: "fog/aws/storage"
 gem 'mini_magick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -69,9 +69,7 @@ gem 'whenever', :require => false
 
 group :development, :test do
   gem 'whiny_validation'
-  # gem 'quiet_assets'
   gem 'haml-rails'
-  # gem 'rspec-rails'
   gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'

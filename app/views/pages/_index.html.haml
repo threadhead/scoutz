@@ -36,7 +36,7 @@
               %span.label.label-warning inactive
           %td
             = link_to page.title, show_admin_unit_page_path(@unit, page), class: 'xlarge'
-            %br/
+            %br
             = link_to 'show', show_admin_unit_page_path(@unit, page), class: 'small'
             - if policy(page).edit?
               %span.small= '|'

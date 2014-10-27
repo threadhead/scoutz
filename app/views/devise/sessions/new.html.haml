@@ -32,5 +32,10 @@
                 = f.submit "Sign in", class: 'btn btn-primary btn-block btn-lg'
                 %br
 
+              - if devise_mapping.registerable? && controller_name != 'registrations'
+                %p.centered
+                  Don't have an account?
+                  = link_to "Sign up", new_registration_path(resource_name)
+
         .modal-footer
           = render partial: "devise/shared/links"

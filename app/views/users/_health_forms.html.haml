@@ -1,0 +1,8 @@
+%fieldset
+  %legend Health Forms
+
+  = f.fields_for :health_forms, HealthForm.new, child_index: 'new_health_form'  do |hf|
+    = hf.form_group do
+
+      = hf.text_field :part_at_date, class: 'date-picker', value: user.part_a_date.to_s(:datetimepicker), control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
+

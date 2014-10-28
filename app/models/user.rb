@@ -26,6 +26,9 @@ class User < ActiveRecord::Base
   has_many :sms_messages, dependent: :destroy
   has_many :pages
 
+  has_many :health_forms, dependent: :destroy
+  accepts_nested_attributes_for :health_forms
+
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)
       where(counselors: {unit_id: unit_id})

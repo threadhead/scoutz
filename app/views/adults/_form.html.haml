@@ -146,6 +146,7 @@
 
     = #f.collection_select :merit_badge_ids, MeritBadge.by_name.all, :id, :name, {label: 'Counselor for', control_col: 'col-md-6'}, multiple: true
 
+  = render partial: 'users/health_forms', locals: {user: @user, unit: @unit, f: f}
 
   %fieldset
     %legend Scouts

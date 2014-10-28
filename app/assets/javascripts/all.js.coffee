@@ -6,6 +6,8 @@ jQuery ->
     hourGrid: 6
     )
 
+  $(".date-picker").datepicker()
+
   $("[data-toggle='tooltip']").tooltip()
 
 

@@ -1,276 +1,275 @@
-%body#page-top.index
-  / Navigation
-  %nav.navbar.navbar-default.navbar-fixed-top
-    .container-fluid
-      / Brand and toggle get grouped for better mobile display
-      .navbar-header.page-scroll
-        %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
-          %span.sr-only Toggle navigation
-          %span.icon-bar
-          %span.icon-bar
-          %span.icon-bar
-        %a.navbar-brand.page-scroll{href: "#page-top"} Scoutt.in
+/ Navigation
+%nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    / Brand and toggle get grouped for better mobile display
+    .navbar-header.page-scroll
+      %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", type: "button"}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand.page-scroll{href: "#page-top"} Scoutt.in
 
-      / Collect the nav links, forms, and other content for toggling
-      #bs-example-navbar-collapse-1.collapse.navbar-collapse
-        %ul.nav.navbar-nav.navbar-right
-          %li.hidden
-            %a{href: "#page-top"}
-          %li
-            %a.page-scroll{href: "#features"} Features
-          %li
-            %a.page-scroll{href: "#portfolio"} Gallery
-          %li
-            %a.page-scroll{href: "#about"} About
-          %li
-            = link_to 'Sign up', '#', class: 'btn btn-info'
-          %li
-            = link_to 'Sign in', new_user_session_path, class: 'btn btn-success'
-
-
-
-  / Header
-  %header
-    .container
-      .intro-text
-        .intro-lead-in Scoutt.in
-        .intro-heading Manage your Troop, Den or Crew with ease
-        %a.page-scroll.btn.btn-xl{href: "#features"} Tell Me More
-
-
-  / Features Section
-  %section#features.bg-light-gray
-    .container-fluid
-      .row
-        .col-lg-12.text-center
-          %h2.section-heading Features
-          -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
-
-      .row.text-center
-        .col-md-4
-          %span.fa-stack.fa-4x
-            %i.fa.fa-circle.fa-stack-2x.text-primary
-            %i.fa.fa-calendar.fa-stack-1x.fa-inverse
-          %h4.service-heading Events
-          %h3
-          %p.text-muted Troop meetings, Den meetings, outings. Easily manage your events and keep your unit informed with reminders and text messages.
-
-        .col-md-4
-          %span.fa-stack.fa-4x
-            %i.fa.fa-circle.fa-stack-2x.text-primary
-            %i.fa.fa-mobile.fa-stack-1x.fa-inverse
-          %h4.service-heading Mobile
-          %p.text-muted Built for your mobile devices from the ground up. Pinching and zooming is for nerds. Enjoy text you can read, maps you can see, and forms you can enter.
-
-        .col-md-4
-          %span.fa-stack.fa-4x
-            %i.fa.fa-circle.fa-stack-2x.text-primary
-            %i.fa.fa-flag-checkered.fa-stack-1x.fa-inverse
-          %h4.service-heading Fast
-          %p.text-muted We now how to build websites, and how to make and keep them fast. Get into Scoutt.in and, get what you want, and get outside!
-
-
-  / Portfolio Grid Section
-  %section#gallery#portfolio
-    .container
-      .row
-        .col-lg-12.text-center
-          %h2.section-heading Gallery
-          -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
-      .row
-        .col-md-4.col-sm-6.portfolio-item
-          %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal1"}
-            .portfolio-hover
-              .portfolio-hover-content
-                %i.fa.fa-search-plus.fa-3x
-            = image_tag 'landing/event-thumb.png', class: 'img-responsive'
-          .portfolio-caption
-            %h4 Events
-            %p.text-muted Signup on the Event page
-
-        .col-md-4.col-sm-6.portfolio-item
-          %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal2"}
-            .portfolio-hover
-              .portfolio-hover-content
-                %i.fa.fa-search-plus.fa-3x
-            = image_tag 'landing/search-thumb.png', class: 'img-responsive'
-          .portfolio-caption
-            %h4 Search Everything
-            %p.text-muted One easy search does it all
-
-        -# .col-md-4.col-sm-6.portfolio-item
-        -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal3"}
-        -#     .portfolio-hover
-        -#       .portfolio-hover-content
-        -#         %i.fa.fa-plus.fa-3x
-        -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/treehouse.png"}
-        -#   .portfolio-caption
-        -#     %h4 Treehouse
-        -#     %p.text-muted Website Design
-
-        -# .col-md-4.col-sm-6.portfolio-item
-        -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal4"}
-        -#     .portfolio-hover
-        -#       .portfolio-hover-content
-        -#         %i.fa.fa-plus.fa-3x
-        -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/golden.png"}
-        -#   .portfolio-caption
-        -#     %h4 Golden
-        -#     %p.text-muted Website Design
-
-        -# .col-md-4.col-sm-6.portfolio-item
-        -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal5"}
-        -#     .portfolio-hover
-        -#       .portfolio-hover-content
-        -#         %i.fa.fa-plus.fa-3x
-        -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/escape.png"}
-        -#   .portfolio-caption
-        -#     %h4 Escape
-        -#     %p.text-muted Website Design
-
-        -# .col-md-4.col-sm-6.portfolio-item
-        -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal6"}
-        -#     .portfolio-hover
-        -#       .portfolio-hover-content
-        -#         %i.fa.fa-plus.fa-3x
-        -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/dreams.png"}
-        -#   .portfolio-caption
-        -#     %h4 Dreams
-        -#     %p.text-muted Website Design
-
-
-  %section#more.bg-light-gray
-    .container-fluid
-      .row
-        .col-lg-12.text-center
-          %h2.section-heading More
-
-    .container-fluid
-      .row
-        .col-md-4
-          .action-section
-            %i.text-primary.fa.fa-mobile.fa-2x
-            %h4 Easy Messaging
-            %p Send emails or text messages only to those who are attending an event. No haveing to select individual names. Scoutt.in will also
-
-        .col-md-4
-          .action-section
-            %i.fa.fa-desktop.fa-2x
-            %h4 Import from Scoutlander
-            %p Import all your Scouts, adults, events, and more. Users will have to generate a new password for their account. But don't worry, we'll walk you through everything step-by-step.
-
-        .col-md-4
-
-  -# / About Section
-  -# %section#about
-  -#   .container-fluid
-  -#     .row
-  -#       .col-lg-12.text-center
-  -#         %h2.section-heading Features
-  -#         -# %h3.section-subheading.text-muted final itinerary is not complete, but here is what we did last year
-  -#     .row
-  -#       .col-lg-12
-  -#         %ul.timeline
-  -#           %li
-  -#             .timeline-image
-  -#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/boston.jpg"}
-  -#             .timeline-panel
-  -#               .timeline-heading
-  -#                 %h4 Boston, MA
-  -#                 %h4.subheading Fly into Beantown
-  -#               .timeline-body
-  -#                 %p.text-muted Faneuil Hall, Fenway Park, Bostom Common, Harvard & MIT. What more will the home of Paul Revere have to discover.
-
-  -#           %li.timeline-inverted
-  -#             .timeline-image
-  -#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/nyc.jpg"}
-  -#             .timeline-panel
-  -#               .timeline-heading
-  -#                 %h4 New York City, NY
-  -#                 %h4.subheading The Big Apple
-  -#               .timeline-body
-  -#                 %p.text-muted No city does it bigger or better than Gotham. We'll see Times Square...
-
-  -#           %li
-  -#             .timeline-image
-  -#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/philly.jpg"}
-  -#             .timeline-panel
-  -#               .timeline-heading
-  -#                 %h4 Philadelphia, PA
-  -#                 %h4.subheading The City of Brothery Love
-  -#               .timeline-body
-  -#                 %p.text-muted The Liberty Bell, Independance Hall, Philadelphia Museum of Art, or the haunted Eastern State Penitentiary. See what the cradle of libery holds for us. Cheese Steaks, oh yeah!
-
-  -#           %li.timeline-inverted
-  -#             .timeline-image
-  -#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/dc.jpg"}
-  -#             .timeline-panel
-  -#               .timeline-heading
-  -#                 %h4 Washington, DC
-  -#                 %h4.subheading Our nation's Capitol
-  -#               .timeline-body
-  -#                 %p.text-muted The US Capitol, White House, Smithsonial Institution, National Air and Space Museum, or the International Spy Museum. There is more to do in DC than you can shake a stick at.
-
-  -#           %li
-  -#             .timeline-image
-  -#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/summit.jpg"}
-  -#             .timeline-panel
-  -#               .timeline-heading
-  -#                 %h4 Glen Jean, WV
-  -#                 %h4.subheading Summit Bechtel Reserve
-  -#               .timeline-body
-  -#                 %p.text-muted 10 days camping and taking in all that the Summer has to offfer. And boy is there a lot you can do!
-
-  -#           %li.timeline-inverted
-  -#             .timeline-image
-  -#               %h4
-  -#                 Join
-  -#                 %br
-  -#                 Troop
-  -#                 %br
-  -#                 Five!
+    / Collect the nav links, forms, and other content for toggling
+    #bs-example-navbar-collapse-1.collapse.navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        %li.hidden
+          %a{href: "#page-top"}
+        %li
+          %a.page-scroll{href: "#features"} Features
+        %li
+          %a.page-scroll{href: "#portfolio"} Gallery
+        %li
+          %a.page-scroll{href: "#about"} About
+        %li
+          = link_to 'Sign up', '#', class: 'btn btn-info'
+        %li
+          = link_to 'Sign in', new_user_session_path, class: 'btn btn-success'
 
 
 
-  / Team Section
-  %section#about
-    .container-fluid
-      .row
-        .col-lg-12.text-center
-          %h2.section-heading About Scoutt.in
-          -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
-
-      .row
-        .col-sm-8.col-sm-offset-2
-          .team-member
-            -# %img.img-responsive.img-circle{alt: "", src: "images/team/1.jpg"}
-            = image_tag 'landing/bsa_logo.gif', class: 'img-responsive img-large'
-            -# %i.fa.fa-user{style: "font-size: 238px;"}
-            -# %h4 Brian Cook
-            -# %p.text-muted Scoutmaster
-            %p Scoutt.in grew out of the need of BS Troop 603 to manage Scouts and their activities, using modern technology, keeping things simple and efficient. Developed by a Scoutmaster and long time Scouter, who just happens to engineer web sites for a living.
-            %p Scoutt.in was built from the top, down, with speed, security, but most importantly ease-of-use. Face it, if a web site is not easy to use, you won't use it.
+/ Header
+%header
+  .container
+    .intro-text
+      .intro-lead-in Scoutt.in
+      .intro-heading Manage your Troop, Den or Crew with ease
+      %a.page-scroll.btn.btn-xl{href: "#features"} Tell Me More
 
 
+/ Features Section
+%section#features.bg-light-gray
+  .container-fluid
+    .row
+      .col-lg-12.text-center
+        %h2.section-heading Features
+        -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
 
-  %section.bg-light-gray
-    .container-fluid
-      .row
-        .col-lg-12.text-center
-          %h2.section-heading Get Started Now
-          %h3.section-subheading.text-primary It's 100% Free
-          = link_to 'Sign Up', sign_up_user_path, class: 'btn btn-xl'
+    .row.text-center
+      .col-md-4
+        %span.fa-stack.fa-4x
+          %i.fa.fa-circle.fa-stack-2x.text-primary
+          %i.fa.fa-calendar.fa-stack-1x.fa-inverse
+        %h4.service-heading Events
+        %h3
+        %p.text-muted Troop meetings, Den meetings, outings. Easily manage your events and keep your unit informed with reminders and text messages.
+
+      .col-md-4
+        %span.fa-stack.fa-4x
+          %i.fa.fa-circle.fa-stack-2x.text-primary
+          %i.fa.fa-mobile.fa-stack-1x.fa-inverse
+        %h4.service-heading Mobile
+        %p.text-muted Built for your mobile devices from the ground up. Pinching and zooming is for nerds. Enjoy text you can read, maps you can see, and forms you can enter.
+
+      .col-md-4
+        %span.fa-stack.fa-4x
+          %i.fa.fa-circle.fa-stack-2x.text-primary
+          %i.fa.fa-flag-checkered.fa-stack-1x.fa-inverse
+        %h4.service-heading Fast
+        %p.text-muted We now how to build websites, and how to make and keep them fast. Get into Scoutt.in and, get what you want, and get outside!
+
+
+/ Portfolio Grid Section
+%section#gallery#portfolio
+  .container
+    .row
+      .col-lg-12.text-center
+        %h2.section-heading Gallery
+        -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
+    .row
+      .col-md-4.col-sm-6.portfolio-item
+        %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal1"}
+          .portfolio-hover
+            .portfolio-hover-content
+              %i.fa.fa-search-plus.fa-3x
+          = image_tag 'landing/event-thumb.png', class: 'img-responsive'
+        .portfolio-caption
+          %h4 Events
+          %p.text-muted Signup on the Event page
+
+      .col-md-4.col-sm-6.portfolio-item
+        %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal2"}
+          .portfolio-hover
+            .portfolio-hover-content
+              %i.fa.fa-search-plus.fa-3x
+          = image_tag 'landing/search-thumb.png', class: 'img-responsive'
+        .portfolio-caption
+          %h4 Search Everything
+          %p.text-muted One easy search does it all
+
+      -# .col-md-4.col-sm-6.portfolio-item
+      -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal3"}
+      -#     .portfolio-hover
+      -#       .portfolio-hover-content
+      -#         %i.fa.fa-plus.fa-3x
+      -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/treehouse.png"}
+      -#   .portfolio-caption
+      -#     %h4 Treehouse
+      -#     %p.text-muted Website Design
+
+      -# .col-md-4.col-sm-6.portfolio-item
+      -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal4"}
+      -#     .portfolio-hover
+      -#       .portfolio-hover-content
+      -#         %i.fa.fa-plus.fa-3x
+      -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/golden.png"}
+      -#   .portfolio-caption
+      -#     %h4 Golden
+      -#     %p.text-muted Website Design
+
+      -# .col-md-4.col-sm-6.portfolio-item
+      -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal5"}
+      -#     .portfolio-hover
+      -#       .portfolio-hover-content
+      -#         %i.fa.fa-plus.fa-3x
+      -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/escape.png"}
+      -#   .portfolio-caption
+      -#     %h4 Escape
+      -#     %p.text-muted Website Design
+
+      -# .col-md-4.col-sm-6.portfolio-item
+      -#   %a.portfolio-link{"data-toggle" => "modal", href: "#portfolioModal6"}
+      -#     .portfolio-hover
+      -#       .portfolio-hover-content
+      -#         %i.fa.fa-plus.fa-3x
+      -#     -# %img.img-responsive{:alt => "", :src => "img/portfolio/dreams.png"}
+      -#   .portfolio-caption
+      -#     %h4 Dreams
+      -#     %p.text-muted Website Design
+
+
+%section#more.bg-light-gray
+  .container-fluid
+    .row
+      .col-lg-12.text-center
+        %h2.section-heading More
+
+  .container-fluid
+    .row
+      .col-md-4
+        .action-section
+          %i.text-primary.fa.fa-mobile.fa-2x
+          %h4 Easy Messaging
+          %p Send emails or text messages only to those who are attending an event. No haveing to select individual names. Scoutt.in will also
+
+      .col-md-4
+        .action-section
+          %i.fa.fa-desktop.fa-2x
+          %h4 Import from Scoutlander
+          %p Import all your Scouts, adults, events, and more. Users will have to generate a new password for their account. But don't worry, we'll walk you through everything step-by-step.
+
+      .col-md-4
+
+-# / About Section
+-# %section#about
+-#   .container-fluid
+-#     .row
+-#       .col-lg-12.text-center
+-#         %h2.section-heading Features
+-#         -# %h3.section-subheading.text-muted final itinerary is not complete, but here is what we did last year
+-#     .row
+-#       .col-lg-12
+-#         %ul.timeline
+-#           %li
+-#             .timeline-image
+-#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/boston.jpg"}
+-#             .timeline-panel
+-#               .timeline-heading
+-#                 %h4 Boston, MA
+-#                 %h4.subheading Fly into Beantown
+-#               .timeline-body
+-#                 %p.text-muted Faneuil Hall, Fenway Park, Bostom Common, Harvard & MIT. What more will the home of Paul Revere have to discover.
+
+-#           %li.timeline-inverted
+-#             .timeline-image
+-#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/nyc.jpg"}
+-#             .timeline-panel
+-#               .timeline-heading
+-#                 %h4 New York City, NY
+-#                 %h4.subheading The Big Apple
+-#               .timeline-body
+-#                 %p.text-muted No city does it bigger or better than Gotham. We'll see Times Square...
+
+-#           %li
+-#             .timeline-image
+-#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/philly.jpg"}
+-#             .timeline-panel
+-#               .timeline-heading
+-#                 %h4 Philadelphia, PA
+-#                 %h4.subheading The City of Brothery Love
+-#               .timeline-body
+-#                 %p.text-muted The Liberty Bell, Independance Hall, Philadelphia Museum of Art, or the haunted Eastern State Penitentiary. See what the cradle of libery holds for us. Cheese Steaks, oh yeah!
+
+-#           %li.timeline-inverted
+-#             .timeline-image
+-#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/dc.jpg"}
+-#             .timeline-panel
+-#               .timeline-heading
+-#                 %h4 Washington, DC
+-#                 %h4.subheading Our nation's Capitol
+-#               .timeline-body
+-#                 %p.text-muted The US Capitol, White House, Smithsonial Institution, National Air and Space Museum, or the International Spy Museum. There is more to do in DC than you can shake a stick at.
+
+-#           %li
+-#             .timeline-image
+-#               -# %img.img-circle.img-responsive{alt: "", src: "images/about/summit.jpg"}
+-#             .timeline-panel
+-#               .timeline-heading
+-#                 %h4 Glen Jean, WV
+-#                 %h4.subheading Summit Bechtel Reserve
+-#               .timeline-body
+-#                 %p.text-muted 10 days camping and taking in all that the Summer has to offfer. And boy is there a lot you can do!
+
+-#           %li.timeline-inverted
+-#             .timeline-image
+-#               %h4
+-#                 Join
+-#                 %br
+-#                 Troop
+-#                 %br
+-#                 Five!
 
 
 
-  %footer
-    .container-fluid
-      .row
-        .col-md-4
-          %span.copyright Copyright &copy; Desert Solitaire, LLC 2014
-        .col-md-4.col-md-offset-4
-          .pull-right
-            Scoutt.in is not affiliated with BSA
+/ Team Section
+%section#about
+  .container-fluid
+    .row
+      .col-lg-12.text-center
+        %h2.section-heading About Scoutt.in
+        -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
+
+    .row
+      .col-sm-8.col-sm-offset-2
+        .team-member
+          -# %img.img-responsive.img-circle{alt: "", src: "images/team/1.jpg"}
+          = image_tag 'landing/bsa_logo.gif', class: 'img-responsive img-large'
+          -# %i.fa.fa-user{style: "font-size: 238px;"}
+          -# %h4 Brian Cook
+          -# %p.text-muted Scoutmaster
+          %p Scoutt.in grew out of the need of BS Troop 603 to manage Scouts and their activities, using modern technology, keeping things simple and efficient. Developed by a Scoutmaster and long time Scouter, who just happens to engineer web sites for a living.
+          %p Scoutt.in was built from the top, down, with speed, security, but most importantly ease-of-use. Face it, if a web site is not easy to use, you won't use it.
+
+
+
+%section.bg-light-gray
+  .container-fluid
+    .row
+      .col-lg-12.text-center
+        %h2.section-heading Get Started Now
+        %h3.section-subheading.text-primary It's 100% Free
+        = link_to 'Sign Up', sign_up_user_path, class: 'btn btn-xl'
+
+
+
+%footer
+  .container-fluid
+    .row
+      .col-md-4
+        %span.copyright Copyright &copy; Desert Solitaire, LLC 2014
+      .col-md-4.col-md-offset-4
+        .pull-right
+          Scoutt.in is not affiliated with BSA
 
 
 / Portfolio Modals

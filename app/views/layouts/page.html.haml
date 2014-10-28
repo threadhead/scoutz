@@ -23,5 +23,7 @@
     = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"
     = javascript_include_tag "landing"
 
-  %body
+  %body#page-top.index
     = yield
+    - if Rails.env.production?
+      = render 'layouts/google_analytics'

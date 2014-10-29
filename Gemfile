@@ -78,7 +78,7 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'vcr'
-  gem 'webmock', '<= 1.16'
+  gem 'webmock' #, '<= 1.16'
 
 end
 
@@ -111,7 +111,7 @@ group :test do
   gem 'sqlite3'
   # gem 'rspec-activemodel-mocks' #will need this when going to rspec 3.0
   # gem 'vcr'
-  # gem 'webmock', '<= 1.16'
+  # gem 'webmock' #, '<= 1.16'
 
 	gem 'shoulda-matchers', require: false
 	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'

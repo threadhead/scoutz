@@ -3,10 +3,13 @@
     .modal-dialog
       .modal-content
         .modal-header
-          %h2 Change your password
+          %h2= @params[:welcome] ? 'Welcome to Scoutt.in!' : 'Change your password'
 
         .modal-body
           = render partial: 'layouts/flash', locals: {flash: flash, ar_object: resource}
+
+          - if @params[:welcome]
+            %p.xlarge An administrator from your Troop, Pack, or Crew has requested you join Scoutt.in. An account has already been setup for you. You just need to create a password.
 
           .row
             .col-md-8.col-md-offset-2
@@ -17,7 +20,10 @@
                 = f.password_field :password_confirmation, placeholder: 'enter again', hide_label: true, class: 'input-lg'
 
                 %br
-                = f.submit "Change my password", class: 'btn btn-primary btn-block btn-lg'
+                - if @params[:welcome]
+                  = f.submit "Create my password", class: 'btn btn-primary btn-block btn-lg'
+                - else
+                  = f.submit "Change my password", class: 'btn btn-primary btn-block btn-lg'
                 %br
 
               - if devise_mapping.registerable? && controller_name != 'registrations'

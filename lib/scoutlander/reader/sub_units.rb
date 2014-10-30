@@ -1,6 +1,6 @@
 module Scoutlander
-  module Importer
-    class SubUnits < Scoutlander::Importer::Base
+  module Reader
+    class SubUnits < Scoutlander::Reader::Base
       attr_reader :sub_units
 
       def initialize(options={})

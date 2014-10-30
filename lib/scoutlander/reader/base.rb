@@ -2,7 +2,7 @@ require 'fileutils'
 require 'mechanize'
 
 module Scoutlander
-  module Importer
+  module Reader
     class Base
       attr_accessor :logger, :collection
       attr_reader :agent

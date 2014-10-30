@@ -23,7 +23,7 @@ begin
 
 
         # # scrape and import sub units
-        sub_unit_importer = Scoutlander::Importer::SubUnits.new(
+        sub_unit_importer = Scoutlander::Reader::SubUnits.new(
                                     email: 'threadhead@gmail.com',
                                     password: ENV['SCOUTLANDER_PASSWORD'],
                                     unit: unit
@@ -37,7 +37,7 @@ begin
 
 
         # # scrape and import scouts
-        scout_importer = Scoutlander::Importer::Scouts.new(
+        scout_importer = Scoutlander::Reader::Scouts.new(
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
                             unit: unit,
@@ -50,7 +50,7 @@ begin
 
 
         # # scrape and import adults
-        adult_importer = Scoutlander::Importer::Adults.new(
+        adult_importer = Scoutlander::Reader::Adults.new(
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
                             unit: unit,
@@ -62,7 +62,7 @@ begin
 
 
         # scrape and import events and signups
-        event_importer = Scoutlander::Importer::Events.new(
+        event_importer = Scoutlander::Reader::Events.new(
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
                             unit: unit

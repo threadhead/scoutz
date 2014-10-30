@@ -1,6 +1,6 @@
 module Scoutlander
-  module Importer
-    class Person < Scoutlander::Importer::Base
+  module Reader
+    class Person < Scoutlander::Reader::Base
 
       def initialize(options={})
         super(options)
@@ -25,7 +25,7 @@ module Scoutlander
 
       def fetch_person_info(kind, datum)
         person_page = person_info_page(datum)
-        reader = Scoutlander::Importer::TdReader.new(page: person_page, id: "td#ctl00_mainContent_#{profile_name(kind)}_")
+        reader = Scoutlander::Reader::TdReader.new(page: person_page, id: "td#ctl00_mainContent_#{profile_name(kind)}_")
 
         {
           leadership_position: 'txtRole',

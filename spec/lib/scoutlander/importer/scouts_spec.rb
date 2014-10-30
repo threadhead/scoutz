@@ -1,11 +1,11 @@
 require 'rails_vcr_helper'
 
-RSpec.describe Scoutlander::Importer::Scouts do
+RSpec.describe Scoutlander::Reader::Scouts do
   before(:all) { @unit = FactoryGirl.create(:unit, sl_uid: '3218', unit_type: 'Boy Scouts') }
 
   describe '.fetch_unit_persons', :vcr do
     before(:all) do
-      @sl = Scoutlander::Importer::Scouts.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+      @sl = Scoutlander::Reader::Scouts.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_unit_scouts') do
         @sl.fetch_unit_scouts
       end
@@ -37,7 +37,7 @@ RSpec.describe Scoutlander::Importer::Scouts do
 
   describe '.fetch_scout_info', :vcr do
     before(:all) do
-      @sl = Scoutlander::Importer::Scouts.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+      @sl = Scoutlander::Reader::Scouts.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_scout_info') do
         @sl.fetch_unit_scouts
         b = (@sl.find_collection_elements_with first_name: 'Devin', last_name: 'Goins')

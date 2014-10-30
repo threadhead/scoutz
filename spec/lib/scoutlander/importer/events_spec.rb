@@ -1,6 +1,6 @@
 require 'rails_vcr_helper'
 
-RSpec.describe Scoutlander::Importer::Events do
+RSpec.describe Scoutlander::Reader::Events do
   before(:all) do
     @unit = FactoryGirl.create(:unit, unit_number: '603', unit_type: 'Boy Scouts', sl_uid: '3218')
     @user = FactoryGirl.create(:adult, first_name: 'Karl', last_name: 'Smith')
@@ -10,7 +10,7 @@ RSpec.describe Scoutlander::Importer::Events do
   describe '.fetch_unit_events', :vcr do
     before do
       VCR.use_cassette('fetch_unit_events') do
-        @sl = Scoutlander::Importer::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+        @sl = Scoutlander::Reader::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
         @sl.stub(:scrape_months).and_return([Date.new(2013,7,1)])
         @sl.fetch_unit_events
       end
@@ -32,7 +32,7 @@ RSpec.describe Scoutlander::Importer::Events do
   describe '.fetch_event_info', :vcr do
     before do
       VCR.use_cassette('fetch_event_info') do
-        @sl = Scoutlander::Importer::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+        @sl = Scoutlander::Reader::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
         @sl.stub(:scrape_months).and_return([Date.new(2013,7,1)])
         @sl.fetch_unit_events
         # @sl.events.each { |event| @sl.fetch_event_info(event) }
@@ -52,7 +52,7 @@ RSpec.describe Scoutlander::Importer::Events do
 
 
   describe ".sl_time_to_datetime" do
-    let(:sl) { Scoutlander::Importer::Events.new(unit: @unit) }
+    let(:sl) { Scoutlander::Reader::Events.new(unit: @unit) }
 
     specify { expect(sl.sl_time_to_datetime('2014.5.3.7.0.0')).to eq(DateTime.parse('2014-05-03 07:00:00')) }
     specify { expect(sl.sl_time_to_datetime('2014.5.3.7.15.0')).to eq(DateTime.parse('2014-05-03 07:15:00')) }

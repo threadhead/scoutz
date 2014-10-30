@@ -1,6 +1,6 @@
 module Scoutlander
-  module Importer
-    class Events < Scoutlander::Importer::Base
+  module Reader
+    class Events < Scoutlander::Reader::Base
       attr_accessor :events
 
       def initialize(options={})

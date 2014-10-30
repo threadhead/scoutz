@@ -3,8 +3,8 @@
 
 
 module Scoutlander
-  module Importer
-    class Scouts < Scoutlander::Importer::Person
+  module Reader
+    class Scouts < Scoutlander::Reader::Person
       attr_accessor :scouts
 
       def initialize(options={})

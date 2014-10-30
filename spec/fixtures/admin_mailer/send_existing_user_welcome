@@ -1,3 +1,0 @@
-AdminMailer#send_existing_user_welcome
-
-Hi, find me in app/views/admin_mailer/send_existing_user_welcome

@@ -4,6 +4,8 @@ begin
       c.hook_into :webmock
       c.filter_sensitive_data('<SCOUTLANDER_PASSWORD>') { ENV['SCOUTLANDER_PASSWORD'] }
       c.default_cassette_options = { record: :new_episodes }
+
+      c.ignore_hosts 'scouttin-dev.s3.amazonaws.com', 'scouttin.s3.amazonaws.com'
     end
 
 
@@ -39,7 +41,7 @@ begin
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
                             unit: unit,
-                            disable_all_notifications: true
+                            disable_all_notifications: false
                             )
 
         VCR.use_cassette('fetch_unit_persons(:scout)') { scout_importer.fetch_unit_scouts }
@@ -52,7 +54,7 @@ begin
                             email: 'threadhead@gmail.com',
                             password: ENV['SCOUTLANDER_PASSWORD'],
                             unit: unit,
-                            disable_all_notifications: true
+                            disable_all_notifications: false
                             )
 
         VCR.use_cassette('fetch_unit_persons(:adult)') { adult_importer.fetch_unit_adults }
@@ -69,7 +71,7 @@ begin
         VCR.use_cassette('fetch_unit_events') { event_importer.fetch_unit_events }
         VCR.use_cassette('fetch_all_event_info_and_create') { event_importer.fetch_all_event_info_and_create }
 
-        pass = {password: 'pack1134', password_confirmation: 'pack1134', confirmed_at: 1.day.ago}
+        pass = {password: 'pack1134', password_confirmation: 'pack1134', confirmed_at: 1.day.ago, role: 'leader'}
         Adult.where(email: 'threadhead@gmail.com').first.update_attributes(pass)
         Adult.where(email: 'rob@robmadden.com').first.update_attributes(pass)
         Adult.where(email: 'tasst01@hotmail.com').first.update_attributes(pass)

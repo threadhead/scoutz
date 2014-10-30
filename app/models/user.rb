@@ -70,8 +70,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  # validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
-  validate :image_size_validation, :if => "picture?"
+  # validates :picture, file_size: { maximum: 0.3.megabytes.to_i, message: 'should be less than 300K' }, if: "picture.present?"
+  validate :image_size_validation, if: "picture.present?"
   def image_size_validation
     errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
   end
@@ -237,6 +237,13 @@ class User < ActiveRecord::Base
     t = UnitPosition.arel_table
     joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where( t[:leadership].not_eq('').or(t[:additional].not_eq('')) )
   end
+
+  def self.without_units
+    habtm_table = Arel::Table.new(:units_users)
+    join_table_with_condition = habtm_table.project(habtm_table[:user_id])
+    where(User.arel_table[:id].not_in(join_table_with_condition))
+  end
+
 
 
 

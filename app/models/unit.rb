@@ -3,13 +3,14 @@ class Unit < ActiveRecord::Base
   # has_many :scouts, through: :users
   # has_many :adults, through: :users
   # has_many :scouts, through: :users, source: :scouts
-  has_many :sub_units, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
   has_many :pages, -> { order(deactivated_at: :desc, position: :asc) }, dependent: :destroy
-  has_many :pictures, as: :assetable, dependent: :destroy
-  has_many :attachment_files, as: :assetable, dependent: :destroy
+  has_many :pictures, class_name: 'Ckeditor::Picture', dependent: :destroy
+  has_many :attachment_files, class_name: 'Ckeditor::AttachmentFile', dependent: :destroy
+
+  has_many :sub_units, dependent: :destroy
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
 

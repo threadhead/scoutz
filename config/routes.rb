@@ -1,6 +1,6 @@
 Scoutz::Application.routes.draw do
   get 'meta_search' => 'meta_search#index'
-  devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
+  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords'}
   # get "events/index"
 
   # get "dashboard_list" => "dashboard_list#index"

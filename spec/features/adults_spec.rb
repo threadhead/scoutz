@@ -142,7 +142,7 @@ RSpec.describe 'Adults' do
     end
 
     it 'clicking change edits the adult' do
-      click_link 'change'
+      click_link "edit #{@user.first_name}"
 
       expect(page).to have_text('Edit Adult')
       expect(page.current_path).to eq(edit_unit_adult_path(@unit, @user))
@@ -174,7 +174,7 @@ RSpec.describe 'Adults' do
       @user2 = FactoryGirl.create(:adult, first_name: 'Bonnie', last_name: 'Doom')
       @user2.units << @unit
       visit unit_adult_path(@unit, @user2)
-      click_link 'change'
+      click_link "edit #{@user2.first_name}"
 
       within "form#edit_adult_#{@user2.id}" do
         fill_in 'adult_first_name', with: 'Fionula'

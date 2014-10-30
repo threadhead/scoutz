@@ -51,6 +51,7 @@ module Scoutlander
         # massage some of the data
         sl_rank(datum)
         sl_leadership(datum)
+        sl_role(datum)
         datum.email = nil if datum.email.nil? || datum.email.downcase == "no email"
         datum.send_reminders = !datum.send_reminders.nil? && datum.send_reminders.include?("ON")
 
@@ -75,6 +76,20 @@ module Scoutlander
         end
         datum.additional_leadership_positions = roles.join(', ') unless roles.empty?
       end
+
+      def sl_role(datum)
+        datum.role = case datum.security_level.downcase
+        when /leader access/
+          'leader'
+        when /admin access/
+          'admin'
+        else
+          'basic'
+        end
+      end
+
+
+
 
 
       # goto the person's show page

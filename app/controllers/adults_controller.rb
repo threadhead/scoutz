@@ -60,6 +60,11 @@ class AdultsController < UsersController
     redirect_to unit_adults_path(@unit), notice: "#{user_name}, and all associated data, was permanently deleted."
   end
 
+  def send_welcome_reset_password
+    super
+    redirect_to unit_adult_path(@unit, @user), notice: "Welcome email was sent to #{@user.name}. Their account has been deactivated until they confirm."
+  end
+
   private
     def set_counselor_attributes(user=nil)
       return unless params[:adult].has_key?(:merit_badge_ids)

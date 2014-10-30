@@ -21,6 +21,10 @@ class AdultPolicy < ApplicationPolicy
     user.admin? && user.adult?
   end
 
+  def send_welcome_reset_password?
+    user.admin? && user.adult?
+  end
+
 
   class Scope < Struct.new(:user, :scope)
     def resolve

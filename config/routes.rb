@@ -13,8 +13,16 @@ Scoutz::Application.routes.draw do
         get 'calendar'
       end
     end
-    resources :scouts
-    resources :adults
+    resources :scouts do
+      member do
+        get 'send_welcome_reset_password'
+      end
+    end
+    resources :adults do
+      member do
+        get 'send_welcome_reset_password'
+      end
+    end
     resources :email_messages
     resources :sms_messages
     resources :users

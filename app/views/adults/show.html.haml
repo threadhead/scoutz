@@ -3,35 +3,36 @@
     .page-header
       .pull-right
         - #if @user.users.where(id: current_user).count > 0
-        = link_to(unit_adults_path(@unit), class: 'btn btn-default') do
-          %i.fa.fa-reply
-          #{@unit.name_unit} adults
+        .btn-group
+          = link_to(unit_adults_path(@unit), class: 'btn btn-default') do
+            %i.fa.fa-reply
+            #{@unit.name_unit} adults
 
-        - if policy(@user).edit?
-          = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
-            %i.fa.fa-edit
-            edit #{@user.first_name}
+          - if policy(@user).edit?
+            = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              edit #{@user.first_name}
 
-        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
-          %i.fa.fa-gears
-          actions
-          %span.caret
-        %ul.dropdown-menu.pull-right
-          - if policy(@user).destroy?
-            %li
-              = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
-                %i.fa.fa-trash-o
-                destroy #{@user.first_name}
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            %i.fa.fa-gear
+            actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
+            - if policy(@user).destroy?
+              %li
+                = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+                  %i.fa.fa-trash-o
+                  destroy #{@user.first_name}
 
-          - if policy(@user).new?
-            %li
-              = link_to(new_unit_adult_path(@unit), class: "") do
-                %i.fa.fa-plus
-                new adult
+            - if policy(@user).new?
+              %li
+                = link_to(new_unit_adult_path(@unit), class: "") do
+                  %i.fa.fa-plus
+                  new adult
 
-          - if policy(@user).send_welcome_reset_password?
-            %li
-              = link_to 'Send welcome email', '#', data: { toggle: 'modal', target: '#send-welcome-email'}
+            - if policy(@user).send_welcome_reset_password?
+              %li
+                = link_to 'Send welcome email', '#', data: { toggle: 'modal', target: '#send-welcome-email'}
 
       %h2 Adult: #{@user.full_name}
 

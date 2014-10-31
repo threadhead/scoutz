@@ -94,7 +94,7 @@ Scoutz::Application.configure do
       domain:               'scoutt.in', # your domain to identify your server when connecting
     }
 
-  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in/' }
+  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in' }
   config.action_mailer.asset_host = 'http://www.scoutt.in'
 
 

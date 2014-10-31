@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       set_user_units
       set_unit
-      stored_location_for(resource) || unit_events_url(@unit)
+      stored_location_for(resource) || unit_events_url(@unit, protocol: 'http')
     end
 
 end

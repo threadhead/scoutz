@@ -89,7 +89,7 @@ Scoutz::Application.configure do
       port:                 2525, # ports 587 and 2525 are also supported with STARTTLS
       enable_starttls_auto: true, # detects and uses STARTTLS
       user_name:            ENV['MANDRILL_USERNAME'],
-      password:             ENV['MANDRILL_PASSWORD'], # SMTP password is any valid API key
+      password:             ENV['MANDRILL_TEST_PASSWORD'], # SMTP password is any valid API key
       authentication:       'login', # Mandrill supports 'plain' or 'login'
       domain:               'scoutt.in', # your domain to identify your server when connecting
     }

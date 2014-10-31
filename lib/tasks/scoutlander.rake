@@ -76,9 +76,9 @@ end
 
 def set_users
   pass = {password: 'pack1134', password_confirmation: 'pack1134', confirmed_at: 1.day.ago}
-  Adult.where(email: 'threadhead@gmail.com').first.update_attributes(pass)
-  Adult.where(email: 'rob@robmadden.com').first.update_attributes(pass)
-  Adult.where(email: 'tasst01@hotmail.com').first.update_attributes(pass)
+  Adult.where(email: 'threadhead@gmail.com').first.update_attributes(pass.merge({role: 'admin'}))
+  Adult.where(email: 'rob@robmadden.com').first.update_attributes(pass.merge({role: 'admin'}))
+  Adult.where(email: 'tasst01@hotmail.com').first.update_attributes(pass.merge({role: 'admin'}))
   user = Adult.where(email: 'stoya.robert@orbital.com').first
 
   # add rob stoya to the unit

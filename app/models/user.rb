@@ -49,8 +49,6 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :unit_positions
 
 
-
-
   before_save :update_picture_attributes
   before_create :save_original_filename
 
@@ -73,7 +71,9 @@ class User < ActiveRecord::Base
   # validates :picture, file_size: { maximum: 0.3.megabytes.to_i, message: 'should be less than 300K' }, if: "picture.present?"
   validate :image_size_validation, if: "picture.present?"
   def image_size_validation
-    errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+    if picture.file.exists?
+      errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+    end
   end
 
 
@@ -350,8 +350,13 @@ class User < ActiveRecord::Base
 
     def update_picture_attributes
       if picture.present? && picture_changed?
-        self.picture_content_type = picture.file.content_type
-        self.picture_file_size = picture.file.size
+        if picture.file.exists?
+          self.picture_content_type = picture.file.content_type
+          self.picture_file_size = picture.file.size
+        else
+          self.picture_content_type = nil
+          self.picture_file_size = nil
+        end
         self.picture_updated_at = Time.zone.now
       end
     end

@@ -108,8 +108,8 @@ Scoutz::Application.configure do
     }
 
 
-  # config.to_prepare { SessionsController.force_ssl }
-  # config.to_prepare { RegistrationsController.force_ssl }
-  # config.to_prepare { PasswordsController.force_ssl }
+  config.to_prepare { SessionsController.force_ssl }
+  config.to_prepare { RegistrationsController.force_ssl }
+  config.to_prepare { PasswordsController.force_ssl }
 
 end

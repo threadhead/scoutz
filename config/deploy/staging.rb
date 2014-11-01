@@ -1,4 +1,4 @@
-set :rails_env, 'production'
+set :rails_env, 'staging'
 
 # ==================
 # Supports bulk-adding hosts to roles, the primary server in each group

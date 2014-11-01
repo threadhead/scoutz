@@ -5,10 +5,7 @@ gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
 gem 'rails', '4.1.6'
-
 gem 'pg'
-
-# gem 'rake'
 
 gem 'devise'
 # gem 'devise-async'
@@ -28,14 +25,13 @@ gem 'wicked'
 gem 'sanitize', '~> 2.1.0'
 # gem 'ckeditor'
 # gem 'gmaps4rails'
-gem 'public_activity' #, git: 'https://github.com/pokonski/public_activity.git', branch: 'rails4'
+gem 'public_activity'
 gem "non-stupid-digest-assets"
 gem 'bootstrap_form'
 gem 'kaminari'
 gem 'acts_as_list'
 gem 'pg_search'
 # gem 'textacular', require: 'textacular/searchable'
-# gem 'attr_searchable'
 
 
 #gem 'twilio-ruby'
@@ -70,7 +66,7 @@ gem 'whenever', :require => false
 group :development, :test do
   gem 'whiny_validation'
   gem 'haml-rails'
-  gem 'rspec' #, '> 3.0.0.beta2' # needed for now to trick guard-rspec
+  gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
@@ -88,10 +84,10 @@ group :development do
   gem "spring-commands-rspec"
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano' #, require: false
-  gem 'capistrano-bundler' #, require: false
-  gem 'capistrano-rails' #, require: false
-  gem 'capistrano-rvm' #, require: false
+  gem 'capistrano'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
 
   gem 'guard'
   gem 'guard-rspec', '~> 4.2.9', require: false
@@ -109,17 +105,12 @@ end
 
 group :test do
   gem 'sqlite3'
-  # gem 'rspec-activemodel-mocks' #will need this when going to rspec 3.0
-  # gem 'vcr'
-  # gem 'webmock' #, '<= 1.16'
-
 	gem 'shoulda-matchers', require: false
-	gem 'database_cleaner' #, git: 'https://github.com/bmabey/database_cleaner', branch: 'master'
+	gem 'database_cleaner'
 	gem 'capybara-webkit'
   gem 'capybara-screenshot'
 
   gem 'simplecov', require: false
-  # gem 'simplecov-rcov', require: false
 end
 
 # To use ActiveModel has_secure_password
@@ -127,15 +118,6 @@ end
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
-
-# bundle exec rake doc:rails generates the API under doc/api.
-# gem 'sdoc', '~> 0.4.0',          group: :doc
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'

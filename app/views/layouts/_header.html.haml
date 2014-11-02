@@ -34,7 +34,7 @@
                   Sign out
 
         - else
-          %li= link_to 'Sign in', new_user_session_path
+          %li= link_to 'Sign in', new_user_session_url, protocol: env_protocol
 
 .navbar.navbar-default#navbar-fixed-lower
   .container-fluid

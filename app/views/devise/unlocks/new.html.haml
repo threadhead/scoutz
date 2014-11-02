@@ -7,7 +7,7 @@
 
         .modal-body
           %p If you attempted to login too many times, Scoutt.in will lock your account.
-          %p You can unlock your account by clicking the link in the email that was sent to you, or simply waiting 10 minutes and #{link_to 'logging in again', new_user_session_path}.
+          %p You can unlock your account by clicking the link in the email that was sent to you, or simply waiting 10 minutes and #{link_to 'logging in again', new_user_session_url, protocol: env_protocol}.
           %p If you need to resend the unlock instructions, complete the form below.
 
           = render partial: 'layouts/flash', locals: {flash: flash}

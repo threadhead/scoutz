@@ -6,7 +6,7 @@
     %ul.nav.navbar-nav.navbar-right
       - if current_user
         %li
-          = link_to destroy_user_session_path, method: :delete do
+          = link_to destroy_user_session_path, method: :delete, protocol: env_protocol do
             %i.fa.fa-power-off
             Sign out
 

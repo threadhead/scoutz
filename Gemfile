@@ -38,6 +38,10 @@ gem 'pg_search'
 gem 'rest-client'
 gem 'icalendar'
 
+# gem 'vcr'
+# gem 'webmock'
+
+
 group :production, :staging do
   # gem 'newrelic_rpm'
   gem 'dalli'  # memcache client
@@ -74,7 +78,7 @@ group :development, :test do
   gem 'awesome_print'
 
   gem 'vcr'
-  gem 'webmock' #, '<= 1.16'
+  gem 'webmock'
 
 end
 

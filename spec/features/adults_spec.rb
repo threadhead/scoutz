@@ -135,14 +135,14 @@ RSpec.describe 'Adults' do
     end
 
     it 'clicking unit_name adults returns to adult list' do
-      click_link 'Pack 134 adults'
+      click_link 'Pack 134 Adults'
 
       expect(page).to have_text('Adults in Pack 134')
       expect(page.current_path).to eq(unit_adults_path(@unit))
     end
 
     it 'clicking change edits the adult' do
-      click_link "edit #{@user.first_name}"
+      click_link "Edit"
 
       expect(page).to have_text('Edit Adult')
       expect(page.current_path).to eq(edit_unit_adult_path(@unit, @user))
@@ -159,7 +159,7 @@ RSpec.describe 'Adults' do
     end
 
     it 'deletes the user and returns to the adult list' do
-      click_link 'destroy Bonnie'
+      click_link 'Destroy Bonnie'
 
       expect(page.current_path).to eq(unit_adults_path(@unit))
       expect(page).to have_text('Bonnie Doom, and all associated data, was permanently deleted')
@@ -174,7 +174,7 @@ RSpec.describe 'Adults' do
       @user2 = FactoryGirl.create(:adult, first_name: 'Bonnie', last_name: 'Doom')
       @user2.units << @unit
       visit unit_adult_path(@unit, @user2)
-      click_link "edit #{@user2.first_name}"
+      click_link "Edit"
 
       within "form#edit_adult_#{@user2.id}" do
         fill_in 'adult_first_name', with: 'Fionula'

@@ -21,14 +21,14 @@ RSpec.describe 'User Welcome Email and Password Reset' do
       before{ visit unit_adult_path(@unit, @adult) }
 
       it 'should have a link to send welcome eamil' do
-        expect(page).to have_link('Send welcome email')
+        expect(page).to have_link('Send Welcome Email')
       end
 
       describe 'clicking the Send welcome email' do
         before do
           ActionMailer::Base.deliveries.clear
           within '#send-welcome-email' do
-            click_link 'Send welcome email'
+            click_link 'Send Welcome Email'
           end
         end
 

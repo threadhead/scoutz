@@ -9,7 +9,7 @@ namespace :scoutlander do
                vcr: false
               }
     import_unit
-    set_users
+    # set_users
   end
 end
 
@@ -38,7 +38,7 @@ begin
                   }
 
         import_unit(params)
-        set_users
+        # set_users
       end
     end
 rescue NameError

@@ -18,7 +18,7 @@ module Scoutlander
         # pages are listed in the left-hand sidbar, and contain CUSTOMID in the URL
         dash_page = login
         unit_page = dash_page.link_with(text: %r{#{@unit.unit_number}}).click
-        puts "unit page uri: #{unit_page.uri}"
+        # puts "unit page uri: #{unit_page.uri}"
 
         @logger.info "CLICK : Get Pages Links"
         pages_links = unit_page.links.find_all{|l| l.uri.to_s =~ /CUSTOMID/}
@@ -75,14 +75,6 @@ module Scoutlander
           # page.body << c.to_html.force_encoding("UTF-8")
         end
         datum.inspected = true
-
-
-        # @logger.info "CLICK : Add Dens or Patrols"
-        # add_dens_page = site_setup_wizard_page.link_with(:text => %r/Add Dens or Patrols/).click
-        # sub_unit_names = add_dens_page.search("table#ctl00_mainContent_adminsubunitmgr_tblData tr td[2]").children.map(&:text)
-        # @logger.info "SUB UNIT NAMES : #{sub_unit_names.join(', ')}"
-        # logout
-
       end
 
 

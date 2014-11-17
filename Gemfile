@@ -37,6 +37,7 @@ gem 'pg_search'
 #gem 'twilio-ruby'
 gem 'rest-client'
 gem 'icalendar'
+gem 'newrelic_rpm'
 
 # gem 'vcr'
 # gem 'webmock'

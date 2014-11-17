@@ -71,6 +71,9 @@ def import_unit(params)
 
   # scrape and import events and signups
   Scoutlander::Importer::Events.new(params).perform
+
+  #scrape and import pages
+  Scoutlander::Importer::Pages.new(params).perform
 end
 
 

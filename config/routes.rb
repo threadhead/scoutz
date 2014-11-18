@@ -1,11 +1,6 @@
 Scoutz::Application.routes.draw do
   get 'meta_search' => 'meta_search#index'
   devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords'}
-  # get "events/index"
-
-  # get "dashboard_list" => "dashboard_list#index"
-  # get "dashboard_calendar" => "dashboard_calendar#index"
-  # get "dashboard/index" => "dashboard_list#index"
 
   resources :units do
     resources :events do
@@ -52,14 +47,19 @@ Scoutz::Application.routes.draw do
     end
   end
 
-  resources :sub_units
-
   namespace :ckeditor do
     resources :pictures, only: [:index, :create, :destroy]
     resources :attachment_files, only: [:index, :create, :destroy]
   end
 
+
+  devise_scope :user do
+    get "/user/welcome/edit" => "welcome#edit"
+    put "/user/welcome" => "welcome#update"
+  end
+
   post 'units/new' => 'units#new'
+  resources :sub_units
   resources :event_signups
 
   get "page/landing"

@@ -3,7 +3,7 @@
     .modal-dialog
       .modal-content
         .modal-header
-          %h2 Change My Password
+          %h2 Welcome to Scoutt.in!
 
         .modal-body
           - if resource.errors.size > 0
@@ -11,16 +11,19 @@
               - resource.errors.full_messages.each do |msg|
                 %p #{msg}
 
+
+          %p.xlarge An administrator from your Troop, Pack, or Crew has requested you join Scoutt.in. An account has already been setup for you. You just need to create a password.
+
           .row
             .col-md-8.col-md-offset-2
-              = bootstrap_form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :put } do |f|
+              = bootstrap_form_for resource, as: resource_name, url: user_welcome_path, html: { method: :put } do |f|
                 = f.hidden_field :reset_password_token
                 %br
                 = f.password_field :password, autofocus: true, placeholder: 'new password', hide_label: true, class: 'input-lg'
                 = f.password_field :password_confirmation, placeholder: 'enter again', hide_label: true, class: 'input-lg'
 
                 %br
-                = f.submit "Change my password", class: 'btn btn-primary btn-block btn-lg'
+                = f.submit "Create my password", class: 'btn btn-primary btn-block btn-lg'
                 %br
 
               - if devise_mapping.registerable? && controller_name != 'registrations'

@@ -14,6 +14,6 @@
 
     %p In order to activate your account, you need to reset the password.
 
-    %p= link_to 'Active my account!', edit_password_url(@user, reset_password_token: @token, welcome: true)
+    %p= link_to 'Active my account!', user_welcome_edit_url(reset_password_token: @token)
 
     %strong You have 72 hours to complete the activation.

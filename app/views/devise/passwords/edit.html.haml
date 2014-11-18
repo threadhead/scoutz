@@ -6,7 +6,11 @@
           %h2= @params[:welcome] ? 'Welcome to Scoutt.in!' : 'Change your password'
 
         .modal-body
-          = render partial: 'layouts/flash', locals: {flash: flash, ar_object: resource}
+          - if resource.errors.size > 0
+            .alert.alert-danger
+              - resource.errors.full_messages.each do |msg|
+                %p #{msg}
+
 
           - if @params[:welcome]
             %p.xlarge An administrator from your Troop, Pack, or Crew has requested you join Scoutt.in. An account has already been setup for you. You just need to create a password.

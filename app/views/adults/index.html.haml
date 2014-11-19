@@ -16,7 +16,7 @@
                 %i.fa.fa-plus
                 new adult
 
-          = cache ["unit-#{@unit.id}", ":search"] do
+          = cache ["unit-#{@unit.id}", ":adults_search"] do
             = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/adults.js?search_typeahead="}
 
 

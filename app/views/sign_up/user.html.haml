@@ -1,51 +1,35 @@
 .row
   .col-md-12
-    %h2 Welcome to Scoutz!
+    %h2.centered Welcome to Scoutt.in!
+    %p &nbsp;
 
 .row
-  .col-md-5.col-md-offset-1
+  .col-md-4.col-md-offset-1
     .well.well-lg
-      %h3 Transfer from Scoutlander.com
-      %p We can transfer all your adults, scouts, and events right from Scoutlander into Scoutz. All you need is an <em>administrator's</em> email address and password.
-      %p
-        %strong Go ahead, it's easy!
-
+      %h3 Transfer My Scoutander Info
+      %p We can transfer all your adults, scouts, and events right from Scoutlander into Scoutz. All you need is any <em>administrator's</em> email address and password.
       .pull-right
-        %button.btn.btn-mini{'data-toggle' => 'modal', 'data-target' => '#import-more-info'}
-          %i.fa.fa-info-sign
-          info...
+        = link_to 'read more...', '#', {data: {toggle: 'modal', target: '#import-more-info'}}
+      %p
+        %strong Transfer today!
+
       %p.clearfix
 
-      = form_tag '#' do
-        .form-group
-          = label_tag :sl_admin_email, '', class: 'sr-only'
-          = text_field_tag :sl_admin_email, nil, class: 'form-control', placeholder: 'admin email'
-        .form-group
-          = label_tag :sl_admin_password, '', class: 'sr-only'
-          = text_field_tag :sl_admin_password, nil, class: 'form-control', placeholder: 'admin password'
-        .form-group
-          %p= submit_tag 'Import', class: 'btn btn-primary'
+      = bootstrap_form_tag url: '#' do |sf|
+        = sf.text_field :sl_admin_email, hide_label: true, class: 'input-lg', placeholder: 'scoutlander admin email'
+        = sf.text_field :sl_admin_password, hide_label: true, class: 'input-lg', placeholder: 'scoutlander admin password'
+        = submit_tag 'Import', class: 'btn btn-primary btn-block'
 
 
-  .col-md-5
+  .col-md-4.col-md-offset-1
     .well.well-lg
-      %h4 Setup Your New Unit
+      %h3 Setup My New Unit
+      %p If you don't use Scoutlander, or you just want to start off fresh, you are in the right spot.
       %p &nbsp;
-      = form_for @unit, url: sign_up_new_unit_path, method: :get, html: { class: 'form-horizontal' } do |f|
-        .form-group
-          = f.label :unit_type, 'Type', class: 'control-label col-md-4'
-          .col-md-8
-            = f.select :unit_type, Unit.unit_types, {}, class: 'form-control'
-
-        .form-group
-          = f.label :unit_number, class: 'control-label col-md-4'
-          .col-md-8
-            = f.text_field :unit_number, class: 'form-control', placeholder: 'unit number'
-            .help-block ex. 134, 603, 15
-
-        .form-group
-          .col-md-8.col-md-offset-4
-            %p= f.submit 'Start My Unit', :class => 'btn btn-primary'
+      = bootstrap_form_for @unit, url: sign_up_new_unit_path, method: :get do |f|
+        = f.select :unit_type, Unit.unit_types
+        = f.text_field :unit_number, placeholder: 'ex. 134, 603, 15'
+        = f.submit 'Start My Unit', :class => 'btn btn-primary btn-block'
 
 
 .modal.fade#import-more-info
@@ -58,13 +42,13 @@
           Importing from Scoutlander
           %small how does it work?
       .modal-body
-        %p Importing from Scoutlander takes place in the background, while you do other things. If Scoutz runs into an error, we will notify you. When the import is done, you will receive an email detailing your successful tansfer.
+        %p Importing from Scoutlander takes place in the background, while you do other things. If Scoutt.in runs into an error, we will notify you. When the import is done, you will receive an email detailing your successful tansfer.
         %p Because we can not import passwords, you will be given the option of sending emails to all your adults and youth, instructing them how to start using Scoutz.
         %p We can import the following:
         %ul
-          %li All Adults (but no passwords)
-          %li All Youth (but no passwords)
-          %li All Events
+          %li All Adults (no passwords)
+          %li All Youth (no passwords)
+          %li All Events (last month, + 6 months)
 
         %p What we can not import:
         %ul

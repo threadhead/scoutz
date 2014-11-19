@@ -1,10 +1,10 @@
 require 'rails_vcr_helper'
 
-RSpec.describe Scoutlander::Importer::Units do
+RSpec.describe Scoutlander::Reader::Units do
   describe '.available_names_uids', :vcr do
     before(:all) do
       VCR.use_cassette('available_names_uids') do
-        @sl = Scoutlander::Importer::Units.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
+        @sl = Scoutlander::Reader::Units.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'])
         @sl.available_names_uids
       end
     end
@@ -19,7 +19,7 @@ RSpec.describe Scoutlander::Importer::Units do
 
 
   describe '.split_city_state' do
-    before(:all) { @sl = Scoutlander::Importer::Units.new }
+    before(:all) { @sl = Scoutlander::Reader::Units.new }
 
     it 'Chicago, IL' do
       city, state = @sl.split_city_state('Chicago, IL')

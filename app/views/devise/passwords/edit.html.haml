@@ -1,19 +1,33 @@
-%h2 Change your password
+.col-lg-6.col-lg-offset-3
+  .modal-fade
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %h2 Change My Password
 
-= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
+        .modal-body
+          - if resource.errors.size > 0
+            .alert.alert-danger
+              - resource.errors.full_messages.each do |msg|
+                %p #{msg}
 
-  = devise_error_messages!
-  = f.hidden_field :reset_password_token
+          .row
+            .col-md-8.col-md-offset-2
+              = bootstrap_form_for resource, as: resource_name, url: password_path(resource_name), html: { method: :put } do |f|
+                = f.hidden_field :reset_password_token
+                %br
+                = f.password_field :password, autofocus: true, placeholder: 'new password', hide_label: true, class: 'input-lg'
+                = f.password_field :password_confirmation, placeholder: 'enter again', hide_label: true, class: 'input-lg'
 
-  %div
-    = f.label :password, "New password"
-    %br
-    = f.password_field :password
-  %div
-    = f.label :password_confirmation, "Confirm new password"
-    %br
-    = f.password_field :password_confirmation
+                %br
+                = f.submit "Change my password", class: 'btn btn-primary btn-block btn-lg'
+                %br
 
-  %div= f.submit "Change my password"
-  
-= render :partial => "devise/shared/links"
+              - if devise_mapping.registerable? && controller_name != 'registrations'
+                %p.centered
+                  Don't have an account?
+                  = link_to "Sign up", new_registration_path(resource_name)
+
+        .modal-footer
+          = render partial: "devise/shared/links"
+

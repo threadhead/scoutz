@@ -13,7 +13,7 @@ set :repo_url, 'https://github.com/threadhead/scoutz.git'
 
 # Default deploy_to directory is /var/www/my_app
 # set :deploy_to, '/var/www/my_app'
-set :deploy_to, "/home/deploy/scoutz"
+# set :deploy_to, "/home/deploy/scoutz"
 
 # Default value for :scm is :git
 # set :scm, :git

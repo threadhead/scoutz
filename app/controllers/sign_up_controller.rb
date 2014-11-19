@@ -1,5 +1,5 @@
 class SignUpController < ApplicationController
-	layout 'full_width_fluid'
+	layout 'dialog_dark_modal'
 
   def user
     @unit = Unit.new

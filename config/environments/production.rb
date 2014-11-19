@@ -37,10 +37,10 @@ Scoutz::Application.configure do
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Set to :debug to see everything in the log.
   config.log_level = :info
@@ -94,16 +94,22 @@ Scoutz::Application.configure do
       domain:               'scoutt.in', # your domain to identify your server when connecting
     }
 
-  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in/' }
+  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in' }
   config.action_mailer.asset_host = 'http://www.scoutt.in'
 
 
 
   # execption notification
   config.middleware.use ExceptionNotification::Rack,
-    :email => {
-      :email_prefix => "[SCOUTT.IN] ",
-      :sender_address => %{"scoutt.in notifier" <notifier@scoutt.in>},
-      :exception_recipients => %w{threadhead@gmail.com}
+    email: {
+      email_prefix: "[SCOUTT.IN] ",
+      sender_address: %{"scoutt.in notifier" <notifier@scoutt.in>},
+      exception_recipients: %w{threadhead@gmail.com}
     }
+
+
+  # config.to_prepare { SessionsController.force_ssl }
+  # config.to_prepare { RegistrationsController.force_ssl }
+  # config.to_prepare { PasswordsController.force_ssl }
+
 end

@@ -1,5 +1,5 @@
 module Scoutlander
-  module Importer
+  module Reader
     class TdReader
       attr_accessor :page, :id
 

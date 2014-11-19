@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141028025723) do
+ActiveRecord::Schema.define(version: 20141104045212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,19 @@ ActiveRecord::Schema.define(version: 20141028025723) do
   add_index "ckeditor_assets", ["unit_id"], name: "index_ckeditor_assets_on_unit_id", using: :btree
   add_index "ckeditor_assets", ["updated_at"], name: "index_ckeditor_assets_on_updated_at", using: :btree
   add_index "ckeditor_assets", ["user_id"], name: "index_ckeditor_assets_on_user_id", using: :btree
+
+  create_table "councils", force: true do |t|
+    t.string   "name"
+    t.integer  "council_number"
+    t.string   "state"
+    t.string   "city"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "councils", ["council_number"], name: "index_councils_on_council_number", using: :btree
+  add_index "councils", ["name"], name: "index_councils_on_name", using: :btree
+  add_index "councils", ["state"], name: "index_councils_on_state", using: :btree
 
   create_table "counselors", force: true do |t|
     t.integer  "merit_badge_id"
@@ -338,7 +351,10 @@ ActiveRecord::Schema.define(version: 20141028025723) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "sl_uid",      limit: nil
+    t.integer  "council_id"
   end
+
+  add_index "units", ["council_id"], name: "index_units_on_council_id", using: :btree
 
   create_table "units_users", id: false, force: true do |t|
     t.integer "unit_id"
@@ -415,7 +431,7 @@ ActiveRecord::Schema.define(version: 20141028025723) do
     t.boolean  "sms_message",                                 default: true
     t.boolean  "weekly_newsletter_email",                     default: true
     t.boolean  "monthly_newsletter_email",                    default: true
-    t.integer  "role",                                        default: 0
+    t.integer  "role",                                        default: 10
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions", using: :btree

@@ -27,11 +27,11 @@
 							.username= current_user.full_name if current_user
 							%ul
 								- if user_signed_in?
-									%li= link_to "logout", destroy_user_session_path
+									%li= link_to "logout", destroy_user_session_url, protocol: env_protocol
 								- else
-									%li= link_to "sign in", new_user_session_path
+									%li= link_to "sign in", new_user_session_url, protocol: env_protocol
 
-				
+
 					%a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")
 						%span.icon-bar
 						%span.icon-bar
@@ -55,7 +55,7 @@
 							%li= link_to "Link 3", "/path3"
 				.span9
 					= yield
-		
+
 			%footer
 				%p &copy; Karl Smith 2012
 		/

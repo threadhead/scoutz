@@ -1,9 +1,9 @@
 class Ckeditor::Asset < ActiveRecord::Base
   self.table_name = "ckeditor_assets"
 
-  belongs_to :assetable, :polymorphic => true
-  belongs_to :unit
-  belongs_to :user
+  # belongs_to :assetable, :polymorphic => true
+  # belongs_to :unit
+  # belongs_to :user
 
   before_save :update_picture_attributes
   before_create :save_original_filename

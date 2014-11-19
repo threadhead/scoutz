@@ -1,11 +1,6 @@
 Scoutz::Application.routes.draw do
   get 'meta_search' => 'meta_search#index'
-  devise_for :users, controllers: {registrations: "registrations", sessions: 'sessions'}
-  # get "events/index"
-
-  # get "dashboard_list" => "dashboard_list#index"
-  # get "dashboard_calendar" => "dashboard_calendar#index"
-  # get "dashboard/index" => "dashboard_list#index"
+  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords'}
 
   resources :units do
     resources :events do
@@ -13,8 +8,16 @@ Scoutz::Application.routes.draw do
         get 'calendar'
       end
     end
-    resources :scouts
-    resources :adults
+    resources :scouts do
+      member do
+        get 'send_welcome_reset_password'
+      end
+    end
+    resources :adults do
+      member do
+        get 'send_welcome_reset_password'
+      end
+    end
     resources :email_messages
     resources :sms_messages
     resources :users
@@ -44,14 +47,19 @@ Scoutz::Application.routes.draw do
     end
   end
 
-  resources :sub_units
-
   namespace :ckeditor do
     resources :pictures, only: [:index, :create, :destroy]
     resources :attachment_files, only: [:index, :create, :destroy]
   end
 
+
+  devise_scope :user do
+    get "/user/welcome/edit" => "welcome#edit"
+    put "/user/welcome" => "welcome#update"
+  end
+
   post 'units/new' => 'units#new'
+  resources :sub_units
   resources :event_signups
 
   get "page/landing"

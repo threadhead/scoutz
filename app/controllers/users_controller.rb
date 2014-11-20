@@ -54,7 +54,8 @@ class UsersController < ApplicationController
             :weekly_newsletter_email, :monthly_newsletter_email,
             phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [], adult_ids: [],
             counselors_attributes: [:id, :merit_badge_id, :unit_id, :_destroy],
-            unit_positions_attributes: [:id, :leadership, :additional, :unit_id]
+            unit_positions_attributes: [:id, :leadership, :additional, :unit_id],
+            health_forms_attributes: [:id, :unit_id, :part_a_date, :part_b_date, :part_c_date, :florida_sea_base_date, :philmont_date, :northern_tier_date, :summit_tier_date]
             )
     end
 

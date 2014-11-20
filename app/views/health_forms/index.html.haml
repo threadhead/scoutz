@@ -1,0 +1,18 @@
+.row
+  .col-md-12
+    = render partial: 'layouts/flash', locals: {flash: flash}
+
+    .panel.panel-index-table.panel-default
+      .panel-heading
+        %span.xxlarge
+          %i.fa.fa-graduation-cap
+          Health Forms
+
+      .panel-body
+        .panel-nav
+          -# = cache ["unit-#{@unit.id}", ":health_form_search"] do
+          -#   = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/health_forms.js?search_typeahead="}
+
+
+        #merit-badge-index
+          = render partial: 'index', locals: {unit: @unit, users: @users, searching: @searching}

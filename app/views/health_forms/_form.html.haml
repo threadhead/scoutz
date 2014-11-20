@@ -1,0 +1,27 @@
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @health_form}
+
+
+
+.row
+  .col-md-8
+
+    = bootstrap_form_for [@unit, @health_form], layout: :horizontal do |f|
+      = render partial: 'users/health_forms', locals: {f: f, unit: @unit}
+
+      = f.form_group do
+        = f.primary
+        = link_to 'Cancel', unit_health_forms_path(@unit), class: 'btn btn-default'
+
+
+  .col-md-3.col-md-offset-1
+    .panel.panel-default
+      .panel-body.centered
+        %h3= @health_form.user.name
+        - if @health_form.user.picture.present?
+          = image_tag @health_form.user.picture.url, class: 'circle-picture'
+        - else
+          - if @health_form.user.adult?
+            .initial-circle.initial-circle-lg.initial-circle-adult= @health_form.user.initials
+          - else
+            .initial-circle.initial-circle-lg.initial-circle-scout= @health_form.user.initials
+

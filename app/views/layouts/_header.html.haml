@@ -85,6 +85,11 @@
                   %i.fa.fa-graduation-cap
                   MB Counselors
 
+              %li
+                = link_to unit_health_forms_path(@unit) do
+                  %i.fa.fa-graduation-cap
+                  Health Forms
+
 
 
         - if policy(EmailMessage).create? || policy(SmsMessage).create?

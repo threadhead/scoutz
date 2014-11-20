@@ -26,8 +26,13 @@ class User < ActiveRecord::Base
   has_many :sms_messages, dependent: :destroy
   has_many :pages
 
-  has_many :health_forms, dependent: :destroy
+  has_many :health_forms, inverse_of: :user, dependent: :destroy do
+    def unit(unit_id)
+      where(health_forms: {unit_id: unit_id}).first
+    end
+  end
   accepts_nested_attributes_for :health_forms
+
 
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)
@@ -41,8 +46,10 @@ class User < ActiveRecord::Base
   end
   accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['merit_badge_id'].blank? }, allow_destroy: true
 
+
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a["number"].blank? }
+
 
   has_many :unit_positions, inverse_of: :user, dependent: :destroy do
     def unit(unit_id)

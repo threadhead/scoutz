@@ -27,9 +27,9 @@
 							.username= current_user.full_name if current_user
 							%ul
 								- if user_signed_in?
-									%li= link_to "logout", destroy_user_session_url, protocol: env_protocol
+									%li= link_to "logout", destroy_user_session_url
 								- else
-									%li= link_to "sign in", new_user_session_url, protocol: env_protocol
+									%li= link_to "sign in", new_user_session_url
 
 
 					%a.btn.btn-navbar(data-target=".nav-collapse" data-toggle="collapse")

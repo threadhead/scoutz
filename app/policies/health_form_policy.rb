@@ -8,7 +8,7 @@ class HealthFormPolicy < ApplicationPolicy
   end
 
   def create?
-    false
+    user_role_at_least_leader
   end
 
   def update?
@@ -16,7 +16,7 @@ class HealthFormPolicy < ApplicationPolicy
   end
 
   def destroy?
-    false
+    user_role_at_least_leader
   end
 
 

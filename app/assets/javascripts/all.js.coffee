@@ -10,12 +10,13 @@ jQuery ->
     # updateField = $(@).data('altfield')
     # console.log updateField
     $(@).datepicker(
-      dateFormat: 'mm-dd-yy'
+      # showButtonPanel: true
+      dateFormat: 'M d, yy'
       altField: String($(@).data('altfield'))
       altFormat: "yy-mm-dd"
-      onSelect: ->
-        console.log $(@).data('altfield')
-        console.log $("#health_form_part_a_date").val()
+      # onSelect: ->
+        # console.log 'onSelect'
+      #   console.log $("#health_form_part_a_date").val()
     )
 
   $("button.date-clear").click ->

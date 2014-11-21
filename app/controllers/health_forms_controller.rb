@@ -6,11 +6,11 @@ class HealthFormsController < ApplicationController
   def index
     authorize HealthForm
     @users = @unit.users.order(:type).by_name_lf
-    # @health_forms_count = HealthForm.count
-    # if params[:search_typeahead] && !params[:search_typeahead].blank?
-    #   @health_forms = HealthForm.name_contains(params[:search_typeahead]).by_name
-    #   @searching = true
-    # end
+    @users_count = @unit.users.count
+    if params[:search_typeahead] && !params[:search_typeahead].blank?
+      @users = @users.name_contains(params[:search_typeahead])
+      @searching = true
+    end
     @searching = false
 
   end
@@ -21,7 +21,8 @@ class HealthFormsController < ApplicationController
 
   def new
     authorize HealthForm
-    # @health_form = HealthForm.new
+    @user = User.find(params[:user_id])
+    @health_form = HealthForm.new(user_id: @user.id)
   end
 
   def edit
@@ -30,13 +31,12 @@ class HealthFormsController < ApplicationController
 
   def create
     authorize HealthForm
-    set_counselor_attributes
-    # @health_form = HealthForm.new(merit_badge_params)
-    # if @health_form.save
-    #   redirect_to @health_form, notice: 'Merit badge was successfully created.'
-    # else
-    #   render :new
-    # end
+    @health_form = HealthForm.new(health_form_params)
+    if @health_form.save
+      redirect_to unit_health_forms_url(@unit), notice: 'Health form was successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
@@ -51,9 +51,12 @@ class HealthFormsController < ApplicationController
 
   def destroy
     authorize @health_form
-    # @health_form.destroy
-    # redirect_to merit_badges_url, notice: 'Merit badge was successfully destroyed.'
+    user = @health_form.user
+    @health_form.destroy
+    redirect_to unit_health_forms_url(@unit), notice: "#{user.name} health form was successfully removed."
   end
+
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

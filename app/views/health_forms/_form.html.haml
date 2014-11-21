@@ -4,8 +4,12 @@
 
 .row
   .col-md-8
+    .alert.alert-info
+      %strong IMPORTANT:
+      enter the date the health form was <u>signed</u>. Scoutt.in will calculate the expiration date as 1 year from when the form was signed.
 
     = bootstrap_form_for [@unit, @health_form], layout: :horizontal do |f|
+      = f.hidden_field :user_id
       = render partial: 'users/health_forms', locals: {f: f, unit: @unit}
 
       = f.form_group do

@@ -5,7 +5,7 @@ module HealthFormsHelper
     case
     when date > 30.days.from_now
       'label-success'
-    when date > 1.day.from_now
+    when date >= Date.today
       'label-warning'
     else
       'label-danger'

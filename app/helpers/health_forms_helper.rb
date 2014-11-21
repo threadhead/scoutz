@@ -1,6 +1,6 @@
 module HealthFormsHelper
   def form_date_label(date)
-    return '' if date.blank?
+    return 'label-default' if date.blank?
 
     case
     when date > 30.days.from_now

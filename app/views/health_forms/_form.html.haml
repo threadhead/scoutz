@@ -18,14 +18,4 @@
 
 
   .col-md-3.col-md-offset-1
-    .panel.panel-default
-      .panel-body.centered
-        %h3= @health_form.user.name
-        - if @health_form.user.picture.present?
-          = image_tag @health_form.user.picture.url, class: 'circle-picture'
-        - else
-          - if @health_form.user.adult?
-            .initial-circle.initial-circle-lg.initial-circle-adult= @health_form.user.initials
-          - else
-            .initial-circle.initial-circle-lg.initial-circle-scout= @health_form.user.initials
-
+    = render partial: 'users/picture_panel_lg', locals: {user: @health_form.user}

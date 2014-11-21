@@ -16,7 +16,7 @@
                 %i.fa.fa-plus
                 new scout
 
-          = cache ["unit-#{@unit.id}", ":search"] do
+          = cache ["unit-#{@unit.id}", ":scouts_search"] do
             = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/scouts.js?search_typeahead="}
 
 

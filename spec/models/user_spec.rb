@@ -9,6 +9,7 @@ RSpec.describe User do
   it { is_expected.to have_and_belong_to_many(:adults) }
   it { is_expected.to have_many(:merit_badges).through(:counselors) }
   it { is_expected.to have_many(:counselors) }
+  it { is_expected.to have_many(:health_forms) }
 	# it { is_expected.to have_many(:adults) }
 	# it { is_expected.to have_many(:scouts) }
 	# it { is_expected.to have_many(:adult_scout_relationships) }

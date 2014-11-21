@@ -137,9 +137,15 @@
     = f.text_field :state, control_col: 'col-md-2'
     = f.text_field :zip_code, control_col: 'col-md-2'
 
+
+  %fieldset
+    %legend Health Forms
+    .col-md-offset-2.col-md-8
+      = render partial: 'health_form_form', locals: {user: @user, unit: @unit}
+
   %fieldset
     %legend Parents (adults)
-    = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Parents', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout'}, {multiple: true, style: "width: 500px"}
+    = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Parents', help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, {multiple: true, style: "width: 500px"}
 
 
   = f.form_group do

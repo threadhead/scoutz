@@ -1,0 +1,12 @@
+- field_input = "#{field}_d".to_sym
+
+.form-group
+  = f.hidden_field field
+  = label_tag field_input, label, class: 'control-label col-md-3'
+  .col-md-8
+    .input-group
+      .input-group-addon
+        %i.fa.fa-calendar
+      = text_field_tag field_input, f.object.send(field.to_sym).try(:to_s, :mo_abbr_year), class: 'form-control date-picker', data: {altfield: "#health_form_#{field}"}
+      %span.input-group-btn
+        %button.btn.btn-default.date-clear{type: 'button'} clear

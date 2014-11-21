@@ -89,6 +89,8 @@
             %td
               = adult_scouts_link_list(@unit, @user)
 
+          = render partial: 'users/health_form_show', locals: {user: @user, unit: @unit}
+
           %tr
             %td
               %strong MB Counselor
@@ -98,9 +100,7 @@
                 %br
 
     .col-md-3.col-md-offset-1
-      .panel.panel-default
-        .panel-body.centered
-          = image_tag @user.picture.url, class: 'circle-picture'
+      = render partial: 'users/picture_panel_lg', locals: {user: @user}
 
 = render layout: 'users/send_welcome_email_modal' do
   = link_to "Send Welcome Email", send_welcome_reset_password_unit_adult_path(@unit, @user), class: 'btn btn-primary'

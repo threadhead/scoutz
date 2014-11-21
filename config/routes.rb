@@ -22,6 +22,7 @@ Scoutz::Application.routes.draw do
     resources :sms_messages
     resources :users
     resources :merit_badges
+    resources :health_forms
     resources :pages do
       member do
         delete 'deactivate'

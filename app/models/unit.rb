@@ -6,6 +6,7 @@ class Unit < ActiveRecord::Base
   has_many :events, dependent: :destroy
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
+  has_many :health_forms, dependent: :destroy
   has_many :pages, -> { order(deactivated_at: :desc, position: :asc) }, dependent: :destroy
   has_many :pictures, class_name: 'Ckeditor::Picture', dependent: :destroy
   has_many :attachment_files, class_name: 'Ckeditor::AttachmentFile', dependent: :destroy

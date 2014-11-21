@@ -1,0 +1,20 @@
+- if health_form.part_a_date
+  .label{class: form_date_label(health_form.part_a_expires), data: {toggle: 'tooltip'}, title: "Part A expires: #{health_form.part_a_expires.to_s(:mo_abbr_year)}" } A
+
+- if health_form.part_b_date
+  .label{class: form_date_label(health_form.part_b_expires), data: {toggle: 'tooltip'}, title: "Part B expires: #{health_form.part_b_expires.to_s(:mo_abbr_year)}" } B
+
+- if health_form.part_c_date
+  .label{class: form_date_label(health_form.part_c_expires), data: {toggle: 'tooltip'}, title: "Part C expires: #{health_form.part_c_expires.to_s(:mo_abbr_year)}" } C
+
+- if health_form.florida_sea_base_date
+  .label{class: form_date_label(health_form.florida_sea_base_expires), data: {toggle: 'tooltip'}, title: "Florida Sea Base expires: #{health_form.florida_sea_base_expires.to_s(:mo_abbr_year)}" } FSB
+
+- if health_form.northern_tier_date
+  .label{class: form_date_label(health_form.northern_tier_expires), data: {toggle: 'tooltip'}, title: "Northern Tier expires: #{health_form.northern_tier_expires.to_s(:mo_abbr_year)}" } NT
+
+- if health_form.philmont_date
+  .label{class: form_date_label(health_form.philmont_expires), data: {toggle: 'tooltip'}, title: "Philmont expires: #{health_form.philmont_expires.to_s(:mo_abbr_year)}" } P
+
+- if health_form.summit_tier_date
+  .label{class: form_date_label(health_form.summit_tier_expires), data: {toggle: 'tooltip'}, title: "Summit expires: #{health_form.summit_tier_expires.to_s(:mo_abbr_year)}" } S

@@ -69,9 +69,9 @@ class MeritBadgesController < ApplicationController
       @merit_badge = MeritBadge.find(params[:id])
     end
 
-    def set_unit
-      @unit = current_user.units.where(id: params[:unit_id]).first
-    end
+    # def set_unit
+    #   @unit = current_user.units.where(id: params[:unit_id]).first
+    # end
 
 
     # Only allow a trusted parameter "white list" through.

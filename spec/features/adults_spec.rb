@@ -6,12 +6,11 @@ RSpec.describe 'Adults' do
 
   before(:all) do
     Warden.test_mode!
-
     create_cub_scout_unit
   end
 
   before(:each) do
-    # Warden.test_reset!
+    Warden.test_reset!
     login_as(@user, scope: :user)
     visit unit_adults_path(@unit)
   end

@@ -107,7 +107,7 @@ class EventsController < ApplicationController
     end
 
     def event_params
-      params.require(:event).permit(:attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, {sub_unit_ids: []})
+      params.require(:event).permit(:attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :type_of_health_forms, {sub_unit_ids: []})
     end
 
 

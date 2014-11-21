@@ -27,4 +27,22 @@ module FeatureHelpers
     @scout2.units << @unit
   end
 
+  def create_boy_scout_unit
+    @unit = FactoryGirl.create(:unit, unit_type: 'Boy Scouts')
+    @sub_unit1 = FactoryGirl.create(:boy_scout_sub_unit, name: 'Hawks')
+    @sub_unit2 = FactoryGirl.create(:boy_scout_sub_unit, name: 'Scorpions')
+    @unit.sub_units << @sub_unit1
+    @unit.sub_units << @sub_unit2
+
+    @user = FactoryGirl.create(:adult, first_name: 'Denise', last_name: 'Richards', role: 'admin')
+    @user.unit_positions.create(unit_id: @unit.id, leadership: 'Committee Chair')
+    @user.units << @unit
+    @scout1 = FactoryGirl.create(:scout, sub_unit: @sub_unit1)
+    @user.scouts << @scout1
+    @scout1.units << @unit
+    @scout2 = FactoryGirl.create(:scout, first_name: 'Mark', last_name: 'Munroe', sub_unit: @sub_unit2)
+    @user.scouts << @scout2
+    @scout2.units << @unit
+  end
+
 end

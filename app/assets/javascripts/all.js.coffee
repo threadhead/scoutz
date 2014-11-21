@@ -1,10 +1,29 @@
 jQuery ->
   $(".datetime-picker").datetimepicker(
-    dateFormat: 'yy-mm-dd',
-    stepMinute: 15,
-    minuteGrid: 15,
+    dateFormat: 'yy-mm-dd'
+    stepMinute: 15
+    minuteGrid: 15
     hourGrid: 6
     )
+
+  $(".date-picker").each ->
+    # updateField = $(@).data('altfield')
+    # console.log updateField
+    $(@).datepicker(
+      # showButtonPanel: true
+      dateFormat: 'M d, yy'
+      altField: String($(@).data('altfield'))
+      altFormat: "yy-mm-dd"
+      # onSelect: ->
+        # console.log 'onSelect'
+      #   console.log $("#health_form_part_a_date").val()
+    )
+
+  $("button.date-clear").click ->
+    prevInput = $(@).parent().prev()
+    $(prevInput).val(null)
+    altField = $(prevInput.data('altfield'))
+    $(altField).val(null)
 
   $("[data-toggle='tooltip']").tooltip()
 

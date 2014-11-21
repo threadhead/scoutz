@@ -10,7 +10,17 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :sub_units
   # acts_as_gmappable process_geocoding: false, validation: false
 
-  # attr_accessible :attire, :end_at, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_deadline, :signup_required, :start_at, :user_ids, :message, :sub_unit_ids
+
+  enum type_of_health_forms: {
+    not_required: 0,
+    parts_ab: 10,
+    parts_abc: 20,
+    northern_tier: 30,
+    florida_sea_base: 40,
+    philmont: 50,
+    summit: 60
+  }
+
 
   validates :name, :start_at, :end_at, :message,
       presence: true
@@ -130,6 +140,42 @@ class Event < ActiveRecord::Base
   def event_signup_user_ids
     event_signup_users.map(&:id)
   end
+
+
+
+  def health_forms_required
+    case type_of_health_forms
+    when 'not_required'
+      []
+    when 'parts_ab'
+      [:part_a_expires, :part_b_expires]
+    when 'parts_abc'
+      [:part_a_expires, :part_b_expires, :part_c_expires]
+    when 'northern_tier'
+      [:part_a_expires, :part_b_expires, :part_c_expires, :northern_tier_expires]
+    when 'florida_sea_base'
+      [:part_a_expires, :part_b_expires, :part_c_expires, :florida_sea_base_expires]
+    when 'summit'
+      [:part_a_expires, :part_b_expires, :part_c_expires, :summit_tier_expires]
+    when 'philmont'
+      [:part_a_expires, :part_b_expires, :part_c_expires, :philmont_expires]
+    else
+      []
+    end
+  end
+
+  def self.type_of_health_forms_for_select
+    {
+      'Not required' => 'not_required',
+      'All activities (Parts A/B)' => 'parts_ab',
+      'Camps & activities > 72 hours (Parts A/B/C)' => 'parts_abc',
+      'Norther Tier (Parts A/B/C + NT)' => 'northern_tier',
+      'Florida Sea Base (Parts A/B/C + FSB)' => 'florida_sea_base',
+      'Philmont (Parts A/B/C + P)' => 'philmont',
+      'Summit (Parts A/B/C + S)' => 'summit'
+    }
+  end
+
 
 
 

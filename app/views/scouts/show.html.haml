@@ -95,10 +95,11 @@
             %td
               %address= user_address_show(@user)
 
+          = render partial: 'users/health_form_show', locals: {user: @user, unit: @unit}
+
+
     .col-md-3.col-md-offset-1
-      .panel.panel-default
-        .panel-body.centered
-          = image_tag @user.picture.url, class: 'circle-picture'
+      = render partial: 'users/picture_panel_lg', locals: {user: @user}
 
 
 = render layout: 'users/send_welcome_email_modal' do

@@ -1,0 +1,20 @@
+.row
+  .col-md-6
+    %p
+      %strong.xlarge Basic/Summer Camp
+
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :part_a_date, label: 'Part A'}
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :part_b_date, label: 'Part B'}
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :part_c_date, label: 'Part C'}
+
+  .col-md-6
+    %p
+      %strong.xlarge High Adventure
+
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :florida_sea_base_date, label: 'Florida Sea Base'}
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :northern_tier_date, label: 'Northern Tier'}
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :philmont_date, label: 'Philmont'}
+    = render partial: 'health_forms/date_input', locals: {f: f, field: :summit_tier_date, label: 'Summit Tier'}
+
+= f.hidden_field :unit_id
+= f.hidden_field :user_id

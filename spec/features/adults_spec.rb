@@ -6,7 +6,6 @@ RSpec.describe 'Adults' do
 
   before(:all) do
     Warden.test_mode!
-
     create_cub_scout_unit
   end
 

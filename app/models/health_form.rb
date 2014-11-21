@@ -9,7 +9,7 @@ class HealthForm < ActiveRecord::Base
     event.health_forms_required.all? do |form|
       form_date = self.send(form)
       return false if form_date.nil?
-      form_date.at_midnight >= event.end_at
+      form_date.end_of_day >= event.end_at
     end
   end
 

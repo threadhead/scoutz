@@ -22,6 +22,16 @@
 
       = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {control_col: 'col-md-5'}
 
+      .form-group
+        = f.label :type_of_health_forms, "Health form", class: 'control-label col-md-2'
+        .col-md-5
+          = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
+        .col-md-2
+          %span.fa-stack{data: {toggle: 'tooltip', placement: 'right'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
+            %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+            %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+
       %fieldset
         %legend Signup (RSVP)
         = f.form_group :signup_deadline do

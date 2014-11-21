@@ -5,6 +5,15 @@ class HealthForm < ActiveRecord::Base
   validates :user_id, presence: true
   validates :unit_id, presence: true
 
+  def valid_forms_for_event(event)
+    event.health_forms_required.all? do |form|
+      form_date = self.send(form)
+      return false if form_date.nil?
+      form_date.at_midnight >= event.end_at
+    end
+  end
+
+
   def part_a_expires
     expires_at part_a_date
   end

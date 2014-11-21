@@ -12,10 +12,10 @@ class ApplicationController < ActionController::Base
   protected
     def auth_and_time_zone
       authenticate_user!
-      Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
       User.current = current_user if current_user
       set_user_units
       set_unit
+      Time.zone = @unit.time_zone || current_user.time_zone || "Pacific Time (US & Canada)"
 
       # logger.info "CURRENT_UNIT_ID: #{session[:current_unit_id]}"
       # @current_unit = @units.where(id: session[:current_unit_id]).first || @units.first
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       set_user_units
       set_unit
-      stored_location_for(resource) || unit_events_url(@unit, protocol: 'http')
+      stored_location_for(resource) || unit_events_url(@unit)
     end
 
 end

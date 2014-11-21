@@ -67,6 +67,11 @@
               %strong Attire
             %td= @event.attire
 
+          %tr
+            %td
+              %strong Health&nbsp;Forms
+            %td= Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)
+
         %tr
           %td
             %strong Location

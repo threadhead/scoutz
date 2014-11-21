@@ -10,7 +10,7 @@ RSpec.describe HealthForm, :type => :model do
 
   describe 'validators' do
     it { is_expected.to validate_presence_of(:unit_id) }
-    it { is_expected.to validate_presence_of(:user_id) }
+    # it { is_expected.to validate_presence_of(:user_id) }
   end
 
   describe 'expires dates' do

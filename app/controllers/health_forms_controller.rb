@@ -1,6 +1,7 @@
 class HealthFormsController < ApplicationController
   before_action :auth_and_time_zone
   before_action :set_health_form, only: [:show, :edit, :update, :destroy]
+  before_action :set_return
   after_action :verify_authorized
 
   def index
@@ -12,7 +13,6 @@ class HealthFormsController < ApplicationController
       @searching = true
     end
     @searching = false
-
   end
 
   def show
@@ -22,7 +22,7 @@ class HealthFormsController < ApplicationController
   def new
     authorize HealthForm
     @user = User.find(params[:user_id])
-    @health_form = HealthForm.new(user_id: @user.id)
+    @health_form = HealthForm.new(user: @user, unit: @unit)
   end
 
   def edit
@@ -32,8 +32,9 @@ class HealthFormsController < ApplicationController
   def create
     authorize HealthForm
     @health_form = HealthForm.new(health_form_params)
+
     if @health_form.save
-      redirect_to unit_health_forms_url(@unit), notice: 'Health form was successfully created.'
+      redirect_to @return || unit_health_forms_url(@unit), notice: 'Health form was successfully created.'
     else
       render :new
     end
@@ -43,7 +44,7 @@ class HealthFormsController < ApplicationController
     authorize @health_form
 
     if @health_form.update_attributes(health_form_params)
-      redirect_to unit_health_forms_url(@unit), notice: 'Health form was successfully updated.'
+      redirect_to @return || unit_health_forms_url(@unit), notice: 'Health form was successfully updated.'
     else
       render :edit
     end
@@ -66,6 +67,10 @@ class HealthFormsController < ApplicationController
 
     def set_health_form
       @health_form = HealthForm.find(params[:id])
+    end
+
+    def set_return
+      @return = params[:return]
     end
 
     # Only allow a trusted parameter "white list" through.

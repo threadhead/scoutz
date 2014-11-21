@@ -149,9 +149,16 @@
 
   %fieldset
     %legend Health Forms
+    .col-md-offset-2.col-md-8
+      - if @user.new_record?
+        You can edit health forms after the user is saved.
 
-    = f.fields_for :health_forms, @user.health_forms.unit(@unit) || HealthForm.new  do |hf|
-      = render partial: 'users/health_forms', locals: {f: hf, unit: @unit}
+      - else
+        - if @user.health_forms.unit(@unit)
+          = link_to "Edit health forms", edit_unit_health_form_path(@unit, @user.health_forms.unit(@unit), return: edit_unit_adult_url(@unit, @user))
+        - else
+          = link_to "Edit health forms", new_unit_health_form_path(@unit, user_id: @user.id, return: edit_unit_adult_url(@unit, @user))
+
 
 
   %fieldset

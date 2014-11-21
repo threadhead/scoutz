@@ -11,7 +11,7 @@ RSpec.describe 'Adults' do
   end
 
   before(:each) do
-    # Warden.test_reset!
+    Warden.test_reset!
     login_as(@user, scope: :user)
     visit unit_adults_path(@unit)
   end

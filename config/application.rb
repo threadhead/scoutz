@@ -27,7 +27,7 @@ module Scoutz
 
     # FROM RAILS 3 -- NOT NEEDED?
     # Custom directories with classes and modules you want to be autoloadable.
-    # config.autoload_paths += %W(#{config.root}/lib #{config.root}/models/concerns)
+    config.autoload_paths += %W(#{config.root}/lib #{config.root}/models/concerns)
     # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     # config.assets.precompile += ['jquery.js']

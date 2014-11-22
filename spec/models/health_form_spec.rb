@@ -15,13 +15,13 @@ RSpec.describe HealthForm, :type => :model do
 
   describe 'expires dates' do
     {
-      part_a_date: :part_a_expires,
-      part_b_date: :part_b_expires,
-      part_c_date: :part_c_expires,
-      florida_sea_base_date: :florida_sea_base_expires,
-      summit_tier_date: :summit_tier_expires,
-      philmont_date: :philmont_expires,
-      northern_tier_date: :northern_tier_expires
+      part_a_date:            :part_a_expires,
+      part_b_date:            :part_b_expires,
+      part_c_date:            :part_c_expires,
+      florida_sea_base_date:  :florida_sea_base_expires,
+      summit_tier_date:       :summit_tier_expires,
+      philmont_date:          :philmont_expires,
+      northern_tier_date:     :northern_tier_expires
     }.each do |k,v|
       it "#{v} in 1 year" do
         health_form.send("#{k}=", Date.parse('2011-02-02'))
@@ -67,6 +67,10 @@ RSpec.describe HealthForm, :type => :model do
       describe 'one second before the event ends' do
         it 'returns false' do
           event.end_at = Time.parse('2011-02-02 00:00:00')
+          puts "part_a_expires: #{health_form.part_a_expires}, eod: #{health_form.part_a_expires.end_of_day}"
+          puts "part_b_expires: #{health_form.part_b_expires}, eod: #{health_form.part_b_expires.end_of_day}"
+          puts "part_c_expires: #{health_form.part_c_expires}, eod: #{health_form.part_c_expires.end_of_day}"
+          puts "event.end_at: #{event.end_at}"
           expect(health_form.valid_forms_for_event(event)).to be(false)
         end
       end

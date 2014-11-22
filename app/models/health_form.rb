@@ -6,6 +6,7 @@ class HealthForm < ActiveRecord::Base
   validates :unit_id, presence: true
 
   def valid_forms_for_event(event)
+    return true if event.health_forms_required.empty?
     event.health_forms_required.all? do |form|
       form_date = self.send(form)
       return false if form_date.nil?

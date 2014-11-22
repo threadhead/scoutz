@@ -10,7 +10,7 @@
     = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
       - users.each do |adult|
         = cache ["unit-#{unit.id}", adult] do
-          %tr
+          %tr.v-centered
             %td.centered= user_picture_circle(adult)
             %td= link_to adult.name_lf, unit_adult_path(unit, adult)
             %td= all_leadership_positions(@unit, adult)

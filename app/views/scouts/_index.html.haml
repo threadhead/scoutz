@@ -13,7 +13,7 @@
     = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
       - users.each do |scout|
         = cache ["unit-#{unit.id}", scout] do
-          %tr
+          %tr.v-centered
             %td.centered= user_picture_circle(scout)
             %td= link_to scout.name_lf, unit_scout_path(unit, scout)
             %td= scout.sub_unit.try(:name)

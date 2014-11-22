@@ -10,7 +10,7 @@
       = cache ["unit-#{unit.id}", cache_key_for_merit_badges(merit_badges)] do
         - merit_badges.each do |merit_badge|
           = cache ["unit-#{unit.id}", merit_badge] do
-            %tr
+            %tr.v-centered
               %td
                 = image_tag merit_badge.patch_image_url, class: 'merit-badge-patch-thumb'
               %td

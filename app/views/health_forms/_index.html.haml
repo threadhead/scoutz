@@ -24,7 +24,7 @@
           - users.each do |user|
             - user_health_form = user.health_forms.unit(unit)
             = cache ["unit-#{unit.id}", user, user_health_form] do
-              %tr
+              %tr.v-centered
                 %td.centered= user_picture_circle(user)
 
                 - if user_health_form

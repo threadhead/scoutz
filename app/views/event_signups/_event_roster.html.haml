@@ -1,5 +1,6 @@
 = cache event_roster do
   %tr
+    %td.centered= user_picture_circle(event_roster.scout)
     %td
       = event_roster.scout.name_lf
       - if policy(event_roster).update?

@@ -78,7 +78,7 @@ RSpec.describe HealthForm, :type => :model do
 
       describe 'one second after the event ends' do
         it 'returns true' do
-          event.end_at = Time.zone.parse('2011-02-01 23:59:58')
+          event.end_at = Time.zone.parse('2011-02-01 23:59:58 -0700')
           puts "part_a_expires: #{health_form.part_a_expires}, eod: #{health_form.part_a_expires.end_of_day}"
           puts "part_b_expires: #{health_form.part_b_expires}, eod: #{health_form.part_b_expires.end_of_day}"
           puts "part_c_expires: #{health_form.part_c_expires}, eod: #{health_form.part_c_expires.end_of_day}"
@@ -90,7 +90,7 @@ RSpec.describe HealthForm, :type => :model do
 
       describe 'at the same time the event ends' do
         it 'returns true' do
-          event.end_at = Time.zone.parse('2011-02-01 23:59:59')
+          event.end_at = Time.zone.parse('2011-02-01 23:59:59 -0700')
           puts "part_a_expires: #{health_form.part_a_expires}, eod: #{health_form.part_a_expires.end_of_day}"
           puts "part_b_expires: #{health_form.part_b_expires}, eod: #{health_form.part_b_expires.end_of_day}"
           puts "part_c_expires: #{health_form.part_c_expires}, eod: #{health_form.part_c_expires.end_of_day}"

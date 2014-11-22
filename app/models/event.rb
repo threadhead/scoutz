@@ -12,13 +12,13 @@ class Event < ActiveRecord::Base
 
 
   enum type_of_health_forms: {
-    not_required: 0,
-    parts_ab: 10,
-    parts_abc: 20,
-    northern_tier: 30,
-    florida_sea_base: 40,
-    philmont: 50,
-    summit: 60
+    not_required:       0,
+    parts_ab:           10,
+    parts_abc:          20,
+    northern_tier:      30,
+    florida_sea_base:   40,
+    philmont:           50,
+    summit:             60
   }
 
 
@@ -143,6 +143,8 @@ class Event < ActiveRecord::Base
 
 
 
+
+  # the types of helath forms required based on the event's type_of_health_forms selection
   def health_forms_required
     case type_of_health_forms
     when 'not_required'
@@ -166,13 +168,13 @@ class Event < ActiveRecord::Base
 
   def self.type_of_health_forms_for_select
     {
-      'Not required' => 'not_required',
-      'All activities (Parts A/B)' => 'parts_ab',
-      'Camps & activities > 72 hours (Parts A/B/C)' => 'parts_abc',
-      'Norther Tier (Parts A/B/C + NT)' => 'northern_tier',
-      'Florida Sea Base (Parts A/B/C + FSB)' => 'florida_sea_base',
-      'Philmont (Parts A/B/C + P)' => 'philmont',
-      'Summit (Parts A/B/C + S)' => 'summit'
+      'Not required'                                  => 'not_required',
+      'All activities (Parts A/B)'                    => 'parts_ab',
+      'Camps & activities > 72 hours (Parts A/B/C)'   => 'parts_abc',
+      'Norther Tier (Parts A/B/C + NT)'               => 'northern_tier',
+      'Florida Sea Base (Parts A/B/C + FSB)'          => 'florida_sea_base',
+      'Philmont (Parts A/B/C + P)'                    => 'philmont',
+      'Summit (Parts A/B/C + S)'                      => 'summit'
     }
   end
 

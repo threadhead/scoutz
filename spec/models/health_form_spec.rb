@@ -59,10 +59,13 @@ RSpec.describe HealthForm, :type => :model do
 
 
     context 'when a health form expires' do
+      before do
+        health_form.part_a_date = Date.parse('2010-02-02')
+        health_form.part_b_date = Date.parse('2010-02-02')
+        health_form.part_c_date = Date.parse('2010-02-02')
+      end
       describe 'one second before the event ends' do
         it 'returns false' do
-          Time.zone = 'Arizona'
-          health_form.part_a_date = Date.parse('2010-02-02')
           event.end_at = Time.parse('2011-02-02 00:00:00')
           expect(health_form.valid_forms_for_event(event)).to be(false)
         end
@@ -71,7 +74,6 @@ RSpec.describe HealthForm, :type => :model do
 
       describe 'one second after the event ends' do
         it 'returns true' do
-          health_form.part_a_date = Date.parse('2010-02-02')
           event.end_at = Time.zone.parse('2011-02-01 23:59:58')
           expect(health_form.valid_forms_for_event(event)).to be(true)
         end
@@ -80,7 +82,6 @@ RSpec.describe HealthForm, :type => :model do
 
       describe 'at the same time the event ends' do
         it 'returns true' do
-          health_form.part_a_date = Date.parse('2010-02-02')
           event.end_at = Time.zone.parse('2011-02-01 23:59:59')
           expect(health_form.valid_forms_for_event(event)).to be(true)
         end

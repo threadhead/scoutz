@@ -5,7 +5,7 @@
     %td
       %strong Health Forms
     %td
-      - if user_health_form.new_record?
+      - if user_health_form.new_record? || user_health_form.all_blank?
         %em none on file
       - else
         = render partial: 'health_forms/tags', locals: { health_form: user_health_form }

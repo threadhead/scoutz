@@ -20,4 +20,14 @@ FactoryGirl.define do
     florida_sea_base_date  Date.today
     summit_tier_date       Date.today
   end
+
+  factory :health_form_empty, class: HealthForm do
+    part_a_date            nil
+    part_b_date            nil
+    part_c_date            nil
+    northern_tier_date     nil
+    philmont_date          nil
+    florida_sea_base_date  nil
+    summit_tier_date       nil
+  end
 end

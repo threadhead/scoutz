@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe HealthForm, :type => :model do
   let(:health_form) { FactoryGirl.build(:health_form) }
   let(:health_form_expired) { FactoryGirl.build(:health_form_expired) }
+  let(:health_form_empty) { FactoryGirl.build(:health_form_empty) }
   before{ Time.zone = 'Arizona' }
 
   it { is_expected.to belong_to(:user) }
@@ -12,6 +13,27 @@ RSpec.describe HealthForm, :type => :model do
     it { is_expected.to validate_presence_of(:unit_id) }
     # it { is_expected.to validate_presence_of(:user_id) }
   end
+
+  describe 'all_blank?' do
+    it 'returns true when all health forms are empty' do
+      expect(health_form_empty.all_blank?).to eq(true)
+    end
+
+    [ :part_a_date,
+      :part_b_date,
+      :part_c_date,
+      :summit_tier_date,
+      :florida_sea_base_date,
+      :northern_tier_date,
+      :philmont_date
+      ].each do |f|
+        it "returns false when field #{f} is not empty" do
+          health_form_empty.send("#{f}=", Date.today)
+          expect(health_form_empty.all_blank?).to eq(false)
+        end
+    end
+  end
+
 
   describe 'expires dates' do
     {

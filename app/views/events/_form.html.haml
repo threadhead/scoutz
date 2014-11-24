@@ -1,4 +1,5 @@
 = bootstrap_form_for @event, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+  = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
   .row

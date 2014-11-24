@@ -1,4 +1,6 @@
 = bootstrap_form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true}, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+  = hidden_field_tag :unit_id, @unit.id
+
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
   %fieldset

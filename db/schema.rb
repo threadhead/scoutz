@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141121014547) do
+ActiveRecord::Schema.define(version: 20141124185354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -155,6 +155,8 @@ ActiveRecord::Schema.define(version: 20141121014547) do
     t.datetime "canceled_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "need_carpool_seats", default: 0
+    t.integer  "has_carpool_seats",  default: 0
   end
 
   add_index "event_signups", ["adults_attending"], name: "index_event_signups_on_adults_attending", using: :btree

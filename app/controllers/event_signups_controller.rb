@@ -129,7 +129,7 @@ class EventSignupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_signup_params
-      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :scout_id, :event_id)
+      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :need_carpool_seats, :has_carpool_seats, :scout_id, :event_id)
     end
 
     def create_activity(task)

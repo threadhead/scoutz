@@ -11,19 +11,40 @@
               = f.hidden_field :event_id
 
               .form-group
-                = f.label :scouts_attending, 'scouts', class: @label_col_class
+                = f.label :scouts_attending, 'Scouts', class: @label_col_class
                 .col-md-4
                   = f.select :scouts_attending, [0,1], {}, {class: 'form-control'}
 
               .form-group
-                = f.label :siblings_attending, 'siblings', class: @label_col_class
+                = f.label :siblings_attending, 'Siblings', class: @label_col_class
                 .col-md-4
                   = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
 
               .form-group
-                = f.label :adults_attending, 'adults', class: @label_col_class
+                = f.label :adults_attending, 'Adults', class: @label_col_class
                 .col-md-4
                   = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+
+              %fieldset
+                %legend Carpools
+                .form-group
+                  = f.label :need_carpool_seats, 'Need Ride', class: @label_col_class
+                  .col-md-4
+                    = f.select :need_carpool_seats, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+                  .col-md-2
+                    %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need. Select 0 if you don\'t need a ride.'}
+                      %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+                      %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+                .form-group
+                  = f.label :has_carpool_seats, 'Can Drive', class: @label_col_class
+                  .col-md-4
+                    = f.select :has_carpool_seats, [nil,0,1,2,3,4,5,6], {}, {class: 'form-control'}
+                  .col-md-2
+                    %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle. Select 0 if you are driving but can\'t carpool.'}
+                      %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+                      %i.fa.fa-question.fa-stack-1x.fa-inverse
+
 
               .row
                 .col-md-10.col-md-offset-1.centered

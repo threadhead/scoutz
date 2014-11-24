@@ -33,6 +33,28 @@
             .col-md-3
               = f.select :adults_attending, [0,1,2,3,4,5,6], {}, class: 'form-control'
 
+          %fieldset
+            %legend Carpools
+            .form-group
+              = f.label :need_carpool_seats, 'Need Ride', class: @label_col_class
+              .col-md-4
+                = f.select :need_carpool_seats, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+              .col-md-2
+                %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need. Select 0 if you don\'t need a ride.'}
+                  %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+                  %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+            .form-group
+              = f.label :has_carpool_seats, 'Can Drive', class: @label_col_class
+              .col-md-4
+                = f.select :has_carpool_seats, [nil,0,1,2,3,4,5,6], {}, {class: 'form-control'}
+              .col-md-2
+                %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle. Select 0 if you are driving but can\'t carpool.'}
+                  %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+                  %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+
+
           .form-group
             .col-md-12
               = f.text_area :comment, placeholder: 'comments', rows: 3, class: 'form-control'
@@ -41,10 +63,8 @@
             .col-md-12.centered
 
         .modal-footer
+          = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }
           - unless event_signup.new_record?
             &nbsp;
             = link_to "Cancel reservation", event_signup, method: :delete, class: 'btn btn-warning', remote: true
           = f.submit signup_submit(event_signup), class: 'btn btn-primary'
-          %br
-          %br
-          = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }

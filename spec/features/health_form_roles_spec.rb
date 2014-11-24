@@ -35,16 +35,16 @@ RSpec.describe 'Health form viewing and roles' do
     let(:tags) { %w(A B C P S FSB N) }
 
     describe 'displays the proper tags' do
-      {part_a_date: 'A', part_b_date: 'B', part_c_date: 'C', summit_tier_date: 'S', florida_sea_base_date: 'FSB', northern_tier_date: 'N', philmont_date: 'P'}.each do |k,v|
+      {part_a_date: 'A', part_b_date: 'B', part_c_date: 'C', summit_tier_date: 'S', florida_sea_base_date: 'FSB', northern_tier_date: 'NT', philmont_date: 'P'}.each do |k,v|
         context "when a user has #{k}" do
           before do
             form.update_attribute(k, Date.today)
             visit unit_scout_path(@unit, @tag_scout)
           end
 
-          it "displays an #{v} in a label" do
+          it "displays #{v} in a label" do
             expect(page).to have_css('div.label', count: 1)
-            expect(page).to have_css('div.label', text: v)
+            expect(page).to have_css('div.label', text: /\A#{v}\z/)
           end
 
           it 'does not display other tags' do
@@ -52,8 +52,26 @@ RSpec.describe 'Health form viewing and roles' do
               expect(page).not_to have_css('div.label', text: /\A#{tag}\z/)
             end
           end
+
+          it 'displays a green tag when form expires > 30 days' do
+            expect(page).to have_css('div.label.label-success', text: /\A#{v}\z/)
+          end
+
+          it 'displays a red tag when form expires' do
+            form.update_attribute(k, Date.today - 1.year)
+            visit unit_scout_path(@unit, @tag_scout)
+            expect(page).to have_css('div.label.label-danger', text: /\A#{v}\z/)
+          end
+
+          it 'displays a red tag when form expires < 30 days' do
+            form.update_attribute(k, Date.today - 360.days)
+            visit unit_scout_path(@unit, @tag_scout)
+            expect(page).to have_css('div.label.label-warning', text: /\A#{v}\z/)
+          end
+
         end
       end
+
 
       context 'displays "none on file"' do
         it 'when users has no health form record' do

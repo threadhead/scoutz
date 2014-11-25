@@ -1,28 +1,29 @@
-= cache event_roster do
-  %tr
-    %td.centered= user_picture_circle(event_roster.scout)
-    %td
-      = event_roster.scout.name_lf
-      - if policy(event_roster).update?
-        %br
-        = link_to 'edit/cancel', '#', class: 'btn btn-xs btn-default edit-event-signup-modal', data: {'event_signup_id' => event_roster.id}
-
-    %td.text-grey
-      = "Scout: #{event_roster.scouts_attending}"
+-# TODO: disable caching for now, need to figure how to cache whe users health form changes
+-# = cache event_roster do
+%tr
+  %td.centered= user_picture_circle(event_roster.scout)
+  %td
+    = event_roster.scout.name_lf
+    - if policy(event_roster).update?
       %br
-      = "Siblings: #{event_roster.siblings_attending}"
-      %br
-      = "Adults: #{event_roster.adults_attending}"
+      = link_to 'edit/cancel', '#', class: 'btn btn-xs btn-default edit-event-signup-modal', data: {'event_signup_id' => event_roster.id}
 
-    %td
-      - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
-      - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip'}, title: "All health forms up-to-date"}
-          %i.fa.fa-circle.fa-stack-2x.green-color
-          %i.fa.fa-medkit.fa-inverse.fa-stack-1x
-      - else
-        %sapn.fa-stack.fa-lg{data: {toggle: 'tooltip'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
-          %i.fa.fa-circle.fa-stack-2x.red-color
-          %i.fa.fa-medkit.fa-inverse.fa-stack-1x
+  %td.text-grey
+    = "Scout: #{event_roster.scouts_attending}"
+    %br
+    = "Siblings: #{event_roster.siblings_attending}"
+    %br
+    = "Adults: #{event_roster.adults_attending}"
 
-    %td.signup-comment= event_roster.comment
+  %td
+    - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
+    - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
+      %span.fa-stack.fa-lg{data: {toggle: 'tooltip'}, title: "All health forms up-to-date"}
+        %i.fa.fa-circle.fa-stack-2x.green-color
+        %i.fa.fa-medkit.fa-inverse.fa-stack-1x
+    - else
+      %sapn.fa-stack.fa-lg{data: {toggle: 'tooltip'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
+        %i.fa.fa-circle.fa-stack-2x.red-color
+        %i.fa.fa-medkit.fa-inverse.fa-stack-1x
+
+  %td.signup-comment= event_roster.comment

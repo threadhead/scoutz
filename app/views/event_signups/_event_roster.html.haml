@@ -17,11 +17,11 @@
     %td
       - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
       - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip'}, title: "All health forms up-to-date"}
+        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "All health forms up-to-date"}
           %i.fa.fa-circle.fa-stack-2x.green-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
       - else
-        %sapn.fa-stack.fa-lg{data: {toggle: 'tooltip'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
+        %sapn.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
           %i.fa.fa-circle.fa-stack-2x.red-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
 

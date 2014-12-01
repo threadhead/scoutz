@@ -7,44 +7,10 @@
         %p.xxlarge
           %strong
             -if event_signup.new_record?
-              Add: #{event_signup.scout.name}
+              Add #{event_signup.scout.name}
             -else
               Change #{event_signup.scout.name}
           / %small how does it work?
 
-      = form_for event_signup, html: { class: 'form-horizontal' }, remote: true do |f|
-        = f.hidden_field :scout_id
-        = f.hidden_field :event_id
-        .modal-body
-          = render partial: 'layouts/flash', locals: {flash: flash, ar_object: event_signup}
-
-          .form-group
-            = f.label :scouts_attending, 'Scouts', class: 'control-label col-md-4'
-            .col-md-3
-              = f.select :scouts_attending, [0,1], {}, class: 'form-control'
-
-          .form-group
-            = f.label :siblings_attending, 'Siblings', class: 'control-label col-md-4'
-            .col-md-3
-              = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, class: 'form-control'
-
-          .form-group
-            = f.label :adults_attending, 'Adults', class: 'control-label col-md-4'
-            .col-md-3
-              = f.select :adults_attending, [0,1,2,3,4,5,6], {}, class: 'form-control'
-
-          .form-group
-            .col-md-12
-              = f.text_area :comment, placeholder: 'comments', rows: 3, class: 'form-control'
-
-          .form-group
-            .col-md-12.centered
-
-        .modal-footer
-          - unless event_signup.new_record?
-            &nbsp;
-            = link_to "Cancel reservation", event_signup, method: :delete, class: 'btn btn-warning', remote: true
-          = f.submit signup_submit(event_signup), class: 'btn btn-primary'
-          %br
-          %br
-          = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }
+      .modal-body
+        = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: true}

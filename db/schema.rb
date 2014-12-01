@@ -155,8 +155,8 @@ ActiveRecord::Schema.define(version: 20141124185354) do
     t.datetime "canceled_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "need_carpool_seats", default: 0
-    t.integer  "has_carpool_seats",  default: 0
+    t.integer  "need_carpool_seats"
+    t.integer  "has_carpool_seats"
   end
 
   add_index "event_signups", ["adults_attending"], name: "index_event_signups_on_adults_attending", using: :btree

@@ -2,6 +2,20 @@
 @import 'boy_scout_colors'
 
 
+.count-badge
+  position: absolute
+  top: 0px
+  right: 0px
+  height: 18px
+  width: 18px
+  border-radius: 50%
+  background-color: red
+  color: white
+  font-size: 10px
+  line-height: 18px
+  text-align: center
+  padding-left: 1px
+
 .initial-circle
   height: 32px
   width: 32px
@@ -125,6 +139,9 @@
 .table-outside-bordered
   border: 1px #ddd solid
 
+.table-borderless>thead>tr>th, .table-borderless>tbody>tr>th, .table-borderless>tfoot>tr>th, .table-borderless>thead>tr>td, .table-borderless>tbody>tr>td, .table-borderless>tfoot>tr>td
+  border-top: none
+
 .table th, .table td
   vertical-align: middle
   &.user-picture
@@ -223,6 +240,9 @@ h2.form-title
 
 .orange-color
   color: #f0ad4e
+
+.yellow-color
+  color: #c8d00d
 
 .word-blue-color
   color: #0000a5

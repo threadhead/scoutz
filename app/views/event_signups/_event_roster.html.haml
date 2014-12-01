@@ -21,8 +21,22 @@
           %i.fa.fa-circle.fa-stack-2x.green-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
       - else
-        %sapn.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
+        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
           %i.fa.fa-circle.fa-stack-2x.red-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
+
+    %td
+      - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
+        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Needs a ride: #{event_roster.need_carpool_seats} #{'seat'.pluralize(event_roster.need_carpool_seats)}"}
+          %i.fa.fa-circle.fa-stack-2x.yellow-color
+          %i.fa.fa-car.fa-inverse.fa-stack-1x
+          %span.count-badge= event_roster.need_carpool_seats
+
+    %td
+      - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
+        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Driving: has #{event_roster.has_carpool_seats} #{'seat'.pluralize(event_roster.has_carpool_seats)}"}
+          %i.fa.fa-circle.fa-stack-2x.orange-color
+          %i.fa.fa-tachometer.fa-inverse.fa-stack-1x
+          %span.count-badge= event_roster.has_carpool_seats
 
     %td.signup-comment= event_roster.comment

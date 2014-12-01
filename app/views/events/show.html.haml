@@ -88,29 +88,27 @@
             %td &nbsp;
             %td= @event.message.html_safe
 
-          - if @event.signup_required
-            %tr
-              %td
-                %strong Roster
-              %td
-                - unless @event_rosters.empty?
-                  %p.right-aligned
-                    - if policy(@event).sms_attendees?
-                      = link_to sms_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                        %i.fa.fa-phone
-                        SMS all attendees
-                    - if policy(@event).email_attendees?
-                      = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                        %i.fa.fa-envelope
-                        Email all attendees
+      - if @event.signup_required
+        %div{style: "border-bottom: 1px solid lightgray; margin-bottom: 12px;"}
+        %strong Roster
+        - unless @event_rosters.empty?
+          .pull-right
+            - if policy(@event).sms_attendees?
+              = link_to sms_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-phone
+                SMS all attendees
+            - if policy(@event).email_attendees?
+              = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-envelope
+                Email all attendees
+        %div.clearfix
+        - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
+          %p#event-signup-add
+            = render partial: 'event_signups/signup_add', locals: { event: @event }
 
-                - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
-                  %p#event-signup-add
-                    = render partial: 'event_signups/signup_add', locals: { event: @event }
-
-                %table.table-condensed.table-striped.table-roster#event-signup-roster
-                  = render partial: 'event_signups/event_roster', collection: @event_rosters
-                  - #@event.event_signups.includes(:scout).each do |signup|
+        %table.table-condensed.table-striped.table-roster#event-signup-roster
+          = render partial: 'event_signups/event_roster', collection: @event_rosters
+          - #@event.event_signups.includes(:scout).each do |signup|
 
 
   .col-md-4

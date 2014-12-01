@@ -1,4 +1,4 @@
-if Rails.env.production? || Rails.env.staging? || Rails.env.development?
+if Rails.env.production? || Rails.env.staging? #|| Rails.env.development?
 
   CarrierWave.configure do |config|
     config.storage :fog

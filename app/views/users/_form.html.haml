@@ -5,7 +5,8 @@
     .col-md-8
       %p
         %strong Unit
-        = @unit.name
+        %span.label.label-default.large= @unit.name
+      %br
 
   .row
     .col-md-4
@@ -24,74 +25,84 @@
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
   .row
-    .col-md-3
-      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true
-    .col-md-2
-      = f.select :rank, @unit.ranks, include_blank: true
+    .col-md-4
+      - if @user.new_record?
+        = f.email_field :email, help: 'leave blank to prevent ability to sign in'
+      - else
+        = f.email_field :email, help: 'can not change email at this time', readonly: true
+
+
+  - if @user.scout?
+    .row
+      .col-md-3
+        = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true
+      .col-md-2
+        = f.select :rank, @unit.ranks, include_blank: true
 
   .row
     .col-md-4
       = f.fields_for :unit_positions, @user.unit_positions.unit(@unit) || UnitPosition.new do |ff|
         = ff.hidden_field :unit_id, value: @unit.id
-        = ff.select :leadership, @unit.scout_leadership_positions, include_blank: true
+
+        - positions = @user.scout? ? @unit.scout_leadership_positions : @unit.adult_leadership_positions
+        = ff.select :leadership, positions, include_blank: true
         = ff.text_field :additional, class: 'form-control', placeholder: 'additional leadership positions', hide_label: true
 
 
       = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
 
-  .row
-    .col-md-12
-      %fieldset
-        %legend Picture
+  %fieldset
+    %legend Picture
+    .row
+      .col-md-8
+        .well.well-sm
+          = image_tag @user.picture.url
+        = f.file_field :picture, hide_label: true
+        = f.check_box :remove_picture, label: 'remove picture'
+        .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+
+  %fieldset
+    %legend Contact Phone Numbers
+    %p= button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
+
+    = f.fields_for :phones do |f_phone|
+      .row
+        .col-md-1
+          = f_phone.select :kind, options_for_phones, hide_label: true
+        .col-md-2
+          = f_phone.phone_field :number, hide_label: true
+        .col-md-3
+          = f_phone.check_box :_destroy, label: 'remove'
+
+    #add-a-phone
+
+    #new-phone-fields.hidden
+      = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
         .row
-          .col-md-8
-            .well.well-sm
-              = image_tag @user.picture.url
-            = f.file_field :picture, hide_label: true
-            = f.check_box :remove_picture, label: 'remove picture'
-            .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
-
-      %fieldset
-        %legend Phone numbers
-        %p= button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
-
-        = f.fields_for :phones do |f_phone|
-          .row
-            .col-md-1
-              = f_phone.select :kind, options_for_phones, hide_label: true
-            .col-md-2
-              = f_phone.phone_field :number, hide_label: true
-            .col-md-3
-              = f_phone.check_box :_destroy, label: 'remove'
-
-        #add-a-phone
-
-        #new-phone-fields.hidden
-          = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
-            .row
-              .col-md-1
-                = h_phone.select :kind, options_for_phones, hide_label: true
-              .col-md-2
-                = h_phone.phone_field :number, hide_label: true
-              .col-md-3
-                = h_phone.check_box :_destroy, label: 'remove'
+          .col-md-1
+            = h_phone.select :kind, options_for_phones, hide_label: true
+          .col-md-2
+            = h_phone.phone_field :number, hide_label: true
+          .col-md-3
+            = h_phone.check_box :_destroy, label: 'remove'
 
 
 
   %fieldset
     %legend Notifications
-    .row
-      .col-md-4
-        = f.email_field :email, label: "Email to use for notifications", help: 'can be same as sign in email'
+    %p
+      - if @user.new_record?
+        %em Email notification will be sent to the email address entered above
+      - else
+        Email notifications sent to: &lt;#{@user.email}&gt;
     .row
       .col-md-12
         %hr
         %p Text messages are sent via email-to-text services. Messages may not arrive from the same number.
-        = #f.check_box :send_reminders, label: 'send reminder before event deadlines and start times'
 
     .row
       .col-md-2
-        = f.phone_field :sms_number, label: 'Mobile number', placeholder: 'XXX-XXX-XXXX'
+        = f.phone_field :sms_number, label: 'Mobile number for SMS', placeholder: 'XXX-XXX-XXXX', help: 'may be same as above'
         = f.select :sms_provider, User.sms_providers, include_blank: true, label: 'Provider'
     .row
       .col-md-12
@@ -112,23 +123,23 @@
       .col-md-6
         %table.table.table-condensed
           %tr
-            %th.middle Email blasts
+            %th.middle Email Blasts
             %td= f.check_box :blast_email, label: 'email'
             %td= #f.check_box :blast_sms, label: 'sms'
           %tr
-            %th.middle Event reminders
+            %th.middle Event Reminders
             %td= f.check_box :event_reminder_email, label: 'email'
             %td= f.check_box :event_reminder_sms, label: 'sms'
           %tr
-            %th.middle Weekly newsletter
+            %th.middle Weekly Newsletter
             %td= f.check_box :weekly_newsletter_email, label: 'email'
             %td
           %tr
-            %th.middle Monthly newsletter
+            %th.middle Monthly Newsletter
             %td= f.check_box :monthly_newsletter_email, label: 'email'
             %td
           %tr
-            %th.middle SMS messages
+            %th.middle SMS Messages
             %td= #f.check_box :event_reminder_email, label: 'email'
             %td= f.check_box :sms_message, label: 'sms'
     .row
@@ -142,8 +153,6 @@
 
         .help-block Most text messages will contain a link to a page and a few words.
       -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
-
-
 
 
   %fieldset
@@ -160,6 +169,18 @@
       .col-md-2
         = f.text_field :zip_code
 
+  - if @user.adult?
+    %fieldset
+      %legend Merit Badge Counselor
+      .row
+        .col-md-6
+          = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label'
+
+          - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
+          = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'
+          .help-block counselor for merit badges in #{@unit.name_unit}
+
+
 
   %fieldset
     %legend Health Forms
@@ -169,15 +190,27 @@
 
 
   %fieldset
-    %legend Parents (adults)
+    %legend= @user.scout? ? 'Parents or Guardians' : 'Scouts'
     .row
       .col-md-8
-        = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, multiple: true
+        - if @user.scout?
+          = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, multiple: true
+        - else
+          = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of these Scouts'}, multiple: true
+
 
 
   %br
   = f.primary
   - if @user.new_record?
-    = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn btn-default'
+    - if @user.scout?
+      = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn btn-default'
+    - else
+      = link_to 'Cancel', unit_adults_path(@unit), class: 'btn btn-default'
+
   - else
-    = link_to 'Cancel', unit_scout_path(@unit, @user), class: 'btn btn-default'
+    - if @user.scout?
+      = link_to 'Cancel', unit_scout_path(@unit, @user), class: 'btn btn-default'
+    - else
+      = link_to 'Cancel', unit_adult_path(@unit, @user), class: 'btn btn-default'
+

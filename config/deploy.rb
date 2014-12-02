@@ -1,5 +1,5 @@
 # config valid only for Capistrano 3.1
-lock '3.2.1'
+lock '3.3.3'
 
 set :application, 'scoutz'
 # set :repo_url, 'git@example.com:me/my_repo.git'

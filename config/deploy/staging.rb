@@ -5,9 +5,9 @@ set :rails_env, 'staging'
 # is considered to be the first unless any hosts have the primary
 # property set.  Don't declare `role :all`, it's a meta role.
 
-role :app, %w{192.168.1.2}
-role :web, %w{192.168.1.2}
-role :db,  %w{192.168.1.2}
+role :app, %w{karl@192.168.1.2}
+role :web, %w{karl@192.168.1.2}
+role :db,  %w{karl@192.168.1.2}
 
 
 # Extended Server Syntax
@@ -16,7 +16,7 @@ role :db,  %w{192.168.1.2}
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server '192.168.1.2', user: 'karl', roles: %w{web app} #, my_property: :my_value
+# server '192.168.1.2', user: 'karl', roles: %w{web app} #, my_property: :my_value
 set :deploy_to, "/home/karl/scoutz"
 
 

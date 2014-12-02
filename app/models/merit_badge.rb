@@ -8,7 +8,7 @@ class MeritBadge < ActiveRecord::Base
   end
   accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['user_id'].blank? }, allow_destroy: true
 
-  has_many :users, :through => :counselors
+  has_many :users, through: :counselors
 
   validates :name, uniqueness: true, presence: true
 

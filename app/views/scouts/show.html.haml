@@ -65,7 +65,7 @@
 
           %tr
             %td
-              %strong= @unit.sub_unit_name
+              %strong= @user.sub_unit.try(:type)
             %td
               = @user.sub_unit.try(:name)
 

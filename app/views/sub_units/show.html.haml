@@ -1,15 +1,66 @@
-%p#notice= notice
+.row
+  .col-md-12
+    .page-header
+      .pull-right
+        .btn-group
+          = link_to unit_sub_units_path(@unit), class: 'btn btn-default' do
+            %i.fa.fa-users
+            #{@unit.name_unit} Patrols
 
-%p
-  %b Unit:
-  = @sub_unit.unit_id
-%p
-  %b Name:
-  = @sub_unit.name
-%p
-  %b Description:
-  = @sub_unit.description
+          - if policy(@sub_unit).edit?
+            = link_to(edit_unit_sub_unit_path(@unit, @sub_unit), class: 'btn btn-default') do
+              %i.fa.fa-edit
+              change
 
-= link_to 'Edit', edit_sub_unit_path(@sub_unit)
-\|
-= link_to 'Back', sub_units_path
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            %i.fa.fa-gear
+            Actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
+            - if policy(@sub_unit).destroy? && @sub_unit.scouts.count == 0
+              %li
+                = link_to(unit_sub_unit_path(@unit, @sub_unit), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+                  %i.fa.fa-trash-o
+                  Destroy #{@sub_unit.name}
+
+            - if policy(@sub_unit).new?
+              %li
+                = link_to(new_unit_sub_unit_path(@unit), class: "") do
+                  %i.fa.fa-plus
+                  New #{@sub_unit.type}
+
+
+      %h2 #{@sub_unit.type}: #{@sub_unit.name}
+
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sub_unit}
+
+= cache ["unit-#{@unit.id}", @sub_unit] do
+  .row
+    .col-md-9
+      .text-xlarge
+        %table.table
+          %tr
+            %td
+              %strong Name
+            %td
+              = @sub_unit.name
+
+          %tr
+            %td
+              %strong Description
+            %td
+              = @sub_unit.description
+
+          %tr
+            %td
+              %strong Scouts
+            %td
+              - @sub_unit.scouts.by_name_lf.each do |scout|
+                = link_to scout.name_lf, [@unit, scout]
+                %br
+
+    .col-md-3
+      - if policy(@sub_unit).destroy? && @sub_unit.scouts.count > 0
+        .alert.alert-info
+          %p You can not destroy this #{@sub_unit.type}. It has Scouts assigned to it.
+          %p Assign the Scouts to a different #{@sub_unit.type}, and try again. Change a Scout's #{@sub_unit.type} by editing their profile.

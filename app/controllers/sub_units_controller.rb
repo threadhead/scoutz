@@ -25,8 +25,8 @@ class SubUnitsController < ApplicationController
     @sub_unit = SubUnit.new(sub_unit_params)
 
     if @sub_unit.save
-      @sub_unit.unit << @unit
-      redirect_to @sub_unit, notice: 'Sub unit was successfully created.'
+      @sub_unit.unit = @unit
+      redirect_to unit_sub_unit_url(@unit, @sub_unit), notice: 'Sub unit was successfully created.'
     else
       render :new
     end
@@ -35,7 +35,7 @@ class SubUnitsController < ApplicationController
   def update
     authorize @sub_unit
     if @sub_unit.update(sub_unit_params)
-      redirect_to @sub_unit, notice: 'Sub unit was successfully updated.'
+      redirect_to unit_sub_unit_url(@unit, @sub_unit), notice: 'Sub unit was successfully updated.'
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class SubUnitsController < ApplicationController
     authorize @sub_unit
     @sub_unit.destroy
 
-    redirect_to sub_units_url
+    redirect_to unit_sub_units_url(@unit), notice: 'Sub unit was successfully destroyed.'
   end
 
   private
@@ -55,7 +55,7 @@ class SubUnitsController < ApplicationController
     end
 
     def sub_unit_params
-      params.require(:sub_unit).permit(:name, :description)
+      params.require(:sub_unit).permit(:name, :description, :unit_id)
     end
 
 

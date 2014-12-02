@@ -4,29 +4,27 @@
       %i.fa.fa-info-circle
       You may only change counselors for your Troop
 
-    = bootstrap_form_for [@unit, @merit_badge], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+    = bootstrap_form_for [@unit, @merit_badge]do |f|
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
 
       = f.text_field :name, disabled: true
       = f.text_field :year_created, disabled: true
-      = f.form_group do
-        = f.check_box :eagle_required, disabled: true
+      = f.check_box :eagle_required, disabled: true
 
       %fieldset
         %legend Merit Badge Counselors
-        .form-group
-          = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label col-md-2'
-          .col-md-8
-            - merit_badge_adult_ids = @merit_badge.counselors.unit(@unit.id).pluck(:user_id)
-            = select_tag "merit_badge[user_ids][]", options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids'
-            .help-block counselors for #{@merit_badge.name} in #{@unit.name_unit}
+        %br
+        = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label sr-only'
+        - merit_badge_adult_ids = @merit_badge.counselors.unit(@unit.id).pluck(:user_id)
+        = select_tag "merit_badge[user_ids][]", options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids', class: 'form-control'
+        .help-block counselors for #{@merit_badge.name} in #{@unit.name_unit}
 
         = #f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Counselors', help: ''}, multiple: true
 
 
-      = f.form_group do
-        = f.primary
-        = link_to 'Cancel', unit_merit_badges_path(@unit), class: 'btn btn-default'
+      %br
+      = f.primary
+      = link_to 'Cancel', unit_merit_badges_path(@unit), class: 'btn btn-default'
 
   .col-md-3
     .well.well-sm.centered

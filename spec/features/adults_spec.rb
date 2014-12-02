@@ -28,7 +28,7 @@ RSpec.describe 'Adults' do
   end
 
   context 'when adding a new adult' do
-    before { click_link 'new adult' }
+    before { click_link 'New Adult' }
 
     context 'with valid data' do
       before do

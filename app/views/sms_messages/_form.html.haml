@@ -1,12 +1,14 @@
-= bootstrap_form_for @sms_message, url: unit_sms_messages_path(@unit), html: {multipart: true}, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+= bootstrap_form_for @sms_message, url: unit_sms_messages_path(@unit), html: {multipart: true} do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sms_message}
 
   %fieldset
     %legend Send to
-    = f.select :send_to_option, SmsMessage.send_to_options(@unit), {hide_label: true, control_col: 'col-md-5'}
+    .row
+      .col-md-4
+        = f.select :send_to_option, SmsMessage.send_to_options(@unit), hide_label: true
 
-    .form-group
-      .col-md-offset-2.col-md-7
+    .row
+      .col-md-offset-1.col-md-10
         #email-leaders-list.collapse{ class: ('in' if @sms_message.send_to_leaders?) }
           .well.well-sm
             %h4 #{@unit.name_unit} Leaders
@@ -23,15 +25,16 @@
 
         #email-send-to-users-list.collapse{ class: ('in' if @sms_message.send_to_users?) }
           .well.well-sm
-            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true, control_col: 'col-md-12'}, {multiple: true}
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true}, {multiple: true}
+
     = f.form_group do
       .help-block only users who have elected to receve sms messages will be shown
 
 
   %fieldset
     %legend Message
-    %p= f.text_area :message, class: '', hide_label: true, control_col: 'col-md-10'
+    %p= f.text_area :message, hide_label: true
 
-  = f.form_group do
-    = f.primary 'Send sms blast'
-    = link_to 'Cancel', unit_sms_messages_path(@unit), class: 'btn btn-default'
+  %br
+  = f.primary 'Send sms blast'
+  = link_to 'Cancel', unit_sms_messages_path(@unit), class: 'btn btn-default'

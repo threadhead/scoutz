@@ -27,7 +27,7 @@
 
         #email-send-to-users-list.collapse{ class: ('in' if @email_message.send_to_users?) }
           .well.well-sm
-            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true, control_col: 'col-md-12'}, {multiple: true}
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true}, {multiple: true}
 
   %fieldset
     %legend Events

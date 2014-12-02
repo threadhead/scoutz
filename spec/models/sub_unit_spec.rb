@@ -20,6 +20,20 @@ RSpec.describe SubUnit do
     FactoryGirl.build(:sub_unit).should be_valid
   end
 
+  describe '.type' do
+    it 'returns Patrol for Boy Scouts units' do
+      unit = FactoryGirl.create(:unit, unit_type: 'Boy Scouts')
+      sub_unit.unit = unit
+      expect(sub_unit.type).to eq('Patrol')
+    end
+
+    it 'returns Den for Cub Scout units' do
+      unit = FactoryGirl.create(:unit)
+      sub_unit.unit = unit
+      expect(sub_unit.type).to eq('Den')
+    end
+  end
+
   context 'finders' do
     before(:all) do
       @sub_unit = FactoryGirl.create(:sub_unit)

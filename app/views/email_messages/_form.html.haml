@@ -1,14 +1,16 @@
-= bootstrap_form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true}, layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+= bootstrap_form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true} do |f|
   = hidden_field_tag :unit_id, @unit.id
 
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
   %fieldset
     %legend Send to
-    = f.select :send_to_option, EmailMessage.send_to_options(@unit), {hide_label: true, control_col: 'col-md-5'}
+    .row
+      .col-md-3
+        = f.select :send_to_option, EmailMessage.send_to_options(@unit), {hide_label: true}
+    .row
+      .col-md-10.col-md-offset-1
 
-    .form-group
-      .col-md-offset-2.col-md-7
         #email-leaders-list.collapse{ class: ('in' if @email_message.send_to_leaders?) }
           .well.well-sm
             %h4 #{@unit.name_unit} Leaders
@@ -25,21 +27,21 @@
 
         #email-send-to-users-list.collapse{ class: ('in' if @email_message.send_to_users?) }
           .well.well-sm
-            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true, control_col: 'col-md-12'}, {multiple: true}
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true}, {multiple: true}
 
   %fieldset
     %legend Events
-    .form-group
-      .col-md-8.col-md-offset-2
+    .row
+      .col-md-8
         %p Selected events will have signup links at the bottom of the message
         .well.well-sm.email-message-events
-          = f.collection_check_boxes :event_ids, @unit.events.from_today.by_start, :id, :event_list_name, hide_label: true, control_col: 'col-md-12'
+          = f.collection_check_boxes :event_ids, @unit.events.from_today.by_start, :id, :event_list_name, hide_label: true
 
 
   %fieldset
     %legend Attachments
-    .form-group
-      .col-md-8.col-md-offset-2
+    .row
+      .col-md-8
         %strong Attach up to 4 files, total size should not exceed 2MB
         = f.fields_for :email_attachments do |f_attachment|
           .well.well-sm
@@ -48,11 +50,12 @@
 
   %fieldset
     %legend Message
-    = f.form_group do
-      from: #{current_user.email}
+    %p
+      From:
+      %span.large.label.label-default= current_user.email
     %p= f.text_field :subject, hide_label: true, control_col: 'col-md-10', placeholder: 'subject'
     %p= f.text_area :message, id: 'ckeditor', hide_label: true, control_col: 'col-md-10'
 
-  = f.form_group do
-    = f.primary 'Send email blast'
-    = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn btn-default'
+  %br
+  = f.primary 'Send Email Blast'
+  = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn btn-default'

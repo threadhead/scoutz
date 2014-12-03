@@ -4,7 +4,7 @@
       %i.fa.fa-info-circle
       You may only change counselors for your Troop
 
-    = bootstrap_form_for [@unit, @merit_badge]do |f|
+    = bootstrap_form_for [@unit, @merit_badge] do |f|
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
 
       = f.text_field :name, disabled: true

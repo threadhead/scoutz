@@ -1,19 +1,22 @@
-= form_for @sub_unit do |f|
-  -if @sub_unit.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@sub_unit.errors.count, "error")} prohibited this sub_unit from being saved:"
-      %ul
-        - @sub_unit.errors.full_messages.each do |msg|
-          %li= msg
+.row
+  .col-md-9
+    = bootstrap_form_for [@unit, @sub_unit] do |f|
+      = f.hidden_field :unit_id, value: @unit.id
+      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sub_unit}
 
-  .field
-    = f.label :unit_id
-    = f.number_field :unit_id
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :description
-    = f.text_area :description
-  .actions
-    = f.submit 'Save'
+      .row
+        .col-md-4
+          = f.text_field :name
+      = f.text_field :description
+
+
+      %br
+      = f.primary
+      - if @sub_unit.new_record?
+        = link_to 'Cancel', unit_sub_units_path(@unit), class: 'btn btn-default'
+      - else
+        = link_to 'Cancel', unit_sub_unit_path(@unit, @sub_unit), class: 'btn btn-default'
+
+
+
+  .col-md-3

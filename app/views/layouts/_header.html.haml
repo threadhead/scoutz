@@ -91,6 +91,11 @@
                   %i.fa.fa-medkit
                   Health Forms
 
+            %li
+              = link_to unit_sub_units_path(@unit) do
+                %i.fa.fa-users
+                = @unit.sub_unit_name.try(:pluralize)
+
 
 
         - if policy(EmailMessage).create? || policy(SmsMessage).create?

@@ -3,9 +3,9 @@
     .page-header
       .pull-right
         - if policy(Event).new?
-          = link_to(new_unit_event_path(@unit), class: "btn btn-success") do
+          = link_to(new_unit_event_path(@unit), class: "btn btn-default") do
             %i.fa.fa-plus
-            new event
+            New Event
 
       %h2 #{@unit.name_unit} Upcoming Events
 

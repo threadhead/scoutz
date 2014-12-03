@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :units
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events, -> { uniq }
-  belongs_to :sub_unit
+  belongs_to :sub_unit, touch: true
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
   has_many :pages

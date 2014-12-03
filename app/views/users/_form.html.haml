@@ -35,7 +35,7 @@
   - if @user.scout?
     .row
       .col-md-3
-        = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true
+        = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true, label: @unit.sub_unit_name
       .col-md-2
         = f.select :rank, @unit.ranks, include_blank: true
 

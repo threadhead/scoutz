@@ -12,6 +12,10 @@ class SubUnit < ActiveRecord::Base
             uniqueness: { scope: :unit_id, case_sensitive: false }
 
 
+  def type
+    self.unit.sub_unit_name
+  end
+
   # find adults in sub_unit through their associated scouts
   def adults
     Adult.joins(scouts: :sub_unit).where(sub_units: {id: self.id} )
@@ -46,6 +50,6 @@ class SubUnit < ActiveRecord::Base
   end
 
   # scopes
-  scope :by_name, -> { order('"sub_units"."name" ASC') }
+  scope :by_name, -> { order(name: :asc) }
 
 end

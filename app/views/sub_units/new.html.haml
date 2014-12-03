@@ -1,5 +1,8 @@
-%h1 New sub_unit
+.row
+  .col-md-12
+    .page-header
+      %h2 New #{@unit.sub_unit_name} in #{@unit.name}
 
-= render 'form'
-
-= link_to 'Back', sub_units_path
+.row
+  .col-md-12
+    = render 'form'

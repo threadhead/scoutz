@@ -83,7 +83,7 @@ class EventsController < ApplicationController
     authorize @event
     @event.destroy
 
-    redirect_to unit_events_url(@unit)
+    redirect_to unit_events_url(@unit), notice: 'Event was successfully destroyed.'
   end
 
   def email_attendees

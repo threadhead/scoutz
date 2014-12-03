@@ -5,11 +5,11 @@
         .btn-group
           = link_to(unit_email_messages_path(@unit), class: 'btn btn-default') do
             %i.fa.fa-reply
-            sent emails
+            Sent Emails
 
-          = link_to(new_unit_email_message_path(@unit), class: 'btn btn-success') do
+          = link_to(new_unit_email_message_path(@unit), class: 'btn btn-default') do
             %i.fa.fa-plus
-            new email blast
+            New Email Blast
 
       %h2 Email Message
 

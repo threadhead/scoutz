@@ -33,7 +33,7 @@ module Scoutlander
           last_name: 'txtLastName',
           sub_unit: 'txtSubUnit',
           rank: 'txtRank',
-          # security_level: 'txtSecurityLevel',
+          security_level: 'txtSecurityLevel',
           role: 'txtSecurityLevel',
           email: 'txtEmail',
           alternate_email: 'txtAltEmail',

@@ -51,4 +51,4 @@ module Scoutz
   end
 end
 
-APP_NAME = ::Rails.env.production? ? 'SCOUTTin' : "Scoutz - #{::Rails.env}"
+APP_NAME = ::Rails.env.production? ? 'SCOUTTin' : "SCOUTTin - #{::Rails.env}"

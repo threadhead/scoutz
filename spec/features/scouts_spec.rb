@@ -19,6 +19,7 @@ RSpec.describe 'Scouts' do
     context 'when viewing a list of unit scouts' do
       before{ visit unit_scouts_path(@unit) }
       it 'shows the scout list' do
+        expect(page.current_path).to eq(unit_scouts_path(@unit))
       end
     end
 

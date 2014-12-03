@@ -43,8 +43,8 @@ Scoutz::Application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.action_mailer.default_url_options = { host: 'http://scoutz.dev' }
-  config.action_mailer.asset_host = 'http://scoutz.dev'
+  config.action_mailer.default_url_options = { host: 'http://localhost:3000' }
+  config.action_mailer.asset_host = 'http://localhost:3000'
 
   # shows sql in console
   # ActiveRecord::Base.logger = Logger.new(STDOUT)
@@ -70,8 +70,9 @@ Scoutz::Application.configure do
       Rack::Lock, Rack::LiveReload,
       min_delay: 500,
       max_delay: 10000,
-      port: 35729,
+      live_reload_port: 35729,
       host: 'localhost',
+      no_swf: true,
       ignore: [ %r{dont/modify\.html$} ]
     )
 

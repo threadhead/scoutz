@@ -1,88 +1,183 @@
-= bootstrap_form_for [@unit, @user], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+= bootstrap_form_for [@unit, @user] do |f|
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-  .form-group
-    = f.label :unit, class: 'control-label col-md-3'
-    .col-md-6
-      .text-xlarge= @unit.name
+  .row
+    .col-md-8
+      %p
+        %strong Unit
+        = @unit.name
 
-  = f.text_field :first_name, control_col: 'col-md-3', placeholder: 'first name'
-  = f.text_field :last_name, control_col: 'col-md-3', placeholder: 'last name'
-  - if current_user.admin? && current_user.adult?
-    = f.select :role, options_for_user_roles, control_col: 'col-md-2'
-  - else
-    .form-group
-      = label_tag :role, nil, class: 'control-label col-md-3'
-      .col-md-2
-        = text_field_tag :role, @user.role, readonly: true, class: 'form-control'
-      .col-md-2
-        %span.fa-stack{data: {toggle: 'tooltip', placement: 'right'}, title: 'You must have admin rights to change roles'}
-          %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
-          %i.fa.fa-question.fa-stack-1x.fa-inverse
-
-  = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true, control_col: 'col-md-4'
-  = f.select :rank, @unit.ranks, include_blank: true, control_col: 'col-md-2'
-
-
-  = f.fields_for :unit_positions, @user.unit_positions.unit(@unit) || UnitPosition.new do |ff|
-    = ff.hidden_field :unit_id, value: @unit.id
-    = ff.select :leadership, @unit.scout_leadership_positions, include_blank: true, control_col: 'col-md-4'
-    = ff.text_field :additional, class: 'form-control', placeholder: 'additional leadership positions', control_col: 'col-md-6', hide_label: true
-
-
-  = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
-
-  %fieldset
-    %legend Picture
-    = f.form_group do
-      .well.well-sm
-        = image_tag @user.picture.url
-    = f.file_field :picture, hide_label: true
-    = f.form_group do
-      = f.check_box :remove_picture, label: 'remove picture'
-      .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
-
-  %fieldset
-    %legend Phone numbers
-    = f.form_group do
-      = button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
-    = f.fields_for :phones do |f_phone|
-      = f_phone.form_group do
+  .row
+    .col-md-4
+      = f.text_field :first_name
+    .col-md-4
+      = f.text_field :last_name
+    .col-md-2
+      - if current_user.admin? && current_user.adult?
+        = f.select :role, options_for_user_roles
+      - else
+        = label_tag :role, nil, class: 'control-label col-md-3'
         .col-md-2
-          = f_phone.select :kind, options_for_phones, hide_label: true, layout: :default
-        .col-md-3.col-md-offset-1
-          = f_phone.phone_field :number, hide_label: true, layout: :default
-        .col-md-2.col-md-offset-1
-          = f_phone.check_box :_destroy, label: 'remove'
+          = text_field_tag :role, @user.role, readonly: true
+          %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'You must have admin rights to change roles'}
+            %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+            %i.fa.fa-question.fa-stack-1x.fa-inverse
 
-    #add-a-phone
+  .row
+    .col-md-3
+      = f.collection_select :sub_unit_id, @unit.sub_units, :id, :name, include_blank: true
+    .col-md-2
+      = f.select :rank, @unit.ranks, include_blank: true
 
-    #new-phone-fields.hidden
-      = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
-        = h_phone.form_group do
-          .col-md-2
-            = h_phone.select :kind, options_for_phones, hide_label: true, layout: :default
-          .col-md-3.col-md-offset-1
-            = h_phone.phone_field :number, hide_label: true, layout: :default
-          .col-md-2.col-md-offset-1
-            = h_phone.check_box :_destroy, label: 'remove'
+  .row
+    .col-md-4
+      = f.fields_for :unit_positions, @user.unit_positions.unit(@unit) || UnitPosition.new do |ff|
+        = ff.hidden_field :unit_id, value: @unit.id
+        = ff.select :leadership, @unit.scout_leadership_positions, include_blank: true
+        = ff.text_field :additional, class: 'form-control', placeholder: 'additional leadership positions', hide_label: true
+
+
+      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
+
+  .row
+    .col-md-12
+      %fieldset
+        %legend Picture
+        .row
+          .col-md-8
+            .well.well-sm
+              = image_tag @user.picture.url
+            = f.file_field :picture, hide_label: true
+            = f.check_box :remove_picture, label: 'remove picture'
+            .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
+
+      %fieldset
+        %legend Phone numbers
+        %p= button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
+
+        = f.fields_for :phones do |f_phone|
+          .row
+            .col-md-1
+              = f_phone.select :kind, options_for_phones, hide_label: true
+            .col-md-2
+              = f_phone.phone_field :number, hide_label: true
+            .col-md-3
+              = f_phone.check_box :_destroy, label: 'remove'
+
+        #add-a-phone
+
+        #new-phone-fields.hidden
+          = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
+            .row
+              .col-md-1
+                = h_phone.select :kind, options_for_phones, hide_label: true
+              .col-md-2
+                = h_phone.phone_field :number, hide_label: true
+              .col-md-3
+                = h_phone.check_box :_destroy, label: 'remove'
+
+
+
+  %fieldset
+    %legend Notifications
+    .row
+      .col-md-4
+        = f.email_field :email, label: "Email to use for notifications", help: 'can be same as sign in email'
+    .row
+      .col-md-12
+        %hr
+        %p Text messages are sent via email-to-text services. Messages may not arrive from the same number.
+        = #f.check_box :send_reminders, label: 'send reminder before event deadlines and start times'
+
+    .row
+      .col-md-2
+        = f.phone_field :sms_number, label: 'Mobile number', placeholder: 'XXX-XXX-XXXX'
+        = f.select :sms_provider, User.sms_providers, include_blank: true, label: 'Provider'
+    .row
+      .col-md-12
+        .help-block You must select a Provider if you would like to receive text messages. If you don't want to receive texts, leave blank.
+    -#= f.form_group do
+    -#  %p
+    -#    = link_to 'Send Verification', sms_send_verification_path, remote: true, class: 'btn btn-default'
+    -#  %p
+    -#    - if @user.sms_number_verified
+    -#      .badge Your SMS number has been verified.
+    -#    - else
+    -#      %span.red-color
+    -#        %i.icon-warning-sign
+    -#        You must reply to the verification text message to receive text messages.
+
+    %h4 How you would like to receive notifications?
+    .row
+      .col-md-6
+        %table.table.table-condensed
+          %tr
+            %th.middle Email blasts
+            %td= f.check_box :blast_email, label: 'email'
+            %td= #f.check_box :blast_sms, label: 'sms'
+          %tr
+            %th.middle Event reminders
+            %td= f.check_box :event_reminder_email, label: 'email'
+            %td= f.check_box :event_reminder_sms, label: 'sms'
+          %tr
+            %th.middle Weekly newsletter
+            %td= f.check_box :weekly_newsletter_email, label: 'email'
+            %td
+          %tr
+            %th.middle Monthly newsletter
+            %td= f.check_box :monthly_newsletter_email, label: 'email'
+            %td
+          %tr
+            %th.middle SMS messages
+            %td= #f.check_box :event_reminder_email, label: 'email'
+            %td= f.check_box :sms_message, label: 'sms'
+    .row
+      .col-md-12
+        .help-block SMS messages are general messages sent by an adult to attendees of an event, a den/patrol, or the entire unit.
+
+      -# %tr
+      -#   %th Signup deadlines
+      -#   %td= f.check_box :signup_deadline_email, label: 'email'
+      -#   %td= f.check_box :signup_deadline_sms, label: 'sms'
+
+        .help-block Most text messages will contain a link to a page and a few words.
+      -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
+
 
 
 
   %fieldset
     %legend Address
-    = f.text_field :address1, control_col: 'col-md-4'
-    = f.text_field :address2, control_col: 'col-md-4'
+    .row
+      .col-md-6
+        = f.text_field :address1
+        = f.text_field :address2
+    .row
+      .col-md-3
+        = f.text_field :city
+      .col-md-1
+        = f.text_field :state
+      .col-md-2
+        = f.text_field :zip_code
 
-    = f.text_field :city, control_col: 'col-md-3'
-    = f.text_field :state, control_col: 'col-md-2'
-    = f.text_field :zip_code, control_col: 'col-md-2'
+
+  %fieldset
+    %legend Health Forms
+    .row
+      .col-md-8
+        = render partial: 'health_form_form', locals: {user: @user, unit: @unit}
+
 
   %fieldset
     %legend Parents (adults)
-    = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Parents', help: 'parents will also be associated to the den(s)/patrol(s) of this Scout'}, {multiple: true, style: "width: 500px"}
+    .row
+      .col-md-8
+        = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, multiple: true
 
 
-  = f.form_group do
-    = f.primary
+  %br
+  = f.primary
+  - if @user.new_record?
     = link_to 'Cancel', unit_scouts_path(@unit), class: 'btn btn-default'
+  - else
+    = link_to 'Cancel', unit_scout_path(@unit, @user), class: 'btn btn-default'

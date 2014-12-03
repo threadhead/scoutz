@@ -6,6 +6,7 @@ RSpec.describe Unit do
   it { is_expected.to have_many(:events) }
   it { is_expected.to have_many(:email_messages) }
   it { is_expected.to have_many(:sms_messages) }
+  it { is_expected.to have_many(:health_forms) }
 
   it { is_expected.to validate_presence_of(:unit_type) }
   it { is_expected.to validate_presence_of(:unit_number) }

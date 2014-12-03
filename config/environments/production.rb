@@ -25,7 +25,7 @@ Scoutz::Application.configure do
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
-  # config.assets.css_compressor = :sass
+  config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -38,10 +38,10 @@ Scoutz::Application.configure do
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Decrease the log volume.
   # config.log_level = :info
@@ -93,16 +93,22 @@ Scoutz::Application.configure do
       domain:               'scoutt.in', # your domain to identify your server when connecting
     }
 
-  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in/' }
+  config.action_mailer.default_url_options = { host: 'http://www.scoutt.in' }
   config.action_mailer.asset_host = 'http://www.scoutt.in'
 
 
 
   # execption notification
   config.middleware.use ExceptionNotification::Rack,
-    :email => {
-      :email_prefix => "[SCOUTT.IN] ",
-      :sender_address => %{"scoutt.in notifier" <notifier@scoutt.in>},
-      :exception_recipients => %w{threadhead@gmail.com}
+    email: {
+      email_prefix: "[SCOUTT.IN] ",
+      sender_address: %{"scoutt.in notifier" <notifier@scoutt.in>},
+      exception_recipients: %w{threadhead@gmail.com}
     }
+
+
+  # config.to_prepare { SessionsController.force_ssl }
+  # config.to_prepare { RegistrationsController.force_ssl }
+  # config.to_prepare { PasswordsController.force_ssl }
+
 end

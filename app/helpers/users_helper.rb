@@ -49,6 +49,24 @@ module UsersHelper
     end
   end
 
+  def user_picture_circle(user)
+    if user.picture.present?
+      image_tag user.picture.thumb.url, class: 'circle-picture circle-picture-sm'
+
+    else
+      if user.adult?
+        content_tag :div, class: 'initial-circle initial-circle-adult' do
+          user.initials
+        end
+      else
+        content_tag :div, class: 'initial-circle initial-circle-scout' do
+          user.initials
+        end
+      end
+    end
+  end
+
+
 
   def user_address_show(user)
     sanitize(user.address1.to_s) + add_break(user.address1) +

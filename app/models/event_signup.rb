@@ -35,4 +35,30 @@ class EventSignup < ActiveRecord::Base
   ## scopes
   scope :for_event, -> event { where(event_id: event.id) }
   scope :by_scout_name_lf, -> { joins(:scout).order('"users"."last_name" ASC, "users"."first_name" ASC') }
+
+
+  def self.need_carpool_select_options
+    { 'no' => nil,
+      'for 1' => 1,
+      'for 2' => 2,
+      'for 3' => 3,
+      'for 4' => 4,
+      'for 5' => 5,
+      'for 6' => 6
+    }
+  end
+
+  def self.has_carpool_select_options
+    {
+      'not driving' => nil,
+      'driving, no seats' => 0,
+      '1 seat' => 1,
+      '2 seats' => 2,
+      '3 seats' => 3,
+      '4 seats' => 4,
+      '5 seats' => 5,
+      '6 seats' => 6,
+    }
+
+  end
 end

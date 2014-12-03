@@ -1,7 +1,8 @@
-%h1 Editing sub_unit
+.row
+  .col-md-12
+    .page-header
+      %h2 Edit #{@sub_unit.type}
 
-= render 'form'
-
-= link_to 'Show', @sub_unit
-\|
-= link_to 'Back', sub_units_path
+.row
+  .col-md-12
+    = render 'form'

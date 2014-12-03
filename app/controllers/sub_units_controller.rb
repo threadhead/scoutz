@@ -1,72 +1,62 @@
 class SubUnitsController < ApplicationController
   before_action :auth_and_time_zone
+  before_action :set_sub_unit, only: [:show, :edit, :update, :destroy]
 
   def index
-    @sub_units = SubUnit.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @sub_units }
-    end
+    authorize SubUnit
+    @sub_units = @unit.sub_units.order(:name)
   end
 
   def show
-    @sub_unit = SubUnit.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @sub_unit }
-    end
+    authorize @sub_unit
   end
 
   def new
-    @sub_unit = SubUnit.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @sub_unit }
-    end
+    authorize SubUnit
+    @sub_unit = SubUnit.new(unit: @unit)
   end
 
   def edit
-    @sub_unit = SubUnit.find(params[:id])
+    authorize @sub_unit
   end
 
   def create
-    @sub_unit = SubUnit.new(params[:sub_unit])
+    authorize SubUnit
+    @sub_unit = SubUnit.new(sub_unit_params)
 
-    respond_to do |format|
-      if @sub_unit.save
-        format.html { redirect_to @sub_unit, notice: 'Sub unit was successfully created.' }
-        format.json { render json: @sub_unit, status: :created, location: @sub_unit }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @sub_unit.errors, status: :unprocessable_entity }
-      end
+    if @sub_unit.save
+      @sub_unit.unit = @unit
+      redirect_to unit_sub_unit_url(@unit, @sub_unit), notice: 'Sub unit was successfully created.'
+    else
+      render :new
     end
   end
 
   def update
-    @sub_unit = SubUnit.find(params[:id])
-
-    respond_to do |format|
-      if @sub_unit.update_attributes(params[:sub_unit])
-        format.html { redirect_to @sub_unit, notice: 'Sub unit was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @sub_unit.errors, status: :unprocessable_entity }
-      end
+    authorize @sub_unit
+    if @sub_unit.update(sub_unit_params)
+      redirect_to unit_sub_unit_url(@unit, @sub_unit), notice: 'Sub unit was successfully updated.'
+    else
+      render :edit
     end
   end
 
   def destroy
-    @sub_unit = SubUnit.find(params[:id])
+    authorize @sub_unit
     @sub_unit.destroy
 
-    respond_to do |format|
-      format.html { redirect_to sub_units_url }
-      format.json { head :no_content }
-    end
+    redirect_to unit_sub_units_url(@unit), notice: 'Sub unit was successfully destroyed.'
   end
+
+  private
+    # Use callbacks to share common setup or constraints between actions.
+    def set_sub_unit
+      @sub_unit = SubUnit.find(params[:id])
+    end
+
+    def sub_unit_params
+      params.require(:sub_unit).permit(:name, :description, :unit_id)
+    end
+
+
 end

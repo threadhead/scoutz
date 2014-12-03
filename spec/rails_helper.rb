@@ -82,6 +82,11 @@ RSpec.configure do |config|
     Google::UrlShortenerV1::Base.stub(:shorten).and_return("http://goo.gl/vZewJH")
   end
 
+  config.before(:each, js: true) do
+    page.driver.browser.url_blacklist = ["//cdnjs.cloudflare.com/ajax/libs/font-awesome", "//fonts.googleapis.com/"]
+  end
+
+
   config.after(:each) do
     DatabaseCleaner.clean
   end

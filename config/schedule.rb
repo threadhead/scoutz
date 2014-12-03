@@ -20,15 +20,15 @@
 # Learn more: http://github.com/javan/whenever
 job_type :rake_logged, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
 
-set :output, '/home/karl/scoutz/shared/log/cron.log'
+set :output, '/home/deploy/scoutz/shared/log/cron.log'
 
-# every 30.minutes do
-#   runner "EventRemindersJob.send_reminders_later"
-# end
+every 30.minutes do
+  runner "Event.delay.send_reminders"
+end
 
-# every :friday, at: '9:17am' do
-#   rake_logged "send_newsletter:weekly"
-# end
+every :friday, at: '9:17am' do
+  rake_logged "send_newsletter:weekly"
+end
 
 # every :month, at: '12:17am' do
 #   rake_logged "send_newsletter:monthly"

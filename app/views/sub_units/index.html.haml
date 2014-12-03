@@ -1,23 +1,38 @@
-%h1 Listing sub_units
+.row
+  .col-md-12
+    = render partial: 'layouts/flash', locals: {flash: flash}
 
-%table
-  %tr
-    %th Unit
-    %th Name
-    %th Description
-    %th
-    %th
-    %th
+    .panel.panel-index-table.panel-default
+      .panel-heading
+        %span.xxlarge
+          %i.fa.fa-users
+          = @unit.sub_unit_name.pluralize
 
-  - @sub_units.each do |sub_unit|
-    %tr
-      %td= sub_unit.unit_id
-      %td= sub_unit.name
-      %td= sub_unit.description
-      %td= link_to 'Show', sub_unit
-      %td= link_to 'Edit', edit_sub_unit_path(sub_unit)
-      %td= link_to 'Destroy', sub_unit, :confirm => 'Are you sure?', :method => :delete
+      .panel-body
+        .panel-nav
+          - if policy(SubUnit).new?
+            .pull-right
+              = link_to(new_unit_sub_unit_path(@unit), class: "btn btn-default") do
+                %i.fa.fa-plus
+                New #{@unit.sub_unit_name}
 
-%br
 
-= link_to 'New Sub unit', new_sub_unit_path
+        .row
+          .col-md-12
+            %br
+            #sub-unit-index
+              %table.table.table-outside-bordered
+                %tr
+                  %th Name
+                  %th Description
+                  %th Scouts
+
+                  = cache ["unit-#{@unit.id}", cache_key_for_sub_units(@sub_units)] do
+                    - @sub_units.each do |sub_unit|
+                      -# = cache ["unit-#{unit.id}", sub_unit] do
+                      %tr
+                        %td.xlarge
+                          = link_to sub_unit.name, unit_sub_unit_path(@unit, sub_unit)
+                          %span.badge= sub_unit.scouts.count
+                        %td= sub_unit.description
+                        %td.scout-list= sub_unit.scouts.by_name_lf.map(&:name).join(', ')

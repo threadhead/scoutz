@@ -80,20 +80,37 @@
               - else
                 %table
                   %tr
-                    %td Signed up
+                    %td Signed up:
                     %td= event_signup.updated_at.to_s(:short_ampm)
                   %tr
-                    %td Scouts attending
+                    %td Scouts attending:
                     %td= event_signup.scouts_attending
                   %tr
-                    %td Siblings attending
+                    %td Siblings attending:
                     %td= event_signup.siblings_attending
                   %tr
-                    %td Adults attending
+                    %td Adults attending:
                     %td= event_signup.adults_attending
                   %tr
                     %td Comments:
                     %td= event_signup.comment
+                  %tr
+                    %td Needs a Ride:
+                    %td
+                      - if event_signup.need_carpool_seats && event_signup.need_carpool_seats > 0
+                        Yes, #{event_signup.need_carpool_seats} #{'seat'.pluralize(event_signup.need_carpool_seats)}
+                      - else
+                        No
+                  %tr
+                    %td Can Drive:
+                    %td
+                      - if event_signup.has_carpool_seats
+                        - if event_signup.has_carpool_seats == 0
+                          Driving, but no available seats
+                        - else
+                          Driving, has #{event_signup.has_carpool_seats} available #{'seat'.pluralize(event_signup.has_carpool_seats)}
+                      - else
+                        No
 
                 %p= link_to("Cancel this signup", event_email_event_signups_url(event, {scout_id: scout.id, user_token: @recipient_user.signup_token, event_token: event.signup_token, cancel_reservation: true}))
 
@@ -125,7 +142,7 @@
                   %tr
                     %td &nbsp;
                     %td{colspan: 3, style: "text-align: center; padding-top: 12px;"}
-                      = link_to "Signup with different options", event_email_event_signups_url(event, {scout_id: scout.id,user_token: @recipient_user.signup_token, event_token: event.signup_token})
+                      = link_to "Signup with different options or change carpooling", event_email_event_signups_url(event, {scout_id: scout.id,user_token: @recipient_user.signup_token, event_token: event.signup_token})
 
                   %tr
                     %td{colspan: 4, style: "text-align: center; padding-top: 8px;"}

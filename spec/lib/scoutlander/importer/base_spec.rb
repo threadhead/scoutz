@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Scoutlander::Importer::Base do
-  let(:base) { Scoutlander::Importer::Base.new }
+RSpec.describe Scoutlander::Reader::Base do
+  let(:base) { Scoutlander::Reader::Base.new }
 
   describe '.find_collection_elements_with' do
     before do

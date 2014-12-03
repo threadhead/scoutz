@@ -45,4 +45,12 @@ module ApplicationHelper
   def table_scout_panel(unit)
     @unit.unit_type.gsub(/\s/, '').underscore.dasherize
   end
+
+  def production?
+    Rails.env.production? || Rails.env.staging?
+  end
+
+  def env_protocol
+    production? ? 'https' : 'http'
+  end
 end

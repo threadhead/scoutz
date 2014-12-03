@@ -14,9 +14,9 @@
             .pull-right
               = link_to(new_unit_adult_path(@unit), class: "btn btn-default") do
                 %i.fa.fa-plus
-                new adult
+                New Adult
 
-          = cache ["unit-#{@unit.id}", ":search"] do
+          = cache ["unit-#{@unit.id}", ":adults_search"] do
             = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/adults.js?search_typeahead="}
 
 

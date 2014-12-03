@@ -55,4 +55,10 @@ class ScoutsController < UsersController
     end
   end
 
+  def send_welcome_reset_password
+    super
+    redirect_to unit_scout_path(@unit, @user), notice: "Welcome email was sent to #{@user.name}. Their account has been deactivated until they confirm."
+  end
+
+
 end

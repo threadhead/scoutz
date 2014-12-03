@@ -5,7 +5,7 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %a.navbar-brand(href="/") Scout.in
+      = link_to 'Scoutt.in', unit_events_path(@unit), class: 'navbar-brand'
 
     .collapse.navbar-collapse#scoutz-navbar-collapse
       %ul.nav.navbar-nav.pull-right
@@ -29,12 +29,12 @@
                   Change Password
               %li.divider
               %li
-                = link_to destroy_user_session_path, method: :delete do
+                = link_to destroy_user_session_url, method: :delete do
                   %i.fa.fa-power-off
                   Sign out
 
         - else
-          %li= link_to 'Sign in', new_user_session_path
+          %li= link_to 'Sign in', new_user_session_url
 
 .navbar.navbar-default#navbar-fixed-lower
   .container-fluid
@@ -71,12 +71,12 @@
           %ul.dropdown-menu
             %li
               = link_to unit_scouts_path(@unit) do
-                %i.fa.fa-user{style: "color: #c00;"}
+                %i.fa.fa-user{style: "color: #808000;"}
                 Scouts
 
             %li
               = link_to unit_adults_path(@unit) do
-                %i.fa.fa-user{style: "color: #c0c000;"}
+                %i.fa.fa-user{style: "color: #CC1814;"}
                 Adults
 
             - if @unit.unit_type == "Boy Scouts"
@@ -84,6 +84,17 @@
                 = link_to unit_merit_badges_path(@unit) do
                   %i.fa.fa-graduation-cap
                   MB Counselors
+
+            - if policy(HealthForm).index?
+              %li
+                = link_to unit_health_forms_path(@unit) do
+                  %i.fa.fa-medkit
+                  Health Forms
+
+            %li
+              = link_to unit_sub_units_path(@unit) do
+                %i.fa.fa-users
+                = @unit.sub_unit_name.try(:pluralize)
 
 
 

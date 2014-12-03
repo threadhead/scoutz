@@ -83,3 +83,7 @@ production:
   database: scoutz_production
   # username: postg
   # password: <%= ENV['POSTG_DATABASE_PASSWORD'] %>
+
+staging:
+  <<: *default
+  database: scoutz_production

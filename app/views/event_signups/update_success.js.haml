@@ -10,20 +10,20 @@
   $("div#event-signups-list").html("#{escape_javascript(render partial: 'event_signups/event_signup', collection: @event_signups)}");
 
 
-  // update the event roster, rebind all the edit buttons
+  // update the event roster
   $("table#event-signup-roster").html("#{escape_javascript(render partial: 'event_signups/event_roster', collection: @event_rosters)}");
 
 
-  // update the signup add select, rebind the add button
+  // update the signup add select
   $("p#event-signup-add").html("#{escape_javascript(render partial: 'event_signups/signup_add', locals: { event: @event_signup.event })}");
 
-  console.log("asdfasdfasdfasdf");
+  // re-bind tooltips to replacement elements
+  $("[data-toggle='tooltip']").tooltip()
+
   // create a pnotify.js notification
 - flash.each do |name, msg|
   :plain
-    (function(){
-      new PNotify({
-        type: "#{name}",
-        text: "#{msg}"
-      });
-    }());
+    new PNotify({
+      type: "#{name}",
+      text: "#{msg}"
+    });

@@ -1,0 +1,15 @@
+.modal.fade#send-welcome-email
+  .modal-dialog
+    .modal-content
+      .modal-header
+        %h4.modal-title Send Welcome Email
+
+      .modal-body
+        %p
+          %strong Sending a welcome email to a user will reset their password.
+          They will not be able to sign in until they respond to the email and change their password. They have 72 hours to complete the change.
+        %p Are you sure you want to do this?
+
+      .modal-footer
+        = yield
+        = button_tag 'Cancel', type: 'button', data: { dismiss: 'modal' }, class: 'btn btn-default'

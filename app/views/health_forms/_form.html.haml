@@ -1,0 +1,21 @@
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @health_form}
+
+
+
+.row
+  .col-md-8
+    .alert.alert-info
+      %strong IMPORTANT:
+      enter the date the health form was <u>signed</u>. Scoutt.in will calculate the expiration date as 1 year from when the form was signed.
+
+    = bootstrap_form_for [@unit, @health_form] do |f|
+      = hidden_field_tag :return, @return
+      = render partial: 'health_forms', locals: {f: f}
+
+      %br
+      = f.primary
+      = link_to 'Cancel', @return || unit_health_forms_path(@unit), class: 'btn btn-default'
+
+
+  .col-md-3.col-md-offset-1
+    = render partial: 'users/picture_panel_lg', locals: {user: @health_form.user}

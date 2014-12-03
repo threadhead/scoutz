@@ -21,10 +21,18 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :units
   has_many :notifiers, dependent: :destroy
   has_and_belongs_to_many :events, -> { uniq }
-  belongs_to :sub_unit
+  belongs_to :sub_unit, touch: true
   has_many :email_messages, dependent: :destroy
   has_many :sms_messages, dependent: :destroy
   has_many :pages
+
+  has_many :health_forms, inverse_of: :user, dependent: :destroy do
+    def unit(unit_id)
+      where(health_forms: {unit_id: unit_id}).first
+    end
+  end
+  accepts_nested_attributes_for :health_forms
+
 
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)
@@ -38,8 +46,10 @@ class User < ActiveRecord::Base
   end
   accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['merit_badge_id'].blank? }, allow_destroy: true
 
+
   has_many :phones, dependent: :destroy
   accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a["number"].blank? }
+
 
   has_many :unit_positions, inverse_of: :user, dependent: :destroy do
     def unit(unit_id)
@@ -47,8 +57,6 @@ class User < ActiveRecord::Base
     end
   end
   accepts_nested_attributes_for :unit_positions
-
-
 
 
   before_save :update_picture_attributes
@@ -70,10 +78,12 @@ class User < ActiveRecord::Base
     end
   end
 
-  # validates :picture, :file_size => { :maximum => 0.3.megabytes.to_i }
-  validate :image_size_validation, :if => "picture?"
+  # validates :picture, file_size: { maximum: 0.3.megabytes.to_i, message: 'should be less than 300K' }, if: "picture.present?"
+  validate :image_size_validation, if: "picture.present?"
   def image_size_validation
-    errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+    if picture.file.exists?
+      errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+    end
   end
 
 
@@ -238,6 +248,13 @@ class User < ActiveRecord::Base
     joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where( t[:leadership].not_eq('').or(t[:additional].not_eq('')) )
   end
 
+  def self.without_units
+    habtm_table = Arel::Table.new(:units_users)
+    join_table_with_condition = habtm_table.project(habtm_table[:user_id])
+    where(User.arel_table[:id].not_in(join_table_with_condition))
+  end
+
+
 
 
   def turn_off_all_notifications
@@ -343,8 +360,13 @@ class User < ActiveRecord::Base
 
     def update_picture_attributes
       if picture.present? && picture_changed?
-        self.picture_content_type = picture.file.content_type
-        self.picture_file_size = picture.file.size
+        if picture.file.exists?
+          self.picture_content_type = picture.file.content_type
+          self.picture_file_size = picture.file.size
+        else
+          self.picture_content_type = nil
+          self.picture_file_size = nil
+        end
         self.picture_updated_at = Time.zone.now
       end
     end

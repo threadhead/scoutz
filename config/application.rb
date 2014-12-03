@@ -8,6 +8,8 @@ Bundler.require(*Rails.groups)
 
 module Scoutz
   class Application < Rails::Application
+    # config.middleware.use Rack::Deflater
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -29,7 +31,7 @@ module Scoutz
     # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     # config.assets.precompile += ['jquery.js']
-    config.assets.precompile += ['ckeditor_config.js', 'ckeditor/config_ckeditor.js']
+    config.assets.precompile += ['landing.css', 'landing.js', 'ckeditor_config.js', 'ckeditor/config_ckeditor.js']
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true

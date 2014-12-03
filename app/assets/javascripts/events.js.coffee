@@ -28,7 +28,7 @@ jQuery ->
     #   else $("#sub-unit-list").collapse("hide")
 
 
-    subUnitRegex = /Den|Lodge/
+    subUnitRegex = /Patrol|Den|Lodge/
     if $(@).val().match subUnitRegex
       $("#sub-unit-list").collapse("show")
     else

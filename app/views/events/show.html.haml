@@ -3,18 +3,32 @@
   .col-md-12
     .page-header
       .pull-right
-        = link_to unit_events_path(@unit), class: 'btn btn-default' do
-          %i.fa.fa-reply
-          event list
+        .btn-group
+          = link_to unit_events_path(@unit), class: 'btn btn-default' do
+            %i.fa.fa-reply
+            Event List
 
-        - if policy(@event).update?
-          = link_to edit_event_path(@event), class: 'btn btn-default' do
-            %i.fa.fa-edit
-            change
-        - if policy(@event).new?
-          = link_to new_event_path, class: "btn btn-success" do
-            %i.fa.fa-plus
-            new event
+          - if policy(@event).update?
+            = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
+              %i.fa.fa-edit
+              Edit
+
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            %i.fa.fa-gear
+            Actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
+            - if policy(@event).destroy?
+              %li
+                = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
+                  %i.fa.fa-trash-o
+                  Destroy Event
+
+            - if policy(Event).new?
+              %li
+                = link_to new_unit_event_path(@unit) do
+                  %i.fa.fa-plus
+                  New Event
 
       %h2= @event.name
 
@@ -66,6 +80,11 @@
               %strong Attire
             %td= @event.attire
 
+          %tr
+            %td
+              %strong Health&nbsp;Forms
+            %td= Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)
+
         %tr
           %td
             %strong Location
@@ -82,29 +101,27 @@
             %td &nbsp;
             %td= @event.message.html_safe
 
-          - if @event.signup_required
-            %tr
-              %td
-                %strong Roster
-              %td
-                - unless @event_rosters.empty?
-                  %p.right-aligned
-                    - if policy(@event).sms_attendees?
-                      = link_to sms_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                        %i.fa.fa-phone
-                        SMS all attendees
-                    - if policy(@event).email_attendees?
-                      = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                        %i.fa.fa-envelope
-                        Email all attendees
+      - if @event.signup_required
+        %div{style: "border-bottom: 1px solid lightgray; margin-bottom: 12px;"}
+        %strong Roster
+        - unless @event_rosters.empty?
+          .pull-right
+            - if policy(@event).sms_attendees?
+              = link_to sms_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-phone
+                SMS all attendees
+            - if policy(@event).email_attendees?
+              = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
+                %i.fa.fa-envelope
+                Email all attendees
+        %div.clearfix
+        - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
+          %p#event-signup-add
+            = render partial: 'event_signups/signup_add', locals: { event: @event }
 
-                - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
-                  %p#event-signup-add
-                    = render partial: 'event_signups/signup_add', locals: { event: @event }
-
-                %table.table-condensed.table-striped.table-roster#event-signup-roster
-                  = render partial: 'event_signups/event_roster', collection: @event_rosters
-                  - #@event.event_signups.includes(:scout).each do |signup|
+        %table.table-condensed.table-striped.table-roster#event-signup-roster
+          = render partial: 'event_signups/event_roster', collection: @event_rosters
+          - #@event.event_signups.includes(:scout).each do |signup|
 
 
   .col-md-4

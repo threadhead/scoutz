@@ -1,0 +1,12 @@
+.panel.panel-default
+  .panel-body.centered
+    %p
+      %strong.xlarge= user.name
+    - if user.picture.present?
+      = image_tag user.picture.url, class: 'circle-picture'
+    - else
+      - if user.adult?
+        .initial-circle.initial-circle-lg.initial-circle-adult= user.initials
+      - else
+        .initial-circle.initial-circle-lg.initial-circle-scout= user.initials
+

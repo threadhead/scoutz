@@ -10,13 +10,8 @@
     = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
       - users.each do |adult|
         = cache ["unit-#{unit.id}", adult] do
-          %tr
-            %td.centered
-              - if adult.picture.present?
-                = image_tag adult.picture.thumb.url, class: 'circle-picture circle-picture-sm'
-              - else
-                .initial-circle.initial-circle-adult= adult.initials
-
+          %tr.v-centered
+            %td.centered= user_picture_circle(adult)
             %td= link_to adult.name_lf, unit_adult_path(unit, adult)
             %td= all_leadership_positions(@unit, adult)
             %td= unit_scouts_link_list(unit, adult.unit_scouts(unit))

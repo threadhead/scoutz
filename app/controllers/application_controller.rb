@@ -12,10 +12,10 @@ class ApplicationController < ActionController::Base
   protected
     def auth_and_time_zone
       authenticate_user!
-      Time.zone = current_user.time_zone || "Pacific Time (US & Canada)"
       User.current = current_user if current_user
-      @units = current_user.units if current_user
+      set_user_units
       set_unit
+      Time.zone = @unit.try(:time_zone) || current_user.time_zone || "Pacific Time (US & Canada)"
 
       # logger.info "CURRENT_UNIT_ID: #{session[:current_unit_id]}"
       # @current_unit = @units.where(id: session[:current_unit_id]).first || @units.first
@@ -25,8 +25,12 @@ class ApplicationController < ActionController::Base
 
     def set_unit
       unit_id = params[:unit_id] || params[:select_default_unit] || session[:current_unit_id]
-      @unit = current_user.units.where(id: unit_id).first || @units.first
-      session[:current_unit_id] = @unit.id
+      @unit = unit_id.nil? ? @units.first : current_user.units.where(id: unit_id).first
+      session[:current_unit_id] = @unit.try(:id)
+    end
+
+    def set_user_units
+      @units = current_user.units if current_user
     end
 
     def clean_up_passwords(object)
@@ -39,4 +43,12 @@ class ApplicationController < ActionController::Base
       render file: File.join(Rails.root, 'public', '403.html'), status: 403, layout: false
       # redirect_to(request.referrer || root_path)
     end
+
+    def after_sign_in_path_for(resource)
+      set_user_units
+      set_unit
+      Time.zone = @unit.try(:time_zone) || current_user.time_zone || "Pacific Time (US & Canada)"
+      stored_location_for(resource) || unit_events_url(@unit)
+    end
+
 end

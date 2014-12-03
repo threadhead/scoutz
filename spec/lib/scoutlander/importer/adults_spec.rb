@@ -1,11 +1,11 @@
 require 'rails_vcr_helper'
 
-RSpec.describe Scoutlander::Importer::Adults do
+RSpec.describe Scoutlander::Reader::Adults do
   before(:all) { @unit = FactoryGirl.create(:unit, sl_uid: '3218', unit_type: 'Boy Scouts') }
 
   describe '.fetch_unit_adults', :vcr do
     before(:all) do
-      @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+      @sl = Scoutlander::Reader::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_unit_adults') do
         @sl.fetch_unit_persons(:adult)
       end
@@ -20,7 +20,7 @@ RSpec.describe Scoutlander::Importer::Adults do
 
   describe '.fetch_adult_info', :vcr do
     before(:all) do
-      @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+      @sl = Scoutlander::Reader::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info') do
         @sl.fetch_unit_persons(:adult)
         @sl.fetch_person_info(:adult, @sl.adults.first)
@@ -37,7 +37,7 @@ RSpec.describe Scoutlander::Importer::Adults do
 
   describe '.fetch_adult_info_with_scout_links', :vcr do
     before(:all) do
-      @sl = Scoutlander::Importer::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
+      @sl = Scoutlander::Reader::Adults.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
       VCR.use_cassette('fetch_adult_info_with_scout_links') do
         @sl.fetch_unit_persons(:adult)
         # pp @sl.adults
@@ -69,7 +69,7 @@ RSpec.describe Scoutlander::Importer::Adults do
 
   describe '.find_or_create_by_profile' do
     before do
-      @sl = Scoutlander::Importer::Adults.new
+      @sl = Scoutlander::Reader::Adults.new
       @person1 = Scoutlander::Datum::Person.new(sl_profile: "111")
       @person2 = Scoutlander::Datum::Person.new(sl_profile: "222")
       @person3 = Scoutlander::Datum::Person.new(sl_profile: "333")

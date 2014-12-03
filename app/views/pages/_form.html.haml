@@ -1,4 +1,4 @@
-= bootstrap_form_for [@unit, @page], layout: :horizontal, label_col: 'col-md-2', control_col: 'col-md-8' do |f|
+= bootstrap_form_for [@unit, @page] do |f|
   = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
 
@@ -9,15 +9,21 @@
       - else
         %h2 Edit Page
 
-  = f.text_field :title, autofocus: true, help: 'less than 48 characters', control_col: 'col-md-4'
-  = f.form_group :public, help: 'public pages can be seen by anyone without login' do
-    = f.check_box :public
-  = f.form_group :front_page, help: 'front pages will be shown below your unit home page, but not on mobile devices' do
-    = f.check_box :front_page
+  .row
+    .col-md-4
+      = f.text_field :title, autofocus: true, help: 'less than 48 characters'
 
-  = f.text_area :body, id: 'ckeditor', help: 'you can change the order in which pages appear after you save this page'
+  = f.check_box :public
+  .help-block public pages can be seen by anyone without login
 
-  = f.form_group do
-    = f.primary
-    = link_to 'Cancel', unit_pages_path(@unit), class: 'btn btn-default'
+  = f.check_box :front_page
+  .help-block front pages will be shown below your unit home page, but not on mobile devices
+
+  %fieldset
+    %legend Body
+    = f.text_area :body, id: 'ckeditor', help: 'you can change the order in which pages appear after you save this page', hide_label: true
+
+  %br
+  = f.primary
+  = link_to 'Cancel', unit_pages_path(@unit), class: 'btn btn-default'
 

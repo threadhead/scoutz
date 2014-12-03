@@ -1,5 +1,5 @@
 - if users.size > 0
-  %table.table
+  %table.table.table-outside-bordered
     %thead
       %th
       %th Name
@@ -13,13 +13,8 @@
     = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
       - users.each do |scout|
         = cache ["unit-#{unit.id}", scout] do
-          %tr
-            %td.centered
-              - if scout.picture.present?
-                = image_tag scout.picture.thumb.url, class: 'circle-picture circle-picture-sm'
-              - else
-                .initial-circle.initial-circle-scout= scout.initials
-
+          %tr.v-centered
+            %td.centered= user_picture_circle(scout)
             %td= link_to scout.name_lf, unit_scout_path(unit, scout)
             %td= scout.sub_unit.try(:name)
             %td= scout.rank

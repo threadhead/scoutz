@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   # etag { current_user.try :id }
 
   before_action :auth_and_time_zone
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_password, :send_welcome_reset_password]
   after_action :verify_authorized
 
   def show
@@ -19,6 +19,16 @@ class UsersController < ApplicationController
     # @user.unit_positions.create(unit_id: @unit.id)
   end
 
+  def send_welcome_reset_password
+    authorize @user
+    @user.confirm!
+
+    token = @user.send(:set_reset_password_token)
+    @user.reset_password_sent_at = 72.hours.from_now - Devise.reset_password_within
+    @user.encrypted_password = nil
+    @user.save(validate: false)
+    AdminMailer.delay.send_existing_user_welcome(user_id: @user.id, token: token)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -44,7 +54,8 @@ class UsersController < ApplicationController
             :weekly_newsletter_email, :monthly_newsletter_email,
             phones_attributes: [:id, :kind, :number, :_destroy], scout_ids: [], adult_ids: [],
             counselors_attributes: [:id, :merit_badge_id, :unit_id, :_destroy],
-            unit_positions_attributes: [:id, :leadership, :additional, :unit_id]
+            unit_positions_attributes: [:id, :leadership, :additional, :unit_id],
+            health_forms_attributes: [:id, :unit_id, :part_a_date, :part_b_date, :part_c_date, :florida_sea_base_date, :philmont_date, :northern_tier_date, :summit_tier_date]
             )
     end
 

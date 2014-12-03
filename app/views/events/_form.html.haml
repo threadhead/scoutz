@@ -1,4 +1,5 @@
-= bootstrap_form_for @event, layout: :horizontal, label_col: 'col-md-3', control_col: 'col-md-8' do |f|
+= bootstrap_form_for @event do |f|
+  = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
   .row
@@ -12,61 +13,85 @@
 
   .row
     .col-md-9
-      = f.text_field :name, autofocus: true, label: 'Event name'
 
-      = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_s(:datetimepicker), control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
-      = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_s(:datetimepicker), control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
+      .row
+        .col-md-8
+          = f.text_field :name, autofocus: true, label: 'Event name'
 
-      = #f.form_group :send_reminders do
-      .form-group
-        .col-md-offset-3.col-md-8
-          = f.check_box :send_reminders, label: "send reminder 48 hours before event start"
+      .row
+        .col-md-3
+          = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_s(:datetimepicker), append: '<i class="fa fa-calendar"></i>'.html_safe
+        .col-md-3
+          = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_s(:datetimepicker), append: '<i class="fa fa-calendar"></i>'.html_safe
 
-      = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing'], {control_col: 'col-md-5'}
+
+      .row
+        .col-md-4
+          = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing']
+
+      .row
+        .col-md-12
+          = f.label :type_of_health_forms, "Health form", class: 'control-label'
+          .form-inline
+            = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
+            %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
+              %i.fa.fa-circle.fa-stack-2x.tooltip_circle
+              %i.fa.fa-question.fa-stack-1x.fa-inverse
 
       %fieldset
         %legend Signup (RSVP)
-        = #f.form_group :signup_deadline do
-        .form-group
-          .col-md-offset-3.col-md-8
-            = f.check_box :signup_required
-        = f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), hide_label: true, control_col: 'col-md-4', append: '<i class="fa fa-calendar"></i>'.html_safe
-        = #f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), append: "<i class=\"fa fa-calendar\"></i>".html_safe, prepend: "#{f.check_box :signup_required, label: ''}".html_safe
+        .row
+          .col-md-4
+            -# = f.check_box :signup_required
+            = #f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), hide_label: true, append: '<i class="fa fa-calendar"></i>'.html_safe
+            = #f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), append: "<i class=\"fa fa-calendar\"></i>".html_safe, prepend: "#{f.check_box :signup_required, label: ''}".html_safe
+            .input-group
+              %span.input-group-addon
+                = hidden_field_tag 'event[signup_required]', '0'
+                = check_box_tag 'event[signup_required]', nil, @event.signup_required
+              = text_field_tag 'event[signup_deadline]', @event.signup_deadline.try(:to_formatted_s, :datetimepicker), class: 'datetime-picker form-control', placeholder: 'deadline'
+              %span.input-group-addon
+                %i.fa.fa-calendar
+
+      %fieldset
+        %legend Reminder
+        = f.check_box :send_reminders, label: "send reminder 48 hours before event start"
 
 
 
       %fieldset
         %legend Location
-        = f.text_field :location_name, label: 'Name'
-        = f.text_field :location_address1, label: 'Address1'
-        = f.text_field :location_address2, label: 'Address2'
-        = f.text_field :location_city, label: 'City', control_col: 'col-md-4'
-        = f.text_field :location_state, label: 'State', control_col: 'col-md-3'
-        = f.text_field :location_zip_code, label: 'Zip', control_col: 'col-md-3'
+        .row
+          .col-md-8
+            = f.text_field :location_name, label: 'Name'
+        .row
+          .col-md-6
+            = f.text_field :location_address1, label: 'Address1'
+            = f.text_field :location_address2, label: 'Address2'
+        .row
+          .col-md-3
+            = f.text_field :location_city, label: 'City'
+          .col-md-1
+            = f.text_field :location_state, label: 'State'
+          .col-md-2
+            = f.text_field :location_zip_code, label: 'Zip'
 
-        = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL', help: "if you don't enter a map url, the above address will be used to display a map"
+        = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL', help: "if you don't enter a map url, the address will be used to display a map"
 
     .col-md-3
-      .row
-        .col-md-11
-          = f.select :kind, @unit.event_kinds, {hide_label: true, layout: :default}
-          #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
-            .well.well-sm
-              %strong.large Select #{@unit.sub_unit_name}s in event
-              = f.collection_check_boxes :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true, control_col: 'col-md-12'
+      = f.select :kind, @unit.event_kinds
+      #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
+        .well.well-sm
+          %strong.large Select #{@unit.sub_unit_name}s in event
+          = f.collection_check_boxes :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true
 
   .row
     .col-md-12
       %fieldset
         %legend Details
-        .col-md-10.col-md-offset-2
-          = text_area_tag 'event[message]', @event.message, id: 'ckeditor'
-          %br
+        = f.text_field :message, hide_label: true, id: 'ckeditor'
 
   .row
     .col-md-9
-      = #f.form_group do
-      .form-group
-        .col-md-offset-3.col-md-8
-          = f.primary
-          = link_to 'Cancel', @event, class: 'btn btn-default'
+      = f.primary
+      = link_to 'Cancel', @event, class: 'btn btn-default'

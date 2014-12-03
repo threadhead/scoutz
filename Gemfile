@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.1.5'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
@@ -134,5 +134,3 @@ end
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

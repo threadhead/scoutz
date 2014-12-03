@@ -1,4 +1,7 @@
 Scoutz::Application.routes.draw do
+  get "/ping/#{ENV['PING_KEY']}"   => 'status#ping'
+  get "/health/#{ENV['PING_KEY']}" => 'status#health'
+
   get 'meta_search' => 'meta_search#index'
   devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords'}
 

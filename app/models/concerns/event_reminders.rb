@@ -11,6 +11,7 @@ module EventReminders
       @@event_reminder_logger ||= Logger.new(File.join(Rails.root, 'log', 'event_reminders.log'))
     end
 
+    # MOVED TO ACTIVERJOB - EventRemindersJob
     # def send_reminders
     #   events = Event.needs_reminders
     #   Event.reminder_logger.info "#{events.size} events need reminders"

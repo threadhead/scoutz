@@ -23,11 +23,13 @@ job_type :rake_logged, "cd :path && :environment_variable=:environment bundle ex
 set :output, '/home/deploy/scoutz/shared/log/cron.log'
 
 every 30.minutes do
-  runner "Event.delay.send_reminders"
+  # runner "Event.delay.send_reminders"
+  runner "EventRemindersJob.perform_later"
 end
 
 every :friday, at: '9:17am' do
-  rake_logged "send_newsletter:weekly"
+  # rake_logged "send_newsletter:weekly"
+  runner "NewsletterWeeklyJob.perform_later"
 end
 
 # every :month, at: '12:17am' do

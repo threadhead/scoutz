@@ -34,6 +34,7 @@ module Scoutlander
           sub_unit: 'txtSubUnit',
           rank: 'txtRank',
           security_level: 'txtSecurityLevel',
+          role: 'txtSecurityLevel',
           email: 'txtEmail',
           alternate_email: 'txtAltEmail',
           send_reminders: 'txtEventNotification',
@@ -87,8 +88,6 @@ module Scoutlander
           'basic'
         end
       end
-
-
 
 
 

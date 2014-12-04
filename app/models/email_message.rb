@@ -3,6 +3,8 @@ class EmailMessage < ActiveRecord::Base
   include SubUnitIds
   include AttributeSanitizer
 
+  serialize :sub_unit_ids, Array
+
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
   has_many :email_attachments, dependent: :destroy
@@ -25,20 +27,20 @@ class EmailMessage < ActiveRecord::Base
   before_create :ensure_id_token
 
 
-  def send_email
-    if events_have_signup?
-      # emails will contain individual links for signup
-      recipients.each { |recipient| MessageMailer.delay.email_blast(self.sender.id, recipient.email, self.id, recipient.id) }
-    else
-      MessageMailer.delay.email_blast(self.sender.id, recipients_emails, self.id)
-    end
-    self.update_attribute(:sent_at, Time.zone.now)
-  end
+  # def send_email
+  #   if events_have_signup?
+  #     # emails will contain individual links for signup
+  #     recipients.each { |recipient| MessageMailer.delay.email_blast(self.sender.id, recipient.email, self.id, recipient.id) }
+  #   else
+  #     MessageMailer.delay.email_blast(self.sender.id, recipients_emails, self.id)
+  #   end
+  #   self.update_attribute(:sent_at, Time.zone.now)
+  # end
 
-  def self.dj_send_email(id)
-    em = EmailMessage.find(id)
-    em.send_email if em
-  end
+  # def self.dj_send_email(id)
+  #   em = EmailMessage.find(id)
+  #   em.send_email if em
+  # end
 
 
 

@@ -54,13 +54,16 @@ RSpec.describe Scoutlander::Reader::Adults do
 
     specify { expect(@dave.relations.size).to eq(1) }
     specify { expect(@dave.relations.map(&:sl_profile)).to include("91046") }
+    specify { expect(@dave.role).to eq('leader') }
 
     specify { expect(@zoerb.relations.size).to eq(1) }
     specify { expect(@zoerb.relations.map(&:sl_profile)).to include("284938") }
+    specify { expect(@zoerb.role).to eq('basic') }
 
     specify { expect(@kurt.relations.size).to eq(2) }
     specify { expect(@kurt.relations.map(&:sl_profile)).to include('284941') }
     specify { expect(@kurt.relations.map(&:sl_profile)).to include('284942') }
+    specify { expect(@kurt.role).to eq('leader') }
   end
 
 

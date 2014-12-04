@@ -129,6 +129,7 @@
       #event-signups-list
         = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}
     - else
-      .alert.alert-info Signup has passed for this event.
+      - if @event.signup_required
+        .alert.alert-info Signup has passed for this event.
 
 #event-signup-modal

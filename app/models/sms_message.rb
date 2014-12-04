@@ -3,6 +3,8 @@ class SmsMessage < ActiveRecord::Base
   include SubUnitIds
   include AttributeSanitizer
 
+  serialize :sub_unit_ids, Array
+
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
   has_and_belongs_to_many :users
@@ -45,15 +47,15 @@ class SmsMessage < ActiveRecord::Base
   end
 
 
-  def send_sms
-    recipients.each { |recipient| TextMessage.delay.sms_message(recipient.sms_email_address, self.id) }
-    self.update_attribute(:sent_at, Time.zone.now)
-  end
+  # def send_sms
+  #   recipients.each { |recipient| TextMessage.delay.sms_message(recipient.sms_email_address, self.id) }
+  #   self.update_attribute(:sent_at, Time.zone.now)
+  # end
 
-  def self.dj_send_sms(id)
-    sm = SmsMessage.find(id)
-    sm.send_sms if sm
-  end
+  # def self.dj_send_sms(id)
+  #   sm = SmsMessage.find(id)
+  #   sm.send_sms if sm
+  # end
 
 
 

@@ -11,7 +11,7 @@ class EmailEventSignupsController < ApplicationController
     authorize EmailEventSignupsController
     if !set_user_event_scout_signup
       # raise ActionDispatch::RoutingError.new('Not Found')
-      render 'public/404', status: 404, layout: false
+      render file: File.join(Rails.root, 'public', '404.html'), status: 404, layout: false
 
     elsif params[:cancel_reservation] == 'true'
       if @event_signup.new_record?

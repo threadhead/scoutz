@@ -33,7 +33,8 @@ class SmsMessagesController < ApplicationController
     if @sms_message.save
       @unit.sms_messages << @sms_message
       current_user.sms_messages << @sms_message
-      SmsMessage.delay.dj_send_sms(@sms_message.id)
+      # SmsMessage.delay.dj_send_sms(@sms_message.id)
+      SmsMessagesJob.perform_later(@sms_message)
       redirect_to unit_sms_message_path(@unit, @sms_message), notice: 'SMS message was successfully created.'
     else
       set_send_to_lists

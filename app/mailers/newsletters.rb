@@ -1,8 +1,8 @@
 class Newsletters < ActionMailer::Base
   default from: "noreply@scoutt.in"
 
-  def weekly(unit_id)
-    set_unit(unit_id)
+  def weekly(unit)
+    set_time_zone(unit)
     @recipients = @unit.users.gets_weekly_newsletter.pluck(:email)
     @events = @unit.events.newsletter_next_week.by_start
     @subject = "Upcoming Events for the week of #{Time.zone.now.next_week.to_s(:draft_date)}"
@@ -11,8 +11,8 @@ class Newsletters < ActionMailer::Base
          subject: "#{@unit.email_name} #{@subject}"
   end
 
-  def monthly(unit_id)
-    set_unit(unit_id)
+  def monthly(unit)
+    set_time_zone(unit)
     @recipients = @unit.users.gets_monthly_newsletter.pluck(:email)
     @events = @unit.events.newsletter_next_month.by_start
     @subject = "Upcoming Events for the month of #{Time.zone.now.next_month.strftime('%B %Y')}"
@@ -24,9 +24,9 @@ class Newsletters < ActionMailer::Base
 
 
   private
-    def set_unit(unit_id)
-      @unit = Unit.find(unit_id)
-      Time.zone = @unit.time_zone || "Pacific Time (US & Canada)"
+    def set_time_zone(unit)
+      @unit = unit
+      Time.zone = unit.time_zone || "Pacific Time (US & Canada)"
     end
 
 end

@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     #   @events = Event.joins(unit: :users).where(users: {id: current_user.id}).by_start
     # end
 
-    @events = Event.joins(unit: :users).where(units: {id: @unit.id}).where(users: {id: current_user.id})
+    @events = Event.joins(unit: :users).where(units: {id: @unit.id}).where(users: {id: current_user.id}).includes(:unit)
 
     if (params[:start] && params[:end])
       @events = @events.time_range(params[:start], params[:end])

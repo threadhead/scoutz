@@ -12,6 +12,6 @@ class Page < ActiveRecord::Base
 
   sanitize_attributes(:body)
 
-  scope :front_pages, -> { active.where(front_page: true) }
-  scope :public_pages, -> { active.where(public: true) }
+  scope :front_pages, -> { where(front_page: true).active }
+  scope :public_pages, -> { where(public: true).active }
 end

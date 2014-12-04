@@ -47,10 +47,6 @@ RSpec.describe Scoutlander::Reader::Scouts do
 
     subject { (@sl.find_collection_elements_with first_name: 'Devin', last_name: 'Goins').first }
 
-    # it "does something" do
-      # pp subject
-    # end
-
     context 'loaded attributes' do
       specify { expect(subject.inspected).to eq(true) }
       specify { expect(subject.first_name).to eq('Devin') }
@@ -62,7 +58,7 @@ RSpec.describe Scoutlander::Reader::Scouts do
       specify { expect(subject.sub_unit).to eq('Desert Dogs') }
       specify { expect(subject.rank).to eq('First Class') }
       specify { expect(subject.send_reminders).to eq(true) }
-      specify { expect(subject.security_level).to eq('Scout Access') }
+      specify { expect(subject.role).to eq('basic') }
       specify { expect(subject.leadership_position).to eq('Asst Senior Patrol Leader') }
       specify { expect(subject.additional_leadership_positions).to eq('Den Chief Pack 134') }
       specify { expect(subject.email).to eq('azdevin13@hotmail.com') }

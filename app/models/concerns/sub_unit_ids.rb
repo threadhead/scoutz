@@ -2,7 +2,7 @@ module SubUnitIds
   extend ActiveSupport::Concern
 
   included do
-    serialize :sub_unit_ids, Array
+    # serialize :sub_unit_ids, Array
 
     validate :has_selected_sub_units, if: :send_to_sub_units?
     def has_selected_sub_units

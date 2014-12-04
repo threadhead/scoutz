@@ -1,13 +1,16 @@
 source 'https://rubygems.org'
 
-ruby '2.1.4'
+ruby '2.1.5'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
-gem 'rails', '4.1.7'
+gem 'rails', '~> 4.2.0.rc1'
+
 gem 'pg'
 
-gem 'devise'
+# gem 'rake'
+
+gem 'devise', git: 'https://github.com/plataformatec/devise.git', branch: 'lm-rails-4-2'
 # gem 'devise-async'
 gem 'haml'
 gem 'pundit'
@@ -29,7 +32,7 @@ gem 'public_activity'
 gem "non-stupid-digest-assets"
 gem 'bootstrap_form'
 gem 'kaminari'
-gem 'acts_as_list'
+gem 'acts_as_list', git: 'https://github.com/swanandp/acts_as_list.git'
 gem 'pg_search'
 # gem 'textacular', require: 'textacular/searchable'
 
@@ -51,8 +54,8 @@ end
 
 # Gems used only for assets and not required
 # in production environments by default.
-gem 'sass-rails', '~> 4.0.3'
-gem 'coffee-rails', '~> 4.0.0'
+gem 'sass-rails'
+gem 'coffee-rails', '~> 4.1.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', :platform => :ruby
@@ -69,9 +72,18 @@ gem 'jquery-rails'
 gem 'whenever', :require => false
 
 group :development, :test do
+    # Call 'debugger' anywhere in the code to stop execution and get a debugger console
+  # gem 'byebug'
+
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  # gem 'web-console', '~> 2.0'
+
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
+
+  gem "spring-commands-rspec"
   gem 'whiny_validation'
   gem 'haml-rails'
-  gem 'rspec'
   gem 'rspec-rails'
   gem 'rspec-activemodel-mocks'
   gem 'factory_girl_rails'
@@ -85,8 +97,6 @@ end
 
 group :development do
   gem 'quiet_assets'
-  gem 'spring'
-  gem "spring-commands-rspec"
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'capistrano'
@@ -124,5 +134,3 @@ end
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.0'
 
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

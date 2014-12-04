@@ -20,13 +20,13 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "activities", force: true do |t|
     t.integer  "trackable_id"
-    t.string   "trackable_type", limit: nil
+    t.string   "trackable_type"
     t.integer  "owner_id"
-    t.string   "owner_type",     limit: nil
-    t.string   "key",            limit: nil
+    t.string   "owner_type"
+    t.string   "key"
     t.text     "parameters"
     t.integer  "recipient_id"
-    t.string   "recipient_type", limit: nil
+    t.string   "recipient_type"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "unit_id"
@@ -39,15 +39,15 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "ckeditor_assets", force: true do |t|
     t.integer  "unit_id"
-    t.string   "data_file_name",          limit: nil, null: false
-    t.string   "data_content_type",       limit: nil
+    t.string   "data_file_name",                     null: false
+    t.string   "data_content_type"
     t.integer  "data_file_size"
     t.string   "type",                    limit: 30
     t.integer  "width"
     t.integer  "height"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "data_original_file_name", limit: nil
+    t.string   "data_original_file_name"
     t.integer  "user_id"
   end
 
@@ -57,10 +57,10 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   add_index "ckeditor_assets", ["user_id"], name: "index_ckeditor_assets_on_user_id", using: :btree
 
   create_table "councils", force: true do |t|
-    t.string   "name"
+    t.string   "name",           limit: 255
     t.integer  "council_number"
-    t.string   "state"
-    t.string   "city"
+    t.string   "state",          limit: 255
+    t.string   "city",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -83,15 +83,15 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   add_index "counselors", ["user_id"], name: "index_counselors_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
-    t.integer  "priority",               default: 0
-    t.integer  "attempts",               default: 0
+    t.integer  "priority",   default: 0
+    t.integer  "attempts",   default: 0
     t.text     "handler"
     t.text     "last_error"
     t.datetime "run_at"
     t.datetime "locked_at"
     t.datetime "failed_at"
-    t.string   "locked_by",  limit: nil
-    t.string   "queue",      limit: nil
+    t.string   "locked_by"
+    t.string   "queue"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -100,10 +100,10 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "email_attachments", force: true do |t|
     t.integer  "email_message_id"
-    t.string   "attachment",         limit: nil
+    t.string   "attachment"
     t.integer  "file_size"
-    t.string   "content_type",       limit: nil
-    t.string   "original_file_name", limit: nil
+    t.string   "content_type"
+    t.string   "original_file_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -114,13 +114,13 @@ ActiveRecord::Schema.define(version: 20141124185354) do
     t.integer  "user_id"
     t.integer  "unit_id"
     t.text     "message"
-    t.string   "subject",        limit: nil
+    t.string   "subject"
     t.datetime "sent_at"
-    t.string   "sub_unit_ids",   limit: nil, default: "--- []\n"
+    t.string   "sub_unit_ids",   default: "--- []\n"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "send_to_option",             default: 1
-    t.string   "id_token",       limit: nil
+    t.integer  "send_to_option", default: 1
+    t.string   "id_token"
   end
 
   add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token", using: :btree
@@ -167,22 +167,22 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "events", force: true do |t|
     t.integer  "unit_id"
-    t.string   "kind",                 limit: nil
-    t.string   "name",                 limit: nil
-    t.boolean  "send_reminders",                   default: true
-    t.string   "notifier_type",        limit: nil
+    t.string   "kind"
+    t.string   "name"
+    t.boolean  "send_reminders",       default: true
+    t.string   "notifier_type"
     t.datetime "start_at"
     t.datetime "end_at"
-    t.boolean  "signup_required",                  default: false
+    t.boolean  "signup_required",      default: false
     t.datetime "signup_deadline"
-    t.string   "location_name",        limit: nil
-    t.string   "location_address1",    limit: nil
-    t.string   "location_address2",    limit: nil
-    t.string   "location_city",        limit: nil
-    t.string   "location_state",       limit: nil
-    t.string   "location_zip_code",    limit: nil
-    t.string   "location_map_url",     limit: nil
-    t.string   "attire",               limit: nil
+    t.string   "location_name"
+    t.string   "location_address1"
+    t.string   "location_address2"
+    t.string   "location_city"
+    t.string   "location_state"
+    t.string   "location_zip_code"
+    t.string   "location_map_url"
+    t.string   "attire"
     t.text     "message"
     t.text     "fees"
     t.datetime "created_at"
@@ -190,18 +190,18 @@ ActiveRecord::Schema.define(version: 20141124185354) do
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "gmaps"
-    t.integer  "attendee_count",                   default: 0
-    t.string   "signup_token",         limit: nil
+    t.integer  "attendee_count",       default: 0
+    t.string   "signup_token"
     t.datetime "reminder_sent_at"
-    t.string   "ical",                 limit: nil
+    t.string   "ical"
     t.integer  "ical_file_size"
-    t.string   "ical_content_type",    limit: nil
+    t.string   "ical_content_type"
     t.datetime "ical_updated_at"
-    t.integer  "ical_sequence",                    default: 0
-    t.string   "ical_uuid",            limit: nil
-    t.string   "sl_profile",           limit: nil
-    t.string   "sl_uid",               limit: nil
-    t.integer  "type_of_health_forms",             default: 0
+    t.integer  "ical_sequence",        default: 0
+    t.string   "ical_uuid"
+    t.string   "sl_profile"
+    t.string   "sl_uid"
+    t.integer  "type_of_health_forms", default: 0
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at", using: :btree
@@ -246,15 +246,15 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   add_index "health_forms", ["user_id"], name: "index_health_forms_on_user_id", using: :btree
 
   create_table "merit_badges", force: true do |t|
-    t.string   "name",                     limit: nil
-    t.string   "year_created",             limit: nil
-    t.boolean  "eagle_required",                       default: false
-    t.boolean  "discontinued",                         default: false
-    t.string   "bsa_advancement_id",       limit: nil
-    t.string   "patch_image_url",          limit: nil
-    t.string   "mb_org_url",               limit: nil
-    t.string   "mb_org_worksheet_pdf_url", limit: nil
-    t.string   "mb_org_worksheet_doc_url", limit: nil
+    t.string   "name"
+    t.string   "year_created"
+    t.boolean  "eagle_required",           default: false
+    t.boolean  "discontinued",             default: false
+    t.string   "bsa_advancement_id"
+    t.string   "patch_image_url"
+    t.string   "mb_org_url"
+    t.string   "mb_org_worksheet_pdf_url"
+    t.string   "mb_org_worksheet_doc_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -263,8 +263,8 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "notifiers", force: true do |t|
     t.integer  "user_id"
-    t.string   "kind",       limit: nil
-    t.string   "account",    limit: nil
+    t.string   "kind"
+    t.string   "account"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -272,16 +272,16 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   add_index "notifiers", ["user_id"], name: "index_notifiers_on_user_id", using: :btree
 
   create_table "pages", force: true do |t|
-    t.string   "title",          limit: nil
+    t.string   "title"
     t.text     "body"
     t.integer  "position"
     t.integer  "unit_id"
     t.integer  "user_id"
-    t.boolean  "public",                     default: false
+    t.boolean  "public",         default: false
     t.text     "update_history"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "front_page",                 default: false
+    t.boolean  "front_page",     default: false
     t.datetime "deactivated_at"
   end
 
@@ -293,10 +293,10 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "phones", force: true do |t|
     t.integer  "user_id"
-    t.string   "number",     limit: nil
+    t.string   "number"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "kind",                   default: 0
+    t.integer  "kind",       default: 0
   end
 
   add_index "phones", ["user_id"], name: "index_phones_on_user_id", using: :btree
@@ -306,8 +306,8 @@ ActiveRecord::Schema.define(version: 20141124185354) do
     t.integer  "unit_id"
     t.text     "message"
     t.datetime "sent_at"
-    t.string   "sub_unit_ids",   limit: nil
-    t.integer  "send_to_option",             default: 1
+    t.string   "sub_unit_ids"
+    t.integer  "send_to_option", default: 1
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -325,7 +325,7 @@ ActiveRecord::Schema.define(version: 20141124185354) do
 
   create_table "sub_units", force: true do |t|
     t.integer  "unit_id"
-    t.string   "name",        limit: nil
+    t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -336,9 +336,9 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   create_table "unit_positions", force: true do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
-    t.string   "leadership", limit: nil
-    t.string   "additional", limit: nil
-    t.integer  "role",                   default: 0
+    t.string   "leadership"
+    t.string   "additional"
+    t.integer  "role",       default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -346,14 +346,14 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   add_index "unit_positions", ["user_id", "unit_id"], name: "index_unit_positions_on_user_id_and_unit_id", using: :btree
 
   create_table "units", force: true do |t|
-    t.string   "unit_type",   limit: nil
-    t.string   "unit_number", limit: nil
-    t.string   "city",        limit: nil
-    t.string   "state",       limit: nil
-    t.string   "time_zone",   limit: nil
+    t.string   "unit_type"
+    t.string   "unit_number"
+    t.string   "city"
+    t.string   "state"
+    t.string   "time_zone"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "sl_uid",      limit: nil
+    t.string   "sl_uid"
     t.integer  "council_id"
   end
 
@@ -376,65 +376,65 @@ ActiveRecord::Schema.define(version: 20141124185354) do
   add_index "user_relationships", ["scout_id", "adult_id"], name: "index_user_relationships_on_scout_id_and_adult_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                           limit: nil, default: ""
-    t.string   "encrypted_password",              limit: nil, default: ""
-    t.string   "reset_password_token",            limit: nil
+    t.string   "email",                           default: ""
+    t.string   "encrypted_password",              default: ""
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                               default: 0
+    t.integer  "sign_in_count",                   default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",              limit: nil
-    t.string   "last_sign_in_ip",                 limit: nil
-    t.string   "confirmation_token",              limit: nil
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email",               limit: nil
-    t.integer  "failed_attempts",                             default: 0
-    t.string   "unlock_token",                    limit: nil
+    t.string   "unconfirmed_email"
+    t.integer  "failed_attempts",                 default: 0
+    t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name",                      limit: nil
-    t.string   "last_name",                       limit: nil
-    t.string   "address1",                        limit: nil
-    t.string   "address2",                        limit: nil
-    t.string   "city",                            limit: nil
-    t.string   "state",                           limit: nil
-    t.string   "zip_code",                        limit: nil
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "address1"
+    t.string   "address2"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zip_code"
     t.date     "birth"
-    t.string   "leadership_role",                 limit: nil
-    t.string   "time_zone",                       limit: nil
-    t.string   "type",                            limit: nil
+    t.string   "leadership_role"
+    t.string   "time_zone"
+    t.string   "type"
     t.integer  "sub_unit_id"
-    t.string   "rank",                            limit: nil
-    t.boolean  "send_reminders",                              default: true
+    t.string   "rank"
+    t.boolean  "send_reminders",                  default: true
     t.datetime "deactivated_at"
-    t.string   "leadership_position",             limit: nil
-    t.string   "additional_leadership_positions", limit: nil
-    t.string   "signup_token",                    limit: nil
-    t.string   "sms_number",                      limit: nil
+    t.string   "leadership_position"
+    t.string   "additional_leadership_positions"
+    t.string   "signup_token"
+    t.string   "sms_number"
     t.datetime "sms_number_verified_at"
-    t.boolean  "blast_email",                                 default: true
+    t.boolean  "blast_email",                     default: true
     t.boolean  "blast_sms"
-    t.boolean  "event_reminder_email",                        default: true
+    t.boolean  "event_reminder_email",            default: true
     t.boolean  "event_reminder_sms"
-    t.boolean  "signup_deadline_email",                       default: true
+    t.boolean  "signup_deadline_email",           default: true
     t.boolean  "signup_deadline_sms"
-    t.string   "picture",                         limit: nil
+    t.string   "picture"
     t.integer  "picture_file_size"
-    t.string   "picture_content_type",            limit: nil
-    t.string   "picture_original_file_name",      limit: nil
+    t.string   "picture_content_type"
+    t.string   "picture_original_file_name"
     t.datetime "picture_updated_at"
     t.datetime "sms_verification_sent_at"
-    t.string   "sl_profile",                      limit: nil
-    t.string   "sl_uid",                          limit: nil
-    t.string   "alternate_email",                 limit: nil
-    t.string   "sms_provider",                    limit: nil
-    t.boolean  "sms_message",                                 default: true
-    t.boolean  "weekly_newsletter_email",                     default: true
-    t.boolean  "monthly_newsletter_email",                    default: true
-    t.integer  "role",                                        default: 10
+    t.string   "sl_profile"
+    t.string   "sl_uid"
+    t.string   "alternate_email"
+    t.string   "sms_provider"
+    t.boolean  "sms_message",                     default: true
+    t.boolean  "weekly_newsletter_email",         default: true
+    t.boolean  "monthly_newsletter_email",        default: true
+    t.integer  "role",                            default: 10
   end
 
   add_index "users", ["additional_leadership_positions"], name: "index_users_on_additional_leadership_positions", using: :btree

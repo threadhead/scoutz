@@ -33,6 +33,10 @@ module Scoutz
     # config.assets.precompile += ['jquery.js']
     config.assets.precompile += ['landing.css', 'landing.js', 'ckeditor_config.js', 'ckeditor/config_ckeditor.js']
 
+    # Do not swallow errors in after_commit/after_rollback callbacks.
+    config.active_record.raise_in_transactional_callbacks = true
+
+
 
     # Override layout for devise controllers
     config.to_prepare do
@@ -47,4 +51,4 @@ module Scoutz
   end
 end
 
-APP_NAME = ::Rails.env.production? ? 'SCOUTTin' : "Scoutz - #{::Rails.env}"
+APP_NAME = ::Rails.env.production? ? 'SCOUTTin' : "SCOUTTin - #{::Rails.env}"

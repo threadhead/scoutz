@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209050109) do
+ActiveRecord::Schema.define(version: 20141209052924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 20141209050109) do
   end
 
   add_index "merit_badges", ["name"], name: "index_merit_badges_on_name", using: :btree
+  add_index "merit_badges", ["updated_at"], name: "index_merit_badges_on_updated_at", using: :btree
 
   create_table "notifiers", force: true do |t|
     t.integer  "user_id"
@@ -292,6 +293,7 @@ ActiveRecord::Schema.define(version: 20141209050109) do
   add_index "pages", ["position"], name: "index_pages_on_position", using: :btree
   add_index "pages", ["public"], name: "index_pages_on_public", using: :btree
   add_index "pages", ["unit_id"], name: "index_pages_on_unit_id", using: :btree
+  add_index "pages", ["updated_at"], name: "index_pages_on_updated_at", using: :btree
   add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
 
   create_table "phones", force: true do |t|
@@ -335,6 +337,7 @@ ActiveRecord::Schema.define(version: 20141209050109) do
   end
 
   add_index "sub_units", ["unit_id"], name: "index_sub_units_on_unit_id", using: :btree
+  add_index "sub_units", ["updated_at"], name: "index_sub_units_on_updated_at", using: :btree
 
   create_table "unit_positions", force: true do |t|
     t.integer  "user_id"

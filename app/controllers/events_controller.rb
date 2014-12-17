@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-  respond_to :html, :js
+  # respond_to :html, :js
   before_action :auth_and_time_zone
   before_action :set_event, only: [:show, :edit, :update, :destroy, :email_attendees, :sms_attendees]
   after_action :verify_authorized

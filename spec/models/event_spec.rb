@@ -87,8 +87,8 @@ RSpec.describe Event do
     specify { expect(subject[:description]).to eq('') }
     specify { expect(subject[:allDay]).to be_falsy }
     specify { expect(subject[:recurring]).to be_falsy }
-    specify { expect(subject[:start]).to eq(@time.rfc822) }
-    specify { expect(subject[:end]).to eq((@time+1).rfc822) }
+    specify { expect(subject[:start]).to eq(@time.iso8601) }
+    specify { expect(subject[:end]).to eq((@time+1).iso8601) }
     specify { expect(subject[:url]).to eq("/units/#{@unit.id}/events/#{@event.id}") }
   end
 

@@ -68,8 +68,8 @@ GEM
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap_form (2.2.0)
-    bourbon (3.2.3)
-      sass (~> 3.2)
+    bourbon (4.0.2)
+      sass (~> 3.3)
       thor
     brakeman (2.0.0)
       erubis (~> 2.6)
@@ -133,7 +133,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     colored (1.2)
-    colorize (0.7.4)
+    colorize (0.7.5)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
@@ -173,32 +173,40 @@ GEM
     ffi (1.9.6)
     fission (0.5.0)
       CFPropertyList (~> 2.2)
-    fog (1.25.0)
+    fog (1.26.0)
+      fog-atmos
       fog-brightbox (~> 0.4)
-      fog-core (~> 1.25)
+      fog-core (~> 1.27, >= 1.27.1)
+      fog-ecloud
       fog-json
       fog-profitbricks
       fog-radosgw (>= 0.0.2)
       fog-sakuracloud (>= 0.0.4)
       fog-softlayer
+      fog-storm_on_demand
       fog-terremark
       fog-vmfusion
       fog-voxel
       fog-xml (~> 0.1.1)
       ipaddress (~> 0.5)
       nokogiri (~> 1.5, >= 1.5.11)
-      opennebula
+    fog-atmos (0.1.0)
+      fog-core
+      fog-xml
     fog-brightbox (0.7.1)
       fog-core (~> 1.22)
       fog-json
       inflecto (~> 0.0.2)
-    fog-core (1.25.0)
+    fog-core (1.27.1)
       builder
       excon (~> 0.38)
       formatador (~> 0.2)
       mime-types
       net-scp (~> 1.1)
       net-ssh (>= 2.1.3)
+    fog-ecloud (0.0.2)
+      fog-core
+      fog-xml
     fog-json (1.0.0)
       multi_json (~> 1.0)
     fog-profitbricks (0.0.1)
@@ -213,6 +221,9 @@ GEM
       fog-core
       fog-json
     fog-softlayer (0.3.25)
+      fog-core
+      fog-json
+    fog-storm_on_demand (0.1.0)
       fog-core
       fog-json
     fog-terremark (0.0.3)
@@ -230,10 +241,11 @@ GEM
     formatador (0.2.5)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
-    guard (2.10.2)
+    guard (2.10.4)
       formatador (>= 0.2.4)
       listen (~> 2.7)
       lumberjack (~> 1.0)
+      nenv (~> 0.1)
       pry (>= 0.9.12)
       thor (>= 0.18.1)
     guard-livereload (2.4.0)
@@ -268,9 +280,9 @@ GEM
     icalendar (2.2.1)
     inflecto (0.0.2)
     ipaddress (0.8.0)
-    jquery-rails (4.0.0)
+    jquery-rails (4.0.1)
       rails-dom-testing (~> 1.0)
-      railties (>= 4.2.0.beta, < 5.0)
+      railties (>= 4.2.0.beta)
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     kaminari (0.16.1)
@@ -304,21 +316,18 @@ GEM
     mini_portile (0.6.1)
     minitest (5.5.0)
     multi_json (1.10.1)
+    nenv (0.1.1)
     net-http-digest_auth (1.4)
     net-http-persistent (2.9.4)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.1)
-    netrc (0.10.0)
+    netrc (0.10.1)
     newrelic_rpm (3.9.8.273)
     nokogiri (1.6.5)
       mini_portile (~> 0.6.0)
     non-stupid-digest-assets (1.0.4)
     ntlm-http (0.1.1)
-    opennebula (4.10.1)
-      json
-      nokogiri
-      rbvmomi
     orm_adapter (0.5.0)
     pg (0.17.1)
     pg_search (0.7.8)
@@ -371,10 +380,6 @@ GEM
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
-    rbvmomi (1.8.2)
-      builder
-      nokogiri (>= 1.4.1)
-      trollop
     responders (2.0.2)
       railties (>= 4.2.0.alpha, < 5)
     rest-client (1.7.2)
@@ -412,12 +417,13 @@ GEM
     safe_yaml (1.0.4)
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
-    sass (3.2.19)
-    sass-rails (4.0.5)
+    sass (3.4.9)
+    sass-rails (5.0.0)
       railties (>= 4.0.0, < 5.0)
-      sass (~> 3.2.2)
-      sprockets (~> 2.8, < 3.0)
-      sprockets-rails (~> 2.0)
+      sass (~> 3.1)
+      sprockets (>= 2.8, < 4.0)
+      sprockets-rails (>= 2.0, < 4.0)
+      tilt (~> 1.1)
     sexp_processor (4.4.4)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
@@ -431,7 +437,7 @@ GEM
       tilt (~> 1.3, >= 1.3.3)
     slop (3.6.0)
     spring (1.2.0)
-    spring-commands-rspec (1.0.3)
+    spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -443,8 +449,8 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.10)
-    sshkit (1.5.1)
-      colorize
+    sshkit (1.6.1)
+      colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     state_machine (1.2.0)
@@ -456,7 +462,6 @@ GEM
     tilt (1.4.1)
     timers (4.0.1)
       hitimes
-    trollop (2.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     uglifier (2.6.0)

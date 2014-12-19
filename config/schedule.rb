@@ -6,6 +6,8 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
+set :output, '/home/deploy/scoutz/shared/log/cron.log'
+
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -19,8 +21,8 @@
 
 # Learn more: http://github.com/javan/whenever
 job_type :rake_logged, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
+job_type :backup, "cd :path && ~/.rvm/bin/rvm 2.1.5 do bundle exec backup perform -t :task :output"
 
-set :output, '/home/deploy/scoutz/shared/log/cron.log'
 
 every 30.minutes do
   # runner "Event.delay.send_reminders"
@@ -30,6 +32,10 @@ end
 every :friday, at: '9:17am' do
   # rake_logged "send_newsletter:weekly"
   runner "NewsletterWeeklyJob.perform_later"
+end
+
+every :day, at: '12:20am' do
+  backup 'scoutz_db'
 end
 
 # every :month, at: '12:17am' do

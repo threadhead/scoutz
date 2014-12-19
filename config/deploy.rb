@@ -50,6 +50,7 @@ set :rvm_ruby_version, '2.1.5'      # Defaults to: 'default'
 
 
 namespace :deploy do
+  before :updating, 'db:backup'
 
   desc 'Restart application'
   task :restart do
@@ -60,13 +61,6 @@ namespace :deploy do
     end
 
   end
-
-#   task :restart do
-#     on roles(:app), in: :sequence, wait: 5 do
-#       # Your restart mechanism here, for example:
-#       execute :touch, release_path.join('tmp/restart.txt')
-#     end
-#   end
 
 #   # my config
 #   # after :updated, "assets:precompile"
@@ -83,6 +77,15 @@ namespace :deploy do
 #       # end
 #     end
 #   end
+end
+
+desc "Backup the database"
+namespace :db do
+  task :backup do
+    on roles(:all) do
+      execute "cd /home/deploy/Backup && ~/.rvm/bin/rvm 2.1.5 do bundle exec backup perform -t scoutz_db_b4_update"
+    end
+  end
 end
 
 

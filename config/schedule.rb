@@ -21,7 +21,7 @@ set :output, '/home/deploy/scoutz/shared/log/cron.log'
 
 # Learn more: http://github.com/javan/whenever
 job_type :rake_logged, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
-job_type :backup, "cd :path && ~/.rvm/bin/rvm 2.1.5 do bundle exec backup perform -t :task :output"
+job_type :backup, "cd /home/deploy/Backup && ~/.rvm/bin/rvm 2.1.5 do bundle exec backup perform -t :task :output"
 
 
 every 30.minutes do

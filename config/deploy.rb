@@ -50,7 +50,7 @@ set :rvm_ruby_version, '2.1.5'      # Defaults to: 'default'
 
 
 namespace :deploy do
-  before :updating, 'db:backup'
+  # before :updating, 'db:backup'
 
   desc 'Restart application'
   task :restart do

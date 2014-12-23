@@ -44,3 +44,6 @@ set :deploy_to, "/home/deploy/scoutz"
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+namespace :deploy do
+  before :updating, 'db:backup'
+end

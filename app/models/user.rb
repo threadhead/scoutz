@@ -277,11 +277,11 @@ class User < ActiveRecord::Base
 
 
   # use by UsersController to create the counselors_attributes hash
-  def self.create_counselors_attributes(user: nil, unit:, merit_badge_ids: merit_badge_ids)
+  def self.create_counselors_attributes(user: nil, unit:, mb_ids: merit_badge_ids)
     # {"0"=>{"unit_id"=>"15", "merit_badge_id"=>"22"}, "1"=>{"unit_id"=>"15", "merit_badge_id"=>"22"}}}
 
     # use only unique, non-empty values (helps with validation)
-    mb_ids_uniq = merit_badge_ids.reject(&:empty?).uniq
+    mb_ids_uniq = mb_ids.reject(&:empty?).uniq
     idx = 0
     h = Hash.new
 

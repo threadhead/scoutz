@@ -65,11 +65,11 @@ class MeritBadge < ActiveRecord::Base
 
 
   # use by UsersController to create the counselors_attributes hash
-  def self.create_counselors_attributes(user_ids: user_ids, unit:, merit_badge: nil)
+  def self.create_counselors_attributes(users_ids: user_ids, unit:, merit_badge: nil)
     # {"0"=>{"unit_id"=>"15", "user_id"=>"22"}, "1"=>{"unit_id"=>"15", "user_id"=>"22"}}}
 
     # use only unique, non-empty values (helps with validation)
-    user_ids_uniq = user_ids.reject(&:empty?).uniq
+    user_ids_uniq = users_ids.reject(&:empty?).uniq
     idx = 0
     h = Hash.new
 

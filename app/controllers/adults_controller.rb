@@ -72,7 +72,7 @@ class AdultsController < UsersController
       params[:adult][:counselors_attributes] = User.create_counselors_attributes(
                                                                        user: user,
                                                                        unit: @unit,
-                                                                       merit_badge_ids: merit_badge_ids['merit_badge_ids']
+                                                                       mb_ids: merit_badge_ids['merit_badge_ids']
                                                                        )
     end
 

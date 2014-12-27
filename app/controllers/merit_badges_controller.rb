@@ -81,7 +81,7 @@ class MeritBadgesController < ApplicationController
       params[:merit_badge][:counselors_attributes] = MeritBadge.create_counselors_attributes(
                                                                        merit_badge: merit_badge,
                                                                        unit: @unit,
-                                                                       user_ids: user_ids['user_ids']
+                                                                       users_ids: user_ids['user_ids']
                                                                        )
     end
 

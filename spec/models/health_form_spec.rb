@@ -6,7 +6,7 @@ RSpec.describe HealthForm, :type => :model do
   let(:health_form_empty) { FactoryGirl.build(:health_form_empty) }
   before{ Time.zone = 'Arizona' }
 
-  it { is_expected.to belong_to(:user) }
+  it { is_expected.to belong_to(:user).touch(true) }
   it { is_expected.to belong_to(:unit) }
 
   describe 'validators' do

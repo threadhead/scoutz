@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe EventSignup do
-  it { should belong_to(:event) }
+  it { should belong_to(:event).touch(true) }
   it { should belong_to(:scout) }
 
   it { should validate_numericality_of(:adults_attending) }

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Phone do
   let(:phone) { FactoryGirl.build(:home_phone, user_id: 999) }
 
-  it { should belong_to(:user) }
+  it { should belong_to(:user).touch(true) }
   it { should validate_presence_of(:kind) }
   it { should validate_presence_of(:number) }
   it { should validate_uniqueness_of(:number).scoped_to(:user_id) }

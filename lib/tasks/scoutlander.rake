@@ -11,6 +11,18 @@ namespace :scoutlander do
     import_unit
     # set_users
   end
+
+  desc "import Troop 603 events only"
+  task import_troop_603_events: [:environment] do
+    find_or_create_unit
+    params = {
+               email: 'threadhead@gmail.com',
+               password: ENV['SCOUTLANDER_PASSWORD'],
+               unit: @unit,
+               vcr: false
+              }
+    Scoutlander::Importer::Events.new(params).perform
+  end
 end
 
 

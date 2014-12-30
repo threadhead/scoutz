@@ -25,6 +25,7 @@
 /config/database.yml
 /config/database.bak
 /config/deploy/**
+/config/deploy.rb
 /coverage/**
 /public/assets/*.gz
 /public/assets/*.js

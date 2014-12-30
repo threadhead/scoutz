@@ -24,7 +24,7 @@
 /public/uploads/**
 /config/database.yml
 /config/database.bak
-/config/deploy/staging.rb
+/config/deploy/**
 /coverage/**
 /public/assets/*.gz
 /public/assets/*.js

@@ -22,7 +22,10 @@ module EventReminders
 
 
     def needs_reminders
-      Event.where(send_reminders: true, reminder_sent_at: nil).where('"events"."start_at" <= ?', 2.days.from_now)
+      # reminders that are at least 2 days away, have not had a rminder already sent, and are not past the end time
+      Event.where(send_reminders: true, reminder_sent_at: nil).
+            where('"events"."start_at" <= ?', 2.days.from_now).
+            where('"events"."end_at" > ?', Time.zone.now)
     end
   end
 

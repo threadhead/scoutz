@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/swanandp/acts_as_list.git
-  revision: 120985dd423cd3ae695b9961ee661c3aa128f112
-  specs:
-    acts_as_list (0.6.0)
-      activerecord (>= 3.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -44,6 +37,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    acts_as_list (0.6.0)
+      activerecord (>= 3.0)
     addressable (2.3.6)
     arel (6.0.0)
     awesome_print (1.6.0)
@@ -487,7 +482,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_list!
+  acts_as_list
   awesome_print
   better_errors
   binding_of_caller

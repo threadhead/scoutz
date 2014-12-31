@@ -32,7 +32,7 @@ gem 'public_activity'
 gem "non-stupid-digest-assets"
 gem 'bootstrap_form'
 gem 'kaminari'
-gem 'acts_as_list', git: 'https://github.com/swanandp/acts_as_list.git'
+gem 'acts_as_list' #, git: 'https://github.com/swanandp/acts_as_list.git'
 gem 'pg_search'
 # gem 'textacular', require: 'textacular/searchable'
 

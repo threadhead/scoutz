@@ -15,4 +15,5 @@
     = hidden_field_tag :user_can_new_event, policy(Event).new?
     #calendar
     - if policy(Event).new?
-      .help-block Click on date to create new event
+      %h4
+        %span.label.label-default Click on date in calendar to create new event

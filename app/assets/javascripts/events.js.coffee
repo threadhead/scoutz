@@ -5,20 +5,23 @@
 jQuery ->
   $('#calendar').fullCalendar
     dayClick: (date) ->
-      newEventUrl = $("a#new-event").attr('href')
-      queryDate = '?start_at=' + date.format()
-      # alert "url: #{newEventUrl}#{queryDate}"
-      window.location = newEventUrl + queryDate
+      if $("input#user_can_new_event").val() == 'true'
+        newEventUrl = $("a#new-event").attr('href')
+        queryDate = '?start_at=' + date.format()
+        # alert "url: #{newEventUrl}#{queryDate}"
+        window.location = newEventUrl + queryDate
     header:
       left: 'today prev,next title'
       center: ''
-      right: 'month,basicWeek,basicDay'
+      right: 'month,agendaWeek,agendaDay'
     events:
       url: '/events.json'
       data: ->
         unit_id: $("input#current_unit_id").val()
     theme: false
     height: 600
+    editable: false
+    eventLimit: true
 
 
   $("select#event_kind").change ->

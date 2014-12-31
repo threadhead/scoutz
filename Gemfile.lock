@@ -1,21 +1,8 @@
 GIT
-  remote: https://github.com/plataformatec/devise.git
-  revision: 1d8890b77372b9c4fd3ec8e9b4963d76774ed33c
-  branch: lm-rails-4-2
-  specs:
-    devise (3.3.0)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
-      responders
-      thread_safe (~> 0.1)
-      warden (~> 1.2.3)
-
-GIT
   remote: https://github.com/swanandp/acts_as_list.git
-  revision: e5976d48d8f1fa1834db127eec249e8e6fd17987
+  revision: 120985dd423cd3ae695b9961ee661c3aa128f112
   specs:
-    acts_as_list (0.5.0)
+    acts_as_list (0.6.0)
       activerecord (>= 3.0)
 
 GEM
@@ -59,16 +46,16 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.3.6)
     arel (6.0.0)
-    awesome_print (1.2.0)
+    awesome_print (1.6.0)
     bcrypt (3.1.9)
-    better_errors (2.0.0)
+    better_errors (2.1.0)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap_form (2.2.0)
-    bourbon (4.0.2)
+    bourbon (4.1.0)
       sass (~> 3.3)
       thor
     brakeman (2.0.0)
@@ -145,6 +132,13 @@ GEM
     delayed_job_active_record (4.0.3)
       activerecord (>= 3.0, < 5.0)
       delayed_job (>= 3.0, < 4.1)
+    devise (3.4.1)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      responders
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.5)
     docile (1.1.5)
     domain_name (0.5.23)
@@ -277,10 +271,10 @@ GEM
       domain_name (~> 0.5)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
-    icalendar (2.2.1)
+    icalendar (2.2.2)
     inflecto (0.0.2)
     ipaddress (0.8.0)
-    jquery-rails (4.0.2)
+    jquery-rails (4.0.3)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -313,7 +307,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_magick (4.0.1)
-    mini_portile (0.6.1)
+    mini_portile (0.6.2)
     minitest (5.5.0)
     multi_json (1.10.1)
     nenv (0.1.1)
@@ -418,7 +412,7 @@ GEM
     sanitize (2.1.0)
       nokogiri (>= 1.4.4)
     sass (3.4.9)
-    sass-rails (5.0.0)
+    sass-rails (5.0.1)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
       sprockets (>= 2.8, < 4.0)
@@ -515,7 +509,7 @@ DEPENDENCIES
   database_cleaner
   delayed_job
   delayed_job_active_record
-  devise!
+  devise
   dotenv-deployment
   dotenv-rails
   exception_notification

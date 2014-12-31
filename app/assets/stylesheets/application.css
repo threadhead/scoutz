@@ -9,6 +9,7 @@
  *= require screen
  *= require ckeditor
  *= require meta_search
+ *= require datepicker3.standalone.min
  *= require_self
 */
 

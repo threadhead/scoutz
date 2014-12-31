@@ -16,7 +16,7 @@ class EventsController < ApplicationController
 
     @events = Event.joins(unit: :users).where(units: {id: @unit.id}).where(users: {id: current_user.id}).includes(:unit)
 
-    if (params[:start] && params[:end])
+    if params.key?(:start) && params.key?(:end)
       @events = @events.time_range(params[:start], params[:end])
     else
       @events = @events.from_today.by_start.page(params[:page]).per(10)
@@ -44,7 +44,8 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new(start_at: Time.zone.now.to_next_hour, end_at: 1.hour.from_now.to_next_hour)
+    start_time = params.key?(:start_at) ? Time.zone.parse("#{params[:start_at]}T08:00:00") : Time.zone.now.to_next_hour
+    @event = Event.new(start_at: start_time, end_at: (start_time + 1.hour))
     @sub_unit_ids = []
     authorize @event
   end

@@ -1,5 +1,7 @@
 = bootstrap_form_for @event do |f|
   = hidden_field_tag :unit_id, @unit.id
+  -# = f.hidden_field :start_at
+  -# = f.hidden_field :end_at
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
   .row
@@ -18,11 +20,21 @@
         .col-md-8
           = f.text_field :name, autofocus: true, label: 'Event name'
 
-      .row
-        .col-md-3
-          = f.text_field :start_at, class: 'datetime-picker', value: @event.start_at.to_s(:datetimepicker), append: '<i class="fa fa-calendar"></i>'.html_safe
-        .col-md-3
-          = f.text_field :end_at, class: 'datetime-picker', value: @event.end_at.to_s(:datetimepicker), append: '<i class="fa fa-calendar"></i>'.html_safe
+      .row#date-time-pair
+        .col-md-4
+          .form-group
+            = f.label :start_at, "Starts"
+            %br
+            = f.text_field_without_bootstrap :start_at_date, class: 'form-control date start date-only-picker', style: "display: inline-block; width: 49%;"
+            = f.text_field_without_bootstrap :start_at_time, class: 'form-control time start time-only-picker', style: "display: inline-block; width: 49%;"
+        .col-md-1{style: "width: 30px; padding: 33px 0px 0px 0px; text-align: center;"}
+          to
+        .col-md-4
+          .form-group
+            = f.label :end_at, "Ends"
+            %br
+            = f.text_field_without_bootstrap :end_at_date, class: 'form-control date end date-only-picker', style: "display: inline-block; width: 49%;"
+            = f.text_field_without_bootstrap :end_at_time, class: 'form-control time end time-only-picker', style: "display: inline-block; width: 49%;"
 
 
       .row
@@ -41,17 +53,18 @@
       %fieldset
         %legend Signup (RSVP)
         .row
+          .col-md-12
+            = f.check_box :signup_required
+        .row
           .col-md-4
-            -# = f.check_box :signup_required
-            = #f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), hide_label: true, append: '<i class="fa fa-calendar"></i>'.html_safe
-            = #f.text_field :signup_deadline, class: 'datetime-picker', placeholder: 'deadline' , value: @event.signup_deadline.try(:to_formatted_s, :datetimepicker), append: "<i class=\"fa fa-calendar\"></i>".html_safe, prepend: "#{f.check_box :signup_required, label: ''}".html_safe
-            .input-group
-              %span.input-group-addon
-                = hidden_field_tag 'event[signup_required]', '0'
-                = check_box_tag 'event[signup_required]', nil, @event.signup_required
-              = text_field_tag 'event[signup_deadline]', @event.signup_deadline.try(:to_formatted_s, :datetimepicker), class: 'datetime-picker form-control', placeholder: 'deadline'
-              %span.input-group-addon
-                %i.fa.fa-calendar
+            .form-group
+              = f.label :signup_deadline, "Signup by"
+              %br
+              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 49%;"
+              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 49%;"
+        .row
+          .col-md-12
+            .help-block even if date is entered, Signup Required must be checked to be honored
 
       %fieldset
         %legend Reminder

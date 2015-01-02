@@ -1,7 +1,5 @@
 = bootstrap_form_for @event do |f|
   = hidden_field_tag :unit_id, @unit.id
-  -# = f.hidden_field :start_at
-  -# = f.hidden_field :end_at
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
   .row
@@ -33,8 +31,8 @@
           .form-group
             = f.label :end_at, "Ends"
             %br
-            = f.text_field_without_bootstrap :end_at_date, class: 'form-control date end date-only-picker', style: "display: inline-block; width: 49%;"
             = f.text_field_without_bootstrap :end_at_time, class: 'form-control time end time-only-picker', style: "display: inline-block; width: 49%;"
+            = f.text_field_without_bootstrap :end_at_date, class: 'form-control date end date-only-picker', style: "display: inline-block; width: 49%;"
 
 
       .row

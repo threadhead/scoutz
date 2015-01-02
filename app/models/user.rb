@@ -2,9 +2,11 @@ class User < ActiveRecord::Base
   include SmsNumber
   include SentientUser
   include PgSearch
+  include Deactivatable
 
-  # include AttrSearchable
+
   mount_uploader :picture, PictureUploader
+
   # Include default devise modules. Others available are:
   # :confirmable,
   # :lockable, :timeoutable and :omniauthable, :validatable,
@@ -15,8 +17,33 @@ class User < ActiveRecord::Base
 
   enum role: {inactive: 0, basic: 10, leader: 20, admin: 30}
 
-  # attr_searchable :first_name, :last_name
-  # attr_searchable scout: [ 'users.first_name', 'users.last_name']
+  # don't use Devise validations
+  # validates_presence_of   :email, if: :email_required?
+  # validates_uniqueness_of :email, allow_blank: true, if: :email_changed?
+  # validates_format_of     :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
+
+  # validates_presence_of     :password, allow_blank: true, if: :password_required?
+  # validates_confirmation_of :password, if: :password_required?
+  # validates_length_of       :password, within: Devise.password_length, allow_blank: true
+
+  # rails-4-ify the validations to allow for blank passwords and emails
+  validates :email, presence: { allow_blank: true }, uniqueness: { allow_blank: true }
+  # validates :email, format: Devise.email_regexp, allow_blank: true, if: :email_changed?
+
+  validates :password, allow_blank: true, confirmation: true, if: :password_required?
+  validates :password, length: Devise.password_length, allow_blank: true
+  validates :first_name, :last_name, presence: true
+  validates :sl_profile, uniqueness: { allow_nil: true }
+
+  # validates :picture, file_size: { maximum: 0.3.megabytes.to_i, message: 'should be less than 300K' }, if: "picture.present?"
+  validate :image_size_validation, if: "picture.present?"
+  def image_size_validation
+    if picture.file.exists?
+      errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
+    end
+  end
+
+
 
   has_and_belongs_to_many :units
   has_many :notifiers, dependent: :destroy
@@ -59,14 +86,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :unit_positions
 
 
-  before_save :update_picture_attributes
-  before_create :save_original_filename
 
-
-
-  validates_presence_of :first_name, :last_name
-
-  validates :sl_profile, uniqueness: { allow_nil: true }
 
   before_validation :strip_password_if_empty
   def strip_password_if_empty
@@ -78,37 +98,30 @@ class User < ActiveRecord::Base
     end
   end
 
-  # validates :picture, file_size: { maximum: 0.3.megabytes.to_i, message: 'should be less than 300K' }, if: "picture.present?"
-  validate :image_size_validation, if: "picture.present?"
-  def image_size_validation
-    if picture.file.exists?
-      errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
-    end
-  end
-
-
-
-
-  # don't use Devise validations
-  # validates_presence_of   :email, if: :email_required?
-  # validates_uniqueness_of :email, allow_blank: true, if: :email_changed?
-  # validates_format_of     :email, with: Devise.email_regexp, allow_blank: true, if: :email_changed?
-
-  # validates_presence_of     :password, allow_blank: true, if: :password_required?
-  # validates_confirmation_of :password, if: :password_required?
-  # validates_length_of       :password, within: Devise.password_length, allow_blank: true
-
-  # rails-4-ify the validations to allow for blank passwords and emails
-  validates :email, presence: { allow_blank: true }, uniqueness: { allow_blank: true }
-  # validates :email, format: Devise.email_regexp, allow_blank: true, if: :email_changed?
-
-  validates :password, allow_blank: true, confirmation: true, if: :password_required?
-  validates :password, length: Devise.password_length, allow_blank: true
 
 
   # this may help: http://stackoverflow.com/questions/15056000/rails-habtm-self-join-error
   has_and_belongs_to_many :scouts, class_name: 'User', join_table: "user_relationships", foreign_key: "adult_id", association_foreign_key: 'scout_id'
   has_and_belongs_to_many :adults, class_name: 'User', join_table: "user_relationships", foreign_key: "scout_id", association_foreign_key: 'adult_id'
+
+
+  #
+  # For caching purposes, we need to touch all associated users on updates or destroy.
+  # BE CAREFUL! By using update_all we avoid the potential of cascading touches of records
+  #  related to the touched users.
+  #
+  after_update :touch_related_users
+  before_destroy :touch_related_users
+
+  def touch_related_users
+    if self.scout?
+      self.adults.update_all(updated_at: Time.now)
+    elsif self.adult?
+      self.scouts.update_all(updated_at: Time.now)
+    end
+  end
+
+
 
   # this works, except for forms with related info (e.g. new adults assigning related scouts)
   # has_many     :adult_scout_relationships,
@@ -130,7 +143,12 @@ class User < ActiveRecord::Base
 
 
   # before_save :ensure_authentication_token
+  before_save :update_picture_attributes
+  before_create :save_original_filename
   before_create :ensure_signup_token
+
+
+
 
   def name
     full_name

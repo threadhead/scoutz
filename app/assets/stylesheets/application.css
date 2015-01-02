@@ -10,6 +10,7 @@
  *= require ckeditor
  *= require meta_search
  *= require datepicker3.standalone.min
+ *= require jquery.timepicker
  *= require_self
 */
 

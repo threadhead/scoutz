@@ -3,6 +3,8 @@ class Event < ActiveRecord::Base
   include EventReminders
   include AttributeSanitizer
   include PgSearch
+  include DateTimeAttributes
+
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
@@ -10,6 +12,7 @@ class Event < ActiveRecord::Base
   has_and_belongs_to_many :sub_units
   # acts_as_gmappable process_geocoding: false, validation: false
 
+  date_time_attribute :start_at, :end_at, :signup_deadline
 
   enum type_of_health_forms: {
     not_required:       0,

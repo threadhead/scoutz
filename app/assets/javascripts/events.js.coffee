@@ -1,8 +1,18 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
-
 jQuery ->
+
+  $(".time-only-picker").timepicker
+    'showDuration': true
+    'timeFormat': 'g:ia'
+
+  $('.date-only-picker').datepicker
+    format: "M dd, yyyy"
+    todayBtn: "linked"
+    orientation: "top auto"
+    autoclose: true
+    todayHighlight: true
+
+  $("#date-time-pair").datepair()
+
   $('#calendar').fullCalendar
     dayClick: (date) ->
       if $("input#user_can_new_event").val() == 'true'

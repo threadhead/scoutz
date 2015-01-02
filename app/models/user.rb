@@ -101,10 +101,13 @@ class User < ActiveRecord::Base
 
 
   # this may help: http://stackoverflow.com/questions/15056000/rails-habtm-self-join-error
-  has_and_belongs_to_many :scouts, class_name: 'User', join_table: "user_relationships", foreign_key: "adult_id", association_foreign_key: 'scout_id'
-  has_and_belongs_to_many :adults, class_name: 'User', join_table: "user_relationships", foreign_key: "scout_id", association_foreign_key: 'adult_id'
+  has_and_belongs_to_many :scouts, class_name: 'User', join_table: "user_relationships", foreign_key: "adult_id", association_foreign_key: 'scout_id', after_add: :touch_updated_at, after_remove: :touch_updated_at
+  has_and_belongs_to_many :adults, class_name: 'User', join_table: "user_relationships", foreign_key: "scout_id", association_foreign_key: 'adult_id', after_add: :touch_updated_at, after_remove: :touch_updated_at
 
-
+  def touch_updated_at(user)
+    # logger.info "TOUCH_UPDATED_AT, self: #{self.name}, user: #{user.name}"
+    user.update_column(:updated_at, Time.now)
+  end
   #
   # For caching purposes, we need to touch all associated users on updates or destroy.
   # BE CAREFUL! By using update_all we avoid the potential of cascading touches of records
@@ -114,9 +117,12 @@ class User < ActiveRecord::Base
   before_destroy :touch_related_users
 
   def touch_related_users
+    # logger.info 'TOUCH_RELATED_USERS'
     if self.scout?
+      # logger.info "  adults: #{self.adults.map(&:name).join(', ')}"
       self.adults.update_all(updated_at: Time.now)
     elsif self.adult?
+      # logger.info "  scouts: #{self.scouts.map(&:name).join(', ')}"
       self.scouts.update_all(updated_at: Time.now)
     end
   end

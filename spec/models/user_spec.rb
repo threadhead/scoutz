@@ -43,9 +43,9 @@ RSpec.describe User do
   		scout1 = FactoryGirl.build(:scout)
   		scout2 = FactoryGirl.build(:scout)
   		adult.scouts << [scout1, scout2]
-  		expect(adult.scouts.count).to eq(2)
+      expect(adult.scouts.count).to eq(2)
       expect(adult.scouts).to include(scout1)
-  		expect(adult.scouts).to include(scout2)
+      expect(adult.scouts).to include(scout2)
       expect(scout1.adults).to include(adult)
       expect(scout2.adults).to include(adult)
   	end
@@ -58,8 +58,8 @@ RSpec.describe User do
   		expect(scout.adults.count).to eq(2)
       expect(scout.adults).to include(adult1)
       expect(scout.adults).to include(adult2)
-      expect(adult1.scouts).to include(scout)
-  		expect(adult2.scouts).to include(scout)
+      # expect(adult1.scouts).to include(scout)
+  		# expect(adult2.scouts).to include(scout)
   	end
   end
 
@@ -271,58 +271,6 @@ RSpec.describe User do
       it 'does not return roles above parameter' do
         expect(User.roles_at_and_below(:basic).keys).not_to include('leader')
         expect(User.roles_at_and_below(:basic).keys).not_to include('admin')
-      end
-    end
-  end
-
-
-  context 'when updating or destroying a user' do
-    describe 'related users are touched' do
-      before do
-        @adult = FactoryGirl.create(:adult)
-        @scout1 = FactoryGirl.build(:scout)
-        @scout2 = FactoryGirl.build(:scout)
-        @adult.scouts << [@scout1, @scout2]
-      end
-
-      describe 'updating' do
-        context 'an adult' do
-          before { @adult.update_attribute(:first_name, 'simon') }
-          it 'all related scouts are touched' do
-            expect(@scout1.updated_at).to be_within(5).of(Time.now)
-            expect(@scout2.updated_at).to be_within(5).of(Time.now)
-          end
-        end
-
-        context 'a scout' do
-          before { @scout1.update_attribute(:first_name, 'simon') }
-          specify { expect(@adult.updated_at).to be_within(5).of(Time.now) }
-        end
-
-        context 'a second scout' do
-          before { @scout2.update_attribute(:first_name, 'simon') }
-          specify { expect(@adult.updated_at).to be_within(5).of(Time.now) }
-        end
-      end
-
-      describe 'destroying' do
-        context 'an adult' do
-          before { @adult.destroy }
-          it 'all realted scouts are touched' do
-            expect(@scout1.updated_at).to be_within(5).of(Time.now)
-            expect(@scout2.updated_at).to be_within(5).of(Time.now)
-          end
-        end
-
-        context 'a scout' do
-          before { @scout1.destroy }
-          specify { expect(@adult.updated_at).to be_within(5).of(Time.now) }
-        end
-
-        context 'a second scout' do
-          before { @scout2.destroy }
-          specify { expect(@adult.updated_at).to be_within(5).of(Time.now) }
-        end
       end
     end
   end

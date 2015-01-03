@@ -5,6 +5,12 @@ class Scout < User
     self.adults.joins(:units).where(units: {id: unit})
   end
 
+  # when scouts view other scouts records
+  def unit_scouts(unit)
+    Scout.where(id: self.id)
+  end
+
+
   def has_adult?(user)
     self.adults.where(id: user).exists?
   end

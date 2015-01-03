@@ -12,6 +12,13 @@ class Adult < User
     self.scouts.joins(:units).where(units: {id: unit})
   end
 
+  # this should never be called, but just in case it is, return the adult
+  def unit_adults(unit)
+    Adult.where(id: self.id)
+  end
+
+
+
   def handle_relations_update(unit, update)
     # We need the ability to update adult/scout relationships using the standard controller methods
 

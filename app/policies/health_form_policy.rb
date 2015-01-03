@@ -1,22 +1,22 @@
 class HealthFormPolicy < ApplicationPolicy
   def index?
-    user_role_at_least_leader
+    adult_leader_or_above
   end
 
   def show?
-    user_role_at_least_leader || health_form_owner?
+    adult_leader_or_above || health_form_owner?
   end
 
   def create?
-    user_role_at_least_leader
+    adult_leader_or_above
   end
 
   def update?
-    user_role_at_least_leader
+    adult_leader_or_above
   end
 
   def destroy?
-    user_role_at_least_leader
+    adult_leader_or_above
   end
 
 

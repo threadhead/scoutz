@@ -11,6 +11,9 @@ class Newsletters < ActionMailer::Base
          subject: "#{@unit.email_name} #{@subject}"
   end
 
+
+
+
   def monthly(recipient, unit)
     set_time_zone(unit)
     @recipient = recipient

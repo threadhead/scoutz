@@ -58,6 +58,10 @@
       %td &nbsp;
       %td= event.message.html_safe
 
+
+
+
+
   - if event.signup_required
     %div#signup
     - if @recipient && @recipient.adult?

@@ -1,18 +1,24 @@
-# require "rails_helper"
+require "rails_helper"
 
-# RSpec.describe AdminMailer, :type => :mailer do
-#   describe "send_existing_user_welcome" do
-#     let(:mail) { AdminMailer.send_existing_user_welcome }
+RSpec.describe AdminMailer, type: :mailer do
+  let(:recipient) { FactoryGirl.build_stubbed(:adult) }
+  let(:token) { "asdf4321fdas" }
 
-#     it "renders the headers" do
-#       expect(mail.subject).to eq("Send existing user welcome")
-#       expect(mail.to).to eq(["to@example.org"])
-#       expect(mail.from).to eq(["from@example.com"])
-#     end
 
-#     it "renders the body" do
-#       expect(mail.body.encoded).to match("Hi")
-#     end
-#   end
+  describe "send_existing_user_welcome" do
+    let(:mail) { AdminMailer.send_existing_user_welcome(recipient, token) }
 
-# end
+    it "renders the headers" do
+      expect(mail.subject).to include("Welcome to Scoutt.in!")
+      expect(mail.to).to eq([recipient.email])
+      expect(mail.from).to eq(['noreply@scoutt.in'])
+    end
+
+    it 'renders the body' do
+      ap mail.body
+      expect(mail.body.encoded).to include("An account has been created for you")
+      expect(mail.body.encoded).to include("http://www.testing.com/user/welcome/edit?reset_password_token=asdf4321fdas")
+    end
+  end
+
+end

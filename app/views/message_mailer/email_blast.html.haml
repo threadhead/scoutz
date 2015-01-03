@@ -1,5 +1,5 @@
 !!!
-%html
+%html{style: "font-family: sans-serif;"}
   %head
   %body
     / %h2{style: "color: white; background-color: gray; padding: 4px"}= @email_message.subject
@@ -7,4 +7,7 @@
 
     - if @email_message.has_events?
       %div{style: "height: 12; background-color: darkgray; margin-bottom: 8px;"}
-      = render @email_message.events
+      = #render @email_message.events
+      = render @events
+
+    = render partial: 'unsubscribe/email_footer', locals: {action: :blast_email, user: @recipient}

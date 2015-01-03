@@ -29,8 +29,5 @@
     %hr
     %p
       %i Event details may change at any time. Check #{link_to 'Scoutt.in', root_url} for the latest details.
-    %p{style: 'font-size: 0.7em;'}
-      %br
-      Generated on #{Time.zone.now.to_s(:long_ampm)}
-      %br
-      All times #{Time.zone}
+
+    = render partial: 'unsubscribe/email_footer', locals: {action: :weekly_newsletter_email, user: @recipient}

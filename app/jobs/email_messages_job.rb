@@ -2,17 +2,21 @@ class EmailMessagesJob < ActiveJob::Base
   queue_as :default
 
   def perform(email_message)
-    if email_message.events_have_signup?
-      # emails will contain individual links for signup
-      email_message.recipients.each { |recipient|
-        MessageMailer.email_blast_with_event(email_message, recipient).deliver_later
-      }
-
-    else
-      MessageMailer.email_blast_no_events(email_message).deliver_later
+    email_message.recipients.each do |user|
+      if email_message.events_have_signup?
+        MessageMailer.email_blast_with_event(user, email_message).deliver_later
+      else
+        MessageMailer.email_blast_no_events(user, email_message).deliver_later
+      end
     end
+
     email_message.update_attribute(:sent_at, Time.zone.now)
   end
+
+
+
+
+
 
   # def before
   #   Delayed::Worker.logger.info ">>>>>>>>>>>>>>>>>>>>>>>>>>>>> EmailMessagesJob/BEFORE"

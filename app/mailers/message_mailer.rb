@@ -3,27 +3,27 @@ class MessageMailer < ActionMailer::Base
   add_template_helper(EventsHelper)
 
 
-  def email_blast_no_events(email_message)
+  def email_blast_no_events(recipient, email_message)
     @email_message = email_message
     @events = []
     @sender = @email_message.sender
-    @recipient_user = nil
+    @recipient = recipient
 
     set_attachments
 
     mail from: @sender.email,
-         to: @email_message.recipients_emails,
+         to: @recipient.email,
          subject: @email_message.subject_with_unit,
          template_name: 'email_blast'
 
   end
 
 
-  def email_blast_with_event(email_message, recipient)
+  def email_blast_with_event(recipient, email_message)
     @email_message = email_message
     @events = @email_message.events
     @sender = @email_message.sender
-    @recipient_user = recipient
+    @recipient = recipient
 
     set_attachments
 
@@ -35,7 +35,7 @@ class MessageMailer < ActionMailer::Base
     end
 
     mail from: @sender.email,
-         to: recipient.email,
+         to: @recipient.email,
          subject: @email_message.subject_with_unit,
          template_name: 'email_blast'
   end

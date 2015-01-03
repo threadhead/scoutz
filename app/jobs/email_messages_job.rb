@@ -4,7 +4,8 @@ class EmailMessagesJob < ActiveJob::Base
   def perform(email_message)
     if email_message.events_have_signup?
       # emails will contain individual links for signup
-      email_message.recipients.each { |recipient| MessageMailer.email_blast_with_event(email_message, recipient).deliver_later
+      email_message.recipients.each { |recipient|
+        MessageMailer.email_blast_with_event(email_message, recipient).deliver_later
       }
 
     else

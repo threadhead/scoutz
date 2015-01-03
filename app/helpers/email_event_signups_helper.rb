@@ -11,7 +11,7 @@ module EmailEventSignupsHelper
                                           adults_attending: options[:adults],
                                           siblings_attending: options[:siblings],
                                           scout_id: options[:scout].id,
-                                          user_token: options[:recipient_user].signup_token,
+                                          user_token: options[:recipient].signup_token,
                                           event_token: options[:event].signup_token
                                           }
                                         )

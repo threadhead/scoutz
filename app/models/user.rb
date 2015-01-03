@@ -373,7 +373,7 @@ class User < ActiveRecord::Base
     end
 
     def generate_token
-      SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
+      SecureRandom.urlsafe_base64(24) #.tr('+/=lIO0', 'pqrsxyz')
     end
 
     def save_original_filename

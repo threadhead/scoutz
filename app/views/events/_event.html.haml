@@ -58,12 +58,16 @@
       %td &nbsp;
       %td= event.message.html_safe
 
+
+
+
+
   - if event.signup_required
     %div#signup
-    - if @recipient_user && @recipient_user.adult?
-      - scouts = @recipient_user.unit_scouts(event.unit)
+    - if @recipient && @recipient.adult?
+      - scouts = @recipient.unit_scouts(event.unit)
     - else
-      - scouts = @recipient_user.blank? ? [] : [@recipient_user]
+      - scouts = @recipient.blank? ? [] : [@recipient]
 
     %div{style: "border: 1px solid gainsboro; margin: 0 0 12px 20px; background-color: whitesmoke; padding: 12px;"}
       - scouts.each do |scout|
@@ -112,11 +116,11 @@
                       - else
                         No
 
-                %p= link_to("Cancel this signup", event_email_event_signups_url(event, {scout_id: scout.id, user_token: @recipient_user.signup_token, event_token: event.signup_token, cancel_reservation: true}))
+                %p= link_to("Cancel this signup", event_email_event_signups_url(event, {scout_id: scout.id, user_token: @recipient.signup_token, event_token: event.signup_token, cancel_reservation: true}))
 
             - if !event_signup.blank? || !event.after_signup_deadline?
               %td{style: "border: 2px solid #eeeeee; padding: 6px; background-color: snow;"}
-                - defaults = {event: event, recipient_user: @recipient_user, scout: scout, scouts: 1}
+                - defaults = {event: event, recipient: @recipient, scout: scout, scouts: 1}
                 %table
                   %tr
                     %td &nbsp;
@@ -142,7 +146,7 @@
                   %tr
                     %td &nbsp;
                     %td{colspan: 3, style: "text-align: center; padding-top: 12px;"}
-                      = link_to "Signup with different options or change carpooling", event_email_event_signups_url(event, {scout_id: scout.id,user_token: @recipient_user.signup_token, event_token: event.signup_token})
+                      = link_to "Signup with different options or change carpooling", event_email_event_signups_url(event, {scout_id: scout.id,user_token: @recipient.signup_token, event_token: event.signup_token})
 
                   %tr
                     %td{colspan: 4, style: "text-align: center; padding-top: 8px;"}

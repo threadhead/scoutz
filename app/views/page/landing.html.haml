@@ -9,11 +9,13 @@
         %span.icon-bar
         %span.icon-bar
 
-      %a.navbar-brand.page-scroll{href: "#page-top"}
-        %span.fa-stack.fa-lg{style: "font-size: 24px;"}
-          %i.fa.fa-stack-2x.fa-map-marker
-          %i.fa.fa-stack-compass.fa-compass
-        Scoutt.in
+      .scouttin-logo{href: "#page-top"}
+        .compass-logo
+          %span.fa-stack.fa-lg
+            %i.fa.fa-stack-2x.fa-map-marker.marker
+            %i.fa.fa-stack-compass.fa-compass.compass
+        .scouttin-name
+          Scoutt.in
 
     / Collect the nav links, forms, and other content for toggling
     #bs-example-navbar-collapse-1.collapse.navbar-collapse
@@ -38,11 +40,17 @@
   .container
 
     .intro-text
-      %span.fa-stack.fa-lg{style: "font-size: 48px;"}
-        %i.fa.fa-stack-2x.fa-map-marker
-        %i.fa.fa-stack-compass.fa-compass
-      .intro-lead-in Scoutt.in
+      .scouttin-logo.scouttin-logo-white.scouttin-logo-lg
+        .compass-logo
+          %span.fa-stack.fa-lg
+            %i.fa.fa-stack-2x.fa-map-marker.marker
+            %i.fa.fa-stack-compass.fa-compass.compass
+        .scouttin-name Scoutt.in
+      %h1 &nbsp;
+      %h1 &nbsp;
+      %h1 &nbsp;
       .intro-heading Manage your Troop, Den or Crew with ease
+      %h1 &nbsp;
       %a.page-scroll.btn.btn-xl{href: "#features"} Tell Me More
 
 

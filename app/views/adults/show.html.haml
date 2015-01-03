@@ -30,7 +30,7 @@
                   %i.fa.fa-plus
                   New Adult
 
-            - if policy(@user).send_welcome_reset_password?
+            - if !@user.email.blank? && policy(@user).send_welcome_reset_password?
               %li
                 = link_to 'Send Welcome Email', '#', data: { toggle: 'modal', target: '#send-welcome-email'}
 

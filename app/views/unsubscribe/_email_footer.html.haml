@@ -1,0 +1,21 @@
+%div{style: "margin: 12px; border-bottom: 1px solid black;"}
+
+%div{style: "margin: 12px 12px 20px 12px; padding: 4px 12px; background-color: #eee; border-radius: 4px;"}
+
+  %p{style: "font-size: 0.9em;line-height: 1;"} #{link_to "UNSUBSCRIBE", send("unsubscribe_#{action}_url", id: user.signup_token)} | You are receiving this email because you are subscribed in your notification settings. To unsubscribe from these emails #{link_to "click here", send("unsubscribe_#{action}_url", id: user.signup_token)}.
+
+
+  %p{style: "font-size: 0.9em; line-height: 1;"}
+    %a{href: "https://scoutt.in"} Scoutt.in
+    is proudly engineered by Scouters like you. &copy; #{Time.now.year}, Desert Solitaire, LLC
+
+  %div{style: "float: right; margin-left: 20px; color: #777"}
+    %p{style: 'font-size: 0.7em; text-align: right;'}
+      Generated on #{Time.zone.now.to_s(:long_ampm)}
+      %br
+      All times #{Time.zone}
+
+  %p{style: "font-size: 0.9em; line-height: 1;"}
+    %em Scoutt.in will never sell or rent your email with third parties for promotional use. Scoutt.in is not associated with the Boy Scouts of America.
+
+  %div{style: "display: table; content: ''; clear: both;"}

@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     @user.reset_password_sent_at = 72.hours.from_now - Devise.reset_password_within
     @user.encrypted_password = nil
     @user.save(validate: false)
-    AdminMailer.delay.send_existing_user_welcome(user_id: @user.id, token: token)
+    AdminMailer.send_existing_user_welcome(@user, token).deliver_later
   end
 
   private

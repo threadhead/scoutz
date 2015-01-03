@@ -3,3 +3,4 @@
   %head
   %body
     = render @event
+    = render partial: 'unsubscribe/email_footer', locals: {action: :event_reminder_email, user: @recipient}

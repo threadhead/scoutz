@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'EventCalendar' do
   before do
-    Event.any_instance.unstub(:ical_valid?)
+    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
     @event = FactoryGirl.create(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event')
   end
 

@@ -1,0 +1,19 @@
+.row
+  .col-md-6.col-md-offset-3
+    .panel.panel-default
+      .panel-heading
+        .scouttin-logo.scouttin-logo-blue.scouttin-logo-lg
+          .compass-logo
+            %span.fa-stack.fa-lg
+              %i.fa.fa-stack-2x.fa-map-marker.marker
+              %i.fa.fa-stack-compass.fa-compass.compass
+          .scouttin-name
+            Scoutt.in
+
+      .panel-body
+        %h2 Unsubscribed - #{action.titleize.pluralize}!
+        %p.xlarge You are unsubscribed from #{action.pluralize} and should no longer receive these emails.
+        %p.xlarge
+          You may still receive emails or text messages for those types that you are still subscribed to.
+          = link_to 'Sign into Scoutt.in', new_user_session_url
+          and check your profile to make additional changes or to check your current settings.

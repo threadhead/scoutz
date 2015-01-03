@@ -5,10 +5,13 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      %span.fa-stack.fa-lg
-        %i.fa.fa-stack-2x.fa-map-marker
-        %i.fa-fa-stack-1x.fa-compass
-      = link_to 'Scoutt.in', unit_events_path(@unit), class: 'navbar-brand'
+      .scouttin-logo.scouttin-logo-khaki
+        .compass-logo
+          %span.fa-stack.fa-lg
+            %i.fa.fa-stack-2x.fa-map-marker.marker
+            %i.fa.fa-stack-compass.fa-compass.compass
+        .scouttin-name
+          = link_to 'Scoutt.in', unit_events_path(@unit), class: ''
 
     .collapse.navbar-collapse#scoutz-navbar-collapse
       %ul.nav.navbar-nav.pull-right

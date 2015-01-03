@@ -40,7 +40,8 @@ Scoutz::Application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.action_mailer.default_url_options = { host: 'http://www.testing.com/' }
+  config.action_mailer.default_url_options = { host: 'http://www.testing.com' }
+  config.action_mailer.asset_host = 'http://www.testing.com'
 
 
   # allows rack:test to display error pages (i.e. 404)

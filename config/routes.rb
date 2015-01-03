@@ -81,6 +81,10 @@ Scoutz::Application.routes.draw do
   get "sign_up/new_sub_unit"
   post "sign_up/create_sub_unit"
 
+  get 'unsubscribe/event_reminder_email'
+  get 'unsubscribe/weekly_newsletter_email'
+  get 'unsubscribe/blast_email'
+
   put "sms/send_verification"
   # resources :after_signup
 

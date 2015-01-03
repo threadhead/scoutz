@@ -1,32 +1,37 @@
-# require "rails_helper"
+require "rails_helper"
 
-# RSpec.describe Newsletters, :type => :mailer do
-#   describe "events_week" do
-#     let(:mail) { Newsletters.events_week }
+RSpec.describe Newsletters, type: :mailer do
+  before do
+    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
+    @unit = FactoryGirl.create(:unit)
+    @recipient = FactoryGirl.create(:adult)
+    @recipient.units << @unit
+    @event = FactoryGirl.create(:event, unit: @unit)
+    @event.update_ical
+    allow(@unit).to receive_message_chain(:events, :newsletter_next_week, :by_start).and_return([@event])
+  end
 
-#     it "renders the headers" do
-#       expect(mail.subject).to eq("Events week")
-#       expect(mail.to).to eq(["to@example.org"])
-#       expect(mail.from).to eq(["from@example.com"])
-#     end
 
-#     it "renders the body" do
-#       expect(mail.body.encoded).to match("Hi")
-#     end
-#   end
+  describe "weekly" do
+    let(:mail) { Newsletters.weekly(@recipient, @unit) }
 
-#   describe "events_month" do
-#     let(:mail) { Newsletters.events_month }
+    it "renders the headers" do
+      expect(mail.subject).to include("[CS Pack 134] Upcoming Events for the week of")
+      expect(mail.to).to eq([@recipient.email])
+      expect(mail.from).to eq(['noreply@scoutt.in'])
+    end
 
-#     it "renders the headers" do
-#       expect(mail.subject).to eq("Events month")
-#       expect(mail.to).to eq(["to@example.org"])
-#       expect(mail.from).to eq(["from@example.com"])
-#     end
+    it 'renders unsubscribe block' do
+      expect(mail.body.encoded).to include("UNSUBSCRIBE")
+      expect(mail.body.encoded).to include("All times (GMT-07:00) Arizona")
+      expect(mail.body.encoded).to include("<a href=\"http://www.testing.com/unsubscribe/weekly_newsletter_email?id=#{@recipient.signup_token}\">")
+    end
 
-#     it "renders the body" do
-#       expect(mail.body.encoded).to match("Hi")
-#     end
-#   end
+    it 'renders the body' do
+      expect(mail.body.encoded).to include("USS Midway Overnight")
+      expect(mail.body.encoded).to include(@event.ical.url)
+      expect(mail.body.encoded).to include(event_url(@event))
+    end
+  end
 
-# end
+end

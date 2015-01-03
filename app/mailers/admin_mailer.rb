@@ -1,8 +1,8 @@
-class AdminMailer < ActionMailer::Base
+class AdminMailer < MailerBase
   default from: "noreply@scoutt.in"
 
-  def send_existing_user_welcome(user_id:, token:)
-    @user = User.find(user_id)
+  def send_existing_user_welcome(user, token)
+    @user = user
     @token = token
 
     mail to: @user.email,

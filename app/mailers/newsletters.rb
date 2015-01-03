@@ -1,4 +1,4 @@
-class Newsletters < ActionMailer::Base
+class Newsletters < MailerBase
   default from: "noreply@scoutt.in"
 
   def weekly(recipient, unit)
@@ -24,12 +24,5 @@ class Newsletters < ActionMailer::Base
          subject: "#{@unit.email_name} #{@subject}",
          template_name: 'weekly'
   end
-
-
-  private
-    def set_time_zone(unit)
-      @unit = unit
-      Time.zone = unit.time_zone || "Pacific Time (US & Canada)"
-    end
 
 end

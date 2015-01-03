@@ -1,10 +1,11 @@
-class TextMessage < ActionMailer::Base
+class TextMessage < MailerBase
   add_template_helper(ApplicationHelper)
 
   default from: "noreply@scoutt.in"
 
   def event_reminder(event, recipient_email)
     @event = event
+    set_time_zone(@event.unit)
 
     mail to: recipient_email,
          subject: @event.sms_reminder_subject
@@ -13,6 +14,7 @@ class TextMessage < ActionMailer::Base
 
   def sms_message(recipient_email, sms_message)
     @sms_message = sms_message
+    set_time_zone(@sms_message.unit)
 
     mail to: recipient_email,
          subject: '',

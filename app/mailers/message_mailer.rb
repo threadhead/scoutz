@@ -1,4 +1,4 @@
-class MessageMailer < ActionMailer::Base
+class MessageMailer < MailerBase
   add_template_helper(EmailEventSignupsHelper)
   add_template_helper(EventsHelper)
 
@@ -8,6 +8,7 @@ class MessageMailer < ActionMailer::Base
     @events = []
     @sender = @email_message.sender
     @recipient = recipient
+    set_time_zone(@email_message.unit)
 
     set_attachments
 
@@ -24,6 +25,7 @@ class MessageMailer < ActionMailer::Base
     @events = @email_message.events
     @sender = @email_message.sender
     @recipient = recipient
+    set_time_zone(@email_message.unit)
 
     set_attachments
 

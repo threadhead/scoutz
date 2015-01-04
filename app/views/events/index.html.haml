@@ -30,7 +30,7 @@
       .panel-heading #{@unit.unit_type_title} Activity
       .panel-body
         %ul.list-unstyled
-          = cache [@unit, @unit.activities.limit(10).first] do
+          = cache ["unit-#{@unit.id}", @unit.activities.limit(10).first, expires_in: 1.hour] do
             - @unit.activities.limit(10).each do |activity|
               = render_activity activity
 

@@ -59,7 +59,8 @@ class Event < ActiveRecord::Base
 
   def gmaps4rails_address
     #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
-    "#{self.location_address1}, #{self.location_city}, #{self.location_state}"
+    # "#{self.location_address1}, #{self.location_city}, #{self.location_state}"
+    [location_address1, location_city, location_state].reject(&:empty?).compact.join(', ')
   end
 
   def sub_unit_kind?

@@ -90,12 +90,20 @@
             %strong Location
           %td
             %address= location_show(@event)
-            - if @event.location_map_url.blank?
+
+            - unless @event.gmaps4rails_address.blank?
               = #gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
               #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
-            - else
-              .iframe-rwd
-                %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+            - unless @event.location_map_url.blank?
+              %br
+              %p
+                = link_to(@event.location_map_url, target: '_blank') do
+                  %i.fa.fa-external-link
+                  Show map...
+
+            -#   .iframe-rwd
+            -#     %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
 
           %tr
             %td &nbsp;

@@ -29,7 +29,8 @@
         %li
           %a.page-scroll{href: "#about"} About
         %li
-          = link_to 'Sign up', '#', class: 'btn btn-info'
+          -# = link_to 'Sign up', '#', class: 'btn btn-info'
+          %a.page-scroll.btn.btn-info{href: "#signup"} Sign up
         %li
           = link_to 'Sign in', new_user_session_url, class: 'btn btn-success'
 
@@ -83,7 +84,7 @@
           %i.fa.fa-circle.fa-stack-2x.text-primary
           %i.fa.fa-flag-checkered.fa-stack-1x.fa-inverse
         %h4.service-heading Fast
-        %p.text-muted We now how to build websites, and how to make and keep them fast. Get into Scoutt.in and, get what you want, and get outside!
+        %p.text-muted We know how to build websites, and how to make and keep them fast. Get into Scoutt.in and, get what you want, and get outside!
 
 
 / Portfolio Grid Section
@@ -167,13 +168,31 @@
         .action-section
           %i.text-primary.fa.fa-mobile.fa-2x
           %h4 Easy Messaging
-          %p Send emails or text messages only to those who are attending an event. No haveing to select individual names. Scoutt.in will also
+          %p Send emails or text messages only to those who are attending an event... with just one click.
 
       .col-md-4
         .action-section
           %i.fa.fa-desktop.fa-2x
           %h4 Import from Scoutlander
           %p Import all your Scouts, adults, events, and more. Users will have to generate a new password for their account. But don't worry, we'll walk you through everything step-by-step.
+
+      .col-md-4
+        .action-section
+          %i.fa.fa-medkit.fa-2x
+          %h4 Health Forms
+          %p Just enter the date your health forms were signed, Scoutt.in will do the rest. Automatically show if a Scout needs a new health form for a particular event. Also shows you the status of all adults and Scouts in your unit.
+
+      .col-md-4
+        .action-section
+          %i.fa.fa-list-ol.fa-2x
+          %h4 Event Rosters
+          %p Would like a list of all the Scouts attending your event? With emergency contact info? Health form status? Activity consent form status? Print it or checkit online. Everything you need to know on one page.
+
+      .col-md-4
+        .action-section
+          %i.fa.fa-car.fa-2x
+          %h4 Carpools
+          %p Quicky see who has seats and who needs a ride.
 
       .col-md-4
 
@@ -253,32 +272,44 @@
   .container-fluid
     .row
       .col-lg-12.text-center
+        .scouttin-logo.scouttin-logo-blue.scouttin-logo-xl
+          .compass-logo
+            %span.fa-stack.fa-lg
+              %i.fa.fa-stack-2x.fa-map-marker.marker
+              %i.fa.fa-stack-compass.fa-compass.compass
         %h2.section-heading About Scoutt.in
         -# %h3.section-subheading.text-muted Lorem ipsum dolor sit amet consectetur.
 
     .row
       .col-sm-8.col-sm-offset-2
         .team-member
+
           -# %img.img-responsive.img-circle{alt: "", src: "images/team/1.jpg"}
-          = image_tag 'landing/bsa_logo.gif', class: 'img-responsive img-large'
+          = #image_tag 'landing/bsa_logo.gif', class: 'img-responsive img-large'
           -# %i.fa.fa-user{style: "font-size: 238px;"}
           -# %h4 Brian Cook
           -# %p.text-muted Scoutmaster
           %p Scoutt.in grew out of the need of BS Troop 603 to manage Scouts and their activities, using modern technology, keeping things simple and efficient. Developed by a Scoutmaster and long time Scouter, who just happens to engineer web sites for a living.
-          %p Scoutt.in was built from the top, down, with speed, security, but most importantly ease-of-use. Face it, if a web site is not easy to use, you won't use it.
+          %p Scoutt.in was built from the top, down, with speed, security, but most importantly ease-of-use. Face it, if if a web site is not easy to use, you won't use it.
 
 
 
-%section.bg-light-gray
+%section.bg-light-gray#signup
   .container-fluid
     .row
       .col-lg-12.text-center
-        %h2.section-heading Get Started Now
-        %h3.section-subheading.text-primary It's 100% Free
-        = link_to 'Sign Up Available Soon', '#', class: 'btn btn-xl'
+        %h2.section-heading
+          Get Started
+          %strike Now
+          Soon
+        -# %h3.section-subheading.text-primary It's 100% Free
+        -# = link_to 'Sign Up Available Soon', '#', class: 'btn btn-xl'
+        %p Scoutt.in is almost ready for everyone to join. But first, we need a few Troops, Packs, or Crews to kick the tires and let us know what they like, and changes they would like to see.
+        %p Subscribe to our announcement list and we will let you know when all is good and ready!
+        %h2 &nbsp;
     .row
       .col-lg-6.col-lg-offset-3
-        = #render 'signup'
+        = render 'signup'
 
 
 

@@ -2,6 +2,9 @@ class PageController < ApplicationController
   # before_action :auth_and_time_zone
 
   def landing
+    # important, this will no account for changes in the page layout. must change
+    #   etag value if page layout is changed.
+    # fresh_when File.mtime("#{Rails.root}/app/views/page/landing.html.haml", etag: 1)
     render :landing, layout: 'page'
   end
 

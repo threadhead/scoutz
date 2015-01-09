@@ -2,7 +2,12 @@
 
 %div{style: "margin: 12px 12px 20px 12px; padding: 4px 12px; background-color: #eee; border-radius: 4px;"}
 
-  %p{style: "font-size: 0.9em;line-height: 1;"} #{link_to "UNSUBSCRIBE", send("unsubscribe_#{action}_url", id: user.signup_token)} | You are receiving this email because you are subscribed in your notification settings. To unsubscribe from these emails #{link_to "click here", send("unsubscribe_#{action}_url", id: user.signup_token)}.
+  %p{style: "font-size: 0.9em;line-height: 1;"}
+    = link_to "UNSUBSCRIBE", send("unsubscribe_#{action}_url", id: user.signup_token)
+    |
+    %a{href: "http://blog.scoutt.in"} Blog
+
+  %p{style: "font-size: 0.9em;line-height: 1;"} You are receiving this email because you are subscribed in your notification settings. To unsubscribe from these emails #{link_to "click here", send("unsubscribe_#{action}_url", id: user.signup_token)}. Keep messages out of spam, add #{mail_to "noreply@scoutt.in"} to you address book!
 
 
   %p{style: "font-size: 0.9em; line-height: 1;"}

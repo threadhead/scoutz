@@ -8,6 +8,11 @@ class PageController < ApplicationController
     render :landing, layout: 'page'
   end
 
+  def redirect_to_dashboard
+    auth_and_time_zone
+    redirect_to unit_events_url(@unit)
+  end
+
   def terms_of_service
   end
 

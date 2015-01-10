@@ -4,6 +4,10 @@ Scoutz::Application.routes.draw do
 
   get 'meta_search' => 'meta_search#index'
   devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords'}
+  authenticated :user do
+    root to: 'page#redirect_to_dashboard', as: :authenticated_root
+  end
+
 
   resources :units do
     resources :events do

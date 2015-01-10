@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe MessageMailer, type: :mailer do
   before do
+    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
     @unit = FactoryGirl.create(:unit)
     @recipient = FactoryGirl.create(:adult)
     @recipient.units << @unit
@@ -33,22 +34,26 @@ RSpec.describe MessageMailer, type: :mailer do
     end
   end
 
+
+
+
   describe "email_blast_no_events" do
-    let(:mail) { MessageMailer.email_blast_no_events(@recipient, @email_message) }
+    let(:mail) { MessageMailer.email_blast(@recipient, @email_message) }
 
     include_examples 'renders headers'
     include_examples 'renders unsubscribe block'
     include_examples 'renders body'
 
     it 'does not renders events' do
+      @event.delete
       expect(mail.body.encoded).to_not include("USS Midway Overnight")
     end
   end
 
 
 
-  describe "email_blast_no_events" do
-    let(:mail) { MessageMailer.email_blast_with_event(@recipient, @email_message) }
+  describe "email_blast_with_events" do
+    let(:mail) { MessageMailer.email_blast(@recipient, @email_message) }
 
     include_examples 'renders headers'
     include_examples 'renders unsubscribe block'

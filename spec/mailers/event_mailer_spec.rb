@@ -12,7 +12,7 @@ RSpec.describe EventMailer, type: :mailer do
   shared_examples 'renders body' do
   end
 
-  describe "email_blast_no_events" do
+  describe "reminder" do
     let(:mail) { EventMailer.reminder(@event, @recipient) }
 
     it "renders the headers" do

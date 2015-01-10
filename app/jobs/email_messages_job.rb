@@ -3,11 +3,7 @@ class EmailMessagesJob < ActiveJob::Base
 
   def perform(email_message)
     email_message.recipients.each do |user|
-      if email_message.events_have_signup?
-        MessageMailer.email_blast_with_event(user, email_message).deliver_later
-      else
-        MessageMailer.email_blast_no_events(user, email_message).deliver_later
-      end
+      MessageMailer.email_blast(user, email_message).deliver_later
     end
 
     email_message.update_attribute(:sent_at, Time.zone.now)

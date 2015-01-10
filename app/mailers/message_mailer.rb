@@ -3,24 +3,24 @@ class MessageMailer < MailerBase
   add_template_helper(EventsHelper)
 
 
-  def email_blast_no_events(recipient, email_message)
-    @email_message = email_message
-    @events = []
-    @sender = @email_message.sender
-    @recipient = recipient
-    set_time_zone(@email_message.unit)
+  # def email_blast_no_events(recipient, email_message)
+  #   @email_message = email_message
+  #   @events = []
+  #   @sender = @email_message.sender
+  #   @recipient = recipient
+  #   set_time_zone(@email_message.unit)
 
-    set_attachments
+  #   set_attachments
 
-    mail from: @sender.email,
-         to: @recipient.email,
-         subject: @email_message.subject_with_unit,
-         template_name: 'email_blast'
+  #   mail from: @sender.email,
+  #        to: @recipient.email,
+  #        subject: @email_message.subject_with_unit,
+  #        template_name: 'email_blast'
 
-  end
+  # end
 
 
-  def email_blast_with_event(recipient, email_message)
+  def email_blast(recipient, email_message)
     @email_message = email_message
     @events = @email_message.events
     @sender = @email_message.sender
@@ -29,12 +29,12 @@ class MessageMailer < MailerBase
 
     set_attachments
 
-    @events.each do |event|
-      if event.ical.present?
-        # attachments.inline[File.basename(event.ical.path)] = {mime_type: 'text/calendar', content: File.read(event.ical.current_path)}
-        attachments[File.basename(event.ical.path)] = {mime_type: event.ical_content_type, content: File.read(event.ical.current_path)}
-      end
-    end
+    # @events.each do |event|
+    #   if event.ical.present?
+    #     # attachments.inline[File.basename(event.ical.path)] = {mime_type: 'text/calendar', content: File.read(event.ical.current_path)}
+    #     attachments[File.basename(event.ical.path)] = {mime_type: event.ical_content_type, content: File.read(event.ical.current_path)}
+    #   end
+    # end
 
     mail from: @sender.email,
          to: @recipient.email,

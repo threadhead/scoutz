@@ -2,15 +2,14 @@ require "rails_helper"
 
 RSpec.describe EventMailer, type: :mailer do
   before do
+    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
     @unit = FactoryGirl.create(:unit)
     @recipient = FactoryGirl.create(:adult)
     @recipient.units << @unit
     @event = FactoryGirl.create(:event, unit: @unit)
+    @event.reload
   end
 
-
-  shared_examples 'renders body' do
-  end
 
   describe "reminder" do
     let(:mail) { EventMailer.reminder(@event, @recipient) }
@@ -29,6 +28,7 @@ RSpec.describe EventMailer, type: :mailer do
 
     it 'renders the body' do
       expect(mail.body.encoded).to include("USS Midway Overnight")
+      expect(mail.body.encoded).to include("<img src=\"http://www.testing.com/assets/ical_email.png\"")
     end
   end
 

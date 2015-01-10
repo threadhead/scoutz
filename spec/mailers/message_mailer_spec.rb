@@ -61,6 +61,7 @@ RSpec.describe MessageMailer, type: :mailer do
 
     it 'renders events' do
       expect(mail.body.encoded).to include("USS Midway Overnight")
+      expect(mail.body.encoded).to include("<img src=\"http://www.testing.com/assets/ical_email.png\"")
     end
   end
 

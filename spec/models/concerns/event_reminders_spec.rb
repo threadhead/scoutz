@@ -138,6 +138,7 @@ RSpec.describe EventReminders do
 
   describe '.send_reminder' do
     before do
+      allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
       ActionMailer::Base.deliveries.clear
       @event = FactoryGirl.create(:event, unit: @unit1, kind: 'Pack Event')
       adult2 = FactoryGirl.create(:adult)

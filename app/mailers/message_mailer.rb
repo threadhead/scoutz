@@ -3,23 +3,6 @@ class MessageMailer < MailerBase
   add_template_helper(EventsHelper)
 
 
-  # def email_blast_no_events(recipient, email_message)
-  #   @email_message = email_message
-  #   @events = []
-  #   @sender = @email_message.sender
-  #   @recipient = recipient
-  #   set_time_zone(@email_message.unit)
-
-  #   set_attachments
-
-  #   mail from: @sender.email,
-  #        to: @recipient.email,
-  #        subject: @email_message.subject_with_unit,
-  #        template_name: 'email_blast'
-
-  # end
-
-
   def email_blast(recipient, email_message)
     @email_message = email_message
     @events = @email_message.events

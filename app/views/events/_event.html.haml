@@ -48,11 +48,12 @@
       %td
         %address= email_location(event)
 
-    %tr
-      %td
-        %strong iCal
-      %td
-        = link_to image_tag('ical_email.png'), (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics"
+    - if event.ical.file.try(:exists?)
+      %tr
+        %td
+          %strong iCal
+        %td
+          = link_to image_tag('ical_email.png'), (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics"
 
     %tr
       %td &nbsp;

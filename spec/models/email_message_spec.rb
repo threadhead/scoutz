@@ -13,7 +13,7 @@ RSpec.describe EmailMessage do
   it { should have_and_belong_to_many(:users) }
   it { should have_and_belong_to_many(:events) }
 
-  it { should validate_presence_of(:message) }
+  # it { should validate_presence_of(:message) }
   it { should validate_presence_of(:subject) }
 
   describe 'validations' do
@@ -41,6 +41,20 @@ RSpec.describe EmailMessage do
     it 'creates an id_token' do
       @email_message.save
       @email_message.id_token.should_not be_blank
+    end
+
+    describe 'presence of message' do
+      it 'required when no events selected' do
+        should validate_presence_of(:message)
+      end
+
+      it 'not required when events selected' do
+        event = FactoryGirl.create(:event)
+        @email_message.message = nil
+        @email_message.event_ids = [event.id]
+        expect(@email_message.valid?).to be(true)
+        expect(@email_message.errors).not_to include(:message)
+      end
     end
   end
 

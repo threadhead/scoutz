@@ -32,10 +32,16 @@
   %fieldset
     %legend Events
     .row
-      .col-md-8
+      .col-md-12
         %p Selected events will have signup links at the bottom of the message
+    .row
+      .col-md-8
         .well.well-sm.email-message-events
           = f.collection_check_boxes :event_ids, @unit.events.from_today.by_start, :id, :event_list_name, hide_label: true
+      .col-md-4
+        .alert.alert-info
+          %strong Tip:
+          Want to send an announcement about an event? Just check the event(s) you want to announce, enter a subject, optional message, and click send. All info about the event(s) will be in the email.
 
 
   %fieldset

@@ -12,9 +12,8 @@ class EmailMessage < ActiveRecord::Base
   has_and_belongs_to_many :users
   accepts_nested_attributes_for :email_attachments, allow_destroy: true
 
-  # attr_accessible :message, :subject, :user_id, :sub_unit_ids, :event_ids, :email_attachments_attributes, :user_ids, :send_to_option
 
-  validates :message, presence: true
+  validates :message, presence: true, if: :has_no_events?
   validates :subject, presence: true
 
   sanitize_attributes :message
@@ -25,22 +24,6 @@ class EmailMessage < ActiveRecord::Base
   end
 
   before_create :ensure_id_token
-
-
-  # def send_email
-  #   if events_have_signup?
-  #     # emails will contain individual links for signup
-  #     recipients.each { |recipient| MessageMailer.delay.email_blast(self.sender.id, recipient.email, self.id, recipient.id) }
-  #   else
-  #     MessageMailer.delay.email_blast(self.sender.id, recipients_emails, self.id)
-  #   end
-  #   self.update_attribute(:sent_at, Time.zone.now)
-  # end
-
-  # def self.dj_send_email(id)
-  #   em = EmailMessage.find(id)
-  #   em.send_email if em
-  # end
 
 
 
@@ -92,6 +75,15 @@ class EmailMessage < ActiveRecord::Base
 
   #scopes
   scope :by_updated_at, -> { order(updated_at: :desc) }
+
+  protected
+    def has_no_events?
+      if self.persisted?
+        has_events?
+      else
+        self.event_ids.empty?
+      end
+    end
 
   private
 

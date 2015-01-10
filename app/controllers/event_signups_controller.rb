@@ -1,7 +1,8 @@
 class EventSignupsController < ApplicationController
   before_action :auth_and_time_zone
-  before_action :set_event_signup, only: [:show, :edit, :update, :destroy]
-  before_action :set_event, except: [:create, :edit, :update]
+  before_action :set_event_signup, only: [:show, :edit, :update, :destroy, :activity_consent_form]
+  before_action :set_event, except: [:create, :edit, :update, :activity_consent_form]
+  before_action :set_current_user, only: [:create, :update, :activity_consent_form]
   after_action :verify_authorized
 
   def index
@@ -73,6 +74,24 @@ class EventSignupsController < ApplicationController
     end
   end
 
+  def activity_consent_form
+    authorize @event_signup
+    @event_signup.permission_check_box = params[:value]
+    respond_to do |format|
+      if @event_signup.save
+        format.js { js_update_success }
+      else
+        format.js { render :edit }
+      end
+    end
+
+    flash.now[:notice] = if @event_signup.has_activity_consent_form?
+      "#{@event_signup.scout.full_name} activty consent form was received."
+    else
+      "#{@event_signup.scout.full_name} activty consent form removed."
+    end
+  end
+
 
 
   private
@@ -104,6 +123,9 @@ class EventSignupsController < ApplicationController
       render :update_success
     end
 
+    def set_current_user
+      User.current = current_user if current_user
+    end
 
     # def redirect_for_signups
     #   if @event_signup.valid?
@@ -129,7 +151,7 @@ class EventSignupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_signup_params
-      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :need_carpool_seats, :has_carpool_seats, :scout_id, :event_id)
+      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :need_carpool_seats, :has_carpool_seats, :scout_id, :event_id, :permission_check_box)
     end
 
     def create_activity(task)

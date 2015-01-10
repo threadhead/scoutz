@@ -69,7 +69,11 @@ Scoutz::Application.routes.draw do
 
   post 'units/new' => 'units#new'
   resources :sub_units
-  resources :event_signups
+  resources :event_signups do
+    member do
+      put 'activity_consent_form'
+    end
+  end
 
   get "page/landing"
   get "page/terms_of_service"

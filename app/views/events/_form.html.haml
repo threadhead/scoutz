@@ -41,28 +41,6 @@
 
 
       %fieldset
-        %legend Forms
-        .row
-          .col-md-12
-            = f.label :type_of_health_forms, "Health form", class: 'control-label'
-            .form-inline
-              = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
-              %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
-                %i.fa.fa-circle.fa-stack-2x.tooltip_circle
-                %i.fa.fa-question.fa-stack-1x.fa-inverse
-
-        %br
-        .row
-          .col-md-8
-            = f.check_box :consent_required, label: "Activity consent forms required"
-        .row
-          .col-md-6
-            .well.well-sm
-              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Form coordinators'}, {multiple: true}
-              .help-block select adults authorized to accept forms, or leave blank for all adult leaders
-
-
-      %fieldset
         %legend Signup (RSVP)
         .row
           .col-md-12
@@ -82,6 +60,29 @@
       %fieldset
         %legend Reminder
         = f.check_box :send_reminders, label: "Send reminder 48 hours before event start"
+
+
+      %fieldset
+        %legend Forms
+        .row
+          .col-md-12
+            = f.label :type_of_health_forms, "Health form", class: 'control-label'
+            .form-inline
+              = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
+              %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
+                %i.fa.fa-circle.fa-stack-2x.tooltip_circle
+                %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+        %br
+        .row
+          .col-md-8
+            = f.check_box :consent_required, label: "Activity Consent Forms required"
+        .row
+          .col-md-8
+            .well.well-sm
+              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'ACF Coordinators'}, {multiple: true}
+              .help-block select adults authorized to accept forms, or leave blank for all adult leaders
+
 
 
 

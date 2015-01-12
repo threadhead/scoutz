@@ -4,6 +4,8 @@
       .well.well-sm
         .row
           .col-md-12
+            .pull-right
+              = user_picture_circle(event_signup.scout)
             %p.xxlarge
               %strong Sign Up #{event_signup.scout.f_name_l_initial}
 

@@ -85,22 +85,22 @@
               %strong Forms
             %td
               - if @event.health_forms_required?
-                %span.fa-stack{style: "font-size: .7em;"}
-                  %i.fa.fa-circle.fa-stack-2x
+                %span.fa-stack.fa-stack-sm
+                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
                   %i.fa.fa-inverse.fa-medkit.fa-stack-1x
               - else
-                %span.fa-stack{style: "font-size: .7em;"}
+                %span.fa-stack.fa-stack-sm
                   %i.fa.fa-medkit.fa-stack-1x
                   %i.fa.fa-ban.fa-stack-2x.text-danger
               Healh Forms: #{Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)}
 
               %br
               - if @event.consent_required?
-                %span.fa-stack{style: "font-size: .7em;"}
-                  %i.fa.fa-circle.fa-stack-2x
+                %span.fa-stack.fa-stack-sm
+                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
                   %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
               - else
-                %span.fa-stack{style: "font-size: .7em;"}
+                %span.fa-stack.fa-stack-sm
                   %i.fa.fa-thumbs-up.fa-stack-1x
                   %i.fa.fa-ban.fa-stack-2x.text-danger
               Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'not required'}

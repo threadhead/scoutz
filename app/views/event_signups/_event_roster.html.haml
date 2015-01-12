@@ -24,6 +24,7 @@
           %i.fa.fa-circle.fa-stack-2x.red-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
 
+
     - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
       %td
         %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Needs a ride: #{event_roster.need_carpool_seats} #{'seat'.pluralize(event_roster.need_carpool_seats)}"}
@@ -31,12 +32,14 @@
           %i.fa.fa-car.fa-inverse.fa-stack-1x
           %span.count-badge= event_roster.need_carpool_seats
 
+
     - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
       %td
         %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Driving: has #{event_roster.has_carpool_seats} #{'seat'.pluralize(event_roster.has_carpool_seats)}"}
           %i.fa.fa-circle.fa-stack-2x.orange-color
           %i.fa.fa-tachometer.fa-inverse.fa-stack-1x
           %span.count-badge= event_roster.has_carpool_seats
+
 
     - if event_roster.event.consent_required?
       %td
@@ -49,7 +52,9 @@
             %i.fa.fa-circle.fa-stack-2x.red-color
             %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
 
+
     %td.signup-comment= event_roster.comment
+
 
     - if policy(event_roster).update?
       %td

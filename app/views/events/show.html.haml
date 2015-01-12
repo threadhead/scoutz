@@ -68,7 +68,7 @@
         %tr
           %td
             %strong RSVP
-          %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
+          %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
 
         %tr
           %td
@@ -103,7 +103,7 @@
                 %span.fa-stack.fa-stack-sm
                   %i.fa.fa-thumbs-up.fa-stack-1x
                   %i.fa.fa-ban.fa-stack-2x.text-danger
-              Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'not required'}
+              Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
 
               - if @event.consent_required?
                 %p.small

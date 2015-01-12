@@ -7,8 +7,7 @@ class EventMailer < MailerBase
     @recipient = recipient
     set_time_zone(@event.unit)
 
-    mail from: "noreply@scoutt.in",
-         to: @recipient.email,
+    mail to: @recipient.email,
          subject: @event.email_reminder_subject
 
   end

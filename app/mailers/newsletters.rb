@@ -1,5 +1,4 @@
 class Newsletters < MailerBase
-  default from: "noreply@scoutt.in"
 
   def weekly(recipient, unit)
     set_time_zone(unit)

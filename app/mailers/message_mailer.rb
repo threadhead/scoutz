@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class MessageMailer < MailerBase
   add_template_helper(EmailEventSignupsHelper)
   add_template_helper(EventsHelper)
@@ -10,7 +12,7 @@ class MessageMailer < MailerBase
     @recipient = recipient
     set_time_zone(@email_message.unit)
 
-    set_attachments
+    # set_attachments
 
     # @events.each do |event|
     #   if event.ical.present?
@@ -19,18 +21,18 @@ class MessageMailer < MailerBase
     #   end
     # end
 
-    mail from: @sender.email,
+    mail reply_to: @sender.email,
          to: @recipient.email,
          subject: @email_message.subject_with_unit,
          template_name: 'email_blast'
   end
 
 
-  def set_attachments
-    if @email_message.has_attachments?
-      @email_message.email_attachments.each do |email_attachment|
-        attachments["#{email_attachment.original_file_name}"] = File.read(email_attachment.attachment.current_path)
-      end
-    end
-  end
+  # def set_attachments
+  #   if @email_message.has_attachments?
+  #     @email_message.email_attachments.each do |email_attachment|
+  #       attachments["#{email_attachment.original_file_name}"] = open(email_attachment.attachment.url) {|f| f.read }
+  #     end
+  #   end
+  # end
 end

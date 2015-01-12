@@ -24,7 +24,8 @@ RSpec.describe MessageMailer, type: :mailer do
     it "renders the headers" do
       expect(mail.subject).to eq("[CS Pack 134] Email Test Message Subject")
       expect(mail.to).to eq([@recipient.email])
-      expect(mail.from).to eq([@sender.email])
+      expect(mail.reply_to).to eq([@sender.email])
+      expect(mail.from).to eq(["noreply@scoutt.in"])
     end
   end
 

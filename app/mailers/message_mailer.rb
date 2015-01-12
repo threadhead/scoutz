@@ -29,7 +29,7 @@ class MessageMailer < MailerBase
   def set_attachments
     if @email_message.has_attachments?
       @email_message.email_attachments.each do |email_attachment|
-        attachments["#{email_attachment.original_file_name}"] = File.read(email_attachment.attachment.current_path)
+        # attachments["#{email_attachment.original_file_name}"] = File.read(email_attachment.attachment.url)
       end
     end
   end

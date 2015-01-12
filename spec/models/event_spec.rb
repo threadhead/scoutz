@@ -92,6 +92,8 @@ RSpec.describe Event do
     specify { expect(subject[:url]).to eq("/units/#{@unit.id}/events/#{@event.id}") }
   end
 
+
+
   describe '.after_signup_deadline?' do
     before { @event = FactoryGirl.build(:event, signup_deadline: Time.zone.now)}
 
@@ -106,6 +108,8 @@ RSpec.describe Event do
     end
   end
 
+
+
   describe '.disable_reminder_if_old' do
     let(:event) { FactoryGirl.build(:event) }
 
@@ -119,6 +123,75 @@ RSpec.describe Event do
       event.start_at = 1.days.ago
       event.disable_reminder_if_old
       expect(event.reminder_sent_at).to be_nil
+    end
+  end
+
+
+
+  context 'form coordinators' do
+    before do
+      @basic_adult = FactoryGirl.create(:adult, role: :basic)
+      @basic_adult.units << @unit1
+      @admin_adult = FactoryGirl.create(:adult, role: :admin)
+      @admin_adult.units << @unit1
+    end
+    let(:event) { FactoryGirl.build_stubbed(:event, unit: @unit1) }
+
+
+    describe '.form_coordinators' do
+      it 'no coordinators selected, return all adults with role=leader or above' do
+        expect(event.form_coordinators).to include(@adult)
+        expect(event.form_coordinators).to include(@admin_adult)
+        expect(event.form_coordinators).not_to include(@basic_adult)
+        expect(event.form_coordinators).not_to include(@scout1)
+      end
+
+      it 'when coordinators specified, it returns only those selected plus admins' do
+        event.form_coordinator_ids << @basic_adult.id.to_s
+        expect(event.form_coordinators).to include(@basic_adult)
+        expect(event.form_coordinators).to include(@admin_adult)
+        expect(event.form_coordinators).not_to include(@adult)
+        expect(event.form_coordinators).not_to include(@scout1)
+      end
+    end
+
+
+    describe '.form_coordinator?(user)' do
+      context 'when no coordinators specified' do
+        it 'returns true for admins and leaders' do
+          expect(event.form_coordinator?(@admin_adult)).to eq(true)
+          expect(event.form_coordinator?(@adult)).to eq(true)
+        end
+
+        it 'returns false for all others' do
+          expect(event.form_coordinator?(@basic_adult)).to eq(false)
+          expect(event.form_coordinator?(@scout1)).to eq(false)
+        end
+      end
+
+      context 'when coordinators sepcified' do
+        before { event.form_coordinator_ids << @basic_adult.id.to_s }
+
+        it 'returns true for admins and coordinators' do
+          expect(event.form_coordinator?(@admin_adult)).to eq(true)
+          expect(event.form_coordinator?(@basic_adult)).to eq(true)
+        end
+
+        it 'returns false for all others' do
+          expect(event.form_coordinator?(@adult)).to eq(false)
+          expect(event.form_coordinator?(@scout1)).to eq(false)
+        end
+      end
+    end
+
+    describe '.has_form_coordinators' do
+      it 'returns false when no coordinators are specified' do
+        expect(event.has_form_coordinators).to eq(false)
+      end
+      it 'returns true when coordinators are specified' do
+        event.form_coordinator_ids << @basic_adult.id.to_s
+        expect(event.has_form_coordinators).to eq(true)
+      end
     end
   end
 

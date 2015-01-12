@@ -278,6 +278,10 @@ class User < ActiveRecord::Base
     where(User.arel_table[:id].not_in(join_table_with_condition))
   end
 
+  def self.role_is_leader_or_above
+    t = User.arel_table
+    User.where(t[:role].gteq(User.roles[:leader]))
+  end
 
 
 

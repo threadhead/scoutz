@@ -32,8 +32,8 @@ class EventSignupPolicy < ApplicationPolicy
     end
   end
 
-  def form_coordinatory?
-    true
+  def form_coordinator?
+    record.event.form_coordinator?(user)
   end
 
   def event_owner?

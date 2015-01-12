@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150110161001) do
+ActiveRecord::Schema.define(version: 20150110200539) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -204,6 +204,8 @@ ActiveRecord::Schema.define(version: 20150110161001) do
     t.string   "sl_profile"
     t.string   "sl_uid"
     t.integer  "type_of_health_forms", default: 0
+    t.boolean  "consent_required"
+    t.string   "form_coordinator_ids", default: "--- []\n"
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at", using: :btree

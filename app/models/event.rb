@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   include PgSearch
   include DateTimeAttributes
 
+  serialize :form_coordinator_ids, Array
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
@@ -145,7 +146,30 @@ class Event < ActiveRecord::Base
     event_signup_users.map(&:id)
   end
 
+  def form_coordinators
+    if has_form_coordinators
+      # adult is in the form_coordinators_ids list, or an admin
+      t = User.arel_table
+      unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
+    else
+      unit.adults.role_is_leader_or_above
+    end
+  end
 
+  def form_coordinator?(user)
+    return false unless user.adult?
+    return true if user.role_at_least(:admin)
+
+    if has_form_coordinators
+      form_coordinator_ids.include? user.id.to_s
+    else
+      unit.adults.role_is_leader_or_above.exists?(id: user.id)
+    end
+  end
+
+  def has_form_coordinators
+    !form_coordinator_ids.reject(&:empty?).empty?
+  end
 
 
   # the types of helath forms required based on the event's type_of_health_forms selection

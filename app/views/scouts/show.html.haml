@@ -87,7 +87,7 @@
             %td
               %strong Parents
             %td
-              = scout_adults_link_list(@unit, @user)
+              = unit_users_link_list(@unit, @user.unit_adults(@unit))
 
           %tr
             %td

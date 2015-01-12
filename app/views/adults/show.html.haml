@@ -87,7 +87,7 @@
             %td
               %strong Scouts
             %td
-              = adult_scouts_link_list(@unit, @user)
+              = unit_users_link_list(@unit, @user.unit_scouts(@unit))
 
           = render partial: 'users/health_form_show', locals: {user: @user, unit: @unit}
 

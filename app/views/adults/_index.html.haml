@@ -14,7 +14,7 @@
             %td.centered= user_picture_circle(adult)
             %td= link_to adult.name_lf, unit_adult_path(unit, adult)
             %td= all_leadership_positions(@unit, adult)
-            %td= unit_scouts_link_list(unit, adult.unit_scouts(unit))
+            %td= unit_users_link_list(unit, adult.unit_scouts(unit))
 
   %small showing #{users.size} of #{users_count}
 

@@ -1,6 +1,9 @@
 class MessageMailer < MailerBase
   add_template_helper(EmailEventSignupsHelper)
   add_template_helper(EventsHelper)
+  add_template_helper(UsersHelper)
+
+  default from: "noreply@scoutt.in"
 
 
   def email_blast(recipient, email_message)
@@ -19,7 +22,7 @@ class MessageMailer < MailerBase
     #   end
     # end
 
-    mail from: @sender.email,
+    mail reply_to: @sender.email,
          to: @recipient.email,
          subject: @email_message.subject_with_unit,
          template_name: 'email_blast'

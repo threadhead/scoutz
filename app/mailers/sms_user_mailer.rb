@@ -1,5 +1,5 @@
 class SmsUserMailer < MailerBase
-  default from: "from@example.com"
+  default from: "noreply@scoutt.in"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:

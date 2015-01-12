@@ -4,7 +4,7 @@
     :title: 'Pack'
     :short_name: 'CS'
     :sub_unit_name: 'Den'
-    :event_types: ['Pack Event', 'Den Event', 'Leader Event']
+    :event_types: ['Pack Meeting', 'Camping/Outing', 'Pack Event', 'Den Event', 'Leader Event']
     :ranks: ['Lion', 'Bobcat', 'Tiger', 'Wolf', 'Bear', 'Webelos I', 'Webelos II']
     :scout_leadership_positions: ['Denner']
     :adult_leadership_positions: ['Cubmaster', 'Asst Cubmaster', 'Den Leader', 'Asst Den Leader', 'Tiger Den Leader', 'Asst Tiger Den Leader', 'Webelos Den Leader', 'Asst Webelos Den Leader', 'Committee Chair', 'Committee Member', 'Commissioner', 'Den Chief', 'Round Table Commissioner', 'Chartered Org Rep', 'Webmaster']
@@ -14,7 +14,7 @@
     :title: 'Troop'
     :short_name: 'BS'
     :sub_unit_name: 'Patrol'
-    :event_types: ['Troop Event', 'Patrol Event', 'Leader Event']
+    :event_types: ['Troop Meeting', 'Camping/Outing', 'Troop Event', 'Patrol Event', 'Adult Leader Event']
     :ranks: ['Scout', 'Tenderfoot', 'Second Class', 'First Class', 'Star', 'Life', 'Eagle Scout']
     :scout_leadership_positions: ['Senior Patrol Leader', 'Asst Senior Patrol Leader', 'Junior Asst Scoutmaster', 'Troop Guide', 'Scribe', 'Troop Historian', 'Patrol Leader', 'Asst Patrol Leader', 'Quartermaster', 'Librarian', 'Den Chief', 'Chaplain Aide', 'Instructor', 'Webmaster', 'OA Rep', 'Trainer']
     :adult_leadership_positions: ['Scoutmaster', 'Asst Scoutmaster', 'Committee Chair', 'Committee Member', 'Advancement Coord', 'Chartered Org Rep', 'Treasurer', 'Webmaster', 'OA Rep', 'Trainer']
@@ -24,7 +24,7 @@
     :title: 'Crew'
     :short_name: 'VC'
     :sub_unit_name: 'Team'
-    :event_types: ['Crew Event', 'Leader Event']
+    :event_types: ['Crew Meeting', 'Camping/Outing', 'Crew Event', 'Leader Event']
     :ranks: ['Bronze Award', 'Silver Award', 'Gold Award', 'Qwest Award', 'TRUST Award', 'Ranger Award']
     :scout_leadership_positions: []
     :adult_leadership_positions: []

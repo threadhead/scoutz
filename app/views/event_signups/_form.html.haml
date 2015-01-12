@@ -41,14 +41,15 @@
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
-  %fieldset.fieldset-sm
-    %legend Activity Consent Form
-    .checkbox
-      = f.label :permision_check_box do
-        = f.check_box :permission_check_box, value: event_signup.has_activity_consent_form?
-        ACF Received
-        - unless event_signup.permission_at.nil?
-          on: #{event_signup.permission_at.to_s(:short_ampm)}
+  - if event_signup.event.consent_required?
+    %fieldset.fieldset-sm
+      %legend Activity Consent Form
+      .checkbox
+        = f.label :permision_check_box do
+          = f.check_box :permission_check_box, value: event_signup.has_activity_consent_form?
+          ACF Received
+          - unless event_signup.permission_at.nil?
+            on: #{event_signup.permission_at.to_s(:short_ampm)}
 
 
   %br

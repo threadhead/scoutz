@@ -146,10 +146,10 @@ RSpec.describe Event do
         expect(event.form_coordinators).not_to include(@scout1)
       end
 
-      it 'when coordinators specified, it returns only those selected plus admins' do
+      it 'when coordinators specified, it returns only those selected' do
         event.form_coordinator_ids << @basic_adult.id.to_s
         expect(event.form_coordinators).to include(@basic_adult)
-        expect(event.form_coordinators).to include(@admin_adult)
+        expect(event.form_coordinators).not_to include(@admin_adult)
         expect(event.form_coordinators).not_to include(@adult)
         expect(event.form_coordinators).not_to include(@scout1)
       end
@@ -194,6 +194,31 @@ RSpec.describe Event do
       end
     end
   end
+
+
+
+  describe '.health_forms_required?' do
+    let(:event) { FactoryGirl.build(:event) }
+
+    it 'return false when no health forms are required' do
+      event.type_of_health_forms = :not_required.to_s
+      expect(event.health_forms_required?).to eq(true)
+    end
+
+    [ :parts_ab,
+      :parts_abc,
+      :northern_tier,
+      :florida_sea_base,
+      :philmont,
+      :summit
+      ].each do |f|
+        it "returns true when health forms #{f} is rquired" do
+          event.type_of_health_forms = f.to_s
+          expect(event.health_forms_required?).to eq(true)
+        end
+    end
+  end
+
 
 
 end

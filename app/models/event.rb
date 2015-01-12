@@ -148,9 +148,10 @@ class Event < ActiveRecord::Base
 
   def form_coordinators
     if has_form_coordinators
-      # adult is in the form_coordinators_ids list, or an admin
+      # adults in the form_coordinators_ids list, or an admin
       t = User.arel_table
-      unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
+      # unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
+      unit.adults.where(id: form_coordinator_ids.reject(&:empty?))
     else
       unit.adults.role_is_leader_or_above
     end
@@ -192,6 +193,10 @@ class Event < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def health_forms_required?
+    self.health_forms_required != Event.type_of_health_forms[:not_required]
   end
 
   def self.type_of_health_forms_for_select

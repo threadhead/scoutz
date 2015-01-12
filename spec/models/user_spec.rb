@@ -205,7 +205,7 @@ RSpec.describe User do
       end
     end
 
-    describe '.role_is_leader_or_above', :focus do
+    describe '.role_is_leader_or_above' do
       before(:all) do
         @adult_basic = FactoryGirl.create(:adult, role: :basic)
         @adult_leader = FactoryGirl.create(:adult, role: :leader)

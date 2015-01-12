@@ -79,17 +79,17 @@ class EventSignupsController < ApplicationController
     @event_signup.permission_check_box = params[:value]
     respond_to do |format|
       if @event_signup.save
+        flash.now[:info] = if @event_signup.has_activity_consent_form?
+          "#{@event_signup.scout.full_name}'s activty consent form was received."
+        else
+          "#{@event_signup.scout.full_name}'s activty consent form removed."
+        end
         format.js { js_update_success }
       else
         format.js { render :edit }
       end
     end
 
-    flash.now[:notice] = if @event_signup.has_activity_consent_form?
-      "#{@event_signup.scout.full_name} activty consent form was received."
-    else
-      "#{@event_signup.scout.full_name} activty consent form removed."
-    end
   end
 
 

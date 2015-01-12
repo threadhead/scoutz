@@ -200,9 +200,9 @@ RSpec.describe Event do
   describe '.health_forms_required?' do
     let(:event) { FactoryGirl.build(:event) }
 
-    it 'return false when no health forms are required' do
-      event.type_of_health_forms = :not_required.to_s
-      expect(event.health_forms_required?).to eq(true)
+    it 'returns false when no health forms are required' do
+      event.type_of_health_forms = 0
+      expect(event.health_forms_required?).to eq(false)
     end
 
     [ :parts_ab,

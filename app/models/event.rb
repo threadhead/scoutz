@@ -196,7 +196,7 @@ class Event < ActiveRecord::Base
   end
 
   def health_forms_required?
-    self.health_forms_required != Event.type_of_health_forms[:not_required]
+    type_of_health_forms != 'not_required'
   end
 
   def self.type_of_health_forms_for_select

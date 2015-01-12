@@ -129,7 +129,7 @@ RSpec.describe Event do
 
 
   context 'form coordinators' do
-    before do
+    before(:all) do
       @basic_adult = FactoryGirl.create(:adult, role: :basic)
       @basic_adult.units << @unit1
       @admin_adult = FactoryGirl.create(:adult, role: :admin)

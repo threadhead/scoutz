@@ -1,28 +1,28 @@
 %h3{style: "margin-bottom: 20px;"} #{event.unit.name} - #{event.name}
-%div{style: "margin-left: 12px; margin-bottom: 48px;"}
-  %table
+%div{style: "margin-left: 24px; margin-bottom: 48px;"}
+  %table{style: 'border-spacing: 0; width: 80%;'}
     %tr
-      %td{td_email}
+      %td{style: td_border + td_col_1}
         %strong Kind
-      %td
+      %td{style: td_border}
         = event.kind
         = " - #{event_kind_sub_units(event)}" if event.sub_unit_kind?
 
     %tr
-      %td
+      %td{style: td_border + td_col_1}
         %strong Times
-      %td #{event.start_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)} - #{event.end_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}
+      %td{style: td_border} #{event.start_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)} - #{event.end_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}
 
     %tr
-      %td
+      %td{style: td_border + td_col_1}
         %strong Organizers
-      %td
+      %td{style: td_border}
         = event.users.map(&:full_name).join(", ")
 
     %tr
-      %td
+      %td{style: td_border + td_col_1}
         %strong RSVP
-      %td
+      %td{style: td_border}
         #{event.signup_required ? "required, by #{event.signup_deadline.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}" : 'not required'}
         - if event.signup_required
           - if event.after_signup_deadline?
@@ -31,29 +31,46 @@
             %a{href: "#signup"} (signup below)
 
     - if event.signup_required
-      %td
+      %td{style: td_border + td_col_1}
         %strong Attending
-      %td
+      %td{style: td_border}
         = event.attendee_count
         %span{style: "color: dimgray;"} (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
 
     %tr
-      %td
-        %strong Attire
-      %td= event.attire
+      %td{style: td_border + td_col_1}
+        %strong Forms
+      %td{style: td_border}
+        Healh Forms: #{Event.type_of_health_forms_for_select.key(event.type_of_health_forms)}
+
+        %br
+        Activity Consent: #{event.consent_required ? '<em>required</em>'.html_safe : 'not required'}
+
+        - if event.consent_required?
+          %br
+          Coordinator#{'s' if event.form_coordinators.count > 1 }:
+          = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
+
 
     %tr
-      %td{td_email}
+      %td{style: td_border + td_col_1}
+        %strong Attire
+      %td{style: td_border}= event.attire
+
+    %tr
+      %td{style: td_border + td_col_1}
         %strong Location
-      %td
+      %td{style: td_border}
         %address= email_location(event)
 
     - if event.ical.file.try(:exists?)
       %tr
-        %td
+        %td{style: td_border + td_col_1}
           %strong iCal
-        %td
-          = link_to image_tag('ical_email.png'), (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics"
+        %td{style: td_border + "vertical-align: middle;"}
+          = link_to (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics" do
+            =image_tag('ical_email.png')
+            %span{style: "font-size: 0.8em;"} add to calendar
 
     %tr
       %td &nbsp;

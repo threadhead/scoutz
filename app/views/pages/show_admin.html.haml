@@ -10,9 +10,8 @@
           - if policy(@page).edit?
             = link_to(edit_unit_page_path(@unit, @page), class: 'btn btn-default') do
               %i.fa.fa-edit
-              change
+              edit
 
-        .btn-group
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
             actions
             %span.caret

@@ -64,22 +64,18 @@
           %td
             - @event.users.each do |user|
               = link_to user.full_name, unit_user_path(@unit, user.id)
-
-        %tr
-          %td
-            %strong RSVP
-          %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
-
         %tr
           %td
             %strong Reminders?
           %td #{@event.send_reminders ? 'Yes' : 'No'}
 
-          %tr
-            %td
-              %strong Attire
-            %td= @event.attire
+        %tr
+          %td
+            %strong Sign Up
+          %td #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
 
+
+        - if @event.signup_required?
           %tr
             %td
               %strong Forms
@@ -109,6 +105,11 @@
                 %p.small
                   Coordinator#{'s' if @event.form_coordinators.count > 1 }:
                   = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'
+
+        %tr
+          %td
+            %strong Attire
+          %td= @event.attire
 
         %tr
           %td

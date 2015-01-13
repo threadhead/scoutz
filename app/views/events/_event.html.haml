@@ -1,6 +1,7 @@
 %h3{style: "margin-bottom: 20px;"} #{event.unit.name} - #{event.name}
 %div{style: "margin-left: 24px; margin-bottom: 48px;"}
   %table{style: 'border-spacing: 0; width: 80%;'}
+
     %tr
       %td{style: td_border + td_col_1}
         %strong Kind
@@ -8,10 +9,12 @@
         = event.kind
         = " - #{event_kind_sub_units(event)}" if event.sub_unit_kind?
 
+
     %tr
       %td{style: td_border + td_col_1}
         %strong Times
-      %td{style: td_border} #{event.start_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)} - #{event.end_at.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}
+      %td{style: td_border} #{event.start_at.in_time_zone(event.unit.time_zone).to_s(:long_ampm)} - #{event.end_at.in_time_zone(event.unit.time_zone).to_s(:long_ampm)}
+
 
     %tr
       %td{style: td_border + td_col_1}
@@ -19,16 +22,18 @@
       %td{style: td_border}
         = event.users.map(&:full_name).join(", ")
 
+
     %tr
       %td{style: td_border + td_col_1}
-        %strong RSVP
+        %strong Sign Up
       %td{style: td_border}
-        #{event.signup_required ? "required, by #{event.signup_deadline.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}" : 'not required'}
+        #{event.signup_required ? "by #{event.signup_deadline.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}" : 'not required'}
         - if event.signup_required
           - if event.after_signup_deadline?
             %strong (PASSED)
           - else
-            %a{href: "#signup"} (signup below)
+            (signup links below)
+
 
     - if event.signup_required
       %td{style: td_border + td_col_1}
@@ -37,19 +42,20 @@
         = event.attendee_count
         %span{style: "color: dimgray;"} (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
 
-    %tr
-      %td{style: td_border + td_col_1}
-        %strong Forms
-      %td{style: td_border}
-        Healh Forms: #{Event.type_of_health_forms_for_select.key(event.type_of_health_forms)}
 
-        %br
-        Activity Consent: #{event.consent_required ? '<em>required</em>'.html_safe : 'not required'}
+      %tr
+        %td{style: td_border + td_col_1}
+          %strong Forms
+        %td{style: td_border}
+          Healh Forms: #{Event.type_of_health_forms_for_select.key(event.type_of_health_forms)}
 
-        - if event.consent_required?
           %br
-          Coordinator#{'s' if event.form_coordinators.count > 1 }:
-          = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
+          Activity Consent: #{event.consent_required ? '<em>required</em>'.html_safe : 'not required'}
+
+          - if event.consent_required?
+            %br
+            Coordinator#{'s' if event.form_coordinators.count > 1 }:
+            = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
 
 
     %tr
@@ -78,8 +84,6 @@
 
 
 
-
-
   - if event.signup_required
     %div#signup
     - if @recipient && @recipient.adult?
@@ -102,7 +106,7 @@
               - else
                 %table
                   %tr
-                    %td Signed up:
+                    %td Signed Up on:
                     %td= event_signup.updated_at.to_s(:short_ampm)
                   %tr
                     %td Scouts attending:

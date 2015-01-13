@@ -1,7 +1,4 @@
 class EventMailer < MailerBase
-  add_template_helper(EmailEventSignupsHelper)
-  add_template_helper(EventsHelper)
-
   def reminder(event, recipient)
     @event = event
     @recipient = recipient

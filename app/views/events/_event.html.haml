@@ -53,7 +53,7 @@
         %td
           %strong iCal
         %td
-          = link_to image_tag('ical_email.png'), (URI.parse(root_url) + event.ical.url).to_s, download: "#{event.name.parameterize}.ics"
+          = link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
 
     %tr
       %td &nbsp;

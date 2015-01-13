@@ -5,6 +5,7 @@ RSpec.describe Event do
   before(:all) do
     adult_2units_2scout_3subunits
   end
+  let(:event) { FactoryGirl.build(:event) }
 
   it { should belong_to(:unit) }
   it { should have_and_belong_to_many(:users) }
@@ -16,7 +17,23 @@ RSpec.describe Event do
   it { should validate_presence_of(:message) }
   it { should validate_uniqueness_of(:sl_profile).allow_nil }
 
-  specify { expect(FactoryGirl.build(:event)).to be_valid }
+  describe 'signup_deadline validation' do
+    it 'valid if signup_deadline is specified and signup required' do
+      event.signup_required = true
+      event.signup_deadline = Time.now
+      expect(event).to be_valid
+      expect(event.errors).not_to include(:signup_deadline)
+    end
+
+    it 'not valid if signup_deadline missing and signup required' do
+      event.signup_required = true
+      event.signup_deadline = nil
+      expect(event).not_to be_valid
+      expect(event.errors).to include(:signup_deadline)
+    end
+  end
+
+  specify { expect(event).to be_valid }
 
   describe '#end_at' do
     context 'is equal to start_at' do

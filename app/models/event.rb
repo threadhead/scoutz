@@ -30,6 +30,7 @@ class Event < ActiveRecord::Base
       presence: true
 
   validates :sl_profile, uniqueness: { allow_nil: true }
+  validates :signup_deadline, presence: true, if: :signup_required?
 
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at

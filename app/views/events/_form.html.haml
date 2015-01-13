@@ -48,17 +48,18 @@
         %legend Sign Up
         .row
           .col-md-12
-            = f.check_box :signup_required
-        .row
-          .col-md-4
-            .form-group
-              = f.label :signup_deadline, "Signup by"
-              %br
-              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 49%;"
-              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 49%;"
-        .row
-          .col-md-12
+            .form-inline
+              = f.label :signup_required do
+                = f.check_box_without_bootstrap :signup_required
+                signup required by
+
+              = #f.label :signup_deadline, "Signup by"
+
+              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 15%;"
+              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 15%;"
             .help-block even if date is entered, Signup Required must be checked to be honored
+
+            %br
 
             .well.well-sm
               %h4 Forms to require when signup required

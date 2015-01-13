@@ -18,20 +18,37 @@ RSpec.describe Event do
   it { should validate_uniqueness_of(:sl_profile).allow_nil }
 
   describe 'signup_deadline validation' do
-    it 'valid if signup_deadline is specified and signup required' do
-      event.signup_required = true
+    before { event.signup_required = true}
+
+    it 'valid when specified and signup required' do
       event.signup_deadline = Time.now
       expect(event).to be_valid
       expect(event.errors).not_to include(:signup_deadline)
     end
 
-    it 'not valid if signup_deadline missing and signup required' do
-      event.signup_required = true
+    it 'not valid if missing and signup required' do
       event.signup_deadline = nil
       expect(event).not_to be_valid
       expect(event.errors).to include(:signup_deadline)
     end
+
+    it 'is not valid when after the start time' do
+      event.signup_deadline = event.start_at
+      expect(event).not_to be_valid
+      expect(event.errors).to include(:signup_deadline)
+
+      event.signup_deadline = event.start_at + 1.minute
+      expect(event).not_to be_valid
+      expect(event.errors).to include(:signup_deadline)
+    end
+
+    it 'is valid when before start_at' do
+      event.signup_deadline = event.start_at - 1.second
+      expect(event).to be_valid
+      expect(event.errors).not_to include(:signup_deadline)
+    end
   end
+
 
   specify { expect(event).to be_valid }
 

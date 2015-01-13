@@ -32,6 +32,13 @@ class Event < ActiveRecord::Base
   validates :sl_profile, uniqueness: { allow_nil: true }
   validates :signup_deadline, presence: true, if: :signup_required?
 
+  validate :signup_deadline_before_start
+  def signup_deadline_before_start
+    if signup_required? && start_at && signup_deadline
+      errors.add(:signup_deadline, "must be before the start time") if signup_deadline >= start_at
+    end
+  end
+
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at
     if end_at && start_at

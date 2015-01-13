@@ -11,8 +11,10 @@
 
     - if @email_message.has_attachments?
       %div{style: "height: 12px; background-color: darkgray; margin-bottom: 8px;"}
+      %strong Attachments
+      %br
       - @email_message.email_attachments.each do |email_attachment|
-        = link_to email_attachment.original_file_name, email_attachment.attachment.url
+        = link_to email_attachment.original_file_name, (URI.parse(root_url) + email_attachment.attachment.url).to_s
         %br
 
     = render partial: 'unsubscribe/email_footer', locals: {action: :blast_email, user: @recipient}

@@ -116,6 +116,8 @@
     .col-md-12
       %fieldset
         %legend Details
+        %p.pull-right.ckeditor-button-help Use #{image_tag 'ckeditor_link_button.png'} to attach files. Use #{image_tag 'ckeditor_image_button.png'} to insert images.
+        .clearfix
         = f.text_area :message, hide_label: true, id: 'ckeditor'
 
   .row

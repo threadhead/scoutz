@@ -65,7 +65,6 @@ RSpec.describe MessageMailer, type: :mailer do
       @event.delete
       expect(mail.body.encoded).to_not include("src=\"http://www.testing.com/assets/ical_email.png\"")
     end
-
   end
 
 

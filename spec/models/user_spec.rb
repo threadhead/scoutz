@@ -204,6 +204,28 @@ RSpec.describe User do
         specify { expect(Scout.with_sms).not_to include(@s1) }
       end
     end
+
+    describe '.role_is_leader_or_above' do
+      before(:all) do
+        @adult_basic = FactoryGirl.create(:adult, role: :basic)
+        @adult_leader = FactoryGirl.create(:adult, role: :leader)
+        @adult_admin = FactoryGirl.create(:adult, role: :admin)
+        @scout_basic = FactoryGirl.create(:scout, role: :basic)
+        @scout_leader = FactoryGirl.create(:scout, role: :leader)
+      end
+      after(:all) { [@adult_basic, @adult_leader, @adult_admin, @scout_basic, @scout_leader].each {|d| d.delete } }
+
+      it 'finds users with role leader or above' do
+        expect(User.role_is_leader_or_above).to include(@adult_leader)
+        expect(User.role_is_leader_or_above).to include(@adult_admin)
+        expect(User.role_is_leader_or_above).to include(@scout_leader)
+      end
+
+      it 'does not find users with role below leader' do
+        expect(User.role_is_leader_or_above).not_to include(@scout_basic)
+        expect(User.role_is_leader_or_above).not_to include(@adult_basic)
+      end
+    end
   end
 
 

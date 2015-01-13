@@ -4,9 +4,7 @@
   %td.centered= user_picture_circle(event_roster.scout)
   %td
     = event_roster.scout.name_lf
-    - if policy(event_roster).update?
-      %br
-      = link_to 'edit/cancel', '#', class: 'btn btn-xs btn-default edit-event-signup-modal', data: {event_signup_id: event_roster.id}
+
 
   %td.text-grey
     = "Scout: #{event_roster.scouts_attending}"
@@ -26,18 +24,50 @@
           %i.fa.fa-circle.fa-stack-2x.red-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
 
-    %td
-      - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
+
+    - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
+      %td
         %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Needs a ride: #{event_roster.need_carpool_seats} #{'seat'.pluralize(event_roster.need_carpool_seats)}"}
           %i.fa.fa-circle.fa-stack-2x.yellow-color
           %i.fa.fa-car.fa-inverse.fa-stack-1x
           %span.count-badge= event_roster.need_carpool_seats
 
-    %td
-      - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
+
+    - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
+      %td
         %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Driving: has #{event_roster.has_carpool_seats} #{'seat'.pluralize(event_roster.has_carpool_seats)}"}
           %i.fa.fa-circle.fa-stack-2x.orange-color
           %i.fa.fa-tachometer.fa-inverse.fa-stack-1x
           %span.count-badge= event_roster.has_carpool_seats
 
+
+    - if event_roster.event.consent_required?
+      %td
+        - if event_roster.has_activity_consent_form?
+          %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Activity Consent Submitted: #{event_roster.permission_at.to_s(:short_ampm)}"}
+            %i.fa.fa-circle.fa-stack-2x.green-color
+            %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
+        - else
+          %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Need to collect Activity Consent Form"}
+            %i.fa.fa-circle.fa-stack-2x.red-color
+            %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
+
+
     %td.signup-comment= event_roster.comment
+
+
+    - if policy(event_roster).update?
+      %td
+        .btn-group
+          %a.btn.dropdown-toggle.btn-warning.btn-xs{href: '#', data: {toggle: 'dropdown'}}
+            %i.fa.fa-gear
+            %span.caret
+          %ul.dropdown-menu
+            %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: {event_signup_id: event_roster.id}
+            - if event_roster.event.consent_required?
+              %li
+                - if event_roster.has_activity_consent_form?
+                  = link_to 'Remove Activity Consent', activity_consent_form_event_signup_path(event_roster, value: '0'), remote: true, method: :put
+                - else
+                  = link_to 'Activity Consent Received', activity_consent_form_event_signup_path(event_roster, value: '1'), remote: true, method: :put
+

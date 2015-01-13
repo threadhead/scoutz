@@ -83,3 +83,6 @@ jQuery ->
       $("div#event-signup-modal-form").modal()
       )
     )
+
+  $("select#event_form_coordinator_ids").select2
+    placeholder: 'Select recipients'

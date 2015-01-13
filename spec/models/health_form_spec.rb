@@ -139,4 +139,5 @@ RSpec.describe HealthForm, :type => :model do
     end
 
   end
+
 end

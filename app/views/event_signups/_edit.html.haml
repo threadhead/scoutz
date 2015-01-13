@@ -4,6 +4,9 @@
 
       .modal-header
         %button.close(data-dismiss='modal') &times;
+        .pull-right
+          = user_picture_circle(event_signup.scout)
+          &nbsp;
         %p.xxlarge
           %strong
             -if event_signup.new_record?

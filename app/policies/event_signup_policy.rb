@@ -20,7 +20,9 @@ class EventSignupPolicy < ApplicationPolicy
     adult_admin || event_owner? || users_signup?
   end
 
-
+  def activity_consent_form?
+    adult_admin || form_coordinator?
+  end
 
   def users_signup?
     if record.respond_to?(:id)
@@ -28,6 +30,10 @@ class EventSignupPolicy < ApplicationPolicy
     else
       true
     end
+  end
+
+  def form_coordinator?
+    record.event.form_coordinator?(user)
   end
 
   def event_owner?

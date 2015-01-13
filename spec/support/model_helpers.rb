@@ -13,7 +13,7 @@ module ModelHelpers
     @adult.units << @unit2
     @adult2.units << @unit2
 
-    @scout1 = FactoryGirl.create(:scout)
+    @scout1 = FactoryGirl.create(:scout, role: :leader)
     @scout1.unit_positions.create(unit_id: @unit1.id, leadership: 'Denner')
     @scout2 = FactoryGirl.create(:scout, email: 'bo@aol.com', sms_number: '3333333333', sms_provider: 'Verizon', event_reminder_sms: true)
     @scout3 = FactoryGirl.create(:scout, email: 'asdf@aol.com', sms_number: '4444444444', sms_provider: 'Verizon', event_reminder_sms: true)

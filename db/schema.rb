@@ -15,10 +15,10 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "pg_trgm"
   enable_extension "hstore"
+  enable_extension "pg_trgm"
 
-  create_table "activities", force: true do |t|
+  create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
     t.string   "trackable_type", limit: 255
     t.integer  "owner_id"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
   add_index "activities", ["unit_id"], name: "index_activities_on_unit_id", using: :btree
 
-  create_table "ckeditor_assets", force: true do |t|
+  create_table "ckeditor_assets", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "data_file_name",          limit: 255, null: false
     t.string   "data_content_type",       limit: 255
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "ckeditor_assets", ["updated_at"], name: "index_ckeditor_assets_on_updated_at", using: :btree
   add_index "ckeditor_assets", ["user_id"], name: "index_ckeditor_assets_on_user_id", using: :btree
 
-  create_table "councils", force: true do |t|
+  create_table "councils", force: :cascade do |t|
     t.string   "name",           limit: 255
     t.integer  "council_number"
     t.string   "state",          limit: 255
@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "councils", ["name"], name: "index_councils_on_name", using: :btree
   add_index "councils", ["state"], name: "index_councils_on_state", using: :btree
 
-  create_table "counselors", force: true do |t|
+  create_table "counselors", force: :cascade do |t|
     t.integer  "merit_badge_id"
     t.integer  "user_id"
     t.integer  "unit_id"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "counselors", ["unit_id"], name: "index_counselors_on_unit_id", using: :btree
   add_index "counselors", ["user_id"], name: "index_counselors_on_user_id", using: :btree
 
-  create_table "delayed_jobs", force: true do |t|
+  create_table "delayed_jobs", force: :cascade do |t|
     t.integer  "priority",               default: 0
     t.integer  "attempts",               default: 0
     t.text     "handler"
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
-  create_table "email_attachments", force: true do |t|
+  create_table "email_attachments", force: :cascade do |t|
     t.integer  "email_message_id"
     t.string   "attachment",         limit: 255
     t.integer  "file_size"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   add_index "email_attachments", ["email_message_id"], name: "index_email_attachments_on_email_message_id", using: :btree
 
-  create_table "email_messages", force: true do |t|
+  create_table "email_messages", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
     t.text     "message"
@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "email_messages", ["updated_at"], name: "index_email_messages_on_updated_at", using: :btree
   add_index "email_messages", ["user_id"], name: "index_email_messages_on_user_id", using: :btree
 
-  create_table "email_messages_events", id: false, force: true do |t|
+  create_table "email_messages_events", id: false, force: :cascade do |t|
     t.integer "email_message_id"
     t.integer "event_id"
   end
@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "email_messages_events", ["email_message_id", "event_id"], name: "index_email_messages_events_on_email_message_id_and_event_id", using: :btree
   add_index "email_messages_events", ["event_id", "email_message_id"], name: "index_email_messages_events_on_event_id_and_email_message_id", using: :btree
 
-  create_table "email_messages_users", id: false, force: true do |t|
+  create_table "email_messages_users", id: false, force: :cascade do |t|
     t.integer "email_message_id"
     t.integer "user_id"
   end
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "email_messages_users", ["email_message_id", "user_id"], name: "index_email_messages_users_on_email_message_id_and_user_id", using: :btree
   add_index "email_messages_users", ["user_id", "email_message_id"], name: "index_email_messages_users_on_user_id_and_email_message_id", using: :btree
 
-  create_table "event_signups", force: true do |t|
+  create_table "event_signups", force: :cascade do |t|
     t.integer  "event_id"
     t.integer  "scout_id"
     t.integer  "scouts_attending",   default: 0
@@ -165,7 +165,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "event_signups", ["scouts_attending"], name: "index_event_signups_on_scouts_attending", using: :btree
   add_index "event_signups", ["siblings_attending"], name: "index_event_signups_on_siblings_attending", using: :btree
 
-  create_table "events", force: true do |t|
+  create_table "events", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "kind",                 limit: 255
     t.string   "name",                 limit: 255
@@ -214,7 +214,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "events", ["unit_id"], name: "index_events_on_unit_id", using: :btree
   add_index "events", ["updated_at"], name: "index_events_on_updated_at", using: :btree
 
-  create_table "events_sub_units", id: false, force: true do |t|
+  create_table "events_sub_units", id: false, force: :cascade do |t|
     t.integer "event_id"
     t.integer "sub_unit_id"
   end
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "events_sub_units", ["event_id", "sub_unit_id"], name: "index_events_sub_units_on_event_id_and_sub_unit_id", using: :btree
   add_index "events_sub_units", ["sub_unit_id", "event_id"], name: "index_events_sub_units_on_sub_unit_id_and_event_id", using: :btree
 
-  create_table "events_users", id: false, force: true do |t|
+  create_table "events_users", id: false, force: :cascade do |t|
     t.integer "event_id"
     t.integer "user_id"
   end
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "events_users", ["event_id", "user_id"], name: "index_events_users_on_event_id_and_user_id", using: :btree
   add_index "events_users", ["user_id", "event_id"], name: "index_events_users_on_user_id_and_event_id", using: :btree
 
-  create_table "health_forms", force: true do |t|
+  create_table "health_forms", force: :cascade do |t|
     t.integer  "unit_id"
     t.integer  "user_id"
     t.date     "part_a_date"
@@ -248,7 +248,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "health_forms", ["updated_at"], name: "index_health_forms_on_updated_at", using: :btree
   add_index "health_forms", ["user_id"], name: "index_health_forms_on_user_id", using: :btree
 
-  create_table "merit_badges", force: true do |t|
+  create_table "merit_badges", force: :cascade do |t|
     t.string   "name",                     limit: 255
     t.string   "year_created",             limit: 255
     t.boolean  "eagle_required",                       default: false
@@ -265,7 +265,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "merit_badges", ["name"], name: "index_merit_badges_on_name", using: :btree
   add_index "merit_badges", ["updated_at"], name: "index_merit_badges_on_updated_at", using: :btree
 
-  create_table "notifiers", force: true do |t|
+  create_table "notifiers", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "kind",       limit: 255
     t.string   "account",    limit: 255
@@ -275,7 +275,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   add_index "notifiers", ["user_id"], name: "index_notifiers_on_user_id", using: :btree
 
-  create_table "pages", force: true do |t|
+  create_table "pages", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
     t.integer  "position"
@@ -296,7 +296,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "pages", ["updated_at"], name: "index_pages_on_updated_at", using: :btree
   add_index "pages", ["user_id"], name: "index_pages_on_user_id", using: :btree
 
-  create_table "phones", force: true do |t|
+  create_table "phones", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "number",     limit: 255
     t.datetime "created_at"
@@ -306,7 +306,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   add_index "phones", ["user_id"], name: "index_phones_on_user_id", using: :btree
 
-  create_table "sms_messages", force: true do |t|
+  create_table "sms_messages", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
     t.text     "message"
@@ -320,7 +320,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "sms_messages", ["unit_id"], name: "index_sms_messages_on_unit_id", using: :btree
   add_index "sms_messages", ["user_id"], name: "index_sms_messages_on_user_id", using: :btree
 
-  create_table "sms_messages_users", id: false, force: true do |t|
+  create_table "sms_messages_users", id: false, force: :cascade do |t|
     t.integer "sms_message_id"
     t.integer "user_id"
   end
@@ -328,7 +328,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "sms_messages_users", ["sms_message_id", "user_id"], name: "index_sms_messages_users_on_sms_message_id_and_user_id", using: :btree
   add_index "sms_messages_users", ["user_id", "sms_message_id"], name: "index_sms_messages_users_on_user_id_and_sms_message_id", using: :btree
 
-  create_table "sub_units", force: true do |t|
+  create_table "sub_units", force: :cascade do |t|
     t.integer  "unit_id"
     t.string   "name",        limit: 255
     t.text     "description"
@@ -339,7 +339,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "sub_units", ["unit_id"], name: "index_sub_units_on_unit_id", using: :btree
   add_index "sub_units", ["updated_at"], name: "index_sub_units_on_updated_at", using: :btree
 
-  create_table "unit_positions", force: true do |t|
+  create_table "unit_positions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
     t.string   "leadership"
@@ -351,7 +351,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   add_index "unit_positions", ["user_id", "unit_id"], name: "index_unit_positions_on_user_id_and_unit_id", using: :btree
 
-  create_table "units", force: true do |t|
+  create_table "units", force: :cascade do |t|
     t.string   "unit_type",   limit: 255
     t.string   "unit_number", limit: 255
     t.string   "city",        limit: 255
@@ -365,7 +365,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
 
   add_index "units", ["council_id"], name: "index_units_on_council_id", using: :btree
 
-  create_table "units_users", id: false, force: true do |t|
+  create_table "units_users", id: false, force: :cascade do |t|
     t.integer "unit_id"
     t.integer "user_id"
   end
@@ -373,7 +373,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "units_users", ["unit_id", "user_id"], name: "index_units_users_on_unit_id_and_user_id", unique: true, using: :btree
   add_index "units_users", ["user_id", "unit_id"], name: "index_units_users_on_user_id_and_unit_id", unique: true, using: :btree
 
-  create_table "user_relationships", id: false, force: true do |t|
+  create_table "user_relationships", id: false, force: :cascade do |t|
     t.integer "adult_id"
     t.integer "scout_id"
   end
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(version: 20141209052924) do
   add_index "user_relationships", ["adult_id", "scout_id"], name: "index_user_relationships_on_adult_id_and_scout_id", using: :btree
   add_index "user_relationships", ["scout_id", "adult_id"], name: "index_user_relationships_on_scout_id_and_adult_id", using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                           limit: 255, default: ""
     t.string   "encrypted_password",              limit: 255, default: ""
     t.string   "reset_password_token",            limit: 255

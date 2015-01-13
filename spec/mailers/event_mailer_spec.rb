@@ -23,7 +23,7 @@ RSpec.describe EventMailer, type: :mailer do
     it 'renders unsubscribe block' do
       expect(mail.body.encoded).to include("UNSUBSCRIBE")
       expect(mail.body.encoded).to include("All times (GMT-07:00) Arizona")
-      expect(mail.body.encoded).to include("<a href=\"http://www.testing.com/unsubscribe/event_reminder_email?id=#{@recipient.signup_token}\">")
+      expect(mail.body.encoded).to include("href=\"http://www.testing.com/unsubscribe/event_reminder_email?id=#{@recipient.signup_token}\"")
     end
 
     it 'renders the body' do

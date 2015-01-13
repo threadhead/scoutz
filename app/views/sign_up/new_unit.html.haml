@@ -42,7 +42,7 @@
           #new-sub-unit-fields.hidden
             = f.fields_for :sub_units, SubUnit.new, child_index: 'new_sub_unit' do |f_sub|
               .form-group
-                = f_sub.label :name, class: @label_col_class
+                = f_sub.label :name, class: 'control-label col-md-4'
                 .col-md-4.controls.sub-unit
                   = f_sub.text_field :name, class: 'form-control'
                 .col-md-4

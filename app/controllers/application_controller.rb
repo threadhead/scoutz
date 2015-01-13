@@ -5,9 +5,6 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :label_col_class
-  def label_col_class
-    @label_col_class = 'control-label col-md-4'
-  end
 
   protected
     def auth_and_time_zone

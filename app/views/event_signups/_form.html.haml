@@ -1,4 +1,4 @@
-= form_for event_signup, html: {}, remote: true do |f|
+= form_for event_signup, remote: true do |f|
   = f.hidden_field :scout_id
   = f.hidden_field :event_id
 
@@ -24,7 +24,7 @@
     %legend Carpool
     .form-horizontal
       .form-group
-        = f.label :need_carpool_seats, 'Need Ride', class: @label_col_class
+        = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-md-4'
         .col-md-4
           = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control'}
         .col-md-2
@@ -33,7 +33,7 @@
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
       .form-group
-        = f.label :has_carpool_seats, 'Can Drive', class: @label_col_class
+        = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-md-4'
         .col-md-6
           = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control'}
         .col-md-2

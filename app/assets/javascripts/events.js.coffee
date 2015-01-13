@@ -77,7 +77,7 @@ jQuery ->
         )
     )
 
-  $("table#event-signup-roster").on("click", "a.edit-event-signup-modal", ->
+  $("tbody#event-signup-roster").on("click", "a.edit-event-signup-modal", ->
     eventSignupId = $(@).data("event-signup-id")
     $.getScript("/event_signups/#{eventSignupId}/edit.js", (data, textStatus, jqxhr) ->
       $("div#event-signup-modal-form").modal()

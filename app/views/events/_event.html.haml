@@ -89,7 +89,7 @@
     - else
       - scouts = @recipient.blank? ? [] : [@recipient]
 
-    %div{style: "border: 1px solid gainsboro; margin: 0 0 12px 20px; background-color: whitesmoke; padding: 12px;"}
+    %div{style: "border: 1px solid gainsboro; margin: 0 0 12px 20px; background-color: whitesmoke; padding: 12px; border-radius: 4px;"}
       - scouts.each do |scout|
         %div{style: "background-color: dimgray; color: white; padding: 4px 12px; margin-bottom: 12px"}
           %strong{style: "font-size: 24px;"} Signup for #{scout.full_name}

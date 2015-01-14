@@ -17,7 +17,7 @@
       %ul.nav.navbar-nav.pull-right
         - if current_user
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
               = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
               %span.user-info
                 %small Welcome,
@@ -69,7 +69,7 @@
 
       %ul.nav.navbar-nav
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
             %i.fa.fa-user
             People
             %i.fa.fa-caret-down
@@ -106,7 +106,7 @@
 
         - if policy(EmailMessage).create? || policy(SmsMessage).create?
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
               %i.fa.fa-phone
               Communications
               %i.fa.fa-caret-down
@@ -114,7 +114,7 @@
             %ul.dropdown-menu
               - if policy(EmailMessage).create?
                 -# %li.dropdown
-                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
                 -#     %i.fa.fa-envelope
                 -#     Email Blast
                 -#     %i.fa.fa-caret-down
@@ -133,7 +133,7 @@
 
               - if policy(SmsMessage).create?
                 -# %li.dropdown
-                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
                 -#     %i.fa.fa-phone
                 -#     SMS Blast
                 -#     %i.fa.fa-caret-down
@@ -154,7 +154,7 @@
 
 
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
             %i.fa.fa-calendar
             Events
             %i.fa.fa-caret-down
@@ -178,7 +178,7 @@
 
         - if @unit.pages.active.count > 0 || policy(Page).index?
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
               %i.fa.fa-file-text-o
               Pages
               %i.fa.fa-caret-down

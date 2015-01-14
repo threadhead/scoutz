@@ -56,7 +56,7 @@
 
   - # don't display the action menu unless the user can edit signups
   - #   BUT there is no need to display action manu if user is looking at their own scout's signup either
-  - if policy(EventSignup.new(event: @event)).update?
+  - if policy(EventSignup.new(event: event_roster.event)).update?
     %td
       .btn-group
         %a.btn.dropdown-toggle.btn-default.btn-xs{href: '#', data: {toggle: 'dropdown'}}

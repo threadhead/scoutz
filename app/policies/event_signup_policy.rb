@@ -37,9 +37,7 @@ class EventSignupPolicy < ApplicationPolicy
   end
 
   def event_owner?
-    if record.is_a?(Event)
-      record.users.where(id: user.id).exists?
-    elsif record.is_a?(EventSignup)
+    if record
       record.event.users.where(id: user.id).exists?
     else
       false

@@ -1,13 +1,12 @@
 jQuery ->
-  $("#email-leaders-list").collapse({
+  $("#email-leaders-list").collapse
     toggle: false
-    })
-  $("#email-send-to-users-list").collapse({
+
+  $("#email-send-to-users-list").collapse
     toggle: false
-    })
-  $("#email-sub-unit-list").collapse({
+
+  $("#email-sub-unit-list").collapse
     toggle: false
-    })
 
   $("select#email_message_send_to_option").change ->
     handleSendToLists(@)

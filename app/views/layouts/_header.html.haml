@@ -13,34 +13,46 @@
         .scouttin-name
           = link_to 'Scoutt.in', unit_events_path(@unit), class: ''
 
-    .collapse.navbar-collapse#scoutz-navbar-collapse
-      %ul.nav.navbar-nav.pull-right
-        - if current_user
-          %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
-              = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
-              %span.user-info
-                %small Welcome,
-                = current_user.first_name
-              %i.fa.fa-caret-down.user-caret
+    .navbar-collapse.collapse#scoutz-navbar-collapse
+      %ul.nav.navbar-nav.navbar-right
+        %li.dropdown
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
+            %span.user-info.hidden-xs
+              %small Welcome,
+              = current_user.first_name
+            %i.fa.fa-caret-down.user-caret.hidden-xs
 
-            %ul.dropdown-menu
-              %li
-                = link_to corrected_unit_user_path(@unit, current_user) do
-                  %i.fa.fa-user
-                  Profile
-              %li
-                = link_to edit_unit_user_password_path(@unit, current_user) do
-                  %i.fa.fa-key
-                  Change Password
-              %li.divider
-              %li
-                = link_to destroy_user_session_url, method: :delete do
-                  %i.fa.fa-power-off
-                  Sign out
+            %span.hidden-md.hidden-lg.hidden-sm
+              Welcome, #{current_user.first_name}
+              %i.fa.fa-caret-down
 
-        - else
-          %li= link_to 'Sign in', new_user_session_url
+          %ul.dropdown-menu
+            %li
+              = link_to corrected_unit_user_path(@unit, current_user) do
+                %i.fa.fa-user
+                Profile
+            %li
+              = link_to edit_unit_user_password_path(@unit, current_user) do
+                %i.fa.fa-key
+                Change Password
+            %li.divider
+            %li
+              = link_to destroy_user_session_url, method: :delete do
+                %i.fa.fa-power-off
+                Sign out
+
+      %form.navbar-form.navbar-right
+        = hidden_field_tag :meta_search_action, "/meta_search?unit_id=#{@unit.id}"
+        .form-group
+          .input-group
+            %span.input-group-addon
+              %i.fa.fa-search
+            = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search everything...'
+
+
+
+
 
 .navbar.navbar-default#navbar-fixed-lower
   .container-fluid
@@ -49,27 +61,17 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-    - if @units.size > 1
-      = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left' do
-        = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
+      - if @units.size > 1
+        = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left' do
+          = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
 
-    - else
-      = link_to @unit.name_unit, '/', class: 'navbar-brand'
+      - else
+        = link_to @unit.name_unit, '/', class: 'navbar-brand'
 
     .navbar-collapse.collapse#unit-navbar-collapse
-      %form.navbar-form.navbar-left
-        = hidden_field_tag :meta_search_action, "/meta_search?unit_id=#{@unit.id}"
-        .form-group
-          .input-group
-            %span.input-group-addon
-              %i.fa.fa-search
-            = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search... everything!'
-
-
-
-      %ul.nav.navbar-nav
+      %ul.nav.navbar-nav.navbar-left
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
             %i.fa.fa-user
             People
             %i.fa.fa-caret-down
@@ -106,18 +108,13 @@
 
         - if policy(EmailMessage).create? || policy(SmsMessage).create?
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               %i.fa.fa-phone
               Communications
               %i.fa.fa-caret-down
 
             %ul.dropdown-menu
               - if policy(EmailMessage).create?
-                -# %li.dropdown
-                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
-                -#     %i.fa.fa-envelope
-                -#     Email Blast
-                -#     %i.fa.fa-caret-down
                 %li.non-link-text
                   %i.fa.fa-envelope
                   %strong Email Blast
@@ -132,13 +129,6 @@
 
 
               - if policy(SmsMessage).create?
-                -# %li.dropdown
-                -#   = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
-                -#     %i.fa.fa-phone
-                -#     SMS Blast
-                -#     %i.fa.fa-caret-down
-
-                -# %ul.dropdown-menu
                 %li.non-link-text
                   %i.fa.fa-mobile-phone.fa-lg
                   %strong SMS Blast
@@ -154,7 +144,7 @@
 
 
         %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
             %i.fa.fa-calendar
             Events
             %i.fa.fa-caret-down
@@ -178,7 +168,7 @@
 
         - if @unit.pages.active.count > 0 || policy(Page).index?
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
               %i.fa.fa-file-text-o
               Pages
               %i.fa.fa-caret-down
@@ -195,9 +185,9 @@
 
       %ul.nav.navbar-nav.navbar-right
         %li
-          = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: 1000}}, title: 'event list' do
+          = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
             %i.fa.fa-list
         %li
-          = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: 1000}}, title: 'event calendar' do
+          = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
             %i.fa.fa-calendar
 

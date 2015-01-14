@@ -46,9 +46,9 @@
         = hidden_field_tag :meta_search_action, "/meta_search?unit_id=#{@unit.id}"
         .form-group
           .input-group
+            = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search everything...'
             %span.input-group-addon
               %i.fa.fa-search
-            = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search everything...'
 
 
 

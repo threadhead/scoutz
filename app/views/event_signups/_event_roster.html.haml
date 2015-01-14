@@ -54,15 +54,17 @@
   %td.signup-comment= event_roster.comment
 
 
-  %td
-    - if policy(event_roster).update?
+  - # don't display the action menu unless the user can edit signups
+  - #   BUT there is no need to display action manu if user is looking at their own scout's signup either
+  - if policy(EventSignup.new(event: @event)).update?
+    %td
       .btn-group
-        %a.btn.dropdown-toggle.btn-warning.btn-xs{href: '#', data: {toggle: 'dropdown'}}
+        %a.btn.dropdown-toggle.btn-default.btn-xs{href: '#', data: {toggle: 'dropdown'}}
           %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu
           %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: {event_signup_id: event_roster.id}
-          - if event_roster.event.consent_required?
+          - if event_roster.event.consent_required? && policy(event_roster).activity_consent_form?
             %li
               - if event_roster.has_activity_consent_form?
                 = link_to 'Remove Activity Consent', activity_consent_form_event_signup_path(event_roster, value: '0'), remote: true, method: :put

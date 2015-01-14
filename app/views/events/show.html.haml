@@ -162,7 +162,9 @@
               %th.centered Seats
               %th.centered ACF
               %th Info
-              %th.right-aligned Action
+              - # only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
+              - if policy(EventSignup.new(event: @event)).update?
+                %th.right-aligned Action
           %tbody#event-signup-roster
             = render partial: 'event_signups/event_roster', collection: @event_rosters
 

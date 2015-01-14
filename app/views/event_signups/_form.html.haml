@@ -45,7 +45,7 @@
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
-  - if event_signup.event.consent_required?
+  - if event_signup.event.consent_required? && policy(event_signup).activity_consent_form?
     %fieldset.fieldset-sm
       %legend
         %span.fa-stack.fa-stack-sm

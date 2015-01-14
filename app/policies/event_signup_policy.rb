@@ -16,7 +16,7 @@ class EventSignupPolicy < ApplicationPolicy
   end
 
   def destroy?
-    # users can delete their own events, and adult admins as well
+    # users can delete their own signups, and adult admins ad event owners
     adult_admin || event_owner? || users_signup?
   end
 
@@ -37,7 +37,13 @@ class EventSignupPolicy < ApplicationPolicy
   end
 
   def event_owner?
-    record.event.users.where(id: user.id).exists?
+    if record.is_a?(Event)
+      record.users.where(id: user.id).exists?
+    elsif record.is_a?(EventSignup)
+      record.event.users.where(id: user.id).exists?
+    else
+      false
+    end
   end
 
   class Scope < Struct.new(:user, :scope)

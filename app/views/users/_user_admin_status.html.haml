@@ -1,0 +1,33 @@
+%td
+  %span.badge.badge-primary{title: 'sign in count'}= user.sign_in_count
+
+%td
+  - if user.confirmed?
+    %span.label.label-success{tilte: 'Confirmed'}> C
+  - else
+    %span.label.label-default{tilte: 'Not-Confirmed'}> X
+  &nbsp;
+
+
+  - case user.role
+  - when 'basic'
+    %span.label.label-primary{title: 'Basic'}> B
+  - when 'leader'
+    %span.label.label-success{title: 'Leader'}> L
+  - when 'admin'
+    %span.label.label-danger{title: 'Admin'}> A
+  - when 'inactive'
+    %span.label.label-default{title: 'Inactive'}> I
+  - else
+    %span.label.label-default{title: 'NONE'}> 0
+
+  &nbsp;
+
+  - if user.access_locked?
+    %span.label.label-warning{title: 'locked!'}>
+      %i.fa.fa-lock
+    &nbsp;
+
+  - unless user.encrypted_password
+    %span.label.label-info{tilte: 'No password'}
+      %i.fa.fa-key

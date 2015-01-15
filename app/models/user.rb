@@ -207,9 +207,6 @@ class User < ActiveRecord::Base
     type == 'Adult'
   end
 
-  def admin?
-    role == 'admin'
-  end
 
   def role_at_least(role_q)
     return false if role.nil?

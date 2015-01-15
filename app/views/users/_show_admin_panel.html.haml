@@ -1,0 +1,57 @@
+.panel.panel-default
+  .panel-heading
+    %h3.panel-title Accout Status
+
+  %table.table.table-condensed
+    %tr
+      %td
+        %strong Role
+      %td
+        - case user.role
+        - when 'basic'
+          %span.label.label-primary Basic
+        - when 'leader'
+          %span.label.label-success Leader
+        - when 'admin'
+          %span.label.label-danger Admin
+        - when 'inactive'
+          %span.label.label-default Inactive
+        - else
+          %span.label.label-default NO ROLE
+
+
+    %tr
+      %td
+        %strong Sign in Count
+      %td= user.sign_in_count
+
+    %tr
+      %td
+        %strong Last Sign In
+      %td= user.last_sign_in_at.to_s.try(:short_ampm)
+
+    %tr
+      %td
+        %strong From IP
+      %td= user.current_sign_in_ip
+
+    %tr
+      %td
+        %strong Confirmed?
+      %td
+        %span>= user.confirmed?
+        - if user.confirmed?
+          , #{user.confirmed_at.to_s.try(:short_ampm)}
+
+    %tr
+      %td
+        %strong Locked Out?
+      %td
+        %span>= user.access_locked?
+        - if user.access_locked?
+          , #{user.locked_at.to_s.try(:short_ampm)}
+
+    %tr
+      %td
+        %strong Has Password?
+      %td= !user.encrypted_password.nil?

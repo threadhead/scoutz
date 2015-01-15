@@ -21,6 +21,8 @@
 
   %fieldset
     %legend Body
+    %p.pull-right.ckeditor-button-help Use #{image_tag 'ckeditor_link_button.png'} to attach files. Use #{image_tag 'ckeditor_image_button.png'} to insert images.
+    .clearfix
     = f.text_area :body, id: 'ckeditor', help: 'you can change the order in which pages appear after you save this page', hide_label: true
 
   %br

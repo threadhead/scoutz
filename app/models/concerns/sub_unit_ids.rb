@@ -26,7 +26,7 @@ module SubUnitIds
   # end
 
   def sub_units
-    SubUnit.where(id: sub_unit_ids)
+    SubUnit.where(id: sub_unit_ids).order(:name)
   end
 
 end

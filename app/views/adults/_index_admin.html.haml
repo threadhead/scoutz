@@ -1,0 +1,23 @@
+- if users.size > 0
+  %table.table.table-outside-bordered
+    %tr
+      %th
+      %th Name
+      %th Leadership
+      %th Scouts
+      %th{colspan: 2} Status
+
+    = cache_unless searching, ["unit-#{unit.id}", :admin, cache_key_for_users(users)] do
+      - users.each do |adult|
+        = cache ["unit-#{unit.id}", :admin, adult] do
+          %tr.v-centered
+            %td.centered= user_picture_circle(adult)
+            %td= link_to adult.name_lf, unit_adult_path(unit, adult)
+            %td= all_leadership_positions(@unit, adult)
+            %td= unit_users_link_list(unit, adult.unit_scouts(unit))
+            = render partial: 'users/user_admin_status', locals: {user: adult}
+
+  %small showing #{users.size} of #{users_count}
+
+-else
+  %h1.centered no results found

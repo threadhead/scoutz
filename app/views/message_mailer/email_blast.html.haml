@@ -6,7 +6,15 @@
     = @email_message.message.html_safe
 
     - if @email_message.has_events?
-      %div{style: "height: 12; background-color: darkgray; margin-bottom: 8px;"}
+      %div{style: "height: 12px; background-color: darkgray; margin-bottom: 8px;"}
       = render @events
+
+    - if @email_message.has_attachments?
+      %div{style: "height: 12px; background-color: darkgray; margin-bottom: 8px;"}
+      %strong Attachments
+      %br
+      - @email_message.email_attachments.each do |email_attachment|
+        = link_to email_attachment.original_file_name, email_url_with_domain_and_host(email_attachment.attachment.url)
+        %br
 
     = render partial: 'unsubscribe/email_footer', locals: {action: :blast_email, user: @recipient}

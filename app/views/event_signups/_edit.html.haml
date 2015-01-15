@@ -4,6 +4,9 @@
 
       .modal-header
         %button.close(data-dismiss='modal') &times;
+        .pull-right
+          = user_picture_circle(event_signup.scout)
+          &nbsp;
         %p.xxlarge
           %strong
             -if event_signup.new_record?
@@ -12,5 +15,5 @@
               Change #{event_signup.scout.name}
           / %small how does it work?
 
-      .modal-body
+      .modal-body.well-reduced-text
         = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: true}

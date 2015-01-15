@@ -44,37 +44,37 @@ jQuery ->
       #console.log $(@).val()
       $(@).closest('form').submit()
 
-  $("#scoutz-navbar-collapse").on('shown.bs.collapse', ->
-    #console.log "scoutz-navbar-collapse:shown"
-    setNavbarLowerTop()
-    setPaddingTop()
-    )
+  # $("#scoutz-navbar-collapse").on('shown.bs.collapse', ->
+  #   #console.log "scoutz-navbar-collapse:shown"
+  #   setNavbarLowerTop()
+  #   setPaddingTop()
+  #   )
 
-  $("#scoutz-navbar-collapse").on('hidden.bs.collapse', ->
-    #console.log "scoutz-navbar-collapse:hidden"
-    setNavbarLowerTop()
-    setPaddingTop()
-    )
-
-
-  $("#unit-navbar-collapse").on('shown.bs.collapse', ->
-    #console.log "unit-navbar-collapse:shown"
-    setPaddingTop()
-    )
-
-  $("#unit-navbar-collapse").on('hidden.bs.collapse', ->
-    #console.log "unit-navbar-collapse:hidden"
-    setPaddingTop()
-    )
+  # $("#scoutz-navbar-collapse").on('hidden.bs.collapse', ->
+  #   #console.log "scoutz-navbar-collapse:hidden"
+  #   setNavbarLowerTop()
+  #   setPaddingTop()
+  #   )
 
 
-  setNavbarLowerTop = ->
-    h = $("#navbar-fixed-upper").position().top - 2 + $("#navbar-fixed-upper").outerHeight()
-    #console.log "  navbar uppper-position: #{h}"
-    $("#navbar-fixed-lower").css("top", "#{h}px")
+  # $("#unit-navbar-collapse").on('shown.bs.collapse', ->
+  #   #console.log "unit-navbar-collapse:shown"
+  #   setPaddingTop()
+  #   )
+
+  # $("#unit-navbar-collapse").on('hidden.bs.collapse', ->
+  #   #console.log "unit-navbar-collapse:hidden"
+  #   setPaddingTop()
+  #   )
 
 
-  setPaddingTop = ->
-    b = $("#navbar-fixed-lower").position().top - 2 + $("#navbar-fixed-lower").outerHeight()
-    #console.log "  navbar lower-position: #{b}"
-    $("body").css("padding-top", "#{b}px")
+  # setNavbarLowerTop = ->
+  #   h = $("#navbar-fixed-upper").position().top - 2 + $("#navbar-fixed-upper").outerHeight()
+  #   #console.log "  navbar uppper-position: #{h}"
+  #   $("#navbar-fixed-lower").css("top", "#{h}px")
+
+
+  # setPaddingTop = ->
+  #   b = $("#navbar-fixed-lower").position().top - 2 + $("#navbar-fixed-lower").outerHeight()
+  #   #console.log "  navbar lower-position: #{b}"
+  #   $("body").css("padding-top", "#{b}px")

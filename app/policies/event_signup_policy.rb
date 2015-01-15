@@ -16,11 +16,13 @@ class EventSignupPolicy < ApplicationPolicy
   end
 
   def destroy?
-    # users can delete their own events, and adult admins as well
+    # users can delete their own signups, and adult admins ad event owners
     adult_admin || event_owner? || users_signup?
   end
 
-
+  def activity_consent_form?
+    adult_admin || form_coordinator?
+  end
 
   def users_signup?
     if record.respond_to?(:id)
@@ -30,8 +32,16 @@ class EventSignupPolicy < ApplicationPolicy
     end
   end
 
+  def form_coordinator?
+    record.event.form_coordinator?(user)
+  end
+
   def event_owner?
-    record.event.users.where(id: user.id).exists?
+    if record
+      record.event.users.where(id: user.id).exists?
+    else
+      false
+    end
   end
 
   class Scope < Struct.new(:user, :scope)

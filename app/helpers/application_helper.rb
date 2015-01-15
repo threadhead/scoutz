@@ -53,4 +53,9 @@ module ApplicationHelper
   def env_protocol
     production? ? 'https' : 'http'
   end
+
+  def space_to_nbsp(str)
+    return if str.nil?
+    str.gsub(" ", "\u00A0")
+  end
 end

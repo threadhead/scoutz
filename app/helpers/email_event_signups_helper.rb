@@ -1,6 +1,10 @@
 module EmailEventSignupsHelper
-  def td_email
-    {style: "width: 100px; vertical-align: top;"}
+  def td_col_1
+    "width: 124px;"
+  end
+
+  def td_border
+    "vertical-align: top; border-bottom: 1px solid #ddd; padding-top: 3px; padding-bottom: 3px;"
   end
 
   def email_signup_link(options={})

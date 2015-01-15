@@ -1,19 +1,33 @@
 module UsersHelper
-  def unit_adults_link_list(unit, users)
-    users.map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
+  # def unit_adults_link_list(unit, users)
+  #   users.map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
+  # end
+
+  # def unit_scouts_link_list(unit, users)
+  #   users.map { |user| link_to(user.full_name, unit_scout_path(unit, user)) }.join(', ').html_safe
+  # end
+
+  # def scout_adults_link_list(unit, scout)
+  #   scout.unit_adults(unit).map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
+  # end
+
+  # def adult_scouts_link_list(unit, adult)
+  #   adult.unit_scouts(unit).map { |user| link_to(user.full_name, unit_scout_path(unit, user)) }.join(', ').html_safe
+  # end
+
+  def unit_users_link_list(unit, users)
+    # return a list of users with their names as links, in a comma separated list
+    users.map { |user| unit_user_link(unit, user) }.join(', ').html_safe
   end
 
-  def unit_scouts_link_list(unit, users)
-    users.map { |user| link_to(user.full_name, unit_scout_path(unit, user)) }.join(', ').html_safe
+  def unit_user_link(unit, user)
+    if user.adult?
+      link_to(user.name, unit_adult_path(unit, user))
+    else
+      link_to(user.name, unit_scout_path(unit, user))
+    end
   end
 
-  def scout_adults_link_list(unit, scout)
-    scout.unit_adults(unit).map { |user| link_to(user.full_name, unit_adult_path(unit, user)) }.join(', ').html_safe
-  end
-
-  def adult_scouts_link_list(unit, adult)
-    adult.unit_scouts(unit).map { |user| link_to(user.full_name, unit_scout_path(unit, user)) }.join(', ').html_safe
-  end
 
   def adult_sub_units_list(unit, adult)
     adult.sub_units(unit).map(&:name).join(', ')

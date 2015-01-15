@@ -1,5 +1,6 @@
 = bootstrap_form_for @email_message, url: unit_email_messages_path(@unit), html: {multipart: true} do |f|
-  = hidden_field_tag :unit_id, @unit.id
+  = f.hidden_field :unit_id, value: @unit.id
+  = f.hidden_field :user_id, value: current_user.id
 
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
@@ -56,11 +57,17 @@
 
   %fieldset
     %legend Message
-    %p
-      From:
-      %span.large.label.label-default= current_user.email
-    %p= f.text_field :subject, hide_label: true, control_col: 'col-md-10', placeholder: 'subject'
-    %p= f.text_area :message, id: 'ckeditor', hide_label: true, control_col: 'col-md-10'
+    .row
+      .col-md-6
+        %p
+          From:
+          %span.large.label.label-default= current_user.email
+      .col-md-6
+        %p.pull-right Use #{image_tag 'ckeditor_link_button.png'} to attach files. Use #{image_tag 'ckeditor_image_button.png'} to insert images.
+    .row
+      .col-md-12
+        = f.text_field :subject, hide_label: true, control_col: 'col-md-10', placeholder: 'subject'
+        %p= f.text_area :message, id: 'ckeditor', hide_label: true, control_col: 'col-md-10'
 
   %br
   = f.primary 'Send Email Blast'

@@ -1,4 +1,4 @@
-= form_for event_signup, html: {}, remote: true do |f|
+= form_for event_signup, remote: true do |f|
   = f.hidden_field :scout_id
   = f.hidden_field :event_id
 
@@ -10,36 +10,54 @@
     %tr
       %td
         .col-md-10.col-md-offset-1
-          = f.select :scouts_attending, [0,1], {}, {class: 'form-control'}
+          = f.select :scouts_attending, [0,1], {}, {class: 'form-control input-sm'}
       %td
         .col-md-10.col-md-offset-1
-          = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+          = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control input-sm'}
       %td
         .col-md-10.col-md-offset-1
-          = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control'}
+          = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control input-sm'}
 
   = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 100%;"
 
-  %fieldset
-    %legend Carpool
+  %fieldset.fieldset-sm
+    %legend
+      %span.fa-stack.fa-stack-sm
+        %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+        %i.fa.fa-car.fa-stack-1x.fa-inverse
+      Carpool
     .form-horizontal
       .form-group
-        = f.label :need_carpool_seats, 'Need Ride', class: @label_col_class
+        = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-md-4'
         .col-md-4
-          = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control'}
-        .col-md-2
+          = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control input-sm'}
+        .col-md-2.col-no-padding
           %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need.'}
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
       .form-group
-        = f.label :has_carpool_seats, 'Can Drive', class: @label_col_class
+        = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-md-4'
         .col-md-6
-          = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control'}
-        .col-md-2
+          = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control input-sm'}
+        .col-md-2.col-no-padding
           %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle. Select  0 if you are driving but can\'t carpool.'}
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+  - if event_signup.event.consent_required? && policy(event_signup).activity_consent_form?
+    %fieldset.fieldset-sm
+      %legend
+        %span.fa-stack.fa-stack-sm
+          %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+          %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
+        Activity Consent Form
+      .checkbox
+        = f.label :permision_check_box do
+          = f.check_box :permission_check_box, value: event_signup.has_activity_consent_form?
+          ACF Received
+          - unless event_signup.permission_at.nil?
+            on: #{event_signup.permission_at.to_s(:short_ampm)}
 
 
   %br

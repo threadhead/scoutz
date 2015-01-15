@@ -1,10 +1,12 @@
 = cache_unless event_signup.new_record?, event_signup do
   .row
     .col-md-12
-      .well.well-sm
+      .well.well-sm.well-reduced-text
         .row
           .col-md-12
-            %p.xxlarge
+            .pull-right
+              = user_picture_circle(event_signup.scout)
+            %p.xlarge
               %strong Sign Up #{event_signup.scout.f_name_l_initial}
 
             = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: false}

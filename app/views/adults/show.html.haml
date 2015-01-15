@@ -38,14 +38,13 @@
 
     = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 
-= cache ["unit-#{@unit.id}", @user] do
-  .row
+.row
+  = cache ["unit-#{@unit.id}", @user] do
     .col-md-8
       .text-xlarge
         %table.table
           %tr
             %td
-              / %strong= @user.sub_unit.unit.unit_type_title
               %strong Unit
             %td
               = @unit.name
@@ -87,7 +86,7 @@
             %td
               %strong Scouts
             %td
-              = adult_scouts_link_list(@unit, @user)
+              = unit_users_link_list(@unit, @user.unit_scouts(@unit))
 
           = render partial: 'users/health_form_show', locals: {user: @user, unit: @unit}
 
@@ -99,8 +98,11 @@
                 = link_to merit_badge.name, [@unit, merit_badge]
                 %br
 
-    .col-md-3.col-md-offset-1
-      = render partial: 'users/picture_panel_lg', locals: {user: @user}
+  .col-md-3.col-md-offset-1
+    = render partial: 'users/picture_panel_lg', locals: {user: @user}
+    - if current_user.admin?
+      = render partial: 'users/show_admin_panel', locals: {user: @user}
 
-= render layout: 'users/send_welcome_email_modal' do
-  = link_to "Send Welcome Email", send_welcome_reset_password_unit_adult_path(@unit, @user), class: 'btn btn-primary'
+- if !@user.email.blank? && policy(@user).send_welcome_reset_password?
+  = render layout: 'users/send_welcome_email_modal' do
+    = link_to "Send Welcome Email", send_welcome_reset_password_unit_adult_path(@unit, @user), class: 'btn btn-primary'

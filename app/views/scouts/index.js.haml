@@ -1,2 +1,7 @@
-:plain
-  $("div#scout-index").html("#{escape_javascript(render partial: 'scouts/index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching})}");
+- if current_user.admin?
+  :plain
+    $("div#scout-index").html("#{escape_javascript(render partial: 'scouts/index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching})}");
+
+- else
+  :plain
+    $("div#scout-index").html("#{escape_javascript(render partial: 'scouts/index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching})}");

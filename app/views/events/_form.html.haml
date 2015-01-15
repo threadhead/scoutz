@@ -39,35 +39,40 @@
         .col-md-4
           = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing']
 
-      .row
-        .col-md-12
-          = f.label :type_of_health_forms, "Health form", class: 'control-label'
-          .form-inline
-            = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
-            %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
-              %i.fa.fa-circle.fa-stack-2x.tooltip_circle
-              %i.fa.fa-question.fa-stack-1x.fa-inverse
-
-      %fieldset
-        %legend Signup (RSVP)
-        .row
-          .col-md-12
-            = f.check_box :signup_required
-        .row
-          .col-md-4
-            .form-group
-              = f.label :signup_deadline, "Signup by"
-              %br
-              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 49%;"
-              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 49%;"
-        .row
-          .col-md-12
-            .help-block even if date is entered, Signup Required must be checked to be honored
-
       %fieldset
         %legend Reminder
-        = f.check_box :send_reminders, label: "send reminder 48 hours before event start"
+        = f.check_box :send_reminders, label: "Send reminder 48 hours before event start"
 
+
+      %fieldset
+        %legend Sign Up
+        .row
+          .col-md-12
+            .form-inline
+              = f.label :signup_required do
+                = f.check_box_without_bootstrap :signup_required
+                signup required by
+
+              = #f.label :signup_deadline, "Signup by"
+
+              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 15%;"
+              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 15%;"
+            .help-block even if date is entered, Signup Required must be checked to be honored
+
+            %br
+
+            .well.well-sm
+              %h4 Forms to require when signup required
+              = f.label :type_of_health_forms, "Health form", class: 'control-label'
+              .form-inline
+                = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
+                %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
+                  %i.fa.fa-circle.fa-stack-2x.tooltip_circle
+                  %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+              %br
+              = f.check_box :consent_required, label: "Activity Consent Forms required"
+              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'ACF Coordinators', help: 'select adults authorized to accept forms, or leave blank for all adult leaders'}, {multiple: true}
 
 
       %fieldset
@@ -100,6 +105,8 @@
     .col-md-12
       %fieldset
         %legend Details
+        %p.pull-right.ckeditor-button-help Use #{image_tag 'ckeditor_link_button.png'} to attach files. Use #{image_tag 'ckeditor_image_button.png'} to insert images.
+        .clearfix
         = f.text_area :message, hide_label: true, id: 'ckeditor'
 
   .row

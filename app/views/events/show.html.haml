@@ -64,26 +64,52 @@
           %td
             - @event.users.each do |user|
               = link_to user.full_name, unit_user_path(@unit, user.id)
-
-        %tr
-          %td
-            %strong RSVP
-          %td #{@event.signup_required ? "required, by #{@event.signup_deadline.to_s(:short_ampm)}" : 'not required'}
-
         %tr
           %td
             %strong Reminders?
           %td #{@event.send_reminders ? 'Yes' : 'No'}
 
-          %tr
-            %td
-              %strong Attire
-            %td= @event.attire
+        %tr
+          %td
+            %strong Sign Up
+          %td #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
 
+
+        - if @event.signup_required?
           %tr
             %td
-              %strong Health&nbsp;Forms
-            %td= Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)
+              %strong Forms
+            %td
+              - if @event.health_forms_required?
+                %span.fa-stack.fa-stack-sm
+                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+                  %i.fa.fa-inverse.fa-medkit.fa-stack-1x
+              - else
+                %span.fa-stack.fa-stack-sm
+                  %i.fa.fa-medkit.fa-stack-1x
+                  %i.fa.fa-ban.fa-stack-2x.text-danger
+              Healh Forms: #{Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)}
+
+              %br
+              - if @event.consent_required?
+                %span.fa-stack.fa-stack-sm
+                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+                  %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
+              - else
+                %span.fa-stack.fa-stack-sm
+                  %i.fa.fa-thumbs-up.fa-stack-1x
+                  %i.fa.fa-ban.fa-stack-2x.text-danger
+              Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
+
+              - if @event.consent_required?
+                %p.small
+                  Coordinator#{'s' if @event.form_coordinators.count > 1 }:
+                  = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'
+
+        %tr
+          %td
+            %strong Attire
+          %td= @event.attire
 
         %tr
           %td
@@ -127,9 +153,20 @@
           %p#event-signup-add
             = render partial: 'event_signups/signup_add', locals: { event: @event }
 
-        %table.table-condensed.table-striped.table-roster#event-signup-roster
-          = render partial: 'event_signups/event_roster', collection: @event_rosters
-          - #@event.event_signups.includes(:scout).each do |signup|
+        %table.table-condensed.table-striped.table-roster
+          %thead
+            %tr
+              %th{colspan: '3'} Name
+              %th.centered HF
+              %th.centered Driving
+              %th.centered Seats
+              %th.centered ACF
+              %th Info
+              - # only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
+              - if policy(EventSignup.new(event: @event)).update?
+                %th.right-aligned Action
+          %tbody#event-signup-roster
+            = render partial: 'event_signups/event_roster', collection: @event_rosters
 
 
   .col-md-4

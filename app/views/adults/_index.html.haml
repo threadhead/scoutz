@@ -6,7 +6,6 @@
       %th Leadership
       %th Scouts
 
-    = #cache ["unit-#{unit.id}", cache_key_for_users(users)] do
     = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
       - users.each do |adult|
         = cache ["unit-#{unit.id}", adult] do
@@ -14,7 +13,7 @@
             %td.centered= user_picture_circle(adult)
             %td= link_to adult.name_lf, unit_adult_path(unit, adult)
             %td= all_leadership_positions(@unit, adult)
-            %td= unit_scouts_link_list(unit, adult.unit_scouts(unit))
+            %td= unit_users_link_list(unit, adult.unit_scouts(unit))
 
   %small showing #{users.size} of #{users_count}
 

@@ -5,6 +5,7 @@ class Event < ActiveRecord::Base
   include PgSearch
   include DateTimeAttributes
 
+  serialize :form_coordinator_ids, Array
 
   belongs_to :unit
   has_many :event_signups, dependent: :destroy
@@ -29,6 +30,14 @@ class Event < ActiveRecord::Base
       presence: true
 
   validates :sl_profile, uniqueness: { allow_nil: true }
+  validates :signup_deadline, presence: true, if: :signup_required?
+
+  validate :signup_deadline_before_start
+  def signup_deadline_before_start
+    if signup_required? && start_at && signup_deadline
+      errors.add(:signup_deadline, "must be before the start time") if signup_deadline >= start_at
+    end
+  end
 
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at
@@ -145,7 +154,31 @@ class Event < ActiveRecord::Base
     event_signup_users.map(&:id)
   end
 
+  def form_coordinators
+    if has_form_coordinators
+      # adults in the form_coordinators_ids list, or an admin
+      t = User.arel_table
+      # unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
+      unit.adults.where(id: form_coordinator_ids.reject(&:empty?))
+    else
+      unit.adults.role_is_leader_or_above
+    end
+  end
 
+  def form_coordinator?(user)
+    return false unless user.adult?
+    return true if user.role_at_least(:admin)
+
+    if has_form_coordinators
+      form_coordinator_ids.include? user.id.to_s
+    else
+      unit.adults.role_is_leader_or_above.exists?(id: user.id)
+    end
+  end
+
+  def has_form_coordinators
+    !form_coordinator_ids.reject(&:empty?).empty?
+  end
 
 
   # the types of helath forms required based on the event's type_of_health_forms selection
@@ -168,6 +201,10 @@ class Event < ActiveRecord::Base
     else
       []
     end
+  end
+
+  def health_forms_required?
+    type_of_health_forms != 'not_required'
   end
 
   def self.type_of_health_forms_for_select

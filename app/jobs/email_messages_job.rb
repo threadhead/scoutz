@@ -6,7 +6,7 @@ class EmailMessagesJob < ActiveJob::Base
       MessageMailer.email_blast(user, email_message).deliver_later
     end
 
-    email_message.update_attribute(:sent_at, Time.zone.now)
+    email_message.update_column(:sent_at, Time.zone.now)
   end
 
 

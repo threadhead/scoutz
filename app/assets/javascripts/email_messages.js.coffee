@@ -1,13 +1,12 @@
 jQuery ->
-  $("#email-leaders-list").collapse({
+  $("#email-leaders-list").collapse
     toggle: false
-    })
-  $("#email-send-to-users-list").collapse({
+
+  $("#email-send-to-users-list").collapse
     toggle: false
-    })
-  $("#email-sub-unit-list").collapse({
+
+  $("#email-sub-unit-list").collapse
     toggle: false
-    })
 
   $("select#email_message_send_to_option").change ->
     handleSendToLists(@)
@@ -40,13 +39,11 @@ jQuery ->
         $("#email-send-to-users-list").collapse("hide")
 
 
-  $("select#email_message_user_ids").select2({
+  $("select#email_message_user_ids").select2
     placeholder: 'Select recipients'
-    })
 
-  $("select#sms_message_user_ids").select2({
+  $("select#sms_message_user_ids").select2
     placeholder: 'Select recipients'
-    })
 
   # $("label.checkbox.sub-unit").tooltip({
   #   placement: "top"

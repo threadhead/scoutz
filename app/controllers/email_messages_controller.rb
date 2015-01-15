@@ -16,6 +16,10 @@ class EmailMessagesController < ApplicationController
   def show
     authorize @email_message
     # fresh_when(@email_message)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
@@ -36,9 +40,8 @@ class EmailMessagesController < ApplicationController
     authorize @email_message
 
     if @email_message.save
-      @unit.email_messages << @email_message
+      # @unit.email_messages << @email_message
       current_user.email_messages << @email_message
-      # EmailMessage.delay.dj_send_email(@email_message.id)
       EmailMessagesJob.perform_later(@email_message)
       redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was queued to be sent.'
     else

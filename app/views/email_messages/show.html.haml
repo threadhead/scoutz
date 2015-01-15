@@ -33,17 +33,30 @@
           %td
             %strong Recipients
           %td
+            %span.badge= @email_message.sent_to_count
             = @email_message.send_to
-            %span.badge= @email_message.send_to_count
-            - case @email_message.send_to_option
-              - when 2
-                %br
-                %small
-                  %em= @email_message.sub_units.map(&:name).join(', ')
-              - when 3
-                %br
-                %small
-                  %em= @email_message.recipients.map(&:name_email).join(', ')
+            - if @email_message.send_to_option == 3
+              (
+              %small>
+                %em>= @email_message.sub_units.map(&:name).join(', ')
+              )
+
+            %br
+            #sent-to-details
+              %p= unit_users_link_list(@email_message.unit, @email_message.sent_to)
+            %p.small
+              = link_to unit_email_message_path(@unit, @email_message), remote: true, id: 'details-reveal' do
+                %i.fa.fa-caret-square-o-right
+                show details...
+
+        %tr
+          %td
+            %strong Queued
+          %td
+            - if @email_message.sent_at
+              = @email_message.sent_at.to_s(:long_ampm)
+            - else
+              currently in queue
 
         %tr
           %td

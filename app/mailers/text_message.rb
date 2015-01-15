@@ -1,7 +1,6 @@
 class TextMessage < MailerBase
   add_template_helper(ApplicationHelper)
 
-  default from: "noreply@scoutt.in"
 
   def event_reminder(event, recipient_email)
     @event = event

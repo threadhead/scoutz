@@ -1,4 +1,4 @@
-- if current_user.role_at_least(:admin)
+- if current_user.admin?
   :plain
     $("div#scout-index").html("#{escape_javascript(render partial: 'scouts/index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching})}");
 

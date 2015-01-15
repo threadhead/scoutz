@@ -17,13 +17,15 @@ module UsersHelper
 
   def unit_users_link_list(unit, users)
     # return a list of users with their names as links, in a comma separated list
-    users.map do |user|
-      if user.adult?
-        link_to(user.name, unit_adult_path(unit, user))
-      else
-        link_to(user.name, unit_scout_path(unit, user))
-      end
-    end.join(', ').html_safe
+    users.map { |user| unit_user_link(unit, user) }.join(', ').html_safe
+  end
+
+  def unit_user_link(unit, user)
+    if user.adult?
+      link_to(user.name, unit_adult_path(unit, user))
+    else
+      link_to(user.name, unit_scout_path(unit, user))
+    end
   end
 
 

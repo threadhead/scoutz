@@ -1,6 +1,6 @@
 %small
   - email_message.sent_to.each do |user|
-    = link_to user.name_lf, unit_user_path(email_message.unit, user)
+    = unit_user_link(email_message.unit, user)
     &mdash;
     = Time.zone.parse(email_message.sent_to_hash[user.id][:sent_at]).to_s(:datetimepicker)
     , status:

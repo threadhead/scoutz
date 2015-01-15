@@ -39,10 +39,10 @@ jQuery ->
 
   # $("input.search-typeahead").delay(100).focus()
 
-  # $("select#select_default_unit").change ->
-  #   if $(@).val()
-  #     #console.log $(@).val()
-  #     $(@).closest('form').submit()
+  $("select#select_default_unit").change ->
+    if $(@).val()
+      #console.log $(@).val()
+      $(@).closest('form').submit()
 
   # $("#scoutz-navbar-collapse").on('shown.bs.collapse', ->
   #   #console.log "scoutz-navbar-collapse:shown"

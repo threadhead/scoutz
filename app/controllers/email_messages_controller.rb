@@ -16,6 +16,10 @@ class EmailMessagesController < ApplicationController
   def show
     authorize @email_message
     # fresh_when(@email_message)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new

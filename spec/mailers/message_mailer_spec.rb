@@ -16,6 +16,7 @@ RSpec.describe MessageMailer, type: :mailer do
     @email_message.events << @event
     @email_attachment = FactoryGirl.create(:email_attachment)
     @email_message.email_attachments << @email_attachment
+    allow(@email_message).to receive(:add_sent_confirmation!) # stub out setting of sent_to_hash
   end
 
   shared_examples 'renders unsubscribe block' do

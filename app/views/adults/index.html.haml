@@ -21,4 +21,7 @@
 
 
         #adult-index
-          = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+          - if current_user.admin?
+            = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+          - else
+            = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}

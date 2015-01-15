@@ -19,10 +19,11 @@ class MessageMailer < MailerBase
     #   end
     # end
 
+    @email_message.add_sent_confirmation!(user: @recipient, status: 'ok')
     mail reply_to: @sender.email,
          to: @recipient.email,
-         subject: @email_message.subject_with_unit,
-         template_name: 'email_blast'
+         subject: @email_message.subject_with_unit
+
   end
 
 

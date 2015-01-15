@@ -16,6 +16,8 @@ class SubUnit < ActiveRecord::Base
     self.unit.sub_unit_name
   end
 
+  default_scope { order(:name) }
+
   # find adults in sub_unit through their associated scouts
   def adults
     Adult.joins(scouts: :sub_unit).where(sub_units: {id: self.id} )

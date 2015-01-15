@@ -4,6 +4,7 @@ class EmailMessage < ActiveRecord::Base
   include AttributeSanitizer
 
   serialize :sub_unit_ids, Array
+  serialize :sent_to_hash, Hash
 
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
@@ -40,8 +41,8 @@ class EmailMessage < ActiveRecord::Base
   end
 
 
-  def send_to_count
-    recipients.blank? ? 0 : recipients.count
+  def sent_to_count
+    sent_to_hash.size
   end
 
 
@@ -50,7 +51,7 @@ class EmailMessage < ActiveRecord::Base
   end
 
   def recipients
-    case send_to_option
+    @recipients ||= case send_to_option
     when 1
       self.unit.users.gets_email_blast
     when 2
@@ -69,6 +70,23 @@ class EmailMessage < ActiveRecord::Base
 
   def recipients_emails
     recipients.map(&:email).uniq
+  end
+
+  def recipients_ids
+    recipients.map(&:id)
+  end
+
+  def sent_to
+    User.where(id: sent_to_hash.keys).by_name_lf
+  end
+
+  def add_sent_confirmation!(user:, status: 'ok')
+    puts "add sent confirmation"
+    self.sent_to_hash[user.id] = {
+      sent_at: Time.zone.now.to_s(:db),
+      status: status
+    }
+    save(validate: false)
   end
 
 

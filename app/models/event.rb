@@ -73,8 +73,15 @@ class Event < ActiveRecord::Base
   end
 
   def sub_unit_kind?
-    self.kind =~ /Den|Patrol/
+    return false if kind.blank?
+    !!(kind =~ /patrol event|den event/i)
   end
+
+  def unit_meeting_kind?
+    return false if kind.blank?
+    !!(kind =~ /troop meeting|pack meeting|crew meeting/i)
+  end
+
 
   before_create :ensure_signup_token
 
@@ -254,6 +261,9 @@ class Event < ActiveRecord::Base
   end
 
 
+  def self.last_unit_meeting(unit)
+    where(unit: unit, kind: "#{unit.unit_type_title} Meeting").order(start_at: :desc).first
+  end
 
 
   def disable_reminder_if_old
@@ -266,16 +276,41 @@ class Event < ActiveRecord::Base
   # for calendar.js
   def as_json(options = {})
     {
-      :id => self.id,
-      :title => self.name,
-      :description => "",
-      :start => self.start_at.iso8601,
-      :end => self.end_at.iso8601,
-      :allDay => false,
-      :recurring => false,
-      :url => Rails.application.routes.url_helpers.unit_event_path(unit, id),
-      color: unit.unit_type == "Boy Scouts" ? 'darkkhaki' : 'midnightblue'
+      id:             self.id,
+      title:          self.name,
+      description:    "",
+      start:          self.start_at.iso8601,
+      end:            self.end_at.iso8601,
+      allDay:         false,
+      recurring:      false,
+      url:            Rails.application.routes.url_helpers.unit_event_path(unit, id),
+      color:          unit.unit_type == "Boy Scouts" ? 'darkkhaki' : 'midnightblue'
     }
+  end
+
+  def to_copy_meeting_json
+    {
+      id:           id,
+      name:         name,
+      start_at:     start_at.try(:iso8601),
+      end_at:       end_at.try(:iso8601),
+      send_reminders: send_reminders,
+      signup_required: signup_required,
+      signup_deadline: signup_deadline.try(:iso8601),
+      location_name: location_name,
+      location_address1: location_address1,
+      location_address2: location_address2,
+      location_city: location_city,
+      location_state: location_state,
+      location_zip_code: location_zip_code,
+      location_map_url: location_map_url,
+      attire: attire,
+      message: message,
+      type_of_health_forms: type_of_health_forms,
+      consent_required: consent_required,
+      form_coordinator_ids: form_coordinator_ids
+    }
+
   end
 
   def self.format_time(date_time)

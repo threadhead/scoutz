@@ -77,20 +77,17 @@ RSpec.describe Event do
   end
 
   describe '.sub_unit_kind' do
-    before(:all) { @event = FactoryGirl.build(:event) }
-    subject { @event.sub_unit_kind? }
-
-    ['Den Event', 'Patrol Event'].each do |event|
-      it "returns TRUE when '#{event}'" do
-        @event.kind = event
-        expect(@event.sub_unit_kind?).to be
+    ['Den Event', 'Patrol Event'].each do |type|
+      it "returns TRUE when '#{type}'" do
+        event.kind = type
+        expect(event.sub_unit_kind?).to be(true)
       end
     end
 
-    ['Pack Event', 'Troop Event', 'Lodge Event'].each do |event|
-      it "returns FALSE when '#{event}'" do
-        @event.kind = event
-        expect(@event.sub_unit_kind?).to be_falsy
+    ['Pack Event', 'Troop Event', 'Lodge Event'].each do |type|
+      it "returns FALSE when '#{type}'" do
+        event.kind = type
+        expect(event.sub_unit_kind?).to be(false)
       end
     end
   end

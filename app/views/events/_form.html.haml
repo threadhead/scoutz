@@ -1,4 +1,9 @@
 = bootstrap_form_for @event do |f|
+  = hidden_field_tag :last_unit_meeting_start_at, @last_unit_meeting_start_at.iso8601
+  = hidden_field_tag :last_unit_meeting_end_at, @last_unit_meeting_end_at.iso8601
+  = hidden_field_tag :orig_start_at, @event.start_at.iso8601
+  = hidden_field_tag :orig_end_at, @event.end_at.iso8601
+
   = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
@@ -95,8 +100,38 @@
         = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL', help: "if you don't enter a map url, the address will be used to display a map"
 
     .col-md-3
-      = f.select :kind, @unit.event_kinds
-      #sub-unit-list{class: @event.sub_unit_kind? ? '' : 'collapse' }
+      = f.select :kind, @unit.event_kinds, include_blank: 'select the kind of event..'
+      #kinds-of-events.collapse{class: @event.new_record? ? 'in' : '' }
+        .alert.alert-warning
+          %small
+            %strong #{@unit.unit_type_title} Meeting:
+            regular weekly meeting
+            %br
+            %strong Camping/Outing:
+            when your #{@unit.unit_type_title} goes
+            %br
+            %strong #{@unit.unit_type_title} Event:
+            other, non-regular event or meeting
+            %br
+            %strong #{@unit.sub_unit_name} Event:
+            when only selected #{@unit.sub_unit_name}s meet
+            %strong Adult Leader Event:
+            adult leaders, no scouts
+
+
+      #unit-meeting-kind.collapse{class: @event.unit_meeting_kind? ? 'in' : '' }
+        .alert.alert-info
+          %small
+            The start/end time has been set to one week from you last #{@unit.unit_type_title} Meeting on the calendar. We set some sensible defaults:
+            %ul
+              %li Heath forms = off
+              %li Signup required = off
+              %li ACF required = off
+          %button.btn.btn-default.btn-sm#copy-last-unit-meeting{type: 'button'}
+            %i.fa.fa-copy
+            Copy Last #{@unit.unit_type_title} Meeting Values
+
+      #sub-unit-list.collapse{class: @event.sub_unit_kind? ? 'in' : '' }
         .well.well-sm
           %strong.large Select #{@unit.sub_unit_name}s in event
           = f.collection_check_boxes :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true

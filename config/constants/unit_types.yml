@@ -24,7 +24,7 @@
     :title: 'Crew'
     :short_name: 'VC'
     :sub_unit_name: 'Team'
-    :event_types: ['Crew Meeting', 'Camping/Outing', 'Crew Event', 'Leader Event']
+    :event_types: ['Crew Meeting', 'Camping/Outing', 'Crew Event', 'Adult Leader Event']
     :ranks: ['Bronze Award', 'Silver Award', 'Gold Award', 'Qwest Award', 'TRUST Award', 'Ranger Award']
     :scout_leadership_positions: []
     :adult_leadership_positions: []
@@ -34,7 +34,7 @@
     :title: 'Troop'
     :short_name: 'GS'
     :sub_unit_name: 'Patrol'
-    :event_types: ['Troop Event', 'Patrol Event', 'Leader Event']
+    :event_types: ['Troop Event', 'Patrol Event', 'Adult Leader Event']
     :ranks: ['Daisy', 'Brownie', 'Junior', 'Cadette', 'Senior', 'Ambasador']
     :scout_leadership_positions: []
     :adult_leadership_positions: []
@@ -44,7 +44,7 @@
     :title: 'Troop'
     :short_name: 'OA'
     :sub_unit_name: 'Patrol'
-    :event_types: ['Lodge Event', 'Patrol Event', 'Leader Event']
+    :event_types: ['Lodge Event', 'Patrol Event', 'Adult Leader Event']
     :ranks: ['Ordeal', 'Brotherhood', 'Vigil Honor']
     :scout_leadership_positions: []
     :adult_leadership_positions: []

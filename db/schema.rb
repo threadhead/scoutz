@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150114191019) do
+ActiveRecord::Schema.define(version: 20150115203422) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,7 @@ ActiveRecord::Schema.define(version: 20150114191019) do
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at", using: :btree
+  add_index "events", ["kind"], name: "index_events_on_kind", using: :btree
   add_index "events", ["reminder_sent_at"], name: "index_events_on_reminder_sent_at", using: :btree
   add_index "events", ["send_reminders"], name: "index_events_on_send_reminders", using: :btree
   add_index "events", ["signup_deadline"], name: "index_events_on_signup_deadline", using: :btree

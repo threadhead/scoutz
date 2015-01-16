@@ -2,6 +2,7 @@ class EventsController < ApplicationController
   # respond_to :html, :js
   before_action :auth_and_time_zone
   before_action :set_event, only: [:show, :edit, :update, :destroy, :email_attendees, :sms_attendees]
+  before_action :set_new_event, only: [:new, :edit]
   after_action :verify_authorized
 
   def index
@@ -36,6 +37,16 @@ class EventsController < ApplicationController
     authorize Event
   end
 
+  def last_unit_meeting
+    authorize Event
+    last_unit_meeting = Event.last_unit_meeting(@unit)
+    last_unit_meeting = Event.first
+    ap last_unit_meeting
+    respond_to do |format|
+      format.json { render json: last_unit_meeting.to_copy_meeting_json }
+    end
+  end
+
   def show
     authorize @event
     @event_signups = @event.user_signups(current_user)
@@ -66,6 +77,7 @@ class EventsController < ApplicationController
       redirect_to unit_event_url(@unit, @event), notice: 'Event was successfully created.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
+      set_new_event
       render :new
     end
   end
@@ -76,6 +88,7 @@ class EventsController < ApplicationController
       redirect_to unit_event_url(@unit, @event), notice: 'Event was successfully updated.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
+      set_new_event
       render :edit
     end
   end
@@ -105,6 +118,13 @@ class EventsController < ApplicationController
   private
     def set_event
       @event = Event.find(params[:id])
+    end
+
+    def set_new_event
+      last_unit_meeting = Event.last_unit_meeting(@unit)
+      puts "last_unit_meeting: #{last_unit_meeting}"
+      @last_unit_meeting_start_at = last_unit_meeting.try(:start_at) || Time.zone.now.to_next_hour
+      @last_unit_meeting_end_at = last_unit_meeting.try(:end_at) || Time.zone.now.to_next_hour + 1.hour
     end
 
     def event_params

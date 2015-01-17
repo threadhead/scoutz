@@ -37,10 +37,10 @@
             = f.text_field :address1, label: 'Address1'
             = f.text_field :address2, label: 'Address2'
         .row
-          .col-md-3
+          .col-md-2
             = f.text_field :city, label: 'City'
-          .col-md-1
-            = f.text_field :state, label: 'State'
+          .col-md-2
+            = f.select :state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
           .col-md-2
             = f.text_field :zip_code, label: 'Zip'
 

@@ -162,10 +162,10 @@
         = f.text_field :address1
         = f.text_field :address2
     .row
-      .col-md-3
+      .col-md-2
         = f.text_field :city
-      .col-md-1
-        = f.text_field :state
+      .col-md-2
+        = f.select :state, options_for_select(::UsStates.states_array, @user.state), include_blank: 'Select...'
       .col-md-2
         = f.text_field :zip_code
 

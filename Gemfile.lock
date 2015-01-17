@@ -47,8 +47,6 @@ GEM
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
       rack (>= 0.9.0)
-    better_states_select (1.0.0)
-      rails (>= 1.2)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
     bootstrap_form (2.2.0)
@@ -503,7 +501,6 @@ DEPENDENCIES
   acts_as_list
   awesome_print
   better_errors
-  better_states_select
   binding_of_caller
   bootstrap_form
   bourbon

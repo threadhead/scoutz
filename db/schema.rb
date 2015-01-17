@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117020048) do
+ActiveRecord::Schema.define(version: 20150117030711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -371,9 +371,14 @@ ActiveRecord::Schema.define(version: 20150117020048) do
     t.string   "address2"
     t.string   "zip_code"
     t.string   "consent_form_url"
-    t.boolean  "attach_consent_form",      default: true
-    t.integer  "use_consent_form"
+    t.boolean  "attach_consent_form",             default: true
+    t.integer  "use_consent_form",                default: 1
     t.integer  "reply_to_default_user_id"
+    t.string   "consent_form"
+    t.datetime "consent_form_updated_at"
+    t.integer  "consent_form_file_size"
+    t.string   "consent_form_content_type"
+    t.string   "consent_form_original_file_name"
   end
 
   add_index "units", ["council_id"], name: "index_units_on_council_id", using: :btree

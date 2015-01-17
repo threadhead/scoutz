@@ -27,7 +27,7 @@ class UnitsController < ApplicationController
     @unit = Unit.new(unit_params)
 
     if @unit.save
-      redirect_to @unit, notice: 'Unit was successfully created.'
+      redirect_to unit_events_url(@unit), notice: "#{@unit.unit_type_title} Settings were successfully created."
     else
       render action: :new
     end
@@ -38,7 +38,7 @@ class UnitsController < ApplicationController
     @unit = Unit.find(params[:id])
 
     if @unit.update(unit_params)
-      redirect_to @unit, notice: 'Unit was successfully updated.'
+      redirect_to unit_events_url(@unit), notice: "#{@unit.unit_type_title} Settings were successfully updated."
     else
       render action: :edit
     end
@@ -60,6 +60,6 @@ class UnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unit_params
-      params.require(:unit).permit(:city, :state, :time_zone, :unit_type, :unit_number, :sub_units_attributes)
+      params.require(:unit).permit(:address1, :address2, :city, :state, :zip_code, :time_zone, :attach_consent_form, :use_consent_form, :consent_form, :consent_form_url)
     end
 end

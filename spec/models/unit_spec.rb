@@ -13,7 +13,46 @@ RSpec.describe Unit do
   it { is_expected.to validate_presence_of(:time_zone) }
   it { is_expected.to validate_presence_of(:city) }
   it { is_expected.to validate_presence_of(:state) }
-  it { is_expected.to validate_uniqueness_of(:sl_uid).allow_nil }
+  # it { is_expected.to validate_uniqueness_of(:sl_uid).allow_nil }
+
+  let(:unit) { FactoryGirl.build(:unit) }
+
+  describe 'validations' do
+    describe 'consent_form_url' do
+      it 'required when use_consent_form = 2' do
+        unit.attach_consent_form = true
+        unit.use_consent_form = 2
+        unit.consent_form_url = nil
+        expect(unit).not_to be_valid
+        expect(unit.errors).to include(:consent_form_url)
+      end
+
+      it 'not required when attach_consent_form is false' do
+        unit.attach_consent_form = false
+        unit.use_consent_form = 2
+        unit.consent_form_url = nil
+        expect(unit).to be_valid
+        expect(unit.errors).not_to include(:consent_form_url)
+      end
+    end
+
+    describe 'consent_forml' do
+      it 'required when use_consent_form = 3' do
+        unit.attach_consent_form = true
+        unit.use_consent_form = 3
+        # unit.consent_form = nil
+        expect(unit).not_to be_valid
+        expect(unit.errors).to include(:consent_form)
+      end
+
+      it 'not required if attach_consent_form is false' do
+        unit.attach_consent_form = false
+        unit.use_consent_form = 3
+        expect(unit).to be_valid
+        expect(unit.errors).not_to include(:consent_form)
+      end
+    end
+  end
 
 
   describe 'The units-users relationships' do
@@ -36,48 +75,34 @@ RSpec.describe Unit do
   	end
   end
 
-  describe '.name' do
-    before { @unit = FactoryGirl.build(:unit) }
-    subject { @unit }
+  specify { expect(unit.name).to eq('Cub Scout Pack 134') }
+  specify { expect(unit.name_short).to eq('CS Pack 134') }
 
-    it { subject.name.should eq('Cub Scout Pack 134') }
-  end
-
-  describe '.name_short' do
-    before { @unit = FactoryGirl.build(:unit) }
-    subject { @unit }
-
-    it { subject.name_short.should eq('CS Pack 134') }
-  end
 
   describe '.event_kinds' do
     it 'Cub Scout events' do
-      unit = FactoryGirl.build(:unit, unit_type: 'Cub Scouts')
-      unit.event_kinds.should eq(['Pack Event', 'Den Event', 'Leader Event'])
+      unit.unit_type = 'Cub Scouts'
+      expect(unit.event_kinds).to eq(['Pack Event', 'Den Event', 'Leader Event'])
     end
 
     it 'Cub Scout events' do
-      unit = FactoryGirl.build(:unit, unit_type: 'Boy Scouts')
-      unit.event_kinds.should eq(['Troop Event', 'Patrol Event', 'Leader Event'])
+      unit.unit_type = 'Boy Scouts'
+      expect(unit.event_kinds).to eq(['Troop Event', 'Patrol Event', 'Leader Event'])
     end
   end
 
   describe '.sub_unit_type' do
     it 'returns Troop for Boy Scouts' do
-      unit = FactoryGirl.build(:unit, unit_type: 'Boy Scouts')
-      unit.sub_unit_name.should eq('Patrol')
+      unit.unit_type = 'Boy Scouts'
+      expect(unit.sub_unit_name).to eq('Patrol')
     end
 
     it 'returns Pack for Cub Scouts' do
-      unit = FactoryGirl.build(:unit, unit_type: 'Cub Scouts')
-      unit.sub_unit_name.should eq('Den')
+      unit.unit_type = 'Cub Scouts'
+      expect(unit.sub_unit_name).to eq('Den')
     end
   end
 
-  describe 'Unit.unit_types' do
-    it 'returns all unit types' do
-      Unit.unit_types.should eq(['Cub Scouts', 'Boy Scouts', 'Venturing Crew', 'Girl Scouts', 'Order of the Arrow'])
-    end
-  end
+  specify { expect(Unit.unit_types).to eq(['Cub Scouts', 'Boy Scouts', 'Venturing Crew', 'Girl Scouts', 'Order of the Arrow']) }
 
 end

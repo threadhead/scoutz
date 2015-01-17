@@ -10,16 +10,24 @@
 
       %fieldset
         %legend Activity Consent Form
-        = f.check_box :attach_consent_form, label: 'Automatically attach consent form link to events that require ACF'
         .row
-          .col-md-11.col-md-offset-1
-            = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
-              %br
-              = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
-              %a{href: '#'} (view BSA ACF)
-              = f.radio_button :use_consent_form, 2, label: 'Use custom ACF (enter link below)'
+          .col-md-8
+            = f.check_box :attach_consent_form, label: 'Automatically attach consent form link to events that require ACF (recommended)'
+            %br
+            .indent-sub-selection
+              = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
+                %br
+                = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
+                %a{href: '#'} (view BSA ACF)
 
-            = f.text_field :consent_form_url, label: 'URL of custom consent form'
+                = f.radio_button :use_consent_form, 2, label: 'Use URL (link) to a page or form'
+                .indent-sub-selection= f.text_field :consent_form_url, label: 'URL of custom consent form'
+
+                = f.radio_button :use_consent_form, 3, label: 'Select custom consent form'
+                .indent-sub-selection
+                  .well.well-sm
+                    %p= f.file_field :consent_form, hide_label: true, help: 'alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf txt'
+
 
 
       %fieldset
@@ -41,4 +49,4 @@
 
       %br
       = f.primary
-      = link_to 'Cancel', unit_merit_badges_path(@unit), class: 'btn btn-default'
+      = link_to 'Cancel', unit_events_path(@unit), class: 'btn btn-default'

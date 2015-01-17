@@ -1,4 +1,10 @@
 class Unit < ActiveRecord::Base
+  mount_uploader :consent_form, ConsentFormUploader
+
+  before_save :update_consent_form_attributes
+  before_create :save_original_filename
+
+
   has_and_belongs_to_many :users
   # has_many :scouts, through: :users
   # has_many :adults, through: :users
@@ -15,8 +21,17 @@ class Unit < ActiveRecord::Base
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
 
 
-  validates_presence_of :unit_type, :unit_number, :time_zone, :state, :city
+  validates :unit_type, :unit_number, :time_zone, :state, :city, presence: true
   validates :sl_uid, uniqueness: { allow_nil: true }
+
+
+  validate :consent_form_size_validation, :if => "consent_form?"
+  def consent_form_size_validation
+    errors.add(:consent_form, "should be less than 1M") if consent_form.size > 1.0.megabytes.to_i
+  end
+
+  validates :consent_form_url, presence: true,  if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 2}
+  validates :consent_form, presence: true, if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 3}
 
 
 
@@ -92,6 +107,21 @@ class Unit < ActiveRecord::Base
     AppConstants.unit_types[unit_type_to_sym][:event_types]
   end
 
+  # def consent_form_url
+  #   url = case use_consent_form
+  #   when 1
+  #     "http://www.scouting.org/filestore/pdf/19-673.pdf"
+  #   when 2
+  #     consent_form_url
+  #   when 3
+  #     return nil unless consent_form.present?
+  #     Rails.configuration.action_mailer.asset_host + consent_form.url
+  #   end
+  # end
+
+
+
+
   def self.unit_types
     @@unit_types ||= AppConstants.unit_types.keys.map { |e| AppConstants.unit_types[e][:name] }
   end
@@ -105,9 +135,28 @@ class Unit < ActiveRecord::Base
   end
 
 
+
+
   ## scopes
   def activities
     PublicActivity::Activity.where(unit_id: self.id).order('created_at DESC')
     # Unit.all
   end
+
+
+  private
+    def save_original_filename
+      if use_consent_form.present?
+        self.consent_form_original_file_name = consent_form.file.original_filename
+      end
+    end
+
+    def update_consent_form_attributes
+      if consent_form.present? && consent_form_changed?
+        self.consent_form_updated_at = Time.zone.now
+        self.consent_form_content_type = consent_form.file.content_type
+        self.consent_form_file_size = consent_form.file.size
+      end
+    end
+
 end

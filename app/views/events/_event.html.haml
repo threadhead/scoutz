@@ -128,6 +128,14 @@
                         Yes, #{event_signup.need_carpool_seats} #{'seat'.pluralize(event_signup.need_carpool_seats)}
                       - else
                         No
+                  - if event.consent_required?
+                    %tr
+                      %td Activity Consent:
+                      %td
+                        - if event_signup.has_activity_consent_form?
+                          %span{style: "background-color: green; color: white; padding: 2px;"} Submitted
+                        - else
+                          %span{style: "background-color: yellow; color: red; font-weight: bold; padding: 2px"} NOT SUBMITTED
                   %tr
                     %td Can Drive:
                     %td

@@ -52,7 +52,18 @@
           %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
           %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
         Activity Consent Form
+
       .checkbox
+        .pull-right
+          - if event_signup.has_activity_consent_form?
+            %span.fa-stack.fa-lg
+              %i.fa.fa-circle.fa-stack-2x.green-color
+              %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
+          - else
+            %span.fa-stack.fa-lg
+              %i.fa.fa-circle.fa-stack-2x.red-color
+              %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
+
         = f.label :permision_check_box do
           = f.check_box :permission_check_box, value: event_signup.has_activity_consent_form?
           ACF Received

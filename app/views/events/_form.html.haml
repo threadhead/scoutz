@@ -3,6 +3,7 @@
   = hidden_field_tag :last_unit_meeting_end_at, @last_unit_meeting_end_at.iso8601
   = hidden_field_tag :orig_start_at, @event.start_at.iso8601
   = hidden_field_tag :orig_end_at, @event.end_at.iso8601
+  = hidden_field_tag :new_record, @event.new_record?
 
   = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
@@ -119,22 +120,81 @@
             adult leaders, no scouts
 
 
-      #unit-meeting-kind.collapse{class: @event.unit_meeting_kind? ? 'in' : '' }
+      #unit-meeting-kind.collapse
         .alert.alert-info
           %small
-            The start/end time has been set to one week from you last #{@unit.unit_type_title} Meeting on the calendar. We set some sensible defaults:
+            %strong #{@unit.unit_type_title} Meeting
+            %br
+            We set some sensible defaults:
             %ul
-              %li Heath forms = off
-              %li Signup required = off
-              %li ACF required = off
-          %button.btn.btn-default.btn-sm#copy-last-unit-meeting{type: 'button'}
+              %li Attire -> uniform
+              %li Send reminder -> off
+              %li Heath forms -> off
+              %li Signup required -> off
+              %li ACF required -> off
+          %button.btn.btn-default.btn-sm.btn-block#copy-last-unit-meeting{type: 'button'}
             %i.fa.fa-copy
             Copy Last #{@unit.unit_type_title} Meeting Values
+          %p.small.centered (+ 1 week)
 
-      #sub-unit-list.collapse{class: @event.sub_unit_kind? ? 'in' : '' }
+      #camping-outing-kind.collapse
+        .alert.alert-info
+          %small
+            %strong Camping/Outing
+            %br
+            We set some sensible defaults:
+            %ul
+              %li Attire -> t-shirt
+              %li Send reminder -> on
+              %li Health form -> on
+              %li Signup required -> on
+              %li ACF required -> on
+
+      #unit-event-kind.collapse
+        .alert.alert-info
+          %small
+            %strong #{@unit.unit_type_title} Event
+            %br
+            We set some sensible defaults:
+            %ul
+              %li Attire -> uniform
+              %li Send reminder -> on
+              %li Health form -> off
+              %li Signup required -> off
+              %li ACF required -> off
+
+      #adult-leader-kind.collapse
+        .alert.alert-info
+          %small
+            %strong Adult Leader Event
+            %br
+            We set some sensible defaults:
+            %ul
+              %li Attire -> casual
+              %li Send reminder -> on
+              %li Health form -> off
+              %li Signup required -> off
+              %li ACF required -> off
+
+      #plc-kind.collapse
+        .alert.alert-info
+          %small
+            %strong Patrol Leaders Council (PLC)
+            %br
+            We set some sensible defaults:
+            %ul
+              %li Attire -> uniform
+              %li Send reminder -> on
+              %li Health form -> off
+              %li Signup required -> off
+              %li ACF required -> off
+
+
+      #sub-unit-kind.collapse
         .well.well-sm
-          %strong.large Select #{@unit.sub_unit_name}s in event
-          = f.collection_check_boxes :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true
+          %small
+            %strong Select #{@unit.sub_unit_name}s for event
+            = f.collection_check_boxes :sub_unit_ids, @unit.sub_units.order('name ASC'), :id, :name, hide_label: true
 
   .row
     .col-md-12

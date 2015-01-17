@@ -40,8 +40,8 @@ class EventsController < ApplicationController
   def last_unit_meeting
     authorize Event
     last_unit_meeting = Event.last_unit_meeting(@unit)
-    last_unit_meeting = Event.first
-    ap last_unit_meeting
+    # last_unit_meeting = Event.first
+    # ap last_unit_meeting
     respond_to do |format|
       format.json { render json: last_unit_meeting.to_copy_meeting_json }
     end

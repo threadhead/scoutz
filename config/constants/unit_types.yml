@@ -14,7 +14,7 @@
     :title: 'Troop'
     :short_name: 'BS'
     :sub_unit_name: 'Patrol'
-    :event_types: ['Troop Meeting', 'Camping/Outing', 'Troop Event', 'Patrol Event', 'Adult Leader Event']
+    :event_types: ['Troop Meeting', 'Camping/Outing', 'PLC', 'Troop Event', 'Patrol Event', 'Adult Leader Event']
     :ranks: ['Scout', 'Tenderfoot', 'Second Class', 'First Class', 'Star', 'Life', 'Eagle Scout']
     :scout_leadership_positions: ['Senior Patrol Leader', 'Asst Senior Patrol Leader', 'Junior Asst Scoutmaster', 'Troop Guide', 'Scribe', 'Troop Historian', 'Patrol Leader', 'Asst Patrol Leader', 'Quartermaster', 'Librarian', 'Den Chief', 'Chaplain Aide', 'Instructor', 'Webmaster', 'OA Rep', 'Trainer']
     :adult_leadership_positions: ['Scoutmaster', 'Asst Scoutmaster', 'Committee Chair', 'Committee Member', 'Advancement Coord', 'Chartered Org Rep', 'Treasurer', 'Webmaster', 'OA Rep', 'Trainer']
@@ -44,7 +44,7 @@
     :title: 'Troop'
     :short_name: 'OA'
     :sub_unit_name: 'Patrol'
-    :event_types: ['Lodge Event', 'Patrol Event', 'Adult Leader Event']
+    :event_types: ['Lodge Meeting', 'Camping/Outing', 'Lodge Event', 'Patrol Event', 'Adult Leader Event']
     :ranks: ['Ordeal', 'Brotherhood', 'Vigil Honor']
     :scout_leadership_positions: []
     :adult_leadership_positions: []

@@ -13,7 +13,6 @@ class EventsController < ApplicationController
     # else
     #   @events = Event.joins(unit: :users).where(users: {id: current_user.id}).by_start
     # end
-
     @events = Event.joins(unit: :users).where(units: {id: @unit.id}).where(users: {id: current_user.id}).includes(:unit)
 
     if params.key?(:start) && params.key?(:end)

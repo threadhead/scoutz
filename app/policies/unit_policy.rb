@@ -19,7 +19,7 @@ class UnitPolicy < ApplicationPolicy
     false
   end
 
-  def change_default_url?
+  def change_default_unit?
     true
   end
 

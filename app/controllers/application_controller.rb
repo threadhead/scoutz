@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
 
   protected
     def auth_and_time_zone
-      puts 'AUTHTIMEZONE'
       authenticate_user!
       User.current = current_user if current_user
       set_user_units
@@ -20,9 +19,7 @@ class ApplicationController < ActionController::Base
 
 
     def set_unit
-      puts 'SET_UNIT'
       unit_id = params[:unit_id] || params[:select_default_unit] || session[:current_unit_id]
-      puts "unit_id: #{unit_id}"
       @unit = unit_id.nil? ? @units.first : current_user.units.where(id: unit_id).first
       session[:current_unit_id] = @unit.try(:id)
     end

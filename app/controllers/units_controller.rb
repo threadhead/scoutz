@@ -52,15 +52,15 @@ class UnitsController < ApplicationController
   end
 
   def change_default_unit
-    # ap @unit
+    authorize Unit
     redirect_to unit_events_url(@unit)
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_unit
-      @unit = current_user.units.where(id: params[:id]).first
-    end
+    # def set_unit
+    #   @unit = current_user.units.where(id: params[:id]).first
+    # end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unit_params

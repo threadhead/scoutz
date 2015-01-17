@@ -4,13 +4,11 @@ class PagesController < ApplicationController
   after_action :verify_authorized
 
 
-  # GET /pages
   def index
     authorize Page
     set_pages
   end
 
-  # GET /pages/1
   def show
     authorize @page
   end
@@ -19,18 +17,15 @@ class PagesController < ApplicationController
     authorize @page
   end
 
-  # GET /pages/new
   def new
     authorize Page
     @page = Page.new
   end
 
-  # GET /pages/1/edit
   def edit
     authorize @page
   end
 
-  # POST /pages
   def create
     @page = @unit.pages.build(page_params.merge({user_id: current_user.id}))
     authorize @page
@@ -42,7 +37,6 @@ class PagesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /pages/1
   def update
     authorize @page
     if @page.update(page_params)
@@ -52,7 +46,6 @@ class PagesController < ApplicationController
     end
   end
 
-  # DELETE /pages/1
   def destroy
     authorize @page
     @page.destroy

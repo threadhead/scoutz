@@ -34,4 +34,16 @@ module EventsHelper
     m.html_safe
   end
 
+  def consent_form_url(event)
+    unit = event.unit
+    case unit.use_consent_form
+    when 1
+      "http://www.scouting.org/filestore/pdf/19-673.pdf"
+    when 2
+      unit.url_consent_form
+    when 3
+      Rails.configuration.action_mailer.asset_host + unit.consent_form.url
+    end
+  end
+
 end

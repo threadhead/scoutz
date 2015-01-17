@@ -36,6 +36,11 @@
               = link_to edit_unit_user_password_path(@unit, current_user) do
                 %i.fa.fa-key
                 Change Password
+            - if policy(@unit).edit?
+              %li
+                = link_to edit_unit_path(@unit) do
+                  %i.fa.fa-key
+                  #{@unit.unit_type_title} Settings
             %li.divider
             %li
               = link_to destroy_user_session_url, method: :delete do

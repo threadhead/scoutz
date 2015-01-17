@@ -370,7 +370,7 @@ ActiveRecord::Schema.define(version: 20150117030711) do
     t.string   "address1"
     t.string   "address2"
     t.string   "zip_code"
-    t.string   "consent_form_url"
+    t.string   "url_consent_form"
     t.boolean  "attach_consent_form",             default: true
     t.integer  "use_consent_form",                default: 1
     t.integer  "reply_to_default_user_id"

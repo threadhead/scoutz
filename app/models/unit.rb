@@ -2,7 +2,7 @@ class Unit < ActiveRecord::Base
   mount_uploader :consent_form, ConsentFormUploader
 
   before_save :update_consent_form_attributes
-  before_create :save_original_filename
+  # before_create :save_original_filename
 
 
   has_and_belongs_to_many :users
@@ -30,7 +30,7 @@ class Unit < ActiveRecord::Base
     errors.add(:consent_form, "should be less than 1M") if consent_form.size > 1.0.megabytes.to_i
   end
 
-  validates :consent_form_url, presence: true,  if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 2}
+  validates :url_consent_form, presence: true,  if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 2}
   validates :consent_form, presence: true, if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 3}
 
 
@@ -107,12 +107,12 @@ class Unit < ActiveRecord::Base
     AppConstants.unit_types[unit_type_to_sym][:event_types]
   end
 
-  # def consent_form_url
+  # def url_consent_form
   #   url = case use_consent_form
   #   when 1
   #     "http://www.scouting.org/filestore/pdf/19-673.pdf"
   #   when 2
-  #     consent_form_url
+  #     url_consent_form
   #   when 3
   #     return nil unless consent_form.present?
   #     Rails.configuration.action_mailer.asset_host + consent_form.url
@@ -145,14 +145,15 @@ class Unit < ActiveRecord::Base
 
 
   private
-    def save_original_filename
-      if use_consent_form.present?
-        self.consent_form_original_file_name = consent_form.file.original_filename
-      end
-    end
+    # def save_original_filename
+    #   puts "consent_form present: #{consent_form.present?}"
+    #   if consent_form.present?
+    #   end
+    # end
 
     def update_consent_form_attributes
       if consent_form.present? && consent_form_changed?
+        self.consent_form_original_file_name = consent_form.file.original_filename
         self.consent_form_updated_at = Time.zone.now
         self.consent_form_content_type = consent_form.file.content_type
         self.consent_form_file_size = consent_form.file.size

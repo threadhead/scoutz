@@ -21,12 +21,16 @@
                 %a{href: '#'} (view BSA ACF)
 
                 = f.radio_button :use_consent_form, 2, label: 'Use URL (link) to a page or form'
-                .indent-sub-selection= f.text_field :consent_form_url, label: 'URL of custom consent form'
+                .indent-sub-selection= f.text_field :url_consent_form, label: 'URL of custom consent form'
 
                 = f.radio_button :use_consent_form, 3, label: 'Select custom consent form'
                 .indent-sub-selection
                   .well.well-sm
                     %p= f.file_field :consent_form, hide_label: true, help: 'alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf txt'
+                    - if @unit.consent_form.present?
+                      Current form:
+                      = link_to @unit.consent_form_original_file_name, @unit.consent_form.url
+                      %small (#{number_to_human_size @unit.consent_form_file_size}, #{@unit.consent_form_updated_at.to_s(:long_ampm)})
 
 
 

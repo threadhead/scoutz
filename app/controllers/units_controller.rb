@@ -60,6 +60,6 @@ class UnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unit_params
-      params.require(:unit).permit(:address1, :address2, :city, :state, :zip_code, :time_zone, :attach_consent_form, :use_consent_form, :consent_form, :consent_form_url)
+      params.require(:unit).permit(:address1, :address2, :city, :state, :zip_code, :time_zone, :attach_consent_form, :use_consent_form, :consent_form, :url_consent_form)
     end
 end

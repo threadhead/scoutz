@@ -18,21 +18,21 @@ RSpec.describe Unit do
   let(:unit) { FactoryGirl.build(:unit) }
 
   describe 'validations' do
-    describe 'consent_form_url' do
+    describe 'url_consent_form' do
       it 'required when use_consent_form = 2' do
         unit.attach_consent_form = true
         unit.use_consent_form = 2
-        unit.consent_form_url = nil
+        unit.url_consent_form = nil
         expect(unit).not_to be_valid
-        expect(unit.errors).to include(:consent_form_url)
+        expect(unit.errors).to include(:url_consent_form)
       end
 
       it 'not required when attach_consent_form is false' do
         unit.attach_consent_form = false
         unit.use_consent_form = 2
-        unit.consent_form_url = nil
+        unit.url_consent_form = nil
         expect(unit).to be_valid
-        expect(unit.errors).not_to include(:consent_form_url)
+        expect(unit.errors).not_to include(:url_consent_form)
       end
     end
 

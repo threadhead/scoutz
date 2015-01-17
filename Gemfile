@@ -31,7 +31,7 @@ gem 'bootstrap_form'
 gem 'kaminari'
 gem 'acts_as_list' #, git: 'https://github.com/swanandp/acts_as_list.git'
 gem 'pg_search'
-
+gem 'better_states_select'
 
 #gem 'twilio-ruby'
 gem 'rest-client'

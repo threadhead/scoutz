@@ -51,6 +51,10 @@ class UnitsController < ApplicationController
     redirect_to units_url
   end
 
+  def change_default_unit
+    # ap @unit
+    redirect_to unit_events_url(@unit)
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

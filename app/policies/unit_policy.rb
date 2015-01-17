@@ -19,6 +19,10 @@ class UnitPolicy < ApplicationPolicy
     false
   end
 
+  def change_default_url?
+    true
+  end
+
   # class Scope < Struct.new(:user, :scope)
   #   def resolve
   #     scope

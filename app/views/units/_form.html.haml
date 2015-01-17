@@ -1,26 +1,44 @@
-= form_for @unit, html: { class: 'form-horizontal' } do |f|
-  .form-group
-    = f.label :unit_type, class: 'control-label'
-    .controls
-      = f.select :unit_type, Unit.unit_types
-  .form-group
-    = f.label :unit_number, class: 'control-label'
-    .controls
-      = f.text_field :unit_number, class: 'text_field'
-      %span{class: 'help-inline'} ex. 134, 603, 15
-  .form-group
-    = f.label :city, class: 'control-label'
-    .controls
-      = f.text_field :city, class: 'text_field'
-  .form-group
-    = f.label :state, class: 'control-label'
-    .controls
-      = f.subregion_select :state, 'US'
-  .form-group
-    = f.label :time_zone, class: 'control-label'
-    .controls
-      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
-  .form-group
-    .col-md-offset-4.col-md-6
-      = f.submit 'Save', class: 'btn btn-primary'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn btn-default'
+.row
+  .col-md-12
+
+    = bootstrap_form_for @unit do |f|
+      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @unit}
+
+      .row
+        .col-md-6
+          = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, help: '*all* dates and times will be displayed in this time zone, for all users'
+
+      %fieldset
+        %legend Activity Consent Form
+        = f.check_box :attach_consent_form, label: 'Automatically attach consent form link to events that require ACF'
+        .row
+          .col-md-11.col-md-offset-1
+            = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
+              %br
+              = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
+              %a{href: '#'} (view BSA ACF)
+              = f.radio_button :use_consent_form, 2, label: 'Use custom ACF (enter link below)'
+
+            = f.text_field :consent_form_url, label: 'URL of custom consent form'
+
+
+      %fieldset
+        %legend Mailing Address (optional)
+        .row
+          .col-md-6
+            = f.text_field :address1, label: 'Address1'
+            = f.text_field :address2, label: 'Address2'
+        .row
+          .col-md-3
+            = f.text_field :city, label: 'City'
+          .col-md-1
+            = f.text_field :state, label: 'State'
+          .col-md-2
+            = f.text_field :zip_code, label: 'Zip'
+
+
+
+
+      %br
+      = f.primary
+      = link_to 'Cancel', unit_merit_badges_path(@unit), class: 'btn btn-default'

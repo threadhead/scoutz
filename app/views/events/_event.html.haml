@@ -53,6 +53,8 @@
           Activity Consent: #{event.consent_required ? '<em>required</em>'.html_safe : 'not required'}
 
           - if event.consent_required?
+            - if event.unit.attach_consent_form?
+              %small= link_to "(download consent form)", consent_form_url(event)
             %br
             Coordinator#{'s' if event.form_coordinators.count > 1 }:
             = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
@@ -73,11 +75,12 @@
       %tr
         %td{style: td_border + td_col_1}
           %strong iCal
-        %td
+        %td{style: td_border}
           = link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
 
     %tr
-      %td &nbsp;
+      %td{style: td_col_1 + "vertical-align: top;"}
+        %strong Details
       %td= event.message.html_safe
 
 
@@ -125,6 +128,14 @@
                         Yes, #{event_signup.need_carpool_seats} #{'seat'.pluralize(event_signup.need_carpool_seats)}
                       - else
                         No
+                  - if event.consent_required?
+                    %tr
+                      %td Activity Consent:
+                      %td
+                        - if event_signup.has_activity_consent_form?
+                          %span{style: "background-color: green; color: white; padding: 2px;"} Submitted
+                        - else
+                          %span{style: "background-color: yellow; color: red; font-weight: bold; padding: 2px"} NOT SUBMITTED
                   %tr
                     %td Can Drive:
                     %td

@@ -9,7 +9,7 @@ Scoutz::Application.routes.draw do
   end
 
 
-  resources :units do
+  resources :units, only: [:edit, :update, :change_default_unit] do
     resources :events do
       collection do
         get 'calendar'

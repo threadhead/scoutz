@@ -74,6 +74,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
 
   config.before(:each) do
+    # DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.strategy = Capybara.current_driver == :rack_test ? :transaction : :truncation
     DatabaseCleaner.start
     # This should effectively stop all creating ical files, which will happen in an after_save callback
@@ -83,7 +84,8 @@ RSpec.configure do |config|
   end
 
   config.before(:each, js: true) do
-    page.driver.browser.url_blacklist = ["//cdnjs.cloudflare.com/ajax/libs/font-awesome", "//fonts.googleapis.com/"]
+    # DatabaseCleaner.strategy = :truncation
+    page.driver.browser.url_blacklist = ["//cdnjs.cloudflare.com/ajax/libs/font-awesome", "//fonts.googleapis.com/", "//www.google-analytics.com"]
   end
 
 
@@ -92,17 +94,18 @@ RSpec.configure do |config|
   end
 
   config.before(:all) do
+    DatabaseCleaner.clean_with(:truncation)
     PublicActivity.enabled = false
 
-    User.delete_all
-    Unit.delete_all
-    SubUnit.delete_all
-    Event.delete_all
-    Phone.delete_all
-    UserRelationship.delete_all
-    EventSignup.delete_all
-    Page.delete_all
-    MeritBadge.delete_all
+    # User.delete_all
+    # Unit.delete_all
+    # SubUnit.delete_all
+    # Event.delete_all
+    # Phone.delete_all
+    # UserRelationship.delete_all
+    # EventSignup.delete_all
+    # Page.delete_all
+    # MeritBadge.delete_all
   end
 
   config.after(:all) do

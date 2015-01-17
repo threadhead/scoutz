@@ -22,9 +22,9 @@ module UsersHelper
 
   def unit_user_link(unit, user)
     if user.adult?
-      link_to(user.name, unit_adult_path(unit, user))
+      link_to(user.name, unit_adult_url(unit, user))
     else
-      link_to(user.name, unit_scout_path(unit, user))
+      link_to(user.name, unit_scout_url(unit, user))
     end
   end
 

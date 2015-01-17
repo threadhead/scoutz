@@ -50,7 +50,7 @@ RSpec.describe 'Adults' do
           select '14', from: 'adult_birth_3i'
           fill_in 'Address1', with: '3660 N Lake Shore Dr'
           fill_in 'adult_city', with: 'Chicago'
-          fill_in 'adult_state', with: 'IL'
+          select 'Illinois', from: 'adult_state'
           fill_in 'adult_zip_code', with: '60657'
           # this should be tested later with javascript
           select 'Russel, Aydan', from: 'adult_scout_ids'

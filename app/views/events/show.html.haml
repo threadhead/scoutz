@@ -102,6 +102,13 @@
               Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
 
               - if @event.consent_required?
+                - if @unit.attach_consent_form?
+                  %br
+                  = link_to consent_form_url(@event) do
+                    %i.fa.fa-download
+                    Download Consent Form
+
+
                 %p.small
                   Coordinator#{'s' if @event.form_coordinators.count > 1 }:
                   = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'

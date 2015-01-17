@@ -87,14 +87,14 @@
           .col-md-8
             = f.text_field :location_name, label: 'Name'
         .row
-          .col-md-6
+          .col-md-8
             = f.text_field :location_address1, label: 'Address1'
             = f.text_field :location_address2, label: 'Address2'
         .row
           .col-md-3
             = f.text_field :location_city, label: 'City'
-          .col-md-1
-            = f.text_field :location_state, label: 'State'
+          .col-md-3
+            = f.select :location_state, options_for_select(::UsStates.states_array, @event.location_state), include_blank: 'Select...'
           .col-md-2
             = f.text_field :location_zip_code, label: 'Zip'
 

@@ -42,7 +42,7 @@ module EventsHelper
     when 2
       unit.url_consent_form
     when 3
-      Rails.configuration.action_mailer.asset_host + consent_form.url
+      Rails.configuration.action_mailer.asset_host + unit.consent_form.url
     end
   end
 

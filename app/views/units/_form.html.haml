@@ -27,6 +27,7 @@
                 .indent-sub-selection
                   .well.well-sm
                     %p= f.file_field :consent_form, hide_label: true, help: 'alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf txt'
+
                     - if @unit.consent_form.present?
                       Current form:
                       = link_to @unit.consent_form_original_file_name, @unit.consent_form.url
@@ -47,8 +48,6 @@
             = f.select :state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
           .col-md-2
             = f.text_field :zip_code, label: 'Zip'
-
-
 
 
       %br

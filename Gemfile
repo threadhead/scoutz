@@ -7,6 +7,7 @@ gem 'dotenv-deployment'
 gem 'rails', '~> 4.2.0'
 
 gem 'pg'
+gem 'dalli'
 
 # gem 'rake'
 
@@ -38,7 +39,6 @@ gem 'newrelic_rpm'
 
 # gem 'vcr'
 # gem 'webmock'
-gem 'dalli'
 
 
 group :production, :staging do

@@ -70,6 +70,7 @@
         .navbar-brand= @unit.name_unit
       .visible-xs-block.navbar-brand= @unit.name_unit
 
+
     .navbar-collapse.collapse#unit-navbar-collapse
       %ul.nav.navbar-nav.navbar-left
         %li
@@ -192,10 +193,12 @@
 
 
       %ul.nav.navbar-nav.navbar-right
-        %li.visible-xs-block
+        %li
           = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
             %i.fa.fa-list
-        %li.visible-xs-block
+            .visible-xs-inline Event List
+        %li
           = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
             %i.fa.fa-calendar
+            .visible-xs-inline Calendar
 

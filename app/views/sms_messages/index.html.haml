@@ -1,14 +1,14 @@
-.row
-  .col-md-12
-    .page-header
-      .pull-right
-        = link_to(new_unit_sms_message_path(@unit), class: "btn btn-success") do
-          %i.fa.fa-plus
-          New SMS Message
+.page-header
+  .row
+    .col-md-6
+      %h2
+        My Sent SMS (#{@unit.name_unit})
+        %span.badge= @sms_messages.size
 
-      %h2 My Sent Messages
-      %blockquote
-        %h3= @unit.name_unit
+    .col-md-6.right-aligned
+      = link_to(new_unit_sms_message_path(@unit), class: "btn btn-default") do
+        %i.fa.fa-plus
+        New SMS Message
 
 .row
   .col-md-12

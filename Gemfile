@@ -20,7 +20,6 @@ gem 'mini_magick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
 gem 'daemons'
-gem 'carmen-rails'
 gem 'mechanize'
 gem 'wicked'
 gem 'sanitize', '~> 2.1.0'
@@ -39,7 +38,7 @@ gem 'newrelic_rpm'
 
 # gem 'vcr'
 # gem 'webmock'
-gem 'dalli'
+# gem 'dalli'
 
 
 group :production, :staging do

@@ -16,6 +16,7 @@ class UsersController < ApplicationController
   def new(ar_model)
     @user = ar_model.new
     authorize @user
+    # 3.times { @user.phones.build }
     # @user.unit_positions.create(unit_id: @unit.id)
   end
 
@@ -38,7 +39,9 @@ class UsersController < ApplicationController
     end
 
     def remove_new_phone_attribute
-      params[controller_type][:phones_attributes].delete('new_phone')
+      if params[controller_type][:phones_attributes]
+        params[controller_type][:phones_attributes].delete('new_phone')
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

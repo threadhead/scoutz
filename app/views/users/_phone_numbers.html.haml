@@ -25,7 +25,7 @@
                   %a.phone-type{href: '#'} Other2
                 %li
                   %a.phone-type{href: '#'} Other3
-            = f_phone.phone_field :number, hide_label: true, placeholder: 'XXX-XXX-XXXX', class: 'phone-number'
+            = f_phone.phone_field :number, value: number_to_phone(f_phone.object.number), hide_label: true, placeholder: 'XXX-XXX-XXXX', class: 'phone-number'
             %span.input-group-btn
               %button.btn.btn-warning.phone-number-remove{type: "button"} remove
 

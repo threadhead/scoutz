@@ -78,7 +78,7 @@
 
               %br
               = f.check_box :consent_required, label: "Activity Consent Forms required"
-              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'ACF Coordinators', help: 'select adults authorized to accept forms, or leave blank for all adult leaders'}, {multiple: true}
+              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'ACF Coordinators', help: 'select adults authorized to accept forms, or leave blank for all adult leaders'}, multiple: true, class: 'form-control'
 
 
       %fieldset

@@ -13,6 +13,7 @@ Scoutz::Application.routes.draw do
     resources :events do
       collection do
         get 'calendar'
+        get 'last_unit_meeting'
       end
     end
     resources :scouts do

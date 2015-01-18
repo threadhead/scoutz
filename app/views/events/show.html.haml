@@ -1,18 +1,23 @@
 = #content_for(:scripts) {javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"}
-.row
-  .col-md-12
-    .page-header
-      .pull-right
-        .btn-group
-          = link_to unit_events_path(@unit), class: 'btn btn-default' do
-            %i.fa.fa-reply
-            Event List
+.page-header
+  .row
+    .col-md-6
+      %h2
+        = render partial: 'event_icon', locals: {event: @event}
+        = @event.name
 
-          - if policy(@event).update?
-            = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
-              %i.fa.fa-edit
-              Edit
+    .col-md-6.right-aligned
+      .btn-group
+        = link_to unit_events_path(@unit), class: 'btn btn-default' do
+          %i.fa.fa-reply
+          Event List
 
+        - if policy(@event).update?
+          = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
+            %i.fa.fa-edit
+            Edit
+
+        - if policy(@event).destroy? || policy(Event).new?
           %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
             %i.fa.fa-gear
             Actions
@@ -30,13 +35,13 @@
                   %i.fa.fa-plus
                   New Event
 
-      %h2= @event.name
 
 
 .row
   .col-md-8
     #event-signup-flash
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
+
     - if @event.ical.present?
       .pull-right
         = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
@@ -143,7 +148,7 @@
             %td= @event.message.html_safe
 
       - if @event.signup_required
-        %div{style: "border-bottom: 1px solid lightgray; margin-bottom: 12px;"}
+        .bottom-border
         %strong Roster
         - unless @event_rosters.empty?
           .pull-right
@@ -174,7 +179,8 @@
                 %th.right-aligned Action
           %tbody#event-signup-roster
             = render partial: 'event_signups/event_roster', collection: @event_rosters
-
+        %br
+        .bottom-border
 
   .col-md-4
     - if @event.signup_required && !@event.after_signup_deadline?

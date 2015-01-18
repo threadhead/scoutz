@@ -1,17 +1,18 @@
-.row
-  .col-md-12
-    .page-header
-      .pull-right
-        .btn-group
-          = link_to(unit_email_messages_path(@unit), class: 'btn btn-default') do
-            %i.fa.fa-reply
-            Sent Emails
-
-          = link_to(new_unit_email_message_path(@unit), class: 'btn btn-default') do
-            %i.fa.fa-plus
-            New Email Blast
-
+.page-header
+  .row
+    .col-md-6
       %h2 Email Message
+
+    .col-md-6.right-aligned
+      .btn-group
+        = link_to(unit_email_messages_path(@unit), class: 'btn btn-default') do
+          %i.fa.fa-reply.hidden-xs
+          Sent Emails
+
+        = link_to(new_unit_email_message_path(@unit), class: 'btn btn-default') do
+          %i.fa.fa-plus.hidden-xs
+          New Email Blast
+
 
 .row
   .col-md-12

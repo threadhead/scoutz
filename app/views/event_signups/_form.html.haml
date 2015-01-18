@@ -28,19 +28,19 @@
       Carpool
     .form-horizontal
       .form-group
-        = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-md-4'
-        .col-md-4
+        = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-xs-4'
+        .col-xs-4
           = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control input-sm'}
-        .col-md-2.col-no-padding
+        .col-xs-2.col-no-padding
           %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need.'}
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
       .form-group
-        = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-md-4'
-        .col-md-6
+        = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-xs-4'
+        .col-xs-6
           = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control input-sm'}
-        .col-md-2.col-no-padding
+        .col-xs-2.col-no-padding
           %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle. Select  0 if you are driving but can\'t carpool.'}
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse

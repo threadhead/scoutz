@@ -9,11 +9,13 @@
 
 %table.table.table-outside-bordered
   %tr
-    %th Reorder
+    %th
+      .hidden-xs Reorder
+      .visible-xs-block &nbsp;
     %th Active
     %th Title
     %th Last Change
-    %th Created by
+    %th.hidden-xs Created by
     %th Public
     %th Front
 
@@ -54,7 +56,7 @@
 
           %td= page.updated_at.to_s(:short_ampm)
 
-          %td= page.created_by.try(:name)
+          %td.hidden-xs= page.created_by.try(:name)
 
           %td
             - if page.public

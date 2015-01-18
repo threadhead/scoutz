@@ -1,13 +1,14 @@
-.row
-  .col-md-12
-    .page-header
-      .pull-right
-        - if policy(Event).new?
-          = link_to(new_unit_event_path(@unit), class: "btn btn-default", id: 'new-event') do
-            %i.fa.fa-plus
-            new event
-
+.page-header
+  .row
+    .col-md-8
       %h2 #{@unit.name_unit} Event Calendar
+
+    .col-md-4.right-aligned
+      - if policy(Event).new?
+        = link_to(new_unit_event_path(@unit), class: "btn btn-default", id: 'new-event') do
+          %i.fa.fa-plus
+          new event
+
 
 .row
   .col-md-12

@@ -5,7 +5,7 @@
       %th Name
       %th Leadership
       %th Scouts
-      %th{colspan: 2} Status
+      %th.hidden-xs{colspan: 2} Status
 
     = cache_unless searching, ["unit-#{unit.id}", :admin, cache_key_for_users(users)] do
       - users.each do |adult|

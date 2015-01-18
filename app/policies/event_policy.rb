@@ -37,6 +37,9 @@ class EventPolicy < ApplicationPolicy
     user_role_at_least_leader || event_owner?
   end
 
+  def last_unit_meeting?
+    update?
+  end
 
 
   def event_owner?

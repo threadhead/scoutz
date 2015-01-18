@@ -82,12 +82,12 @@ RSpec.describe Unit do
   describe '.event_kinds' do
     it 'Cub Scout events' do
       unit.unit_type = 'Cub Scouts'
-      expect(unit.event_kinds).to eq(['Pack Event', 'Den Event', 'Leader Event'])
+      expect(unit.event_kinds).to eq(['Pack Meeting', 'Camping/Outing', 'Pack Event', 'Den Event', 'Leader Event'])
     end
 
     it 'Cub Scout events' do
       unit.unit_type = 'Boy Scouts'
-      expect(unit.event_kinds).to eq(['Troop Event', 'Patrol Event', 'Leader Event'])
+      expect(unit.event_kinds).to eq(['Troop Meeting', 'Camping/Outing', 'PLC', 'Troop Event', 'Patrol Event', 'Adult Leader Event'])
     end
   end
 

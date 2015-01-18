@@ -1,0 +1,32 @@
+- if event.unit_meeting_kind?
+  %span.fa-stack.fa-stack-sm
+    %i.fa.fa-circle.fa-stack-2x.fa-unit-meeting
+    %i.fa.fa-briefcase.fa-stack-1x.fa-inverse
+
+- elsif event.camping_outing_kind?
+  %span.fa-stack.fa-stack-sm
+    %i.fa.fa-circle.fa-stack-2x.fa-camping-outing
+    %i.fa.fa-tree.fa-stack-1x.fa-inverse
+
+- elsif event.unit_event_kind?
+  %span.fa-stack.fa-stack-sm
+    %i.fa.fa-circle.fa-stack-2x.fa-unit-event
+    %i.fa.fa-calendar-o.fa-stack-1x.fa-inverse
+
+
+- elsif event.plc_kind?
+  %span.fa-stack.fa-stack-sm
+    %i.fa.fa-circle.fa-stack-2x.fa-plc
+    %i.fa.fa-thumb-tack.fa-stack-1x.fa-inverse
+
+
+- elsif event.adult_leader_kind?
+  %span.fa-stack.fa-stack-sm
+    %i.fa.fa-circle.fa-stack-2x.fa-adult-leader
+    %i.fa.fa-university.fa-stack-1x.fa-inverse
+
+- elsif event.sub_unit_kind?
+  %span.fa-stack.fa-stack-sm
+    %i.fa.fa-circle.fa-stack-2x.fa-sub-unit
+    %i.fa.fa-group.fa-stack-1x.fa-inverse
+

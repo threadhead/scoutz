@@ -9,7 +9,7 @@ class Adult < User
 
   # associated scouts in a unit
   def unit_scouts(unit)
-    self.scouts.joins(:units).where(units: {id: unit})
+    self.scouts.joins(:units).where(units: {id: unit.id})
   end
 
   # this should never be called, but just in case it is, return the adult

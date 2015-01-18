@@ -1,25 +1,26 @@
-.row
-  .col-md-12
-    .page-header
-      .pull-right
-        .btn-group
-          = link_to(:back, class: 'btn btn-default') do
-            %i.fa.fa-reply
-            Back
-
-          = link_to unit_merit_badges_path(@unit), class: 'btn btn-default' do
-            %i.fa.fa-graduation-cap
-            #{@unit.name_unit} MB Counselors
-
-          - if policy(@merit_badge).edit?
-            = link_to(edit_unit_merit_badge_path(@unit, @merit_badge), class: 'btn btn-default') do
-              %i.fa.fa-edit
-              Edit
-
-
+.page-header
+  .row
+    .col-md-6
       %h2 Merit Badge: #{@merit_badge.name}
 
-    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
+    .col-md-6.right-aligned
+      .btn-group
+        = link_to(:back, class: 'btn btn-default') do
+          %i.fa.fa-reply
+          Back
+
+        = link_to unit_merit_badges_path(@unit), class: 'btn btn-default' do
+          %i.fa.fa-graduation-cap
+          #{@unit.name_unit} MB Counselors
+
+        - if policy(@merit_badge).edit?
+          = link_to(edit_unit_merit_badge_path(@unit, @merit_badge), class: 'btn btn-default') do
+            %i.fa.fa-edit
+            Edit
+
+
+
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
 
 = cache ["unit-#{@unit.id}", @merit_badge] do
   .row

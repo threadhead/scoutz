@@ -11,7 +11,7 @@ class EmailMessage < ActiveRecord::Base
   has_many :email_attachments, dependent: :destroy
   has_and_belongs_to_many :events
   has_and_belongs_to_many :users
-  accepts_nested_attributes_for :email_attachments, allow_destroy: true
+  accepts_nested_attributes_for :email_attachments, allow_destroy: true, reject_if: proc { |a| a["attachment"].blank? }
 
 
   validates :message, presence: true, if: :has_no_events?

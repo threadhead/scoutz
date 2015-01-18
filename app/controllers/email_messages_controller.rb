@@ -81,7 +81,9 @@ class EmailMessagesController < ApplicationController
     end
 
     def remove_new_email_attachment_attribute
-      params[:email_message][:email_attachments_attributes].delete('new_email_attachment')
+      if params[:email_message][:email_attachments_attributes]
+        params[:email_message][:email_attachments_attributes].delete('new_email_attachment')
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

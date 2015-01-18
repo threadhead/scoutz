@@ -38,7 +38,7 @@ gem 'newrelic_rpm'
 
 # gem 'vcr'
 # gem 'webmock'
-# gem 'dalli'
+gem 'dalli'
 
 
 group :production, :staging do

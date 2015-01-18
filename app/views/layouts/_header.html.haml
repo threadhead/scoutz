@@ -67,7 +67,8 @@
         %span.icon-bar
         %span.icon-bar
       - unless @units.size > 1
-        = link_to @unit.name_unit, '/', class: 'navbar-brand'
+        .navbar-brand= @unit.name_unit
+      .visible-xs-block.navbar-brand= @unit.name_unit
 
     .navbar-collapse.collapse#unit-navbar-collapse
       %ul.nav.navbar-nav.navbar-left
@@ -191,10 +192,10 @@
 
 
       %ul.nav.navbar-nav.navbar-right
-        %li
+        %li.visible-xs-block
           = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
             %i.fa.fa-list
-        %li
+        %li.visible-xs-block
           = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
             %i.fa.fa-calendar
 

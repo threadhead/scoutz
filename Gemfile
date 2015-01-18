@@ -39,11 +39,11 @@ gem 'newrelic_rpm'
 
 # gem 'vcr'
 # gem 'webmock'
+gem 'dalli'
 
 
 group :production, :staging do
   # gem 'newrelic_rpm'
-  gem 'dalli'  # memcache client
   gem 'exception_notification'
 end
 

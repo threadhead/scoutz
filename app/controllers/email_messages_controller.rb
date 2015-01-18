@@ -28,7 +28,7 @@ class EmailMessagesController < ApplicationController
     options.merge!({event_ids: params[:event_ids].split(',')}) if params[:event_ids]
     @email_message = EmailMessage.new(options)
     authorize @email_message
-    4.times { @email_message.email_attachments.build }
+    2.times { @email_message.email_attachments.build }
   end
 
   def edit
@@ -36,6 +36,7 @@ class EmailMessagesController < ApplicationController
   end
 
   def create
+    remove_new_email_attachment_attribute
     @email_message = @unit.email_messages.build(email_message_params)
     authorize @email_message
 
@@ -53,6 +54,7 @@ class EmailMessagesController < ApplicationController
 
   def update
     authorize @email_message
+    remove_new_email_attachment_attribute
     if @email_message.update_attributes(email_message_params)
       redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully updated.'
     else
@@ -78,9 +80,13 @@ class EmailMessagesController < ApplicationController
       @unit_users = @unit.users.gets_email_blast.by_name_lf
     end
 
+    def remove_new_email_attachment_attribute
+      params[:email_message][:email_attachments_attributes].delete('new_email_attachment')
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_message_params
-      params.require(:email_message).permit(:message, :subject, :user_id, {email_attachments_attributes: [:attachment]}, {sub_unit_ids: []}, {event_ids: []}, {user_ids: []}, :send_to_option)
+      params.require(:email_message).permit(:message, :subject, :user_id, {email_attachments_attributes: [:id, :attachment, :_destroy]}, {sub_unit_ids: []}, {event_ids: []}, {user_ids: []}, :send_to_option)
       # filter_params(params[:email_message])
     end
 

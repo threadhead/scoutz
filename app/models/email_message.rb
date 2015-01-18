@@ -16,6 +16,7 @@ class EmailMessage < ActiveRecord::Base
 
   validates :message, presence: true, if: :has_no_events?
   validates :subject, presence: true
+  validates_associated :email_attachments
 
   sanitize_attributes :message
 

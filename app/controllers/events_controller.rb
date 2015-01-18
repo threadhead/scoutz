@@ -121,7 +121,6 @@ class EventsController < ApplicationController
 
     def set_new_event
       last_unit_meeting = Event.last_unit_meeting(@unit)
-      puts "last_unit_meeting: #{last_unit_meeting}"
       @last_unit_meeting_start_at = last_unit_meeting.try(:start_at) || Time.zone.now.to_next_hour
       @last_unit_meeting_end_at = last_unit_meeting.try(:end_at) || Time.zone.now.to_next_hour + 1.hour
     end

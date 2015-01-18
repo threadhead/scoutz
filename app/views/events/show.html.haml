@@ -30,7 +30,9 @@
                   %i.fa.fa-plus
                   New Event
 
-      %h2= @event.name
+      %h2
+        = render partial: 'event_icon', locals: {event: @event}
+        = @event.name
 
 
 .row

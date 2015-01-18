@@ -17,6 +17,7 @@
     - @events.each do |event|
       = cache ["unit-#{@unit.id}", event] do
         %p
+          = render partial: 'event_icon', locals: {event: event}
           = link_to event_list_name(event), unit_event_path(@unit, event)
           - if event.signup_required
             %span.label.label-default #{event.attendee_count} going

@@ -51,152 +51,156 @@
 
       = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
 
-  %fieldset
-    %legend Picture
-    .row
-      .col-md-8
-        .well.well-sm
-          = image_tag @user.picture.url
-        = f.file_field :picture, hide_label: true
-        = f.check_box :remove_picture, label: 'remove picture'
-        .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
-
-  %fieldset
-    %legend Contact Phone Numbers
-    %p= button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
-
-    = f.fields_for :phones do |f_phone|
+  .fieldset-box
+    %fieldset
+      %legend Picture
       .row
-        .col-md-1
-          = f_phone.select :kind, options_for_phones, hide_label: true
-        .col-md-2
-          = f_phone.phone_field :number, hide_label: true
-        .col-md-3
-          = f_phone.check_box :_destroy, label: 'remove'
+        .col-md-8
+          .well.well-sm
+            = image_tag @user.picture.url
+          = f.file_field :picture, hide_label: true
+          = f.check_box :remove_picture, label: 'remove picture'
+          .help-block alowed attachments: jpg jpeg gif png, at least 200px X 200px
 
-    #add-a-phone
+  .fieldset-box
+    %fieldset
+      %legend Contact Phone Numbers
+      %p= button_tag "add phone number", type: 'button', class: 'btn btn-success btn-sm add-phone-button'
 
-    #new-phone-fields.hidden
-      = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
+      = f.fields_for :phones do |f_phone|
         .row
           .col-md-1
-            = h_phone.select :kind, options_for_phones, hide_label: true
+            = f_phone.select :kind, options_for_phones, hide_label: true
           .col-md-2
-            = h_phone.phone_field :number, hide_label: true
+            = f_phone.phone_field :number, hide_label: true
           .col-md-3
-            = h_phone.check_box :_destroy, label: 'remove'
+            = f_phone.check_box :_destroy, label: 'remove'
+
+      #add-a-phone
+
+      #new-phone-fields.hidden
+        = f.fields_for :phones, Phone.new, child_index: 'new_phone'  do |h_phone|
+          .row
+            .col-md-1
+              = h_phone.select :kind, options_for_phones, hide_label: true
+            .col-md-2
+              = h_phone.phone_field :number, hide_label: true
+            .col-md-3
+              = h_phone.check_box :_destroy, label: 'remove'
 
 
 
-  %fieldset
-    %legend Notifications
-    %p
-      - if @user.new_record?
-        %em Email notification will be sent to the email address entered above
-      - else
-        Email notifications sent to: &lt;#{@user.email}&gt;
-    .row
-      .col-md-12
-        %hr
-        %p Text messages are sent via email-to-text services. Messages may not arrive from the same number.
-
-    .row
-      .col-md-2
-        = f.phone_field :sms_number, label: 'Mobile number for SMS', placeholder: 'XXX-XXX-XXXX', help: 'may be same as above'
-        = f.select :sms_provider, User.sms_providers, include_blank: true, label: 'Provider'
-    .row
-      .col-md-12
-        .help-block You must select a Provider if you would like to receive text messages. If you don't want to receive texts, leave blank.
-    -#= f.form_group do
-    -#  %p
-    -#    = link_to 'Send Verification', sms_send_verification_path, remote: true, class: 'btn btn-default'
-    -#  %p
-    -#    - if @user.sms_number_verified
-    -#      .badge Your SMS number has been verified.
-    -#    - else
-    -#      %span.red-color
-    -#        %i.icon-warning-sign
-    -#        You must reply to the verification text message to receive text messages.
-
-    %h4 How you would like to receive notifications?
-    .row
-      .col-md-6
-        %table.table.table-condensed
-          %tr
-            %th.middle Email Blasts
-            %td= f.check_box :blast_email, label: 'email'
-            %td= #f.check_box :blast_sms, label: 'sms'
-          %tr
-            %th.middle Event Reminders
-            %td= f.check_box :event_reminder_email, label: 'email'
-            %td= f.check_box :event_reminder_sms, label: 'sms'
-          %tr
-            %th.middle Weekly Newsletter
-            %td= f.check_box :weekly_newsletter_email, label: 'email'
-            %td
-          %tr
-            %th.middle Monthly Newsletter
-            %td= f.check_box :monthly_newsletter_email, label: 'email'
-            %td
-          %tr
-            %th.middle SMS Messages
-            %td= #f.check_box :event_reminder_email, label: 'email'
-            %td= f.check_box :sms_message, label: 'sms'
-    .row
-      .col-md-12
-        .help-block SMS messages are general messages sent by an adult to attendees of an event, a den/patrol, or the entire unit.
-
-      -# %tr
-      -#   %th Signup deadlines
-      -#   %td= f.check_box :signup_deadline_email, label: 'email'
-      -#   %td= f.check_box :signup_deadline_sms, label: 'sms'
-
-        .help-block Most text messages will contain a link to a page and a few words.
-      -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
-
-
-  %fieldset
-    %legend Address
-    .row
-      .col-md-6
-        = f.text_field :address1
-        = f.text_field :address2
-    .row
-      .col-md-2
-        = f.text_field :city
-      .col-md-2
-        = f.select :state, options_for_select(::UsStates.states_array, @user.state), include_blank: 'Select...'
-      .col-md-2
-        = f.text_field :zip_code
-
-  - if @user.adult?
+  .fieldset-box
     %fieldset
-      %legend Merit Badge Counselor
+      %legend Notifications
+      %p
+        - if @user.new_record?
+          %em Email notification will be sent to the email address entered above
+        - else
+          Email notifications sent to: &lt;#{@user.email}&gt;
+      .row
+        .col-md-12
+          %hr
+          %p Text messages are sent via email-to-text services. Messages may not arrive from the same number.
+
+      .row
+        .col-md-2
+          = f.phone_field :sms_number, label: 'Mobile number for SMS', placeholder: 'XXX-XXX-XXXX', help: 'may be same as above'
+          = f.select :sms_provider, User.sms_providers, include_blank: true, label: 'Provider'
+      .row
+        .col-md-12
+          .help-block You must select a Provider if you would like to receive text messages. If you don't want to receive texts, leave blank.
+      -#= f.form_group do
+      -#  %p
+      -#    = link_to 'Send Verification', sms_send_verification_path, remote: true, class: 'btn btn-default'
+      -#  %p
+      -#    - if @user.sms_number_verified
+      -#      .badge Your SMS number has been verified.
+      -#    - else
+      -#      %span.red-color
+      -#        %i.icon-warning-sign
+      -#        You must reply to the verification text message to receive text messages.
+
+      %h4 How you would like to receive notifications?
       .row
         .col-md-6
-          = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label'
+          %table.table.table-condensed
+            %tr
+              %th.middle Email Blasts
+              %td= f.check_box :blast_email, label: 'email'
+              %td= #f.check_box :blast_sms, label: 'sms'
+            %tr
+              %th.middle Event Reminders
+              %td= f.check_box :event_reminder_email, label: 'email'
+              %td= f.check_box :event_reminder_sms, label: 'sms'
+            %tr
+              %th.middle Weekly Newsletter
+              %td= f.check_box :weekly_newsletter_email, label: 'email'
+              %td
+            %tr
+              %th.middle Monthly Newsletter
+              %td= f.check_box :monthly_newsletter_email, label: 'email'
+              %td
+            %tr
+              %th.middle SMS Messages
+              %td= #f.check_box :event_reminder_email, label: 'email'
+              %td= f.check_box :sms_message, label: 'sms'
+      .row
+        .col-md-12
+          .help-block SMS messages are general messages sent by an adult to attendees of an event, a den/patrol, or the entire unit.
 
-          - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
-          = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'
-          .help-block counselor for merit badges in #{@unit.name_unit}
+        -# %tr
+        -#   %th Signup deadlines
+        -#   %td= f.check_box :signup_deadline_email, label: 'email'
+        -#   %td= f.check_box :signup_deadline_sms, label: 'sms'
+
+          .help-block Most text messages will contain a link to a page and a few words.
+        -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
 
 
+  .fieldset-box
+    %fieldset
+      %legend Address
+      .row
+        .col-md-6
+          = f.text_field :address1
+          = f.text_field :address2
+      .row
+        .col-md-2
+          = f.text_field :city
+        .col-md-2
+          = f.select :state, options_for_select(::UsStates.states_array, @user.state), include_blank: 'Select...'
+        .col-md-2
+          = f.text_field :zip_code
 
-  %fieldset
-    %legend Health Forms
-    .row
-      .col-md-8
-        = render partial: 'health_form_form', locals: {user: @user, unit: @unit}
+    - if @user.adult?
+      %fieldset
+        %legend Merit Badge Counselor
+        .row
+          .col-md-6
+            = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label'
+
+            - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
+            = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'
+            .help-block counselor for merit badges in #{@unit.name_unit}
 
 
-  %fieldset
-    %legend= @user.scout? ? 'Parents or Guardians' : 'Scouts'
-    .row
-      .col-md-8
-        - if @user.scout?
-          = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, multiple: true
-        - else
-          = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of these Scouts'}, multiple: true
+  .fieldset-box
+    %fieldset
+      %legend Health Forms
+      .row
+        .col-md-8
+          = render partial: 'health_form_form', locals: {user: @user, unit: @unit}
+
+  .fieldset-box
+    %fieldset
+      %legend= @user.scout? ? 'Parents or Guardians' : 'Scouts'
+      .row
+        .col-md-8
+          - if @user.scout?
+            = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, multiple: true
+          - else
+            = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of these Scouts'}, multiple: true
 
 
 

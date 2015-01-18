@@ -13,7 +13,7 @@ class ScoutPolicy < ApplicationPolicy
 
   def update?
     # can update themself, or need to be an adult leader
-    user.id == record.id || user_role_at_least_leader
+    user.id == record.id || user_role_at_least_leader || my_scout?
   end
 
   def destroy?

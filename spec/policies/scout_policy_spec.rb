@@ -31,6 +31,7 @@ RSpec.describe ScoutPolicy do
     it_behaves_like 'can access thier own'
   end
 
+
   permissions :destroy? do
     it_behaves_like 'adult admin access'
   end
@@ -45,5 +46,37 @@ RSpec.describe ScoutPolicy do
     permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
 
     it_behaves_like 'can access thier own'
+  end
+
+  describe 'my scouts permissions' do
+    before do
+      @unit2 = FactoryGirl.create(:unit)
+      @adult2 = FactoryGirl.create(:adult, role: 'basic')
+      @adult2.units << @unit2
+      @scout2 = FactoryGirl.create(:scout)
+      @scout2.units << @unit2
+    end
+
+    context 'edit?' do
+      it 'forbids non-parents from editing scout' do
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit?).to be(false)
+      end
+
+      it 'allows parents(adults) to edit scout' do
+        @adult2.scouts << @scout2
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit?).to be(true)
+      end
+    end
+
+    context 'update?' do
+      it 'forbids non-parents from editing scout' do
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).update?).to be(false)
+      end
+
+      it 'allows parents(adults) to edit scout' do
+        @adult2.scouts << @scout2
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).update?).to be(true)
+      end
+    end
   end
 end

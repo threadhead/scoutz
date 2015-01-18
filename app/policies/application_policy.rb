@@ -1,4 +1,4 @@
-class ApplicationPolicy < Struct.new(:user, :record)
+class ApplicationPolicy < Struct.new(:user, :record, :unit)
 
   def index?;       false;     end
   def show?;        false;     end
@@ -24,6 +24,12 @@ class ApplicationPolicy < Struct.new(:user, :record)
 
   def adult_admin
     user.admin? && user.adult?
+  end
+
+  def my_scout?
+    return false if unit.nil?
+    # user.unit_scouts(record.unit).where(users: {id: record.user_id}).exists?
+    user.unit_scouts(unit).pluck(:id).include? record.id
   end
 
   def scope

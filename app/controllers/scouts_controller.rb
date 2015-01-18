@@ -14,6 +14,11 @@ class ScoutsController < UsersController
 
   def new; super(Scout); end
 
+  def edit
+    authorize_scout
+  end
+
+
   def create
     remove_new_phone_attribute
     @user = Scout.new(user_params)
@@ -32,7 +37,7 @@ class ScoutsController < UsersController
   end
 
   def update
-    authorize @user
+    authorize_scout
     remove_new_phone_attribute
     respond_to do |format|
       if @user.update_attributes(user_params)
@@ -59,6 +64,17 @@ class ScoutsController < UsersController
     super
     redirect_to unit_scout_path(@unit, @user), notice: "Welcome email was sent to #{@user.name}. Their account has been deactivated until they confirm."
   end
+
+  private
+    def authorize_scout
+      # https://github.com/elabs/pundit/blob/master/lib/pundit.rb
+      # basically following the pundit.authorize method
+      query = params[:action].to_s + "?"
+      @_policy_authorized = true
+      @_pundit_policy_authorized = true
+      policy = ScoutPolicy.new(current_user, @user, @unit)
+      raise Pundit::NotAuthorizedError.new("not allowed to edit this scout") unless policy.public_send(query)
+    end
 
 
 end

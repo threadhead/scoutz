@@ -6,7 +6,7 @@
       %th= unit.sub_unit_name
       %th Rank
       %th Leadership
-      %th.text-right Age
+      -# %th.text-right Age
       %th Adults
 
     = cache_unless searching, ["unit-#{unit.id}", cache_key_for_users(users)] do
@@ -18,7 +18,7 @@
             %td= scout.sub_unit.try(:name)
             %td= scout.rank
             %td.col-md-2= all_leadership_positions(@unit, scout)
-            %td.text-right= scout.age
+            -# %td.text-right= scout.age
             %td= unit_users_link_list(unit, scout.adults)
 
   %small showing #{users.size} of #{users_count}

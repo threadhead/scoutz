@@ -1,7 +1,7 @@
-%td
+%td.hidden-xs
   %span.badge.badge-primary{title: 'Sign in Count'}= user.sign_in_count
 
-%td
+%td.hidden-xs
   - if user.confirmed?
     %span.label.label-success{title: 'Access Confirmed'}> C
   - else

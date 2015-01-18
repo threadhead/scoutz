@@ -66,15 +66,17 @@
         %span.icon-bar
         %span.icon-bar
         %span.icon-bar
-      - if @units.size > 1
-        = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left' do
-          = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
-
-      - else
+      - unless @units.size > 1
         = link_to @unit.name_unit, '/', class: 'navbar-brand'
 
     .navbar-collapse.collapse#unit-navbar-collapse
       %ul.nav.navbar-nav.navbar-left
+        %li
+          - if @units.size > 1
+            = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left col-xs-12' do
+              = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
+            .clearfix.visible-xs-block
+
         %li.dropdown
           = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
             %i.fa.fa-user

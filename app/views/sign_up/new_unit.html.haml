@@ -8,7 +8,8 @@
         = f.select :unit_type, Unit.unit_types, {}, class: 'form-control'
         = f.text_field :unit_number, placeholder: 'ex. 134, 603, 15'
         = f.text_field :city
-        = f.subregion_select :state, 'US', {}, class: 'form-control'
+        = f.select :state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
+
         = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, {}
 
     .col-md-6

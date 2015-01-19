@@ -36,6 +36,27 @@
 
 
       %fieldset
+        %legend Home Meeting Location
+        %p Where you have your regular #{@unit.unit_type_title} Meetings. Setting this makes it easy to copy this location for meetings.
+        .row
+          .col-md-6
+            = f.text_field :home_name, label: 'Name'
+            = f.text_field :home_address1, label: 'Address1'
+            = f.text_field :home_address2, label: 'Address2'
+        .row
+          .col-md-2
+            = f.text_field :home_city, label: 'City'
+          .col-md-2
+            = f.select :home_state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
+          .col-md-2
+            = f.text_field :home_zip_code, label: 'Zip'
+        .row
+          .col-md-8
+            = f.text_field :home_map_url, label: 'Map URL', placeholder: 'http://maps.google.com', help: "if you don't enter a map url, the above address will be used to display a map"
+
+
+
+      %fieldset
         %legend Mailing Address (optional)
         .row
           .col-md-6

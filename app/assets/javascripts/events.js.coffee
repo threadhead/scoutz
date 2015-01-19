@@ -1,4 +1,3 @@
-# moment.parseZone($("input#last_unit_meeting_start_at").val()).add(moment.duration({weeks: 1})).format();
 jQuery ->
 
   $(".time-only-picker").timepicker
@@ -167,6 +166,17 @@ jQuery ->
     moment.parseZone(datetime).add(moment.duration({weeks: 1})).format("MMM D, YYYY")
   getNextWeeksTime = (datetime) ->
     moment.parseZone(datetime).add(moment.duration({weeks: 1})).format("h:mma")
+
+
+  $("button#copy-unit-home").click ->
+    console.log 'copy-unit-home'
+    $("input#event_location_name").val( $("input#unit_home_name").val() )
+    $("input#event_location_address1").val( $("input#unit_home_address1").val() )
+    $("input#event_location_address2").val( $("input#unit_home_address2").val() )
+    $("input#event_location_city").val( $("input#unit_home_city").val() )
+    $("input#event_location_zip_code").val( $("input#unit_home_zip_code").val() )
+    unit_home_state = $("input#unit_home_state").val()
+    $("select#event_location_state option[value='" + unit_home_state + "']").prop("selected", true)
 
 
 

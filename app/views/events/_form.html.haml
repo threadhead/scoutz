@@ -1,3 +1,12 @@
+.row
+  .col-md-12
+    .page-header
+      - if controller.action_name == 'new'
+        %h2 New Event for #{@unit.name}
+      - else
+        %h2 Edit Event
+
+
 = bootstrap_form_for @event do |f|
   = hidden_field_tag :last_unit_meeting_start_at, @last_unit_meeting_start_at.iso8601
   = hidden_field_tag :last_unit_meeting_end_at, @last_unit_meeting_end_at.iso8601
@@ -5,17 +14,18 @@
   = hidden_field_tag :orig_end_at, @event.end_at.iso8601
   = hidden_field_tag :new_record, @event.new_record?
 
+  = hidden_field_tag :unit_home_name, @unit.home_name
+  = hidden_field_tag :unit_home_address1, @unit.home_address1
+  = hidden_field_tag :unit_home_address2, @unit.home_address2
+  = hidden_field_tag :unit_home_city, @unit.home_city
+  = hidden_field_tag :unit_home_state, @unit.home_state
+  = hidden_field_tag :unit_home_map_url, @unit.home_map_url
+
+
+
   = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
 
-  .row
-    .col-md-12
-      .page-header
-        .form-inline
-          - if controller.action_name == 'new'
-            %h2 New Event for #{@unit.name}
-          - else
-            %h2 Edit Event
 
   .row
     .col-md-9
@@ -85,7 +95,13 @@
         %legend Location
         .row
           .col-md-8
-            = f.text_field :location_name, label: 'Name'
+            .form-group
+              = f.label :location_name, 'Name', class: 'control-label'
+              .input-group
+                = f.text_field_without_bootstrap :location_name, class: 'form-control'
+                %span.input-group-btn
+                  %button.btn.btn-default#copy-unit-home{type: 'button', title: 'copy home location'}
+                    %i.fa.fa-home
         .row
           .col-md-8
             = f.text_field :location_address1, label: 'Address1'
@@ -98,7 +114,7 @@
           .col-md-2
             = f.text_field :location_zip_code, label: 'Zip'
 
-        = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL', help: "if you don't enter a map url, the address will be used to display a map"
+        = f.url_field :location_map_url, placeholder: 'http://maps.google.com', label: 'Map URL', help: "if you don't enter a map url, the above address will be used to display a map"
 
     .col-md-3
       = f.select :kind, @unit.event_kinds, include_blank: 'select the kind of event..'

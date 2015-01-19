@@ -101,7 +101,8 @@ jQuery ->
     $("input#event_location_address1").val(data['location_address1'])
     $("input#event_location_address2").val(data['location_address2'])
     $("input#event_location_city").val(data['location_city'])
-    $("input#event_location_state").val(data['location_state'])
+    # $("input#event_location_state").val(data['location_state'])
+    $("select#event_location_state option[value='#{data['location_state']}']").prop("selected", true)
     $("input#event_location_zip_code").val(data['location_zip_code'])
     $("input#event_location_map_url").val(data['location_map_url'])
 

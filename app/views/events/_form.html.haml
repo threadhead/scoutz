@@ -19,6 +19,7 @@
   = hidden_field_tag :unit_home_address2, @unit.home_address2
   = hidden_field_tag :unit_home_city, @unit.home_city
   = hidden_field_tag :unit_home_state, @unit.home_state
+  = hidden_field_tag :unit_home_zip_code, @unit.home_zip_code
   = hidden_field_tag :unit_home_map_url, @unit.home_map_url
 
 
@@ -71,8 +72,13 @@
 
               = #f.label :signup_deadline, "Signup by"
 
-              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 15%;"
-              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 15%;"
+              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 15%;", disabled: !@event.signup_required
+
+              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 15%;", disabled: !@event.signup_required
+
+              %span.bg-info.bg-info-sm#deadline-set-info{style: "display: none;"}
+                %i.fa.fa-info-circle
+                set to 1 hour before start
             .help-block even if date is entered, Signup Required must be checked to be honored
 
             %br

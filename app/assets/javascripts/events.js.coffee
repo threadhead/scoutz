@@ -62,6 +62,7 @@ jQuery ->
     else if selected.match outingEvent
       showElemHideOthers("#camping-outing-kind")
       setCampingOutingDefaults()
+      setSignupDateTime()
 
     else if selected.match leaderEvent
       showElemHideOthers("#adult-leader-kind")
@@ -74,6 +75,8 @@ jQuery ->
     else if selected.match plcEvent
       showElemHideOthers("#plc-kind")
       setPlcDefaults()
+
+    setSignupDateTimeDisable()
 
 
   showElemHideOthers = (elem) ->
@@ -119,8 +122,10 @@ jQuery ->
     # $("textarea#ckeditor").val(data['message'])
     CKEDITOR.instances.ckeditor.setData(data['message'])
     $("input#event_start_at_date").val(getNextWeeksDate(data['start_at']))
+    $("input#event_start_at_date").datepicker('update')
     $("input#event_start_at_time").val(getNextWeeksTime(data['start_at']))
     $("input#event_end_at_date").val(getNextWeeksDate(data['end_at']))
+    $("input#event_end_at_date").datepicker('update')
     $("input#event_end_at_time").val(getNextWeeksTime(data['end_at']))
 
 
@@ -163,9 +168,56 @@ jQuery ->
 
 
   getNextWeeksDate = (datetime) ->
-    moment.parseZone(datetime).add(moment.duration({weeks: 1})).format("MMM D, YYYY")
+    mmt = moment.parseZone(datetime)
+    if mmt.isValid()
+      mmt.add(moment.duration({weeks: 1})).format("MMM D, YYYY")
+    else
+      null
+
   getNextWeeksTime = (datetime) ->
-    moment.parseZone(datetime).add(moment.duration({weeks: 1})).format("h:mma")
+    mmt = moment.parseZone(datetime)
+    if mmt.isValid()
+      mmt.add(moment.duration({weeks: 1})).format("h:mma")
+    else
+      null
+
+
+  setSignupDateTime = ->
+    if !$("input#event_signup_deadline_date").val() && !$("input#event_signup_deadline_time").val()
+      date = $("input#event_start_at_date").val()
+      time = $("input#event_start_at_time").val()
+      mmt = moment("#{date} #{time}", "MMM D, YYYY h:mma")
+      if mmt.isValid()
+        signupDeadline = mmt.subtract(moment.duration({hours: 1}))
+        $("input#event_signup_deadline_date").val(signupDeadline.format("MMM D, YYYY"))
+        $("input#event_signup_deadline_date").datepicker('update')
+        $("input#event_signup_deadline_time").val(signupDeadline.format("h:mma"))
+        $("span#deadline-set-info").delay(500).show("fade", "slow").delay(5000).hide("fade", "slow")
+
+
+  setSignupDateTimeDisable = ->
+      cb = !$("input#event_signup_required").is(":checked")
+      $("input#event_signup_deadline_date").prop("disabled", cb)
+      $("input#event_signup_deadline_time").prop("disabled", cb)
+
+
+  # deadlineFollowStatDateTime = ->
+  #   date = $("input#event_start_at_date").val()
+  #   time = $("input#event_start_at_time").val()
+  #   startMmt = moment("#{date} #{time}", "MMM D, YYYY h:mma")
+
+  #   if startMmt.isValid()
+  #     date = $("input#event_signup_deadline_date").val()
+  #     time = $("input#event_signup_deadline_time").val()
+  #     deadlineMmt = moment("#{date} #{time}", "MMM D, YYYY h:mma")
+
+  #     timeDiff = startMmt.diff(deadlineMmt)
+
+
+
+  $("input#event_signup_required").change ->
+    setSignupDateTimeDisable()
+    setSignupDateTime()
 
 
   $("button#copy-unit-home").click ->

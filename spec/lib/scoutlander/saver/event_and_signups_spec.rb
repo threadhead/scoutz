@@ -40,6 +40,7 @@ RSpec.describe Scoutlander::Saver::EventAndSignups do
         @datum.start_at = Time.now
         @datum.end_at = Time.now
         @datum.message = 'Something'
+        @datum.kind = 'Event'
       end
 
       it 'creates new event' do

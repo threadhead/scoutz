@@ -26,7 +26,7 @@ class Event < ActiveRecord::Base
   }
 
 
-  validates :name, :start_at, :end_at, :message,
+  validates :name, :start_at, :end_at, :message, :kind,
       presence: true
 
   validates :sl_profile, uniqueness: { allow_nil: true }

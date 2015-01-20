@@ -15,6 +15,7 @@ RSpec.describe Event do
   it { should validate_presence_of(:start_at) }
   it { should validate_presence_of(:end_at) }
   it { should validate_presence_of(:message) }
+  it { should validate_presence_of(:kind) }
   it { should validate_uniqueness_of(:sl_profile).allow_nil }
 
   describe 'signup_deadline validation' do

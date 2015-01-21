@@ -49,7 +49,7 @@ RSpec.describe MessageMailer, type: :mailer do
   end
 
 
-  describe "email_blast_no_events" do
+  describe "email_blast with no events" do
     let(:mail) { MessageMailer.email_blast(@recipient, @email_message) }
 
     include_examples 'renders headers'
@@ -70,7 +70,7 @@ RSpec.describe MessageMailer, type: :mailer do
 
 
 
-  describe "email_blast_with_events" do
+  describe "email_blast with events" do
     let(:mail) { MessageMailer.email_blast(@recipient, @email_message) }
 
     include_examples 'renders headers'

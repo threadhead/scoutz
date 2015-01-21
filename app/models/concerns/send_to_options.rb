@@ -10,10 +10,30 @@ module SendToOptions
         ["Everyone in #{unit.name}", 1],
         ["#{unit.name} Leaders", 2],
         ["Selected #{unit.sub_unit_name.pluralize}", 3],
-        ["Selected Adults/Scouts", 4]
-      ]
+        ["Selected Adults/Scouts", 4],
+        ["Scoutmasters (SM/ASM)", 5],
+        ["Committee Members", 6],
+        ["Cubmaster/ACM/Den Leaders", 7]
+      ].reject { |a| options_to_reject(unit).include? a[1] }
+    end
+
+    def options_to_reject(unit)
+      case unit.unit_type
+      when "Boy Scouts"
+        [7,6]
+      when "Cub Scouts"
+        [5,6,7]
+      when "Venturing Crew"
+        [7,5,6]
+      when "Girl Scouts"
+        [7,5,6]
+      when "Order of the Arrow"
+        [7,5,6]
+      end
     end
   end
+
+
 
 
   def send_to(to_unit=self.unit)
@@ -26,6 +46,12 @@ module SendToOptions
       "Selected #{to_unit.sub_unit_name.pluralize}"
     when 4
       "Selected Adults/Scouts"
+    when 5
+      "Scoutmasters (SM/ASM)"
+    when 6
+      "Committee Members"
+    when 7
+      "Cubmaster/ACM/Den Leaders"
     end
   end
 
@@ -44,6 +70,18 @@ module SendToOptions
 
   def send_to_users?
     send_to_option == 4
+  end
+
+  def send_to_scoutmasters?
+    send_to_option == 5
+  end
+
+  def send_to_committee?
+    send_to_option == 6
+  end
+
+  def send_to_cubmasters_den_leaders?
+    send_to_option == 7
   end
 
 end

@@ -7,6 +7,7 @@ module ModelHelpers
     @adult = FactoryGirl.create(:adult, sms_number: '1111111111', sms_provider: 'T-Mobile', event_reminder_sms: true)
     @adult.unit_positions.create(unit_id: @unit1.id, leadership: 'Cubmaster')
     @adult2 = FactoryGirl.create(:adult, sms_number: '2222222222', sms_provider: 'Verizon', event_reminder_sms: true)
+    @adult2.unit_positions.create(unit_id: @unit2.id, leadership: 'Asst Scoutmaster')
 
     # add adults to units
     @adult.units << @unit1

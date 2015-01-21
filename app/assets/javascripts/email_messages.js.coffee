@@ -1,13 +1,4 @@
 jQuery ->
-  $("#email-leaders-list").collapse
-    toggle: false
-
-  $("#email-send-to-users-list").collapse
-    toggle: false
-
-  $("#email-sub-unit-list").collapse
-    toggle: false
-
   $("select#email_message_send_to_option").change ->
     handleSendToLists(@)
 
@@ -18,25 +9,37 @@ jQuery ->
   handleSendToLists = (sel) ->
     switch $(sel).val()
       when "2"
-        $("#email-leaders-list").collapse("show")
-        $("#email-send-to-users-list").collapse("hide")
-        $("#email-sub-unit-list").collapse("hide")
+        emailShowElemHideOthers("#email-leaders-list")
 
       when "3"
-        $("#email-send-to-users-list").collapse("hide")
-        $("#email-leaders-list").collapse("hide")
-        $("#email-sub-unit-list").collapse("show")
-
+        emailShowElemHideOthers("#email-sub-unit-list")
 
       when "4"
-        $("#email-sub-unit-list").collapse("hide")
-        $("#email-leaders-list").collapse("hide")
-        $("#email-send-to-users-list").collapse("show")
+        emailShowElemHideOthers("#email-send-to-users-list")
+        $("div#s2id_email_message_user_ids").find("#s2id_autogen1").focus()
+
+      when "5"
+        emailShowElemHideOthers("#email-scoutmasters-list")
 
       else
-        $("#email-leaders-list").collapse("hide")
-        $("#email-sub-unit-list").collapse("hide")
-        $("#email-send-to-users-list").collapse("hide")
+        emailShowElemHideOthers('')
+
+  emailKindDivs = ->
+    ['#email-leaders-list', '#email-send-to-users-list', '#email-sub-unit-list', '#email-scoutmasters-list']
+
+  $.each(emailKindDivs(), (idx, elem) ->
+    $(elem).collapse(toggle: false)
+    )
+
+
+  emailShowElemHideOthers = (elem) ->
+    $.each(emailKindDivs(), (idx, div) ->
+      if div != elem
+        # console.log "hiding: #{div}"
+        $(div).collapse("hide")
+      )
+    # console.log "showing: #{elem}"
+    $(elem).collapse("show")
 
 
   $("select#email_message_user_ids").select2

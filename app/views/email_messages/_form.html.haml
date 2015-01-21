@@ -7,6 +7,7 @@
   .row
     .col-md-3
       = f.select :send_to_option, EmailMessage.send_to_options(@unit), label: 'Send to'
+
   .row
     .col-md-10.col-md-offset-1
 
@@ -14,6 +15,11 @@
         .well.well-sm
           %h4 #{@unit.name_unit} Leaders
           %smaller.text-grey= @leaders.map(&:name_email).join(', ')
+
+      #email-scoutmasters-list.collapse{ class: ('in' if @email_message.send_to_scoutmasters?) }
+        .well.well-sm
+          %h4 Scoutmasters (SM/ASM)
+          %smaller.text-grey= @unit.scoutmasters.gets_email_blast.by_name_lf.map(&:name_email).join(', ')
 
       #email-sub-unit-list.collapse{ class: ('in' if @email_message.send_to_sub_units?) }
         .well.well-sm
@@ -27,6 +33,8 @@
       #email-send-to-users-list.collapse{ class: ('in' if @email_message.send_to_users?) }
         .well.well-sm
           = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true}, {multiple: true}
+
+
 
   %fieldset
     %legend Events
@@ -43,6 +51,7 @@
           Want to send an announcement about an event? Just check the event(s) you want to announce, enter a subject, optional message, and click send. All info about the event(s) will be in the email.
 
 
+
   %fieldset
     %legend Attachments
     %p
@@ -50,12 +59,6 @@
     %p= button_tag "Add Attachment", type: 'button', class: 'btn btn-success btn-sm add-attachment'
 
     #email-attachments
-      -# = f.fields_for :email_attachments do |f_attachment|
-      -#   .row
-      -#     .col-md-8
-      -#       .well.well-sm
-      -#         .pull-right= button_tag 'Remove', type: 'button', class: 'btn btn-warning btn-xs remove-attachment'
-      -#         %p= f_attachment.file_field :attachment, hide_label: true, control_col: 'col-md-12'
 
     #new-attachment-fields.hidden
       .email-attachment-fields
@@ -65,12 +68,13 @@
               .well.well-sm
                 .pull-right= button_tag 'Remove', type: 'button', class: 'btn btn-warning btn-xs remove-attachment'
                 %p= h_attachment.file_field :attachment, hide_label: true, control_col: 'col-md-12'
-                -# %p= h_attachment.check_box :_destroy, label: 'remove'
 
 
     .help-block alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf ppt txt csv
     .help-block size: each attachment must be < 1MB
     %small.text-muted attachments are saved for 6 months, then deleted
+
+
 
   %fieldset
     %legend Message
@@ -85,6 +89,8 @@
       .col-md-12
         = f.text_field :subject, hide_label: true, control_col: 'col-md-10', placeholder: 'subject'
         %p= f.text_area :message, id: 'ckeditor', hide_label: true, control_col: 'col-md-10'
+
+
 
   %br
   = f.primary 'Send Email Blast'

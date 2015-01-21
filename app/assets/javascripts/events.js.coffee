@@ -34,12 +34,7 @@ jQuery ->
     eventLimit: true
 
 
-  eventKindDivs = ->
-    ['#unit-meeting-kind', '#sub-unit-kind', '#camping-outing-kind', '#unit-event-kind', '#adult-leader-kind', '#plc-kind']
 
-  $.each(eventKindDivs(), (idx, elem) ->
-    $(elem).collapse(toggle: false)
-    )
 
   $("select#event_kind").change ->
     return if $("input#new_record").val() == 'false'
@@ -53,33 +48,40 @@ jQuery ->
     selected = $(@).val()
 
     if selected.match unitMeeting
-      showElemHideOthers("#unit-meeting-kind")
+      eventShowElemHideOthers("#unit-meeting-kind")
       setUnitMeetingDefaults()
 
     else if selected.match subUnitEvent
-      showElemHideOthers("#sub-unit-kind")
+      eventShowElemHideOthers("#sub-unit-kind")
 
     else if selected.match outingEvent
-      showElemHideOthers("#camping-outing-kind")
+      eventShowElemHideOthers("#camping-outing-kind")
       setCampingOutingDefaults()
       setSignupDateTime()
 
     else if selected.match leaderEvent
-      showElemHideOthers("#adult-leader-kind")
+      eventShowElemHideOthers("#adult-leader-kind")
       setAdultLeaderDefaults()
 
     else if selected.match unitEvent
-      showElemHideOthers("#unit-event-kind")
+      eventShowElemHideOthers("#unit-event-kind")
       setUnitEventDefaults()
 
     else if selected.match plcEvent
-      showElemHideOthers("#plc-kind")
+      eventShowElemHideOthers("#plc-kind")
       setPlcDefaults()
 
     setSignupDateTimeDisable()
 
 
-  showElemHideOthers = (elem) ->
+  eventKindDivs = ->
+    ['#unit-meeting-kind', '#sub-unit-kind', '#camping-outing-kind', '#unit-event-kind', '#adult-leader-kind', '#plc-kind']
+
+  $.each(eventKindDivs(), (idx, elem) ->
+    $(elem).collapse(toggle: false)
+    )
+
+  eventShowElemHideOthers = (elem) ->
     $.each(eventKindDivs(), (idx, div) ->
       if div != elem
         # console.log "hiding: #{div}"

@@ -3,9 +3,14 @@ require 'rails_helper'
 RSpec.describe EmailMessage do
   before(:all) do
     adult_2units_2scout_3subunits
-    @adult2 = FactoryGirl.create(:adult, email: nil)
-    @adult2.units << @unit1 # add adult with no email
+    @adult3 = FactoryGirl.create(:adult, email: nil)
+    @adult3.units << @unit1 # add adult with no email
   end
+
+  let(:email_message) { FactoryGirl.build(:email_message, unit: @unit1) }
+  let(:email_message_c) { FactoryGirl.build_stubbed(:email_message, unit: @unit1) }
+  let(:email_message_c_bs) { FactoryGirl.build_stubbed(:email_message, unit: @unit2) }
+
 
   it { should belong_to(:sender) }
   it { should belong_to(:unit) }
@@ -17,28 +22,26 @@ RSpec.describe EmailMessage do
   it { should validate_presence_of(:subject) }
 
   describe 'validations' do
-    before { @email_message = FactoryGirl.build(:email_message) }
-
-    specify { expect(@email_message).to be_valid }
+    specify { expect(email_message).to be_valid }
 
 
     it 'invalid when no user_ids when send_to_users selected' do
-      @email_message.send_to_option = 4
-      @email_message.should_not be_valid
-      expect(@email_message.errors.count).to eq(1)
-      expect(@email_message.errors).to include(:base)
+      email_message.send_to_option = 4
+      expect(email_message).not_to be_valid
+      expect(email_message.errors.count).to eq(1)
+      expect(email_message.errors).to include(:base)
     end
 
     it 'valid when sub_unit_ids when send_to_users selected' do
       user = FactoryGirl.create(:adult)
-      @email_message.send_to_option = 4
-      @email_message.user_ids = [user.id]
-      @email_message.should be_valid
+      email_message.send_to_option = 4
+      email_message.user_ids = [user.id]
+      expect(email_message).to be_valid
     end
 
     it 'creates an id_token' do
-      @email_message.save
-      @email_message.id_token.should_not be_blank
+      email_message.save
+      expect(email_message.id_token).not_to be_blank
     end
 
     describe 'presence of message' do
@@ -48,64 +51,70 @@ RSpec.describe EmailMessage do
 
       it 'not required when events selected' do
         event = FactoryGirl.create(:event)
-        @email_message.message = nil
-        @email_message.event_ids = [event.id]
-        expect(@email_message.valid?).to be(true)
-        expect(@email_message.errors).not_to include(:message)
+        email_message.message = nil
+        email_message.event_ids = [event.id]
+        expect(email_message.valid?).to eq(true)
+        expect(email_message.errors).not_to include(:message)
       end
     end
   end
 
 
   context '.send_to(unit)' do
-    before do
-      @email_message = FactoryGirl.build(:email_message, unit: @unit1)
-      # @sub_unit = FactoryGirl.create(:sub_unit, unit: @unit)
-    end
-
     context 'with associated unit' do
       it 'returns Everyone in Unit when send_to_unit selected' do
-        @email_message.send_to_option = 1
-        @email_message.send_to.should eq("Everyone in Cub Scout Pack 134")
+        email_message.send_to_option = 1
+        expect(email_message.send_to).to eq("Everyone in Cub Scout Pack 134")
       end
 
       it 'returns All Unit Leaders when send_to_leaders selected' do
-        @email_message.send_to_option = 2
-        @email_message.send_to.should eq("All Cub Scout Pack 134 Leaders")
+        email_message.send_to_option = 2
+        expect(email_message.send_to).to eq("All Cub Scout Pack 134 Leaders")
       end
 
       it 'returns Selected SubUnits when send_to_sub_units selected' do
-        @email_message.send_to_option = 3
-        @email_message.send_to.should eq("Selected Dens")
+        email_message.send_to_option = 3
+        expect(email_message.send_to).to eq("Selected Dens")
       end
 
       it 'returns Selected Adults/Scouts when send_to_users selected' do
-        @email_message.send_to_option = 4
-        @email_message.send_to.should eq("Selected Adults/Scouts")
+        email_message.send_to_option = 4
+        expect(email_message.send_to).to eq("Selected Adults/Scouts")
+      end
+
+      it 'returns Scoutmasters when send_to_scoutmasters selected' do
+        email_message.send_to_option = 5
+        expect(email_message.send_to).to eq("Scoutmasters (SM/ASM)")
       end
     end
 
 
     context 'with specified unit' do
-      before { @unit2 = FactoryGirl.create(:unit, unit_type: 'Boy Scouts', unit_number: '555') }
+      let(:unit2) { FactoryGirl.build(:unit, unit_type: 'Boy Scouts', unit_number: '555') }
+
       it 'returns Everyone in Unit when send_to_unit selected' do
-        @email_message.send_to_option = 1
-        @email_message.send_to(@unit2).should eq("Everyone in Boy Scout Troop 555")
+        email_message.send_to_option = 1
+        expect(email_message.send_to(unit2)).to eq("Everyone in Boy Scout Troop 555")
       end
 
       it 'returns All Unit Leaders when send_to_leaders selected' do
-        @email_message.send_to_option = 2
-        @email_message.send_to(@unit2).should eq("All Boy Scout Troop 555 Leaders")
+        email_message.send_to_option = 2
+        expect(email_message.send_to(unit2)).to eq("All Boy Scout Troop 555 Leaders")
       end
 
       it 'returns Selected SubUnits when send_to_sub_units selected' do
-        @email_message.send_to_option = 3
-        @email_message.send_to(@unit2).should eq("Selected Patrols")
+        email_message.send_to_option = 3
+        expect(email_message.send_to(unit2)).to eq("Selected Patrols")
       end
 
       it 'returns Selected Adults/Scouts when send_to_users selected' do
-        @email_message.send_to_option = 4
-        @email_message.send_to(@unit2).should eq("Selected Adults/Scouts")
+        email_message.send_to_option = 4
+        expect(email_message.send_to(unit2)).to eq("Selected Adults/Scouts")
+      end
+
+      it 'returns Scoutmasters when send_to_scoutmasters selected' do
+        email_message.send_to_option = 5
+        expect(email_message.send_to(unit2)).to eq("Scoutmasters (SM/ASM)")
       end
     end
   end
@@ -124,12 +133,12 @@ RSpec.describe EmailMessage do
     end
 
     it 'returns FALSE when no associated events' do
-      @email_message.has_events?.should be_falsy
+      expect(@email_message.has_events?).to eq(false)
     end
 
     it 'returns TRUE when it has associated events' do
       @email_message.events << @event
-      @email_message.has_events?.should be
+      expect(@email_message.has_events?).to eq(true)
     end
   end
 
@@ -144,24 +153,24 @@ RSpec.describe EmailMessage do
 
     it 'returns TRUE when email message has an event that has signup required' do
       @event.update_attribute(:signup_required, true)
-      @email_message.events_have_signup?.should be
+      expect(@email_message.events_have_signup?).to eq(true)
     end
 
     it 'returns FALSE when email message has an event that does not have signup required' do
-      @email_message.events_have_signup?.should be_falsy
+      expect(@email_message.events_have_signup?).to eq(false)
     end
   end
 
 
   context '.subject_with_unit' do
     before do
-      @unit999 = FactoryGirl.create(:unit, unit_type: "Boy Scouts", unit_number: '535')
+      @unit999 = FactoryGirl.build_stubbed(:unit, unit_type: "Boy Scouts", unit_number: '535')
       @email_message = FactoryGirl.build(:email_message, unit: @unit999)
     end
 
     it 'returns the subject with unit name' do
       @email_message.subject = "Home with Homies"
-      @email_message.subject_with_unit.should eq("[BS Troop 535] Home with Homies")
+      expect(@email_message.subject_with_unit).to eq("[BS Troop 535] Home with Homies")
     end
   end
 
@@ -169,66 +178,79 @@ RSpec.describe EmailMessage do
 
 
   context '.recipients' do
-    before { @email_message = FactoryGirl.create(:email_message, unit: @unit1) }
-
     context 'sending to all users in unit' do
       it 'returns all users in a unit with emails' do
-        @email_message.recipients.should include(@adult)
+        expect(email_message_c.recipients).to include(@adult)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients.should_not include(@adult2)
-        @email_message.recipients.should_not include(@scout1)
-        @email_message.recipients.should_not include(@scout2)
+        expect(email_message_c.recipients).not_to include(@adult3)
+        expect(email_message_c.recipients).not_to include(@scout1)
+        expect(email_message_c.recipients).not_to include(@scout2)
       end
     end
 
     context 'sending to unit leaders' do
-      before { @email_message.send_to_option = 2 }
+      before { email_message_c.send_to_option = 2 }
 
       it 'returns all leaders (adults) with emails' do
-        @email_message.recipients.should include(@adult)
+        expect(email_message_c.recipients).to include(@adult)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients.should_not include(@adult2)
-        @email_message.recipients.should_not include(@scout1)
-        @email_message.recipients.should_not include(@scout2)
+        expect(email_message_c.recipients).not_to include(@adult3)
+        expect(email_message_c.recipients).not_to include(@scout1)
+        expect(email_message_c.recipients).not_to include(@scout2)
       end
     end
 
     context 'sending to selected sub units' do
       before do
-        @email_message.send_to_option = 3
-        @email_message.sub_unit_ids = [@sub_unit1, @sub_unit3]
+        email_message_c.send_to_option = 3
+        email_message_c.sub_unit_ids = [@sub_unit1, @sub_unit3]
       end
 
       it 'returns all user with emails' do
-        @email_message.recipients.should include(@adult)
+        expect(email_message_c.recipients).to include(@adult)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients.should_not include(@adult2)
-        @email_message.recipients.should_not include(@scout1)
-        @email_message.recipients.should_not include(@scout2)
+        expect(email_message_c.recipients).not_to include(@adult3)
+        expect(email_message_c.recipients).not_to include(@scout1)
+        expect(email_message_c.recipients).not_to include(@scout2)
       end
     end
 
     context 'sending to selected users' do
       before do
-        @email_message.send_to_option = 4
-        @email_message.user_ids = [@adult.id, @scout1.id, @scout2.id]
+        email_message_c.send_to_option = 4
+        email_message_c.user_ids = [@adult.id, @scout1.id, @scout2.id]
       end
 
       it 'returns all users with emails' do
-        @email_message.recipients.should include(@adult)
-        @email_message.recipients.should include(@scout2)
+        expect(email_message_c.recipients).to include(@adult)
+        expect(email_message_c.recipients).to include(@scout2)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients.should_not include(@scout1)
-        @email_message.recipients.should_not include(@adult2)
+        expect(email_message_c.recipients).not_to include(@scout1)
+        expect(email_message_c.recipients).not_to include(@adult3)
       end
+    end
+
+    context 'sending to scoutmasters' do
+      before { email_message_c_bs.send_to_option = 5 }
+
+      it 'returns users with Scoutmaster position' do
+        expect(email_message_c_bs.recipients).to include(@adult2)
+      end
+
+      it 'does not return users without Scoutmaster positions' do
+        expect(email_message_c_bs.recipients).not_to include(@adult)
+        expect(email_message_c_bs.recipients).not_to include(@adult3)
+        expect(email_message_c_bs.recipients).not_to include(@scout1)
+      end
+
     end
   end
 
@@ -236,67 +258,80 @@ RSpec.describe EmailMessage do
 
 
   context '.recipients_emails' do
-    before { @email_message = FactoryGirl.create(:email_message, unit: @unit1) }
-
     context 'sending to all users in unit' do
       it 'returns all users in a unit with emails' do
-        @email_message.recipients_emails.should include(@adult.email)
+        expect(email_message_c.recipients_emails).to include(@adult.email)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients_emails.should_not include(@adult2.email)
-        @email_message.recipients_emails.should_not include(@scout1.email)
-        @email_message.recipients_emails.should_not include(@scout2.email)
+        expect(email_message_c.recipients_emails).not_to include(@adult2.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout1.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout2.email)
       end
     end
 
     context 'sending to unit leaders' do
-      before { @email_message.send_to_option = 2 }
+      before { email_message_c.send_to_option = 2 }
 
       it 'returns all leaders (adults) with emails' do
-        @email_message.recipients_emails.should include(@adult.email)
+        expect(email_message_c.recipients_emails).to include(@adult.email)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients_emails.should_not include(@adult2.email)
-        @email_message.recipients_emails.should_not include(@scout1.email)
-        @email_message.recipients_emails.should_not include(@scout2.email)
+        expect(email_message_c.recipients_emails).not_to include(@adult2.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout1.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout2.email)
       end
     end
 
     context 'sending to selected sub units' do
       before do
-        @email_message.send_to_option = 3
-        @email_message.sub_unit_ids = [@sub_unit1, @sub_unit3]
+        email_message_c.send_to_option = 3
+        email_message_c.sub_unit_ids = [@sub_unit1, @sub_unit3]
       end
 
       it 'returns all user with emails' do
-        @email_message.recipients_emails.should include(@adult.email)
+        expect(email_message_c.recipients_emails).to include(@adult.email)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients_emails.should_not include(@adult2.email)
-        @email_message.recipients_emails.should_not include(@scout1.email)
-        @email_message.recipients_emails.should_not include(@scout2.email)
+        expect(email_message_c.recipients_emails).not_to include(@adult2.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout1.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout2.email)
       end
     end
 
     context 'sending to selected users' do
       before do
-        @email_message.send_to_option = 4
-        @email_message.user_ids = [@adult.id, @scout1.id, @scout2.id]
+        email_message_c.send_to_option = 4
+        email_message_c.user_ids = [@adult.id, @scout1.id, @scout2.id]
       end
 
       it 'returns all users with emails' do
-        @email_message.recipients_emails.should include(@adult.email)
-        @email_message.recipients_emails.should include(@scout2.email)
+        expect(email_message_c.recipients_emails).to include(@adult.email)
+        expect(email_message_c.recipients_emails).to include(@scout2.email)
       end
 
       it 'should not return users without emails' do
-        @email_message.recipients_emails.should_not include(@scout1.email)
-        @email_message.recipients_emails.should_not include(@adult2.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout1.email)
+        expect(email_message_c.recipients_emails).not_to include(@adult2.email)
       end
     end
+
+    context 'send to scoutmasters' do
+      before { email_message_c_bs.send_to_option = 5 }
+
+      it 'returns all users with emails' do
+        expect(email_message_c_bs.recipients_emails).to include(@adult2.email)
+      end
+
+      it 'should not return users without emails' do
+        expect(email_message_c_bs.recipients_emails).not_to include(@adult.email)
+        expect(email_message_c_bs.recipients_emails).not_to include(@adult3.email)
+        expect(email_message_c_bs.recipients_emails).not_to include(@scout2.email)
+      end
+    end
+
   end
 
 

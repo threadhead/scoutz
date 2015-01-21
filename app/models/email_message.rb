@@ -64,6 +64,8 @@ class EmailMessage < ActiveRecord::Base
       sub_units.inject([]) {|users, su| users + su.users_receiving_email_blast }.uniq
     when 4
       self.users.gets_email_blast
+    when 5
+      self.unit.scoutmasters.gets_email_blast
     else
       []
     end

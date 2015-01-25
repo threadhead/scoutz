@@ -21,17 +21,21 @@ set :output, '/home/deploy/scoutz/shared/log/cron.log'
 
 # Learn more: http://github.com/javan/whenever
 job_type :rake_logged, "cd :path && :environment_variable=:environment bundle exec rake :task :output"
-job_type :backup, "cd /home/deploy/Backup && ~/.rvm/bin/rvm 2.1.5 do bundle exec backup perform -t :task :output"
+job_type :backup, "cd /home/deploy/Backup && ~/.rvm/bin/rvm 2.2.0 do bundle exec backup perform -t :task :output"
 
 
 every 30.minutes do
-  # runner "Event.delay.send_reminders"
   runner "EventRemindersJob.perform_later"
 end
 
 every :friday, at: '9:17am' do
-  # rake_logged "send_newsletter:weekly"
   runner "NewsletterWeeklyJob.perform_later"
+end
+
+# the job will check and only run on the 5th from the last day of the month
+#  but we need to cover all days for all months, e.g. Feb 14, Apr 26, Jan 27
+every '17 3 23-28 * *' do
+  runner "NewsletterMonthlyJob.perform_later"
 end
 
 every :day, at: '12:20am' do

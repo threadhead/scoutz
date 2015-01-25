@@ -1,3 +1,30 @@
-Newsletters#events_month
+!!!
+%html{style: "font-family: sans-serif;"}
+  %head
+  %body
+    %h2{style: "margin-bottom: 20px;"}= @unit.name
+    %p= @subject
+    %hr
+    - if @events.empty?
+      %h3{style: "padding: 20px;"} No scheduled events. Check #{link_to 'Scoutt.in', root_url} for future events.
 
-= @greeting + ", find me in app/views/newsletters/events_month.text.haml"
+    -else
+      %table{style: "border-collapse: collapse;"}
+        %tr{style: "background-color: darkslategray; color: white;"}
+          %th{style: "text-align: left; padding: 12px;"} Event
+          %th{style: "text-align: left; padding: 12px;"} Dates
+          %th{style: "text-align: left; padding: 12px;"} Sign Up
+          %th{style: "text-align: left; padding: 12px;"} iCal
+
+        - @events.each do |event|
+          %tr{style: "#{cycle '', 'background: whitesmoke;'}"}
+            %td{style: "padding: 8px;"}= link_to event.name, event_url(event)
+            %td{style: "padding: 8px; font-size: 0.8em;"} #{event.start_at.to_s(:short_ampm)} - #{event.end_at.to_s(:short_ampm)}
+            %td{style: "padding: 8px;; font-size: 0.8em;"}= event.signup_required ? "by #{event.signup_deadline.to_s(:short_ampm)}" : ''
+            %td{style: "padding: 8px;"}= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
+
+    %hr
+    %p
+      %i Event details may change. Check #{link_to 'Scoutt.in', root_url} for the latest details.
+
+    = render partial: 'unsubscribe/email_footer', locals: {action: :weekly_newsletter_email, user: @recipient}

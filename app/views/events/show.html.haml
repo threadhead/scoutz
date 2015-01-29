@@ -68,7 +68,7 @@
             %strong Organizer
           %td
             - @event.users.each do |user|
-              = link_to user.full_name, unit_user_path(@unit, user.id)
+              = link_to user.full_name, corrected_unit_user_path(@unit, user)
         %tr
           %td
             %strong Reminders?

@@ -7,17 +7,17 @@ namespace :public_activity do
 
     desc "prune PA older than 60 days"
     task d60: [:environment] do
-      PrunePublicActivityJob.perform_later(days_to_prune: 60)
+      PrunePublicActivityJob.perform_later(60)
     end
 
     desc "prune PA older than 90 days"
     task d90: [:environment] do
-      PrunePublicActivityJob.perform_later(days_to_prune: 90)
+      PrunePublicActivityJob.perform_later(90)
     end
 
     desc "prune PA older than 120 days"
     task d120: [:environment] do
-      PrunePublicActivityJob.perform_later(days_to_prune: 120)
+      PrunePublicActivityJob.perform_later(120)
     end
   end
 end

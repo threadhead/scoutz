@@ -42,7 +42,7 @@ class EmailMessagesController < ApplicationController
     if @email_message.save
       current_user.email_messages << @email_message
       if params[:commit] == 'Delay 15 Minutes'
-        EmailMessagesJob.set(wait: 1.minutes).perform_later(@email_message)
+        EmailMessagesJob.set(wait: 15.minutes).perform_later(@email_message)
         flash[:notice] = 'Email message is queued to be sent in 15 minutes.'
       else
         EmailMessagesJob.perform_later(@email_message)

@@ -46,6 +46,6 @@ every :month, at: '2:14am' do
   runner "PruneEmailMessagesJob.perform_later"
 end
 
-# every :month, at: '12:17am' do
-#   rake_logged "send_newsletter:monthly"
-# end
+every :month, at: '3:14am' do
+  runner "PrunePublicActivityJob.perform_later(90)"
+end

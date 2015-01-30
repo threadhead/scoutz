@@ -1,5 +1,5 @@
 require 'rails_helper'
-include ActiveSupport::Testing::TimeHelpers
+# include ActiveSupport::Testing::TimeHelpers
 
 RSpec.describe PruneEmailMessagesJob, type: :job do
   before(:all) do
@@ -10,7 +10,7 @@ RSpec.describe PruneEmailMessagesJob, type: :job do
 
   let(:email_message) { FactoryGirl.create(:email_message, unit: @unit, sender: @sender) }
 
-  context 'destroying' do
+  context 'pruning' do
     before do
       #stub out the logger
       logger_stub = double(Logger)

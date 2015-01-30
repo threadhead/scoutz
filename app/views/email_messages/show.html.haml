@@ -15,7 +15,7 @@
             New Email Blast
 
         - if @email_message.sent_at.nil? && @email_message.active? && policy(@email_message).destroy?
-          = link_to unit_email_message_path(@unit, @email_message), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do
+          = link_to unit_email_message_path(@unit, @email_message, view: 'show'), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do
             %i.fa.fa-trash
             Cancel Sending
 

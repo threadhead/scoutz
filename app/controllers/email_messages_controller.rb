@@ -69,11 +69,16 @@ class EmailMessagesController < ApplicationController
     authorize @email_message
     if @email_message.sent_at.nil?
       @email_message.deactivate!
-      flash[:notice] = "Sending of email #{@email_message.subject} cancelled."
+      flash[:notice] = "Sending of email '#{@email_message.subject}' cancelled."
     else
-      flash[:notice] = "I'm sorry, but the email #{@email_message.subject} was already sent."
+      flash[:notice] = "I'm sorry, but the email '#{@email_message.subject}' was already sent at #{@email_message.sent_at.to_s(:long_ampm)}."
     end
-    redirect_to unit_email_messages_url(@unit)
+
+    if params[:view] == 'show'
+      redirect_to unit_email_message_url(@unit, @email_message)
+    else
+      redirect_to unit_email_messages_url(@unit)
+    end
   end
 
 

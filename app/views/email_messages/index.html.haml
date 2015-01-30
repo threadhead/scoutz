@@ -17,7 +17,7 @@
 
     %table.table
       %thead
-        %th Sent at
+        %th Sent
         %th Subject
         %th.hidden-xs From
         %th Recipients
@@ -28,7 +28,7 @@
           %td
             - if email_message.sent_at
               = email_message.sent_at.to_s(:short_ampm)
-            - if email_message.deactivated?
+            - elsif email_message.deactivated?
               cancelled
             - else
               %em pending
@@ -37,7 +37,9 @@
             - if email_message.has_attachments?
               %i.fa.fa-paper-clip
           %td.hidden-xs= email_message.sender.email
-          %td= email_message.send_to
+          %td
+            = email_message.send_to
+            %span.badge= email_message.recipients_ids.size
           %td
             .btn-group
               = link_to 'View', unit_email_message_path(@unit, email_message), class: 'btn btn-default btn-xs'

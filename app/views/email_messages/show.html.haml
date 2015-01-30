@@ -5,13 +5,19 @@
 
     .col-md-6.right-aligned
       .btn-group
-        = link_to(unit_email_messages_path(@unit), class: 'btn btn-default') do
+        = link_to unit_email_messages_path(@unit), class: 'btn btn-default' do
           %i.fa.fa-reply.hidden-xs
           Sent Emails
 
-        = link_to(new_unit_email_message_path(@unit), class: 'btn btn-default') do
-          %i.fa.fa-plus.hidden-xs
-          New Email Blast
+        - if policy(EmailMessage).create?
+          = link_to new_unit_email_message_path(@unit), class: 'btn btn-default' do
+            %i.fa.fa-plus.hidden-xs
+            New Email Blast
+
+        - if @email_message.sent_at.nil? && @email_message.active? && policy(@email_message).destroy?
+          = link_to unit_email_message_path(@unit, @email_message), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' do
+            %i.fa.fa-trash
+            Cancel Sending
 
 
 .row
@@ -52,10 +58,12 @@
 
         %tr
           %td
-            %strong Queued
+            %strong Sent
           %td
             - if @email_message.sent_at
               = @email_message.sent_at.to_s(:long_ampm)
+            - elsif @email_message.deactivated?
+              sending cancelled at #{ @email_message.deactivated_at.to_s(:long_ampm) }
             - else
               currently in queue
 

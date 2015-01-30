@@ -93,5 +93,23 @@
 
 
   %br
-  = f.primary 'Send Email Blast'
+  -# = f.primary 'Send Email Blast'
+  = button_tag 'Send Email Blast', type: 'button', class: 'btn btn-primary', data: { toggle: 'modal', target: '#send-email-blast'}
   = link_to 'Cancel', unit_email_messages_path(@unit), class: 'btn btn-default'
+
+
+  .modal.fade#send-email-blast
+    .modal-dialog
+      .modal-content
+        .modal-header
+          %h4.modal-title Send Email Blast
+
+        .modal-body
+          %p
+            %strong We recommend delaying your email for 15 minutes.
+          %p Just in case you forgot something, or made a mistake, you can cancel the sending.
+
+        .modal-footer
+          = button_tag 'Cancel', type: 'button', data: { dismiss: 'modal' }, class: 'btn btn-default'
+          = f.submit 'Send Now!', class: 'btn btn-default'
+          = f.submit 'Delay 15 Minutes', class: 'btn btn-primary'

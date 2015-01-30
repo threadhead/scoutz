@@ -2,6 +2,7 @@ class EmailMessage < ActiveRecord::Base
   include SendToOptions
   include SubUnitIds
   include AttributeSanitizer
+  include Deactivatable
 
   serialize :sub_unit_ids, Array
   serialize :sent_to_hash, Hash

@@ -86,7 +86,7 @@ class EmailMessage < ActiveRecord::Base
 
   def add_sent_confirmation!(user:, status: 'ok')
     self.sent_to_hash[user.id] = {
-      sent_at: Time.zone.now.to_s(:db),
+      sent_at: Time.zone.now.iso8601,
       status: status
     }
     save(validate: false)

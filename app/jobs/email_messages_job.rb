@@ -2,6 +2,8 @@ class EmailMessagesJob < ActiveJob::Base
   queue_as :default
 
   def perform(email_message)
+    return if email_message.deactivated?
+
     email_message.recipients.each do |user|
       MessageMailer.email_blast(user, email_message).deliver_later
     end

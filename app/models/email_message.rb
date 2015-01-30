@@ -2,6 +2,7 @@ class EmailMessage < ActiveRecord::Base
   include SendToOptions
   include SubUnitIds
   include AttributeSanitizer
+  include Deactivatable
 
   serialize :sub_unit_ids, Array
   serialize :sent_to_hash, Hash
@@ -84,7 +85,6 @@ class EmailMessage < ActiveRecord::Base
   end
 
   def add_sent_confirmation!(user:, status: 'ok')
-    puts "add sent confirmation"
     self.sent_to_hash[user.id] = {
       sent_at: Time.zone.now.to_s(:db),
       status: status

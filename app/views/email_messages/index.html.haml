@@ -32,14 +32,18 @@
               cancelled
             - else
               %em pending
+
           %td
             = link_to email_message.subject, unit_email_message_path(@unit, email_message)
             - if email_message.has_attachments?
               %i.fa.fa-paper-clip
+
           %td.hidden-xs= email_message.sender.email
+
           %td
             = email_message.send_to
             %span.badge= email_message.recipients_ids.size
+
           %td
             .btn-group
               = link_to 'View', unit_email_message_path(@unit, email_message), class: 'btn btn-default btn-xs'
@@ -47,3 +51,7 @@
                 = link_to 'Cancel Sending', unit_email_message_path(@unit, email_message), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs'
 
     = paginate @email_messages, theme: 'bootstrap'
+
+.row
+  .col-md-12
+    %em.text-muted email messages are stored for about 1.5 years

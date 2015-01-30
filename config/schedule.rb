@@ -42,6 +42,10 @@ every :day, at: '12:20am' do
   backup 'scoutz_db'
 end
 
+every :month, at: '2:14am' do
+  runner "PruneEmailMessagesJob.perform_later"
+end
+
 # every :month, at: '12:17am' do
 #   rake_logged "send_newsletter:monthly"
 # end

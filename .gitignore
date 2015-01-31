@@ -47,3 +47,4 @@
 .powenv
 .powrc
 .env
+SERVER_CONFIG.txt

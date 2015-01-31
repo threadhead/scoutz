@@ -71,7 +71,9 @@ class User < ActiveRecord::Base
       where(counselors: {unit_id: unit_id})
     end
   end
-  accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['merit_badge_id'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :counselors,
+        reject_if: proc { |att| att['merit_badge_id'].blank? || att['merit_badge_id'] == '0' },
+        allow_destroy: true
 
 
   has_many :phones, dependent: :destroy

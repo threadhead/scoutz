@@ -157,6 +157,7 @@
         .row
           .col-md-6
             = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label'
+            = hidden_field_tag 'adult[merit_badge_ids][]', '0'
 
             - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
             = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'

@@ -15,6 +15,9 @@
         %legend Merit Badge Counselors
         %br
         = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label sr-only'
+        = hidden_field_tag 'merit_badge[user_ids][]', '0'
+
+
         - merit_badge_adult_ids = @merit_badge.counselors.unit(@unit.id).pluck(:user_id)
         = select_tag "merit_badge[user_ids][]", options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids', class: 'form-control'
         .help-block counselors for #{@merit_badge.name} in #{@unit.name_unit}

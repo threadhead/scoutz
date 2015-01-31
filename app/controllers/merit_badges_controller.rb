@@ -41,7 +41,7 @@ class MeritBadgesController < ApplicationController
   def update
     authorize @merit_badge
     set_counselor_attributes(@merit_badge)
-    logger.info "params: #{pp params}"
+    # logger.info "params: #{pp params}"
 
     begin
       merit_badge_update = @merit_badge.update(merit_badge_params)

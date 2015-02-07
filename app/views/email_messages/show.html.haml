@@ -40,8 +40,8 @@
           %td
             %strong Recipients
           %td
-            %span.badge= @email_message.sent_to_count
             = @email_message.send_to
+            %span.badge= @email_message.sent_to_count
             - if @email_message.send_to_option == 3
               (
               %small>

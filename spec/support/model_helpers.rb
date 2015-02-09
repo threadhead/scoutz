@@ -32,4 +32,19 @@ module ModelHelpers
     @sub_unit2.scouts << @scout2
     @sub_unit3 = FactoryGirl.create(:cub_scout_sub_unit, unit: @unit1)
   end
+
+  def unit_meeting_kinds
+    [ 'Pack Event',
+      'Troop Event',
+      'Crew Event',
+      'Lodge Event',
+      'Troop Meeting',
+      'Pack Meeting',
+      'Crew Meeting',
+      'Camping/Outing',
+      'PLC',
+      'Lodge Meeting'
+    ]
+  end
+
 end

@@ -25,7 +25,7 @@ module Deactivatable
 
 
 
-  module ClassMethods
+  class_methods do
 
     def deactivatable_options
       @deactivatable_options || {}

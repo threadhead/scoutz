@@ -79,7 +79,7 @@ class Event < ActiveRecord::Base
 
   def unit_meeting_kind?
     return false if kind.blank?
-    !!(kind =~ /troop meeting|pack meeting|crew meeting|lodge meeting/i)
+    !!(kind =~ /troop meeting|pack meeting|crew meeting|lodge meeting|plc/i) || plc_kind? || unit_event_kind? || camping_outing_kind?
   end
 
   def camping_outing_kind?
@@ -89,7 +89,7 @@ class Event < ActiveRecord::Base
 
   def unit_event_kind?
     return false if kind.blank?
-    !!(kind =~ /troop event|pack event|crew event/i)
+    !!(kind =~ /troop event|pack event|crew event|lodge event/i)
   end
 
   def adult_leader_kind?

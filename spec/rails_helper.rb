@@ -79,7 +79,8 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     # This should effectively stop all creating ical files, which will happen in an after_save callback
     # on Event. To remove this stub, call: reset(Event)
-    allow_any_instance_of(Event).to receive(:ical_valid?).and_return(false)
+    Event.class_variable_set(:@@disable_ical_generation, true)
+    # allow_any_instance_of(Event).to receive(:ical_valid?).and_return(false)
     Google::UrlShortenerV1::Base.stub(:shorten).and_return("http://goo.gl/vZewJH")
   end
 

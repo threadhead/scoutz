@@ -159,7 +159,7 @@ RSpec.describe EventReminders do
 
     it 'sends one email to all event recipients' do
       @event.send_reminder
-      expect(ActionMailer::Base.deliveries.size).to eq(5) # 3 eamils, 2 sms
+      expect(ActionMailer::Base.deliveries.size).to eq(5) # 3 emails, 2 sms
       # ap ActionMailer::Base.deliveries
     end
 

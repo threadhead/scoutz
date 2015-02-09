@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe EventMailer, type: :mailer do
   before do
-    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
+    Event.class_variable_set(:@@disable_ical_generation, false)
     @unit = FactoryGirl.create(:unit)
     @recipient = FactoryGirl.create(:adult)
     @recipient.units << @unit

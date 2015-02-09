@@ -10,7 +10,7 @@ RSpec.describe MessageMailer, type: :mailer do
   after(:all) { [@unit, @recipient].each {|f| f.delete} }
 
   before(:each) do
-    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
+    Event.class_variable_set(:@@disable_ical_generation, false)
     @event = FactoryGirl.create(:event, unit: @unit)
     @email_message = FactoryGirl.create(:email_message, sender: @sender, unit: @unit, message: "<em>A Message Today!</em>")
     @email_message.events << @event

@@ -37,11 +37,15 @@ RSpec.describe EventReminders do
 
 
   describe '.users_to_email' do
-    it 'returns all unit members' do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
-      expect(@event.users_to_email).to include(@adult)
-      expect(@event.users_to_email).not_to include(@scout1)
-      expect(@event.users_to_email).not_to include(@scout2)
+    ['Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event', 'Troop Meeting', 'Pack Meeting', 'Crew Meeting', 'Camping/Outing', 'PLC', 'Lodge Meeting'].each do |kind|
+      context "event kind: #{kind}" do
+        it 'returns all unit members' do
+          @event = FactoryGirl.build(:event, unit: @unit1, kind: kind)
+          expect(@event.users_to_email).to include(@adult)
+          expect(@event.users_to_email).not_to include(@scout1)
+          expect(@event.users_to_email).not_to include(@scout2)
+        end
+      end
     end
 
     it 'returns all unit leaders' do
@@ -61,11 +65,15 @@ RSpec.describe EventReminders do
 
 
   describe '.recipients_emails' do
-    it 'returns all unit members' do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
-      expect(@event.recipients_emails).to include(@adult.email)
-      expect(@event.recipients_emails).not_to include(@scout1.email)
-      expect(@event.recipients_emails).not_to include(@scout2.email)
+    ['Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event', 'Troop Meeting', 'Pack Meeting', 'Crew Meeting', 'Camping/Outing', 'PLC', 'Lodge Meeting'].each do |kind|
+      context "event kind: #{kind}" do
+        it 'returns all unit members' do
+          @event = FactoryGirl.build(:event, unit: @unit1, kind: kind)
+          expect(@event.recipients_emails).to include(@adult.email)
+          expect(@event.recipients_emails).not_to include(@scout1.email)
+          expect(@event.recipients_emails).not_to include(@scout2.email)
+        end
+      end
     end
 
     it 'returns all unit leaders' do
@@ -85,13 +93,17 @@ RSpec.describe EventReminders do
 
 
   describe '.recipients_sms_emails' do
-    it 'returns all unit members' do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Pack Event')
-      expect(@event.recipients_sms_emails).to include(@adult.sms_email_address)
-      expect(@event.recipients_sms_emails).not_to include(@adult2.sms_email_address)
-      expect(@event.recipients_sms_emails).not_to include(@scout1.sms_email_address)
-      expect(@event.recipients_sms_emails).not_to include(@scout2.sms_email_address)
-      expect(@event.recipients_sms_emails).to include(@scout3.sms_email_address)
+    ['Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event', 'Troop Meeting', 'Pack Meeting', 'Crew Meeting', 'Camping/Outing', 'PLC', 'Lodge Meeting'].each do |kind|
+      context "event kind: #{kind}" do
+        it 'returns all unit members' do
+          @event = FactoryGirl.build(:event, unit: @unit1, kind: kind)
+          expect(@event.recipients_sms_emails).to include(@adult.sms_email_address)
+          expect(@event.recipients_sms_emails).not_to include(@adult2.sms_email_address)
+          expect(@event.recipients_sms_emails).not_to include(@scout1.sms_email_address)
+          expect(@event.recipients_sms_emails).not_to include(@scout2.sms_email_address)
+          expect(@event.recipients_sms_emails).to include(@scout3.sms_email_address)
+        end
+      end
     end
 
     it 'returns all unit leaders' do

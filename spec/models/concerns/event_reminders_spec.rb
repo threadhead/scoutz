@@ -45,7 +45,7 @@ RSpec.describe EventReminders do
     end
 
     it 'returns all unit leaders' do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Leader Event')
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Adult Leader Event')
       expect(@event.users_to_email).to include(@adult)
       expect(@event.users_to_email).not_to include(@scout1)
       expect(@event.users_to_email).not_to include(@scout2)
@@ -69,7 +69,7 @@ RSpec.describe EventReminders do
     end
 
     it 'returns all unit leaders' do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Leader Event')
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Adult Leader Event')
       expect(@event.recipients_emails).to include(@adult.email)
       expect(@event.recipients_emails).not_to include(@scout1.email)
       expect(@event.recipients_emails).not_to include(@scout2.email)
@@ -95,7 +95,7 @@ RSpec.describe EventReminders do
     end
 
     it 'returns all unit leaders' do
-      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Leader Event')
+      @event = FactoryGirl.build(:event, unit: @unit1, kind: 'Adult Leader Event')
       expect(@event.recipients_sms_emails).to include(@adult.sms_email_address)
       expect(@event.recipients_sms_emails).not_to include(@adult2.sms_email_address)
       expect(@event.recipients_sms_emails).not_to include(@scout1.sms_email_address)

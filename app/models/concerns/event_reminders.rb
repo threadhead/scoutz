@@ -28,7 +28,7 @@ module EventReminders
     self.class.reminder_logger.info "  Reminders for (#{self.id}): #{self.name}"
     send_sms_reminders
     send_email_reminders
-    update_attribute(:reminder_sent_at, Time.zone.now)
+    update_column(:reminder_sent_at, Time.zone.now)
   end
 
 
@@ -51,27 +51,31 @@ module EventReminders
 
   def users_to_email
     case kind
-    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
+    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event', 'Troop Meeting', 'Pack Meeting', 'Crew Meeting', 'Camping/Outing', 'PLC', 'Lodge Meeting'
       self.unit.users.gets_email_reminder
     when 'Den Event', 'Patrol Event'
       sub_unit_users = []
       self.sub_units.each { |su| sub_unit_users << su.users_receiving_email_reminder }
       sub_unit_users.flatten
-    when 'Leader Event'
+    when 'Adult Leader Event'
       self.unit.users.unit_leaders(self.unit).gets_email_reminder
+    else
+      []
     end
   end
 
   def users_to_sms
     case kind
-    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
+    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event', 'Troop Meeting', 'Pack Meeting', 'Crew Meeting', 'Camping/Outing', 'PLC', 'Lodge Meeting'
       self.unit.users.gets_sms_reminder
     when 'Den Event', 'Patrol Event'
       sub_unit_users = []
       self.sub_units.each { |su| sub_unit_users << su.users_receiving_sms_reminder }
       sub_unit_users.flatten
-    when 'Leader Event'
+    when 'Adult Leader Event'
       self.unit.users.unit_leaders(self.unit).gets_sms_reminder
+    else
+      []
     end
   end
 

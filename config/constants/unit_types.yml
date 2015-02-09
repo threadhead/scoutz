@@ -4,7 +4,7 @@
     :title: 'Pack'
     :short_name: 'CS'
     :sub_unit_name: 'Den'
-    :event_types: ['Pack Meeting', 'Camping/Outing', 'Pack Event', 'Den Event', 'Leader Event']
+    :event_types: ['Pack Meeting', 'Camping/Outing', 'Pack Event', 'Den Event', 'Adult Leader Event']
     :ranks: ['Lion', 'Bobcat', 'Tiger', 'Wolf', 'Bear', 'Webelos I', 'Webelos II']
     :scout_leadership_positions: ['Denner']
     :adult_leadership_positions: ['Cubmaster', 'Asst Cubmaster', 'Den Leader', 'Asst Den Leader', 'Tiger Den Leader', 'Asst Tiger Den Leader', 'Webelos Den Leader', 'Asst Webelos Den Leader', 'Committee Chair', 'Committee Member', 'Commissioner', 'Den Chief', 'Round Table Commissioner', 'Chartered Org Rep', 'Webmaster']

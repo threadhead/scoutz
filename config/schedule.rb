@@ -44,8 +44,10 @@ every '17 3 23-28 * *' do
   runner "NewsletterMonthlyJob.perform_later"
 end
 
-every :day, at: '12:20am' do
-  backup 'scoutz_db'
+if @environment == 'production'
+  every :day, at: '12:20am' do
+    backup 'scoutz_db'
+  end
 end
 
 every :month, at: '2:14am' do

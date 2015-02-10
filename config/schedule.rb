@@ -6,7 +6,13 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
-set :output, '/home/deploy/scoutz/shared/log/cron.log'
+puts "capistrano rails_env: #{rails_env}"
+if rails_env == 'production'
+  set :output, '/home/deploy/scoutz/shared/log/cron.log'
+else
+  set :output, '/home/karl/scoutz/shared/log/cron.log'
+end
+
 
 #
 # every 2.hours do

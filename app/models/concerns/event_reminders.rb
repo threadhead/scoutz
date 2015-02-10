@@ -92,11 +92,11 @@ module EventReminders
 
 
   def email_reminder_subject
-    "#{unit.email_name} #{name} - Reminder"
+    "#{name} - Reminder #{unit.email_name}"
   end
 
   def sms_reminder_subject
-    "#{unit.email_name} #{name.truncate(26, separator: ' ')} - Reminder"
+    "#{name.truncate(26, separator: ' ')} - Reminder"
   end
 
 end

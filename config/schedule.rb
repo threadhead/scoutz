@@ -6,10 +6,10 @@
 # Example:
 #
 # set :output, "/path/to/my/cron_log.log"
-puts "capistrano rails_env: #{rails_env}"
-if rails_env == 'production'
+case @environment
+when 'production'
   set :output, '/home/deploy/scoutz/shared/log/cron.log'
-else
+when 'staging'
   set :output, '/home/karl/scoutz/shared/log/cron.log'
 end
 

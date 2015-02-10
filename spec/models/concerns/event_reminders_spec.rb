@@ -136,14 +136,14 @@ RSpec.describe EventReminders do
   describe '.email_reminder_subject' do
     it 'retruns the name of the event with reminder suffix' do
       @event = FactoryGirl.build(:event, name: 'Monster Painting', unit: @unit1, kind: 'Pack Event')
-      expect(@event.email_reminder_subject).to eq('[CS Pack 134] Monster Painting - Reminder')
+      expect(@event.email_reminder_subject).to eq('Monster Painting - Reminder [CS Pack 134]')
     end
   end
 
   describe '.sms_reminder_subject' do
     it 'retruns the name of the event, truncated, with reminder suffix' do
       @event = FactoryGirl.build(:event, name: 'Monster Painting On the Sea of Tranquility', unit: @unit1, kind: 'Pack Event')
-      expect(@event.sms_reminder_subject).to eq('[CS Pack 134] Monster Painting On the... - Reminder')
+      expect(@event.sms_reminder_subject).to eq('Monster Painting On the... - Reminder')
     end
   end
 

@@ -16,7 +16,7 @@ RSpec.describe Newsletters, type: :mailer do
     let(:mail) { Newsletters.weekly(@recipient, @unit) }
 
     it "renders the headers" do
-      expect(mail.subject).to include("[CS Pack 134] Upcoming Events for the Week of")
+      expect(mail.subject).to include("Upcoming Events for the Week of")
       expect(mail.to).to eq([@recipient.email])
       expect(mail.from).to eq(['noreply@scoutt.in'])
     end

@@ -65,10 +65,9 @@
 
         %tr
           %td
-            %strong Organizer
-          %td
-            - @event.users.each do |user|
-              = link_to user.full_name, corrected_unit_user_path(@unit, user)
+            %strong Organizers
+          %td= unit_users_link_list(@unit, @event.users.by_name_lf)
+
         %tr
           %td
             %strong Reminders?

@@ -275,3 +275,5 @@ jQuery ->
 
   $("select#event_form_coordinator_ids").select2
     placeholder: 'Select recipients'
+
+  $("select#event_user_ids").select2()

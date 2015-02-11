@@ -56,6 +56,11 @@
         .col-md-4
           = f.select :attire, ['Field Uniform (Class A)', 'Activity Uniform (Class B)', 'Field or Activity Uniform', 'No Uniform, Comfortable Clothing']
 
+      .row
+        .col-md-10
+          = f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Organizers', help: 'allowed to edit and destroy events, signup users, regardless of security level'}, multiple: true
+
+
       %fieldset
         %legend Reminder
         = f.check_box :send_reminders, label: "Send reminder 48 hours before event start"

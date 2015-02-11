@@ -1,4 +1,8 @@
 Scoutz::Application.routes.draw do
+  get 'user_email/edit'
+
+  get 'user_email/update'
+
   get "/ping/#{ENV['PING_KEY']}"   => 'status#ping'
   get "/health/#{ENV['PING_KEY']}" => 'status#health'
 
@@ -41,7 +45,8 @@ Scoutz::Application.routes.draw do
         get 'show_admin'
       end
     end
-    resources :user_passwords
+    resources :user_passwords, only: [:edit, :update]
+    resources :user_email, only: [:edit, :update]
     collection do
       get 'change_default_unit'
     end

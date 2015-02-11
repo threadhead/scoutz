@@ -1,0 +1,37 @@
+.row
+  .col-md-12
+    .page-header
+      %h2 Change Your Email
+
+
+
+.row
+  .col-md-12
+    .alert.alert-danger
+      %span.xlarge Changing your email will required you to confirm the change via comfirmation email sent to your current email address <em>"#{ @user.email }"</em>. The change will not happen if you do not confirm.
+
+.row
+  .col-md-offset-2.col-md-6
+    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+
+.row
+  .col-md-offset-2.col-md-4
+    .panel.panel-info
+      .panel-heading
+        %h3.panel-title Change your email
+      .panel-body
+        %p
+          %strong Current Email:
+          = @user.email
+
+          %hr
+        = bootstrap_form_for @user, url: "/units/#{@unit.id}/user_email/#{@user.id}" do |f|
+          = f.text_field :email, label: 'New Email', value: nil
+
+          %h3 &nbsp;
+          = f.primary 'Update Email'
+          = link_to 'Cancel', :back, class: 'btn btn-default'
+
+  .col-md-3.col-md-offset-3
+    = render partial: 'users/picture_panel_lg', locals: {user: @user}
+

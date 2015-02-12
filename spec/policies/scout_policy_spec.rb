@@ -68,18 +68,20 @@ RSpec.describe ScoutPolicy do
         expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit?).to be(false)
       end
 
-      it 'forbids non-parents from editing scout email' do
-        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit_email?).to be(false)
-      end
-
       it 'allows parents(adults) to edit scout' do
         @adult2.scouts << @scout2
         expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit?).to be(true)
       end
+    end
 
+    context 'edit_email?' do
       it 'allows parents(adults) to edit scout email' do
         @adult2.scouts << @scout2
         expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit_email?).to be(true)
+      end
+
+      it 'forbids non-parents from editing scout email' do
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit_email?).to be(false)
       end
     end
 

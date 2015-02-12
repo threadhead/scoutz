@@ -38,7 +38,7 @@
                 Change Password
             %li
               = link_to edit_unit_user_email_path(@unit, current_user) do
-                %i.fa.fa-key
+                %i.fa.fa-envelope-o
                 Change Email
             - if policy(@unit).edit?
               %li

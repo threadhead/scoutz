@@ -29,7 +29,7 @@
       = bootstrap_form_for @unit, url: sign_up_new_unit_path, method: :get do |f|
         = f.select :unit_type, Unit.unit_types
         = f.text_field :unit_number, placeholder: 'ex. 134, 603, 15'
-        = f.submit 'Start My Unit', :class => 'btn btn-primary btn-block'
+        = f.submit 'Start My Unit', class: 'btn btn-primary btn-block'
 
 
 .modal.fade#import-more-info

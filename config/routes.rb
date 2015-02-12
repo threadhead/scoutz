@@ -1,9 +1,13 @@
 Scoutz::Application.routes.draw do
+  get 'user_email/edit'
+
+  get 'user_email/update'
+
   get "/ping/#{ENV['PING_KEY']}"   => 'status#ping'
   get "/health/#{ENV['PING_KEY']}" => 'status#health'
 
   get 'meta_search' => 'meta_search#index'
-  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords'}
+  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords', confirmations: 'confirmations'}
   authenticated :user do
     root to: 'page#redirect_to_dashboard', as: :authenticated_root
   end
@@ -41,7 +45,8 @@ Scoutz::Application.routes.draw do
         get 'show_admin'
       end
     end
-    resources :user_passwords
+    resources :user_passwords, only: [:edit, :update]
+    resources :user_email, only: [:edit, :update]
     collection do
       get 'change_default_unit'
     end

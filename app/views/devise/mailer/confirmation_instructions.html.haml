@@ -1,7 +1,10 @@
-%p Welcome #{@resource.name} to Scoutt.in!
+- if @resource.confirmed?
+  %p #{ @resource.name }, please confirm a change to your email address.
+  %p= link_to "Confirm my email change to: #{@resource.unconfirmed_email}", confirmation_url(@resource, confirmation_token: @token)
+  %p If you did not request this change. Do not click on the confirmation link. You can ignore this email and nothing will be changed.
 
-%p You can confirm your account email through the link below:
-
-%p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
-
-%p To make setup as easy as possible, you have up to 48 hours to confirm your account before it is deactivated.
+- else
+  %p Welcome #{@resource.name} to Scoutt.in!
+  %p You can confirm your account email through the link below:
+  %p= link_to 'Confirm my account', confirmation_url(@resource, confirmation_token: @token)
+  %p To make setup as easy as possible, you have up to 48 hours to confirm your account before it is deactivated.

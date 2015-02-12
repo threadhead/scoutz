@@ -47,20 +47,17 @@
           %tr
             %td
               %strong Unit
-            %td
-              = @unit.name
+            %td= @unit.name
 
           %tr
             %td
               %strong Position
-            %td
-              = all_leadership_positions(@unit, @user)
+            %td= all_leadership_positions(@unit, @user)
 
           %tr
             %td
               %strong Email
-            %td
-              = mail_to @user.email
+            %td= mail_to @user.email
 
           %tr
             %td
@@ -80,14 +77,12 @@
           %tr
             %td
               %strong= @unit.sub_unit_name.pluralize
-            %td
-              = @user.sub_units(@unit).map(&:name).join(', ')
+            %td= @user.sub_units(@unit).map(&:name).join(', ')
 
           %tr
             %td
               %strong Scouts
-            %td
-              = unit_users_link_list(@unit, @user.unit_scouts(@unit))
+            %td= unit_users_link_list(@unit, @user.unit_scouts(@unit))
 
           = render partial: 'users/health_form_show', locals: {user: @user, unit: @unit}
 

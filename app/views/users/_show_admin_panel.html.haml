@@ -40,18 +40,18 @@
         %strong Confirmed?
       %td
         %span>= user.confirmed?
-        - if user.confirmed?
-          , #{user.confirmed_at.to_s.try(:short_ampm)}
+        - if user.confirmed? && user.confirmed_at.present?
+          , #{user.confirmed_at.to_s(:short_ampm)}
 
     %tr
       %td
         %strong Locked Out?
       %td
         %span>= user.access_locked?
-        - if user.access_locked?
-          , #{user.locked_at.to_s.try(:short_ampm)}
+        - if user.access_locked? && user.locked_at.present?
+          , #{user.locked_at.to_s(:short_ampm)}
 
     %tr
       %td
         %strong Has Password?
-      %td= !user.encrypted_password.nil?
+      %td= !user.encrypted_password.blank?

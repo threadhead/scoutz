@@ -11,9 +11,11 @@ RSpec.configure { |c| c.deprecation_stream = File.join(Rails.root, 'log', 'rspec
 require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara-screenshot'
+# require 'capybara-screenshot'
 require 'capybara-screenshot/rspec'
 require 'pundit/rspec'
+
+Capybara::Screenshot.prune_strategy = { keep: 20 }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are

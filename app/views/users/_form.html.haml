@@ -25,11 +25,18 @@
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
   .row
-    .col-md-4
-      - if @user.new_record?
+    - if @user.new_record?
+      .col-md-4
         = f.email_field :email, help: 'leave blank to prevent ability to sign in'
-      - else
-        = f.email_field :email, help: 'can not change email at this time', readonly: true
+    - else
+      .col-md-4
+        = f.email_field :email, readonly: true
+      - if ScoutPolicy.new(current_user, @user, @unit).edit_email?
+        .col-md-4
+          .form-group
+            = label_tag :blah_blah_blah, '&nbsp;'.html_safe, class: 'control-label'
+            %br.hidden-xs.hidden-sm
+            = link_to 'Change Email', edit_unit_user_email_path(@unit, @user), class: 'btn btn-default', id: 'change_user_email'
 
 
   - if @user.scout?

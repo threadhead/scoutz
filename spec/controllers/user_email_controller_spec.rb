@@ -1,19 +1,19 @@
-require 'rails_helper'
+# require 'rails_helper'
 
-RSpec.describe UserEmailController, type: :controller do
+# RSpec.describe UserEmailController, type: :controller do
 
-  describe "GET #edit" do
-    it "returns http success" do
-      get :edit
-      expect(response).to have_http_status(:success)
-    end
-  end
+#   describe "GET #edit" do
+#     it "returns http success" do
+#       get :edit
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
 
-  describe "GET #update" do
-    it "returns http success" do
-      get :update
-      expect(response).to have_http_status(:success)
-    end
-  end
+#   describe "GET #update" do
+#     it "returns http success" do
+#       get :update
+#       expect(response).to have_http_status(:success)
+#     end
+#   end
 
-end
+# end

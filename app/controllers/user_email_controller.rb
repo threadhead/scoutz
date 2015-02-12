@@ -68,7 +68,7 @@ class UserEmailController < ApplicationController
       @_pundit_policy_authorized = true
       @_policy_authorized = true
 
-      unless UserEmailControllerPolicy.new(current_user, @user).update?
+      unless UserEmailControllerPolicy.new(current_user, @user, @unit).update?
         error = Pundit::NotAuthorizedError.new("not allowed to edit the email of this user.")
         error.query, error.record, error.policy = 'update', @user, UserEmailControllerPolicy
 

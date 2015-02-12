@@ -32,6 +32,12 @@ class ApplicationPolicy < Struct.new(:user, :record, :unit)
     user.unit_scouts(unit).pluck(:id).include? record.id
   end
 
+  def current_user_record?
+    return false unless record.is_a?(Adult) || record.is_a?(Scout)
+    user.id == record.id
+  end
+
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

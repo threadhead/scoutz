@@ -31,12 +31,12 @@
     - else
       .col-md-4
         = f.email_field :email, readonly: true
-      - if policy(@user).edit_email?
+      - if ScoutPolicy.new(current_user, @user, @unit).edit_email?
         .col-md-4
           .form-group
             = label_tag :blah_blah_blah, '&nbsp;'.html_safe, class: 'control-label'
             %br.hidden-xs.hidden-sm
-            = link_to 'Change Email', edit_unit_user_email_path(@unit, @user), class: 'btn btn-default'
+            = link_to 'Change Email', edit_unit_user_email_path(@unit, @user), class: 'btn btn-default', id: 'change_user_email'
 
 
   - if @user.scout?

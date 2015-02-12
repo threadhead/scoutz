@@ -48,6 +48,12 @@ RSpec.describe ScoutPolicy do
     it_behaves_like 'can access thier own'
   end
 
+  permissions :edit_email? do
+    it_behaves_like 'adult admin access'
+    it_behaves_like 'can access thier own'
+
+  end
+
   describe 'my scouts permissions' do
     before do
       @unit2 = FactoryGirl.create(:unit)
@@ -62,9 +68,18 @@ RSpec.describe ScoutPolicy do
         expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit?).to be(false)
       end
 
+      it 'forbids non-parents from editing scout email' do
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit_email?).to be(false)
+      end
+
       it 'allows parents(adults) to edit scout' do
         @adult2.scouts << @scout2
         expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit?).to be(true)
+      end
+
+      it 'allows parents(adults) to edit scout email' do
+        @adult2.scouts << @scout2
+        expect(ScoutPolicy.new(@adult2, @scout2, @unit2).edit_email?).to be(true)
       end
     end
 

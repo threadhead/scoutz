@@ -18,6 +18,7 @@
         - else
           Changing #{ @user.name.possessive } email does not require confirmation! Changes will take effect immediatly.
           %br
+          %br
           A notification will be sent to the new email address of the change.
 
 .row
@@ -36,7 +37,7 @@
       .panel-body
         %p
           %strong Current Email:
-          = @user.email
+          = @user.email.blank? ? '<no email>' : @user.email
 
           %hr
         = bootstrap_form_for @user, url: "/units/#{@unit.id}/user_email/#{@user.id}" do |f|

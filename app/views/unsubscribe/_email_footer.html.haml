@@ -3,12 +3,16 @@
 %div{style: "font-size: 0.7em; color: #666; line-height: 1; margin: 12px 36px; padding: 12px 24px; background-color: #eee; border-radius: 4px;"}
 
   %p{style: "line-height: 1;"}
-    = link_to "UNSUBSCRIBE", send("unsubscribe_#{action}_url", id: user.signup_token), style: "color: #0080ff; text-decoration: none;"
-    |
+    - unless action.nil?
+      = link_to "UNSUBSCRIBE", send("unsubscribe_#{action}_url", id: user.signup_token), style: "color: #0080ff; text-decoration: none;"
+      |
     %a{href: "http://blog.scoutt.in", style: "color: #0080ff; text-decoration: none;"} Blog
 
   %p
-    You are receiving this email because you are subscribed in your notification settings. To unsubscribe from these emails #{link_to "click here", send("unsubscribe_#{action}_url", id: user.signup_token), style: "color: #0080ff; text-decoration: none;"}. Keep messages out of spam, add
+    - unless action.nil?
+      You are receiving this email because you are subscribed in your notification settings.
+      To unsubscribe from these emails #{link_to "click here", send("unsubscribe_#{action}_url", id: user.signup_token), style: "color: #0080ff; text-decoration: none;"}.
+    Keep messages out of spam, add
     %a{href: "mailto:noreply@scoutt.in", style: "color: #0080ff; text-decoration: none;"} noreply@scoutt.in
     to you address book!
     %a{href: "https://scoutt.in", style: "color: #0080ff; text-decoration: none;"} Scoutt.in

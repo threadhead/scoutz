@@ -1,6 +1,8 @@
 class UserEmailControllerPolicy < ApplicationPolicy
 
-  def update?;  true;   end
+  def update?
+    adult_admin || current_user_record?
+  end
 
   # class Scope < Struct.new(:user, :scope)
   #   def resolve

@@ -15,7 +15,7 @@
         %h3.panel-title Change your password
       .panel-body
         = bootstrap_form_for @user, url: "/units/#{@unit.id}/user_passwords/#{@user.id}" do |f|
-          = f.password_field :current_password, label: 'Current Password', unit: @unit
+          = f.password_field :current_password, label: 'Current Password', unit: @unit, autofocus:true
           %hr
           = f.password_field :password, label: 'New Password'
           = f.password_field :password_confirmation, label: 'Re-enter New Password'

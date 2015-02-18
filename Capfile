@@ -21,7 +21,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails'
 require "whenever/capistrano"
 # require 'capistrano/rails/migrations'
-require 'capistrano/inspeqtor'
+# require 'capistrano/inspeqtor'
 
 # Loads custom tasks from `lib/capistrano/tasks' if you have any defined.
 Dir.glob('lib/capistrano/tasks/*.rake').each { |r| import r }

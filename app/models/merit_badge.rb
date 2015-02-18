@@ -6,7 +6,9 @@ class MeritBadge < ActiveRecord::Base
       where(counselors:{unit_id: unit_id})
     end
   end
-  accepts_nested_attributes_for :counselors, reject_if: proc { |att| att['user_id'].blank? }, allow_destroy: true
+  accepts_nested_attributes_for :counselors,
+        reject_if: proc { |att| att['user_id'].blank? || att['user_id'] == '0' },
+        allow_destroy: true
 
   has_many :users, through: :counselors
 

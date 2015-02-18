@@ -79,7 +79,7 @@ class Event < ActiveRecord::Base
 
   def unit_meeting_kind?
     return false if kind.blank?
-    !!(kind =~ /troop meeting|pack meeting|crew meeting|lodge meeting/i)
+    !!(kind =~ /troop meeting|pack meeting|crew meeting|lodge meeting|plc/i) || plc_kind? || unit_event_kind? || camping_outing_kind?
   end
 
   def camping_outing_kind?
@@ -89,7 +89,7 @@ class Event < ActiveRecord::Base
 
   def unit_event_kind?
     return false if kind.blank?
-    !!(kind =~ /troop event|pack event|crew event/i)
+    !!(kind =~ /troop event|pack event|crew event|lodge event/i)
   end
 
   def adult_leader_kind?
@@ -263,7 +263,7 @@ class Event < ActiveRecord::Base
   # scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }
   scope :from_today, -> { where('start_at >= ? OR end_at >= ?', Time.zone.now.beginning_of_day, Time.zone.now.beginning_of_day) }
   scope :newsletter_next_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week)}
-  scope :newsletter_next_month, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_month.end_of_month) }
+  scope :newsletter_next_month, -> { where(start_at: Time.zone.now.next_month.beginning_of_month..Time.zone.now.next_month.end_of_month) }
   # scope :contains_search, ->(n) { where("events.name ILIKE ? OR events.location_name ILIKE ? OR events.message ILIKE ?", "%#{n}%", "%#{n}%", "%#{n}%") }
   # scope :contains_search, ->(n) { where("to_tsvector('english', name) @@ to_tsquery('english', ?)", n) }
 

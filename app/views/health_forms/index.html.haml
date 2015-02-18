@@ -18,7 +18,7 @@
 
 
           = cache ["unit-#{@unit.id}", ":health_form_search"] do
-            = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/health_forms.js?search_typeahead="}
+            = render partial: 'layouts/search', locals: {type: 'health forms', search_url: "/units/#{@unit.id}/health_forms.js?search_typeahead="}
 
 
         #health-form-index

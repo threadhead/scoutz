@@ -5,7 +5,7 @@ module SentientUser
   # inspiration: https://github.com/bokmann/sentient_user/blob/master/lib/sentient_user.rb
 
 
-  module ClassMethods
+  class_methods do
     def current
       Thread.current[:user]
     end

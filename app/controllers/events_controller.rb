@@ -59,7 +59,7 @@ class EventsController < ApplicationController
 
   def new
     start_time = params.key?(:start_at) ? Time.zone.parse("#{params[:start_at]}T08:00:00") : Time.zone.now.to_next_hour
-    @event = Event.new(start_at: start_time, end_at: (start_time + 1.hour))
+    @event = Event.new(start_at: start_time, end_at: (start_time + 1.hour), user_ids: [current_user.id])
     @sub_unit_ids = []
     authorize @event
   end
@@ -132,7 +132,7 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(
         :end_at_date, :end_at_time, :start_at_date, :start_at_time, :signup_deadline_date, :signup_deadline_time,
-        :attire, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_required, :start_at, :user_ids, :message, :type_of_health_forms, :consent_required, {sub_unit_ids: []}, {form_coordinator_ids: []})
+        :attire, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_required, :start_at, {user_ids: []}, :message, :type_of_health_forms, :consent_required, {sub_unit_ids: []}, {form_coordinator_ids: []})
     end
 
 

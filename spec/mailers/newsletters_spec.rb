@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe Newsletters, type: :mailer do
   before do
-    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
+    Event.class_variable_set(:@@disable_ical_generation, false)
     @unit = FactoryGirl.create(:unit)
     @recipient = FactoryGirl.create(:adult)
     @recipient.units << @unit
@@ -16,7 +16,7 @@ RSpec.describe Newsletters, type: :mailer do
     let(:mail) { Newsletters.weekly(@recipient, @unit) }
 
     it "renders the headers" do
-      expect(mail.subject).to include("[CS Pack 134] Upcoming Events for the week of")
+      expect(mail.subject).to include("Upcoming Events for the Week of")
       expect(mail.to).to eq([@recipient.email])
       expect(mail.from).to eq(['noreply@scoutt.in'])
     end

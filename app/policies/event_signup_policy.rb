@@ -21,7 +21,7 @@ class EventSignupPolicy < ApplicationPolicy
   end
 
   def activity_consent_form?
-    adult_admin || form_coordinator?
+    adult_admin || form_coordinator? || event_owner?
   end
 
   def users_signup?

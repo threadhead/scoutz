@@ -38,6 +38,8 @@ class AdultsController < UsersController
     authorize @user
     remove_new_phone_attribute
     set_counselor_attributes(@user)
+    # logger.info "params: #{pp params}"
+
     params[:adult][:scout_ids] = @user.handle_relations_update(@unit, params[:adult][:scout_ids])
 
     begin

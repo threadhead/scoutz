@@ -49,26 +49,27 @@
             %td
               / %strong= @user.sub_unit.unit.unit_type_title
               %strong Unit
-            %td
-              = @user.sub_unit.try(:unit).try(:name)
+            %td= @unit.name
 
           %tr
             %td
               %strong Rank
-            %td
-              = @user.rank
+            %td= @user.rank
 
           %tr
             %td
               %strong Position
-            %td
-              = all_leadership_positions(@unit, @user)
+            %td= all_leadership_positions(@unit, @user)
 
           %tr
             %td
-              %strong= @user.sub_unit.try(:type)
+              %strong= @unit.sub_unit_name
+            %td= @user.sub_unit.try(:name)
+
+          %tr
             %td
-              = @user.sub_unit.try(:name)
+              %strong Email
+            %td= mail_to @user.try(:email)
 
           %tr
             %td
@@ -87,12 +88,11 @@
           %tr
             %td
               %strong Parents
-            %td
-              = unit_users_link_list(@unit, @user.unit_adults(@unit))
+            %td= unit_users_link_list(@unit, @user.unit_adults(@unit))
 
           %tr
             %td
-              %strong Address
+            %strong Address
             %td
               %address= user_address_show(@user)
 

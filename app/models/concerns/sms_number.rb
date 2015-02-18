@@ -9,7 +9,7 @@ module SmsNumber
     end
   end
 
-  module ClassMethods
+  class_methods do
     def sms_providers
       [
         'AT&T',

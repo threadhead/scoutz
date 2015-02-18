@@ -6,7 +6,7 @@ module AttributeSanitizer
   end
 
 
-  module ClassMethods
+  class_methods do
     def sanitize_attributes(*args)
       @attributes_to_sanitize ||= []
       @attributes_to_sanitize.concat args

@@ -11,7 +11,7 @@
       .panel-body
         .panel-nav
           = cache ["unit-#{@unit.id}", ":merit_badges_search"] do
-            = render partial: 'layouts/search', locals: {search_url: "/units/#{@unit.id}/merit_badges.js?search_typeahead="}
+            = render partial: 'layouts/search', locals: {type: 'merit badges', search_url: "/units/#{@unit.id}/merit_badges.js?search_typeahead="}
 
 
         #merit-badge-index

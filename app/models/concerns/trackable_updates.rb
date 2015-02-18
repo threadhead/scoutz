@@ -16,7 +16,7 @@ module TrackableUpdates
     end
   end
 
-  module ClassMethods
+  class_methods do
     def trackable_user_resource(resource)
       @trackable_user_resource = resource
     end

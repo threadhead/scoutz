@@ -9,27 +9,25 @@ module EventCalendar
     after_save :update_ical_background, if: :ical_valid?
   end
 
-  module ClassMethods
+  class_methods do
+    @@disable_ical_generation = false
+
     def update_ical(event_id)
       event = Event.find(event_id)
       event.update_ical if event
     end
-
-    # def update_all_ical
-    #   Event.pluck(:id).each{ |event_id| Event.delay(priority: -5).update_ical(event_id) }
-    # end
   end
 
 
 
 
   def ical_valid?
+    return false if @@disable_ical_generation
     !(self.start_at.blank? || self.end_at.blank? || self.name.blank?)
   end
 
   def update_ical_background
     IcalFilesUpdateJob.perform_later(self)
-    # Event.delay(priority: -5).update_ical(self.id)
   end
 
   def update_ical

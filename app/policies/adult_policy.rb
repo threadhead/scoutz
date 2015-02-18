@@ -25,6 +25,12 @@ class AdultPolicy < ApplicationPolicy
     user.admin? && user.adult?
   end
 
+  def edit_email?
+    adult_admin || current_user_record?
+  end
+
+
+
 
   class Scope < Struct.new(:user, :scope)
     def resolve

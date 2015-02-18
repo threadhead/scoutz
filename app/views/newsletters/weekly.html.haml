@@ -19,15 +19,12 @@
         - @events.each do |event|
           %tr{style: "#{cycle '', 'background: whitesmoke;'}"}
             %td{style: "padding: 8px;"}= link_to event.name, event_url(event)
-            %td{style: "padding: 8px; font-size: 0.8em;"}
-              = "s: #{event.start_at.to_s(:short_ampm)}"
-              %br
-              = "e: #{event.end_at.to_s(:short_ampm)}"
+            %td{style: "padding: 8px; font-size: 0.8em;"} #{event.start_at.to_s(:short_ampm)} - #{event.end_at.to_s(:short_ampm)}
             %td{style: "padding: 8px;; font-size: 0.8em;"}= event.signup_required ? "by #{event.signup_deadline.to_s(:short_ampm)}" : ''
             %td{style: "padding: 8px;"}= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
 
     %hr
     %p
-      %i Event details may change at any time. Check #{link_to 'Scoutt.in', root_url} for the latest details.
+      %i Event details may change. Check #{link_to 'Scoutt.in', root_url} for the latest details.
 
     = render partial: 'unsubscribe/email_footer', locals: {action: :weekly_newsletter_email, user: @recipient}

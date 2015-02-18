@@ -13,7 +13,7 @@ class ScoutPolicy < ApplicationPolicy
 
   def update?
     # can update themself, or need to be an adult leader
-    user.id == record.id || user_role_at_least_leader || my_scout?
+    current_user_record? || user_role_at_least_leader || my_scout?
   end
 
   def destroy?
@@ -24,6 +24,11 @@ class ScoutPolicy < ApplicationPolicy
   def send_welcome_reset_password?
     user.admin? && user.adult?
   end
+
+  def edit_email?
+    adult_admin || current_user_record? || my_scout?
+  end
+
 
 
   class Scope < Struct.new(:user, :scope)

@@ -25,11 +25,18 @@
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
   .row
-    .col-md-4
-      - if @user.new_record?
+    - if @user.new_record?
+      .col-md-4
         = f.email_field :email, help: 'leave blank to prevent ability to sign in'
-      - else
-        = f.email_field :email, help: 'can not change email at this time', readonly: true
+    - else
+      .col-md-4
+        = f.email_field :email, readonly: true
+      - if ScoutPolicy.new(current_user, @user, @unit).edit_email?
+        .col-md-4
+          .form-group
+            = label_tag :blah_blah_blah, '&nbsp;'.html_safe, class: 'control-label'
+            %br.hidden-xs.hidden-sm
+            = link_to 'Change Email', edit_unit_user_email_path(@unit, @user), class: 'btn btn-default', id: 'change_user_email'
 
 
   - if @user.scout?
@@ -157,6 +164,7 @@
         .row
           .col-md-6
             = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label'
+            = hidden_field_tag 'adult[merit_badge_ids][]', '0'
 
             - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
             = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'

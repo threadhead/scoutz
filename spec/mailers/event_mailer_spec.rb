@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe EventMailer, type: :mailer do
   before do
-    allow_any_instance_of(Event).to receive(:ical_valid?).and_call_original
+    Event.class_variable_set(:@@disable_ical_generation, false)
     @unit = FactoryGirl.create(:unit)
     @recipient = FactoryGirl.create(:adult)
     @recipient.units << @unit
@@ -15,7 +15,7 @@ RSpec.describe EventMailer, type: :mailer do
     let(:mail) { EventMailer.reminder(@event, @recipient) }
 
     it "renders the headers" do
-      expect(mail.subject).to eq("[CS Pack 134] USS Midway Overnight - Reminder")
+      expect(mail.subject).to eq("USS Midway Overnight - Reminder [CS Pack 134]")
       expect(mail.to).to eq([@recipient.email])
       expect(mail.from).to eq(['noreply@scoutt.in'])
     end

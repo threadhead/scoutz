@@ -1,4 +1,4 @@
-%h3{style: "margin-bottom: 20px;"} #{event.unit.name} - #{event.name}
+%h3{style: "margin-bottom: 20px;"}= link_to  "#{event.unit.name} - #{event.name}", unit_event_url(@unit, event), style: " text-decoration: none;"
 %div{style: "margin-left: 24px; margin-bottom: 48px;"}
   %table{style: 'border-spacing: 0; width: 80%;'}
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119171019) do
+ActiveRecord::Schema.define(version: 20150130035850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 20150119171019) do
     t.integer  "send_to_option",             default: 1
     t.string   "id_token",       limit: 255
     t.text     "sent_to_hash",               default: "--- {}\n"
+    t.datetime "deactivated_at"
   end
 
   add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token", using: :btree
@@ -386,6 +387,8 @@ ActiveRecord::Schema.define(version: 20150119171019) do
     t.string   "home_state"
     t.string   "home_zip_code"
     t.string   "home_map_url"
+    t.datetime "monthly_newsletter_sent_at"
+    t.datetime "weekly_newsletter_sent_at"
   end
 
   add_index "units", ["council_id"], name: "index_units_on_council_id", using: :btree

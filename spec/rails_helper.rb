@@ -11,9 +11,11 @@ RSpec.configure { |c| c.deprecation_stream = File.join(Rails.root, 'log', 'rspec
 require 'shoulda/matchers'
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara-screenshot'
+# require 'capybara-screenshot'
 require 'capybara-screenshot/rspec'
 require 'pundit/rspec'
+
+Capybara::Screenshot.prune_strategy = { keep: 20 }
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -79,7 +81,8 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     # This should effectively stop all creating ical files, which will happen in an after_save callback
     # on Event. To remove this stub, call: reset(Event)
-    allow_any_instance_of(Event).to receive(:ical_valid?).and_return(false)
+    Event.class_variable_set(:@@disable_ical_generation, true)
+    # allow_any_instance_of(Event).to receive(:ical_valid?).and_return(false)
     Google::UrlShortenerV1::Base.stub(:shorten).and_return("http://goo.gl/vZewJH")
   end
 

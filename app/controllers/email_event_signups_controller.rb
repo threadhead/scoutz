@@ -58,7 +58,7 @@ class EmailEventSignupsController < ApplicationController
     authorize EmailEventSignupsController
     if set_user_and_event
       @event_signup = EventSignup.find(params[:id])
-      if @event_signup.update_attributes(params[:event_signup])
+      if @event_signup.update_attributes(email_event_signups_params(params[:event_signup]))
         redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup changed."
       else
         flash[:error] = "Change failed. See below."
@@ -132,7 +132,7 @@ class EmailEventSignupsController < ApplicationController
       @user = User.find_by_signup_token(params[:user_token])
       @event = Event.find_by_signup_token(params[:event_token])
       @unit = @event.unit if @event
-      !@user.blank? && !@event.blank?
+      @user.present? && @event.present?
     end
 
     def edit_options
@@ -159,9 +159,9 @@ class EmailEventSignupsController < ApplicationController
       end
     end
 
-    def valid_keys
-      [:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment]
-    end
+    # def valid_keys
+    #   [:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment]
+    # end
 
     def create_activity(task)
       @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id, created_at: Time.now}

@@ -4,7 +4,7 @@ module SendToOptions
   # included do
   # end
 
-  module ClassMethods
+  class_methods do
     def send_to_options(unit)
       [
         ["Everyone in #{unit.name}", 1],

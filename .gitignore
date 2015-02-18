@@ -26,6 +26,7 @@
 /config/database.bak
 /config/deploy/**
 /config/deploy.rb
+/config/schedule.rb
 /coverage/**
 /public/assets/*.gz
 /public/assets/*.js
@@ -47,3 +48,4 @@
 .powenv
 .powrc
 .env
+SERVER_CONFIG.txt

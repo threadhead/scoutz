@@ -5,7 +5,7 @@ module DateTimeAttributes
     # before_validation :attributes_to_datetime
   end
 
-  module ClassMethods
+  class_methods do
 
     # def date_time_attributes
     #   @date_time_attributes || []

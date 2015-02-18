@@ -9,7 +9,7 @@ class EmailMessagesController < ApplicationController
 
   def index
     # authorize EmailMessage
-    @email_messages = policy_scope(EmailMessage.where(unit_id: @unit)).includes(:sender).by_updated_at
+    @email_messages = policy_scope(EmailMessage.where(unit_id: @unit)).includes(:sender).page(params[:page]).per(20).by_updated_at
     # fresh_when etag: current_user.try(:id), last_modified: @email_messages.maximum(:updated_at)
   end
 
@@ -28,7 +28,6 @@ class EmailMessagesController < ApplicationController
     options.merge!({event_ids: params[:event_ids].split(',')}) if params[:event_ids]
     @email_message = EmailMessage.new(options)
     authorize @email_message
-    2.times { @email_message.email_attachments.build }
   end
 
   def edit
@@ -41,13 +40,17 @@ class EmailMessagesController < ApplicationController
     authorize @email_message
 
     if @email_message.save
-      # @unit.email_messages << @email_message
       current_user.email_messages << @email_message
-      EmailMessagesJob.perform_later(@email_message)
-      redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was queued to be sent.'
+      if params[:commit] == 'Delay 15 Minutes'
+        EmailMessagesJob.set(wait: 15.minutes).perform_later(@email_message)
+        flash[:notice] = 'Email message is queued to be sent in 15 minutes.'
+      else
+        EmailMessagesJob.perform_later(@email_message)
+        flash[:notice] = 'Email message was queued to be sent.'
+      end
+      redirect_to unit_email_message_path(@unit, @email_message)
     else
       set_send_to_lists
-      4.times { @email_message.email_attachments.build }
       render action: "new"
     end
   end
@@ -64,8 +67,18 @@ class EmailMessagesController < ApplicationController
 
   def destroy
     authorize @email_message
-    @email_message.destroy
-    redirect_to email_messages_url
+    if @email_message.sent_at.nil?
+      @email_message.deactivate!
+      flash[:notice] = "Sending of email '#{@email_message.subject}' cancelled."
+    else
+      flash[:notice] = "I'm sorry, but the email '#{@email_message.subject}' was already sent at #{@email_message.sent_at.to_s(:long_ampm)}."
+    end
+
+    if params[:view] == 'show'
+      redirect_to unit_email_message_url(@unit, @email_message)
+    else
+      redirect_to unit_email_messages_url(@unit)
+    end
   end
 
 

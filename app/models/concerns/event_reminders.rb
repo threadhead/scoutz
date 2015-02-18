@@ -3,10 +3,10 @@ require 'logger'
 module EventReminders
   extend ActiveSupport::Concern
 
-  included do
-  end
+  # included do
+  # end
 
-  module ClassMethods
+  class_methods do
     def reminder_logger
       @@event_reminder_logger ||= Logger.new(File.join(Rails.root, 'log', 'event_reminders.log'))
     end
@@ -28,7 +28,7 @@ module EventReminders
     self.class.reminder_logger.info "  Reminders for (#{self.id}): #{self.name}"
     send_sms_reminders
     send_email_reminders
-    update_attribute(:reminder_sent_at, Time.zone.now)
+    update_column(:reminder_sent_at, Time.zone.now)
   end
 
 
@@ -50,28 +50,30 @@ module EventReminders
 
 
   def users_to_email
-    case kind
-    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
+    if unit_meeting_kind?
       self.unit.users.gets_email_reminder
-    when 'Den Event', 'Patrol Event'
+    elsif sub_unit_kind?
       sub_unit_users = []
       self.sub_units.each { |su| sub_unit_users << su.users_receiving_email_reminder }
       sub_unit_users.flatten
-    when 'Leader Event'
+    elsif adult_leader_kind?
       self.unit.users.unit_leaders(self.unit).gets_email_reminder
+    else
+      []
     end
   end
 
   def users_to_sms
-    case kind
-    when 'Pack Event', 'Troop Event', 'Crew Event', 'Lodge Event'
+    if unit_meeting_kind?
       self.unit.users.gets_sms_reminder
-    when 'Den Event', 'Patrol Event'
+    elsif sub_unit_kind?
       sub_unit_users = []
       self.sub_units.each { |su| sub_unit_users << su.users_receiving_sms_reminder }
       sub_unit_users.flatten
-    when 'Leader Event'
+    elsif adult_leader_kind?
       self.unit.users.unit_leaders(self.unit).gets_sms_reminder
+    else
+      []
     end
   end
 
@@ -90,11 +92,11 @@ module EventReminders
 
 
   def email_reminder_subject
-    "#{unit.email_name} #{name} - Reminder"
+    "#{name} - Reminder #{unit.email_name}"
   end
 
   def sms_reminder_subject
-    "#{unit.email_name} #{name.truncate(26, separator: ' ')} - Reminder"
+    "#{name.truncate(26, separator: ' ')} - Reminder"
   end
 
 end

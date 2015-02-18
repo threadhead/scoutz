@@ -1,0 +1,19 @@
+!!!
+%html{style: "font-family: sans-serif;"}
+  %head
+  %body
+    %p
+      This is to notify you that your email address on
+      %a{href: 'https://scoutt.in'} Scoutt.in
+      has been changed to
+      %strong= @recipient.email
+      %span< . You will need to use this email address when you
+      %a{href: 'https://scoutt.in'} sign in to Scoutt.in
+      %span> .
+
+    %p Your password has not changed.
+
+    %p
+      Your email was changed by #{ @user_making_change.name }. If you have any questions concerning this change, you can reply to this email and it will be sent to #{ @user_making_change.name_email }.
+
+    = render partial: 'unsubscribe/email_footer', locals: {action: nil, user: @recipient}

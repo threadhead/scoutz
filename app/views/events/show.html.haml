@@ -42,11 +42,15 @@
     #event-signup-flash
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
 
-    - if @event.ical.present?
-      .pull-right
+    .pull-right
+      = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-xs' do
+        %i.fa.fa-print
+        Print
+
+      - if @event.ical.present?
         = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
           %i.fa.fa-calendar
-          ical file
+          iCal File
 
     %p &nbsp;
     .text-xlarge

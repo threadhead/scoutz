@@ -1,6 +1,56 @@
-/*
-  Welcome to Compass. Use this file to define print styles.
-  Import this file using the following HTML or equivalent:
-  <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" />
-  
+body
+  font-size: 10px
 
+.panel-sm
+  font-size: 0.8em
+
+.centered
+  text-align: center
+
+.xl
+  font-size: 2em
+
+.indent
+  margin-left: 2em
+
+.totals
+  font-size: 1.4em
+
+table
+  page-break-inside: auto
+
+  tr, td
+    page-break-inside: avoid
+    page-break-after: auto
+
+thead
+  display: table-header-group
+
+tfoot
+  display: table-footer-group
+
+div.no-break
+  page-break-inside: avoid
+  page-break-after: auto
+
+.fa-stack-sm
+  font-size: 12px
+
+.panel-body
+  padding: 6px
+
+.panel
+  margin-bottom: 12px
+  margin-top: 0
+
+.table
+  margin-bottom: 12px
+
+.print-button-section
+  background-color: lightgray
+  padding-top: 20px
+  padding-bottom: 20px
+
+@media print
+  .no-print, .no-print *
+    display: none !important

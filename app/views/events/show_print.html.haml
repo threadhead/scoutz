@@ -1,3 +1,12 @@
+.row.no-print.print-button-section
+  .col-md-12
+    .pull-right
+      = link_to unit_event_path(@unit, @event), class: 'btn btn-default btn-lg' do
+        %i.fa.fa-reply
+        Return to Event
+      = button_tag class: 'btn btn-success btn-lg print-button' do
+        %i.fa.fa-print
+        Print
 %h3
   -# = render partial: 'event_icon', locals: {event: @event}
   = @event.name
@@ -73,94 +82,95 @@
 
 
 
-.row
-  .col-md-12
-    %table.table.table-condensed.table-bordered
-      %thead
-        %tr
-          %th Name
-          %th Attending
-          %th HF
-          %th Seats
-          %th Driving
-          - if @event.consent_required?
-            %th ACF
-          %th Info
-          %th Emergency Contact
-
-      %tbody
-        - @event_rosters.each do |event_roster|
+- if @event_rosters.size > 0 && policy(@event).print_roster?
+  .row
+    .col-md-12
+      %table.table.table-condensed.table-bordered
+        %thead
           %tr
-            %td
-              .no-break
-                %br
-                = event_roster.scout.name_lf
-
-            %td
-              .no-break
-                = space_to_nbsp "Scout: #{event_roster.scouts_attending}"
-                %br
-                = space_to_nbsp "Siblings: #{event_roster.siblings_attending}"
-                %br
-                = space_to_nbsp "Adults: #{event_roster.adults_attending}"
-
-            %td.xl
-              .no-break
-                - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
-                - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
-                  %i.fa.fa-check
-                - else
-                  %span.fa-stack.fa-stack-sm
-                    %i.fa.fa-check.fa-stack-1x
-                    %i.fa.fa-ban.fa-stack-2x
-
-            %td
-              .no-break
-                - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
-                  Needs #{event_roster.need_carpool_seats.to_i} seats
-
-
-            %td
-              .no-break
-                - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
-                  Has #{event_roster.has_carpool_seats.to_i} seats
-
+            %th Name
+            %th Attending
+            %th HF
+            %th Seats
+            %th Driving
             - if @event.consent_required?
+              %th ACF
+            %th Info
+            %th Emergency Contact
+
+        %tbody
+          - @event_rosters.each do |event_roster|
+            %tr
+              %td
+                .no-break
+                  %br
+                  = event_roster.scout.name_lf
+
+              %td
+                .no-break
+                  = space_to_nbsp "Scout: #{event_roster.scouts_attending}"
+                  %br
+                  = space_to_nbsp "Siblings: #{event_roster.siblings_attending}"
+                  %br
+                  = space_to_nbsp "Adults: #{event_roster.adults_attending}"
+
               %td.xl
                 .no-break
-                  - if event_roster.has_activity_consent_form?
+                  - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
+                  - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
                     %i.fa.fa-check
                   - else
                     %span.fa-stack.fa-stack-sm
                       %i.fa.fa-check.fa-stack-1x
                       %i.fa.fa-ban.fa-stack-2x
 
-            %td
-              .no-break= event_roster.comment
+              %td
+                .no-break
+                  - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
+                    Needs #{event_roster.need_carpool_seats.to_i} seats
 
-            %td
-              .no-break
-                - event_roster.scout.unit_adults(@event.unit).each do |adult|
-                  = adult.name
-                  (
-                  = adult.phones.map{ |phone| "#{phone.kind}: #{number_to_phone phone.number}" }.join(', ')
-                  )
-                  %br
 
-.row
-  .col-md-12
-    .totals
-      %p
-        %strong Total Atendees:
-        = @event.attendee_count
-      %p.indent
-        %strong Scouts:
-        = @event.event_signups.sum(:scouts_attending)
-        %br
-        %strong Adults:
-        = @event.event_signups.sum(:adults_attending)
-        %br
-        %strong Siblings:
-        = @event.event_signups.sum(:siblings_attending)
+              %td
+                .no-break
+                  - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
+                    Has #{event_roster.has_carpool_seats.to_i} seats
+
+              - if @event.consent_required?
+                %td.xl
+                  .no-break
+                    - if event_roster.has_activity_consent_form?
+                      %i.fa.fa-check
+                    - else
+                      %span.fa-stack.fa-stack-sm
+                        %i.fa.fa-check.fa-stack-1x
+                        %i.fa.fa-ban.fa-stack-2x
+
+              %td
+                .no-break= event_roster.comment
+
+              %td
+                .no-break
+                  - event_roster.scout.unit_adults(@event.unit).each do |adult|
+                    = adult.name
+                    (
+                    = adult.phones.map{ |phone| "#{phone.kind}: #{number_to_phone phone.number}" }.join(', ')
+                    )
+                    %br
+
+  .row
+    .col-md-12
+      .totals
+        %p
+          %strong Total Atendees:
+          = @event.attendee_count
+        %p.indent
+          %strong Scouts:
+          = @event.event_signups.sum(:scouts_attending)
+          %br
+          %strong Adults:
+          = @event.event_signups.sum(:adults_attending)
+          %br
+          %strong Siblings:
+          = @event.event_signups.sum(:siblings_attending)
 
 

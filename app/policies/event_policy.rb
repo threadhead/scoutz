@@ -41,6 +41,10 @@ class EventPolicy < ApplicationPolicy
     update?
   end
 
+  def print_roster?
+    user_role_at_least_leader || event_owner?
+  end
+
 
   def event_owner?
     record.users.where(id: user.id).exists?

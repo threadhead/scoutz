@@ -23,6 +23,11 @@
             Actions
             %span.caret
           %ul.dropdown-menu.pull-right
+            %li
+              = link_to unit_event_path(@unit, @event, print: true) do
+                %i.fa.fa-print
+                Print
+
             - if policy(@event).destroy?
               %li
                 = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do

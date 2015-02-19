@@ -1,4 +1,6 @@
 jQuery ->
+  $("button.print-button").click ->
+    window.print()
 
   if $("#gmap").length > 0
     GMaps.geocode

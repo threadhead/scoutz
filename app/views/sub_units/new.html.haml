@@ -1,8 +1,4 @@
-.row
-  .col-md-12
-    .page-header
-      %h2 New #{@unit.sub_unit_name} in #{@unit.name}
+.page-header
+  %h2 New #{@unit.sub_unit_name} in #{@unit.name}
 
-.row
-  .col-md-12
-    = render 'form'
+= render 'form'

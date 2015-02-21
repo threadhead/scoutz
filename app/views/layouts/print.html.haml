@@ -23,16 +23,6 @@
 
   %body
     .container-fluid
-      .row.no-print.print-button-section
-        .col-md-12
-          .pull-right
-            = link_to :back, class: 'btn btn-default btn-lg' do
-              %i.fa.fa-reply
-              Return
-            = button_tag class: 'btn btn-success btn-lg print-button' do
-              %i.fa.fa-print
-              Print
-
       .row
         .col-md-12
           = yield

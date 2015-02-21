@@ -1,6 +1,6 @@
-%h3
-  -# = render partial: 'event_icon', locals: {event: @event}
-  = @event.name
+= render partial: 'layouts/print_header', locals: { return_link: unit_event_path(@unit, @event) }
+
+%h3= @event.name
 
 .row
   .col-md-6

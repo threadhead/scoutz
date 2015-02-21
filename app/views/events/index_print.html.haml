@@ -1,57 +1,55 @@
-.row
-  .col-md-12
-    %h3
-      .pull-right
-        %h4 #{ Time.zone.now.to_date.to_s(:mo_abbr_year) } &mdash; #{ @end_month.to_date.to_s(:mo_abbr_year) }
-      #{ @unit.name } Events
+= render partial: 'layouts/print_header', locals: { return_link: unit_events_path(@unit) }
 
-.row
-  .col-md-12
-    %table.table.table-condensed
-      %tfoot
-        %tr
-          %td{ colspan: 99 }
-            %em Does not include Adult/Leader events
+%h3
+  .pull-right
+    %h4 #{ Time.zone.now.to_date.to_s(:mo_abbr_year) } &mdash; #{ @end_month.to_date.to_s(:mo_abbr_year) }
+  #{ @unit.name } Events
 
-      %tbody
-        - @events.each do |event|
-          %tr
-            %td.centered.event-stacked-time
-              .no-break
-                %span.start-month-day= event.start_at.strftime("%^b %e")
-                %br
-                %span.start-year= event.start_at.strftime("%Y")
-                %br
-                %span.start-time= event.start_at.strftime("%l:%M%p")
+%table.table.table-condensed
+  %tfoot
+    %tr
+      %td{ colspan: 99 }
+        %em Does not include Adult/Leader events
 
-            %td.event-stacked-time
-              .no-break
-                %br
-                to
+  %tbody
+    - @events.each do |event|
+      %tr
+        %td.centered.event-stacked-time
+          .no-break
+            %span.start-month-day= event.start_at.strftime("%^b %e")
+            %br
+            %span.start-year= event.start_at.strftime("%Y")
+            %br
+            %span.start-time= event.start_at.strftime("%l:%M%p")
 
-            %td.centered.event-stacked-time.td-end-at
-              .no-break
-                %span.start-month-day= event.end_at.strftime("%^b %e")
-                %br
-                %span.start-year= event.end_at.strftime("%Y")
-                %br
-                %span.start-time= event.end_at.strftime("%l:%M%p")
+        %td.event-stacked-time
+          .no-break
+            %br
+            to
 
-            %td{ style: "width: 35%;"}
-              .no-break
-                %strong.lg= event.name
+        %td.centered.event-stacked-time.td-end-at
+          .no-break
+            %span.start-month-day= event.end_at.strftime("%^b %e")
+            %br
+            %span.start-year= event.end_at.strftime("%Y")
+            %br
+            %span.start-time= event.end_at.strftime("%l:%M%p")
 
-            %td
-              .no-break
-                - if event.signup_required
-                  %em Sign up:
-                  = event.signup_deadline.to_s(:short_ampm)
+        %td{ style: "width: 35%;"}
+          .no-break
+            %strong.lg= event.name
 
-            %td
-              .no-break
-                %em Organizers:
-                = event.users.by_name_lf.map(&:name).join(', ')
+        %td
+          .no-break
+            - if event.signup_required
+              %em Sign up:
+              = event.signup_deadline.to_s(:short_ampm)
 
-            %td
-              .no-break= location_single_line(event)
+        %td
+          .no-break
+            %em Organizers:
+            = event.users.by_name_lf.map(&:name).join(', ')
+
+        %td
+          .no-break= location_single_line(event)
 

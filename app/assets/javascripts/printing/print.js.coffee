@@ -19,3 +19,18 @@ jQuery ->
           # map.addMarker
           #   lat: latlng.lat()
           #   lng: latlng.lng()
+
+
+  $('#calendar').fullCalendar
+    header:
+      left: 'today prev,next title'
+      center: ''
+      right: ''
+    events:
+      url: '/events.json'
+      data: ->
+        unit_id: $("input#current_unit_id").val()
+    theme: false
+    height: 800
+    editable: false
+    eventLimit: false

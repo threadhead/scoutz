@@ -1,9 +1,6 @@
 .page-header
-  .row
-    .col-md-8
-      %h2 #{@unit.name_unit} Event Calendar
-
-    .col-md-4.right-aligned
+  .pull-right
+    .btn-group
       - if policy(Event).new?
         = link_to new_unit_event_path(@unit), class: "btn btn-default", id: 'new-event' do
           %i.fa.fa-plus
@@ -13,12 +10,11 @@
         %i.fa.fa-print
         Print
 
+  %h2 #{@unit.name_unit} Event Calendar
 
-.row
-  .col-md-12
-    = hidden_field_tag :current_unit_id, @unit.id
-    = hidden_field_tag :user_can_new_event, policy(Event).new?
-    #calendar
-    - if policy(Event).new?
-      %h4
-        %span.label.label-default Click on date in calendar to create new event
+= hidden_field_tag :current_unit_id, @unit.id
+= hidden_field_tag :user_can_new_event, policy(Event).new?
+#calendar
+- if policy(Event).new?
+  %h4
+    %span.label.label-default Click on date in calendar to create new event

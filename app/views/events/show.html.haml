@@ -1,46 +1,42 @@
 = #content_for(:scripts) {javascript_include_tag "http://maps.google.com/maps/api/js?sensor=true"}
 .page-header
-  .row
-    .col-md-6
-      %h2
-        = render partial: 'event_icon', locals: {event: @event}
-        = @event.name
+  .pull-right
+    .btn-group
+      = link_to unit_events_path(@unit), class: 'btn btn-default' do
+        %i.fa.fa-reply
+        Event List
 
-    .col-md-6.right-aligned
-      .btn-group
-        = link_to unit_events_path(@unit), class: 'btn btn-default' do
-          %i.fa.fa-reply
-          Event List
+      - if policy(@event).update?
+        = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
+          %i.fa.fa-edit
+          Edit
 
-        - if policy(@event).update?
-          = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
-            %i.fa.fa-edit
-            Edit
+      - if policy(@event).destroy? || policy(Event).new?
+        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+          %i.fa.fa-gear
+          Actions
+          %span.caret
+        %ul.dropdown-menu.pull-right
+          %li
+            = link_to unit_event_path(@unit, @event, print: true) do
+              %i.fa.fa-print
+              Print
 
-        - if policy(@event).destroy? || policy(Event).new?
-          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
-            %i.fa.fa-gear
-            Actions
-            %span.caret
-          %ul.dropdown-menu.pull-right
+          - if policy(@event).destroy?
             %li
-              = link_to unit_event_path(@unit, @event, print: true) do
-                %i.fa.fa-print
-                Print
+              = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
+                %i.fa.fa-trash-o
+                Destroy Event
 
-            - if policy(@event).destroy?
-              %li
-                = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
-                  %i.fa.fa-trash-o
-                  Destroy Event
+          - if policy(Event).new?
+            %li
+              = link_to new_unit_event_path(@unit) do
+                %i.fa.fa-plus
+                New Event
 
-            - if policy(Event).new?
-              %li
-                = link_to new_unit_event_path(@unit) do
-                  %i.fa.fa-plus
-                  New Event
-
-
+  %h2
+    = render partial: 'event_icon', locals: {event: @event}
+    = @event.name
 
 .row
   .col-md-8

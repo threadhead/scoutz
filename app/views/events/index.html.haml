@@ -1,18 +1,17 @@
-.row
-  .col-md-12
-    .page-header
-      .pull-right
-        - if policy(Event).new?
-          = link_to(new_unit_event_path(@unit), class: "btn btn-default") do
-            %i.fa.fa-plus
-            New Event
+.page-header
+  .pull-right
+    .btn-group
+      - if policy(Event).new?
+        = link_to(new_unit_event_path(@unit), class: "btn btn-default") do
+          %i.fa.fa-plus
+          New Event
 
-        = link_to '#', data: { toggle: 'modal', target: '#print-event-list'}, class: 'btn btn-default' do
-          %i.fa.fa-print
-          Print
+      = link_to '#', data: { toggle: 'modal', target: '#print-event-list'}, class: 'btn btn-default' do
+        %i.fa.fa-print
+        Print
 
 
-      %h2 #{@unit.name_unit} Upcoming Events
+  %h2 #{@unit.name_unit} Upcoming Events
 
 
 .row

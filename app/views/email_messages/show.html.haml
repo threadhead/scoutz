@@ -1,7 +1,7 @@
 .page-header
   .row
     .col-md-8
-      %h2 Email Message that is the beginnin of the end of tomorrow
+      %h2 Email Message
 
     .col-md-4.right-aligned
       .btn-group
@@ -20,74 +20,72 @@
             Cancel Sending
 
 
-.row
-  .col-md-12
-    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_message}
 
-    .text-xlarge
-      %table.table
-        %tr
-          %td
-            %strong Subject
-          %td= @email_message.subject
+.text-xlarge
+  %table.table
+    %tr
+      %td
+        %strong Subject
+      %td= @email_message.subject
 
-        %tr
-          %td
-            %strong From
-          %td= @email_message.sender.name_email
+    %tr
+      %td
+        %strong From
+      %td= @email_message.sender.name_email
 
-        %tr
-          %td
-            %strong Recipients
-          %td
-            = @email_message.send_to
-            %span.badge= @email_message.sent_to_count
-            - if @email_message.send_to_option == 3
-              (
-              %small>
-                %em>= @email_message.sub_units.map(&:name).join(', ')
-              )
+    %tr
+      %td
+        %strong Recipients
+      %td
+        = @email_message.send_to
+        %span.badge= @email_message.sent_to_count
+        - if @email_message.send_to_option == 3
+          (
+          %small>
+            %em>= @email_message.sub_units.map(&:name).join(', ')
+          )
 
-            %br
-            #sent-to-details
-              %p= unit_users_link_list(@email_message.unit, @email_message.sent_to)
-            %p.small
-              = link_to unit_email_message_path(@unit, @email_message), remote: true, id: 'details-reveal' do
-                %i.fa.fa-caret-square-o-right
-                show details...
+        %br
+        #sent-to-details
+          %p= unit_users_link_list(@email_message.unit, @email_message.sent_to)
+        %p.small
+          = link_to unit_email_message_path(@unit, @email_message), remote: true, id: 'details-reveal' do
+            %i.fa.fa-caret-square-o-right
+            show details...
 
-        %tr
-          %td
-            %strong Sent
-          %td
-            - if @email_message.sent_at
-              = @email_message.sent_at.to_s(:long_ampm)
-            - elsif @email_message.deactivated?
-              sending cancelled at #{ @email_message.deactivated_at.to_s(:long_ampm) }
-            - else
-              currently in queue
+    %tr
+      %td
+        %strong Sent
+      %td
+        - if @email_message.sent_at
+          = @email_message.sent_at.to_s(:long_ampm)
+        - elsif @email_message.deactivated?
+          sending cancelled at #{ @email_message.deactivated_at.to_s(:long_ampm) }
+        - else
+          currently in queue
 
-        %tr
-          %td
-            %strong Events
-          %td
-            - if @email_message.events.size > 0
-              - @email_message.events.each do |event|
-                %p= link_to event_list_name(event), unit_event_path(@unit, event)
-            - else
-              %em none selected
+    %tr
+      %td
+        %strong Events
+      %td
+        - if @email_message.events.size > 0
+          - @email_message.events.each do |event|
+            %p= link_to event_list_name(event), unit_event_path(@unit, event)
+        - else
+          %em none selected
 
-        %tr
-          %td
-            %strong Attachments*
-          %td
-            - @email_message.email_attachments.each do |email_attachment|
-              = link_to email_attachment.original_file_name, email_attachment.attachment.url, target: '_blank'
-              %br
+    %tr
+      %td
+        %strong Attachments*
+      %td
+        - @email_message.email_attachments.each do |email_attachment|
+          = link_to email_attachment.original_file_name, email_attachment.attachment.url, target: '_blank'
+          %br
 
-        %tr
-          %td
-            %strong Message
-          %td
-            .show-message= @email_message.message.html_safe
-    %small.text-muted * attachments are saved for 6 months, then deleted
+    %tr
+      %td
+        %strong Message
+      %td
+        .show-message= @email_message.message.html_safe
+%small.text-muted * attachments are saved for 6 months, then deleted

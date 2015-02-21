@@ -1,208 +1,211 @@
-.navbar.navbar-fixed-top.navbar-inverse#navbar-fixed-upper
-  .container-fluid
-    .navbar-header
-      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#scoutz-navbar-collapse")
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      .scouttin-logo.scouttin-logo-khaki
-        .compass-logo
-          %span.fa-stack.fa-lg
-            %i.fa.fa-stack-2x.fa-map-marker.marker
-            %i.fa.fa-stack-compass.fa-compass.compass
-        .scouttin-name
-          = link_to 'Scoutt.in', unit_events_path(@unit), class: ''
+= cache cache_key_for_header(@unit) do
+  .navbar.navbar-fixed-top.navbar-inverse#navbar-fixed-upper
+    .container-fluid
+      .navbar-header
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#scoutz-navbar-collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        .scouttin-logo.scouttin-logo-khaki
+          .compass-logo
+            %span.fa-stack.fa-lg
+              %i.fa.fa-stack-2x.fa-map-marker.marker
+              %i.fa.fa-stack-compass.fa-compass.compass
+          .scouttin-name
+            = link_to 'Scoutt.in', unit_events_path(@unit), class: ''
 
-    .navbar-collapse.collapse#scoutz-navbar-collapse
-      %ul.nav.navbar-nav.navbar-right
-        %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
-            = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
-            %span.user-info.hidden-xs
-              %small Welcome,
-              = current_user.first_name
-            %i.fa.fa-caret-down.user-caret.hidden-xs
-
-            %span.hidden-md.hidden-lg.hidden-sm
-              Welcome, #{current_user.first_name}
-              %i.fa.fa-caret-down
-
-          %ul.dropdown-menu
-            %li
-              = link_to corrected_unit_user_path(@unit, current_user) do
-                %i.fa.fa-user
-                Profile
-            %li
-              = link_to edit_unit_user_password_path(@unit, current_user) do
-                %i.fa.fa-key
-                Change Password
-            %li
-              = link_to edit_unit_user_email_path(@unit, current_user) do
-                %i.fa.fa-envelope-o
-                Change Email
-            - if policy(@unit).edit?
-              %li
-                = link_to edit_unit_path(@unit) do
-                  %i.fa.fa-gear
-                  #{@unit.unit_type_title} Settings
-            %li.divider
-            %li
-              = link_to destroy_user_session_url, method: :delete do
-                %i.fa.fa-power-off
-                Sign out
-
-      %form.navbar-form.navbar-right
-        = hidden_field_tag :meta_search_action, "/meta_search?unit_id=#{@unit.id}"
-        .form-group
-          .input-group
-            = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search everything...'
-            %span.input-group-addon
-              %i.fa.fa-search
-
-
-
-
-
-.navbar.navbar-default#navbar-fixed-lower
-  .container-fluid
-    .navbar-header
-      %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-navbar-collapse")
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      - unless @units.size > 1
-        .hidden-xs.navbar-brand= @unit.name_unit
-      .visible-xs-block.navbar-brand= @unit.name_unit
-
-
-    .navbar-collapse.collapse#unit-navbar-collapse
-      %ul.nav.navbar-nav.navbar-left
-        %li
-          - if @units.size > 1
-            = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left col-xs-12' do
-              = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
-            .clearfix.visible-xs-block
-
-        %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
-            %i.fa.fa-user
-            People
-            %i.fa.fa-caret-down
-
-          %ul.dropdown-menu
-            %li
-              = link_to unit_scouts_path(@unit) do
-                %i.fa.fa-user{style: "color: #808000;"}
-                Scouts
-
-            %li
-              = link_to unit_adults_path(@unit) do
-                %i.fa.fa-user{style: "color: #CC1814;"}
-                Adults
-
-            - if @unit.unit_type == "Boy Scouts"
-              %li
-                = link_to unit_merit_badges_path(@unit) do
-                  %i.fa.fa-graduation-cap
-                  MB Counselors
-
-            - if policy(HealthForm).index?
-              %li
-                = link_to unit_health_forms_path(@unit) do
-                  %i.fa.fa-medkit
-                  Health Forms
-
-            %li
-              = link_to unit_sub_units_path(@unit) do
-                %i.fa.fa-users
-                = @unit.sub_unit_name.try(:pluralize)
-
-
-
-        - if policy(EmailMessage).create? || policy(SmsMessage).create?
+      .navbar-collapse.collapse#scoutz-navbar-collapse
+        %ul.nav.navbar-nav.navbar-right
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
-              %i.fa.fa-phone
-              Communications
+              = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
+              %span.user-info.hidden-xs
+                %small Welcome,
+                = current_user.first_name
+              %i.fa.fa-caret-down.user-caret.hidden-xs
+
+              %span.hidden-md.hidden-lg.hidden-sm
+                Welcome, #{current_user.first_name}
+                %i.fa.fa-caret-down
+
+            %ul.dropdown-menu
+              %li
+                = link_to corrected_unit_user_path(@unit, current_user) do
+                  %i.fa.fa-user
+                  Profile
+              %li
+                = link_to edit_unit_user_password_path(@unit, current_user) do
+                  %i.fa.fa-key
+                  Change Password
+              %li
+                = link_to edit_unit_user_email_path(@unit, current_user) do
+                  %i.fa.fa-envelope-o
+                  Change Email
+              - if policy(@unit).edit?
+                %li
+                  = link_to edit_unit_path(@unit) do
+                    %i.fa.fa-gear
+                    #{@unit.unit_type_title} Settings
+              %li.divider
+              %li
+                = link_to destroy_user_session_url, method: :delete do
+                  %i.fa.fa-power-off
+                  Sign out
+
+        %form.navbar-form.navbar-right
+          = hidden_field_tag :meta_search_action, "/meta_search?unit_id=#{@unit.id}"
+          .form-group
+            .input-group
+              = search_field_tag :search_meta, '', class: 'form-control search-meta', placeholder: 'search everything...'
+              %span.input-group-addon
+                %i.fa.fa-search
+
+
+
+
+
+  .navbar.navbar-default#navbar-fixed-lower
+    .container-fluid
+      .navbar-header
+        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-navbar-collapse")
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        - unless @units.size > 1
+          .hidden-xs.navbar-brand= @unit.name_unit
+        .visible-xs-block.navbar-brand= @unit.name_unit
+
+
+      .navbar-collapse.collapse#unit-navbar-collapse
+        %ul.nav.navbar-nav.navbar-left
+          %li
+            - if @units.size > 1
+              = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left col-xs-12' do
+                = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
+              .clearfix.visible-xs-block
+
+          %li.dropdown
+            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+              %i.fa.fa-user
+              People
               %i.fa.fa-caret-down
 
             %ul.dropdown-menu
-              - if policy(EmailMessage).create?
-                %li.non-link-text
-                  %i.fa.fa-envelope
-                  %strong Email Blast
-                %li
-                  = link_to unit_email_messages_path(@unit) do
-                    My Sent Email
-                %li
-                  = link_to new_unit_email_message_path(@unit) do
-                    %i.fa.fa-plus
-                    New Email Blast
-                %li.divider
-
-
-              - if policy(SmsMessage).create?
-                %li.non-link-text
-                  %i.fa.fa-mobile-phone.fa-lg
-                  %strong SMS Blast
-                %li
-                  = link_to unit_sms_messages_path(@unit) do
-                    My Sent SMS
-                %li
-                  = link_to new_unit_sms_message_path(@unit) do
-                    %i.fa.fa-plus
-                    New SMS Blast
-
-
-
-
-        %li.dropdown
-          = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
-            %i.fa.fa-calendar
-            Events
-            %i.fa.fa-caret-down
-
-          %ul.dropdown-menu
-            %li
-              = link_to unit_events_path(@unit) do
-                Event List
-
-            %li
-              = link_to calendar_unit_events_path(@unit) do
-                Event Calendar
-
-            - if policy(Event).create?
               %li
-                = link_to new_unit_event_path(@unit) do
-                  %i.fa.fa-plus
-                  New Event
+                = link_to unit_scouts_path(@unit) do
+                  %i.fa.fa-user{style: "color: #808000;"}
+                  Scouts
+
+              %li
+                = link_to unit_adults_path(@unit) do
+                  %i.fa.fa-user{style: "color: #CC1814;"}
+                  Adults
+
+              - if @unit.unit_type == "Boy Scouts"
+                %li
+                  = link_to unit_merit_badges_path(@unit) do
+                    %i.fa.fa-graduation-cap
+                    MB Counselors
+
+              - if policy(HealthForm).index?
+                %li
+                  = link_to unit_health_forms_path(@unit) do
+                    %i.fa.fa-medkit
+                    Health Forms
+
+              %li
+                = link_to unit_sub_units_path(@unit) do
+                  %i.fa.fa-users
+                  = @unit.sub_unit_name.try(:pluralize)
 
 
 
-        - if @unit.pages.active.count > 0 || policy(Page).index?
+          - if policy(EmailMessage).create? || policy(SmsMessage).create?
+            %li.dropdown
+              = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+                %i.fa.fa-phone
+                Communications
+                %i.fa.fa-caret-down
+
+              %ul.dropdown-menu
+                - if policy(EmailMessage).create?
+                  %li.non-link-text
+                    %strong Email Blast
+                  %li
+                    = link_to unit_email_messages_path(@unit) do
+                      %i.fa.fa-envelope
+                      My Sent Email
+                  %li
+                    = link_to new_unit_email_message_path(@unit) do
+                      %i.fa.fa-plus
+                      New Email Blast
+                  %li.divider
+
+
+                - if policy(SmsMessage).create?
+                  %li.non-link-text
+                    %strong SMS Blast
+                  %li
+                    = link_to unit_sms_messages_path(@unit) do
+                      %i.fa.fa-mobile-phone.fa-lg
+                      My Sent SMS
+                  %li
+                    = link_to new_unit_sms_message_path(@unit) do
+                      %i.fa.fa-plus
+                      New SMS Blast
+
+
+
+
           %li.dropdown
             = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
-              %i.fa.fa-file-text-o
-              Pages
+              %i.fa.fa-calendar
+              Events
               %i.fa.fa-caret-down
 
             %ul.dropdown-menu
-              - @unit.pages.active.each do |page|
-                %li= link_to page.title, [@unit, page]
+              %li
+                = link_to unit_events_path(@unit) do
+                  %i.fa.fa-list
+                  Event List
 
-              - if policy(Page).index?
-                %li.divider
-                %li= link_to 'Edit/Reorder', unit_pages_path(@unit)
+              %li
+                = link_to calendar_unit_events_path(@unit) do
+                  %i.fa.fa-calendar
+                  Event Calendar
+
+              - if policy(Event).create?
+                %li
+                  = link_to new_unit_event_path(@unit) do
+                    %i.fa.fa-plus
+                    New Event
 
 
 
-      %ul.nav.navbar-nav.navbar-right
-        %li
-          = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
-            %i.fa.fa-list
-            .visible-xs-inline Event List
-        %li
-          = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
-            %i.fa.fa-calendar
-            .visible-xs-inline Calendar
+          - if @unit.pages.active.count > 0 || policy(Page).index?
+            %li.dropdown
+              = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+                %i.fa.fa-file-text-o
+                Pages
+                %i.fa.fa-caret-down
+
+              %ul.dropdown-menu
+                - @unit.pages.active.each do |page|
+                  %li= link_to page.title, [@unit, page]
+
+                - if policy(Page).index?
+                  %li.divider
+                  %li= link_to 'Edit/Reorder', unit_pages_path(@unit)
+
+
+
+        %ul.nav.navbar-nav.navbar-right
+          %li
+            = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
+              %i.fa.fa-list
+              .visible-xs-inline Event List
+          %li
+            = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
+              %i.fa.fa-calendar
+              .visible-xs-inline Calendar
 

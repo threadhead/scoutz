@@ -1,76 +1,73 @@
-.row
-  .col-md-12
+= bootstrap_form_for @unit do |f|
+  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @unit}
 
-    = bootstrap_form_for @unit do |f|
-      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @unit}
+  .row
+    .col-md-6
+      = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, help: '*all* dates and times will be displayed in this time zone, for all users'
 
-      .row
-        .col-md-6
-          = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, help: '*all* dates and times will be displayed in this time zone, for all users'
-
-      %fieldset
-        %legend Activity Consent Form
-        .row
-          .col-md-8
-            = f.check_box :attach_consent_form, label: 'Automatically attach consent form link to events that require ACF (recommended)'
+  %fieldset
+    %legend Activity Consent Form
+    .row
+      .col-md-8
+        = f.check_box :attach_consent_form, label: 'Automatically attach consent form link to events that require ACF (recommended)'
+        %br
+        .indent-sub-selection
+          = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
             %br
+            = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
+            %a{href: '#'} (view BSA ACF)
+
+            = f.radio_button :use_consent_form, 2, label: 'Use URL (link) to a page or form'
+            .indent-sub-selection= f.text_field :url_consent_form, label: 'URL of custom consent form'
+
+            = f.radio_button :use_consent_form, 3, label: 'Select custom consent form'
             .indent-sub-selection
-              = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
-                %br
-                = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
-                %a{href: '#'} (view BSA ACF)
+              .well.well-sm
+                %p= f.file_field :consent_form, hide_label: true, help: 'alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf txt'
 
-                = f.radio_button :use_consent_form, 2, label: 'Use URL (link) to a page or form'
-                .indent-sub-selection= f.text_field :url_consent_form, label: 'URL of custom consent form'
-
-                = f.radio_button :use_consent_form, 3, label: 'Select custom consent form'
-                .indent-sub-selection
-                  .well.well-sm
-                    %p= f.file_field :consent_form, hide_label: true, help: 'alowed attachments: jpg jpeg gif png pdf doc xls docx xls xlsx xlsb rtf odf txt'
-
-                    - if @unit.consent_form.present?
-                      Current form:
-                      = link_to @unit.consent_form_original_file_name, @unit.consent_form.url
-                      %small (#{number_to_human_size @unit.consent_form_file_size}, #{@unit.consent_form_updated_at.to_s(:long_ampm)})
+                - if @unit.consent_form.present?
+                  Current form:
+                  = link_to @unit.consent_form_original_file_name, @unit.consent_form.url
+                  %small (#{number_to_human_size @unit.consent_form_file_size}, #{@unit.consent_form_updated_at.to_s(:long_ampm)})
 
 
 
-      %fieldset
-        %legend Home Meeting Location
-        %p Where you have your regular #{@unit.unit_type_title} Meetings. Setting this makes it easy to copy this location for meetings.
-        .row
-          .col-md-6
-            = f.text_field :home_name, label: 'Name'
-            = f.text_field :home_address1, label: 'Address1'
-            = f.text_field :home_address2, label: 'Address2'
-        .row
-          .col-md-2
-            = f.text_field :home_city, label: 'City'
-          .col-md-2
-            = f.select :home_state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
-          .col-md-2
-            = f.text_field :home_zip_code, label: 'Zip'
-        .row
-          .col-md-8
-            = f.text_field :home_map_url, label: 'Map URL', placeholder: 'http://maps.google.com', help: "if you don't enter a map url, the above address will be used to display a map"
+  %fieldset
+    %legend Home Meeting Location
+    %p Where you have your regular #{@unit.unit_type_title} Meetings. Setting this makes it easy to copy this location for meetings.
+    .row
+      .col-md-6
+        = f.text_field :home_name, label: 'Name'
+        = f.text_field :home_address1, label: 'Address1'
+        = f.text_field :home_address2, label: 'Address2'
+    .row
+      .col-md-2
+        = f.text_field :home_city, label: 'City'
+      .col-md-2
+        = f.select :home_state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
+      .col-md-2
+        = f.text_field :home_zip_code, label: 'Zip'
+    .row
+      .col-md-8
+        = f.text_field :home_map_url, label: 'Map URL', placeholder: 'http://maps.google.com', help: "if you don't enter a map url, the above address will be used to display a map"
 
 
 
-      %fieldset
-        %legend Mailing Address (optional)
-        .row
-          .col-md-6
-            = f.text_field :address1, label: 'Address1'
-            = f.text_field :address2, label: 'Address2'
-        .row
-          .col-md-2
-            = f.text_field :city, label: 'City'
-          .col-md-2
-            = f.select :state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
-          .col-md-2
-            = f.text_field :zip_code, label: 'Zip'
+  %fieldset
+    %legend Mailing Address (optional)
+    .row
+      .col-md-6
+        = f.text_field :address1, label: 'Address1'
+        = f.text_field :address2, label: 'Address2'
+    .row
+      .col-md-2
+        = f.text_field :city, label: 'City'
+      .col-md-2
+        = f.select :state, options_for_select(::UsStates.states_array, @unit.state), include_blank: 'Select...'
+      .col-md-2
+        = f.text_field :zip_code, label: 'Zip'
 
 
-      %br
-      = f.primary
-      = link_to 'Cancel', unit_events_path(@unit), class: 'btn btn-default'
+  %br
+  = f.primary
+  = link_to 'Cancel', unit_events_path(@unit), class: 'btn btn-default'

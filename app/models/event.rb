@@ -258,6 +258,12 @@ class Event < ActiveRecord::Base
     # where(start_at: DateTime.parse(start_date)..DateTime.parse(end_date))
   end
 
+  def self.now_plus_months(months)
+    st = Time.zone.now.beginning_of_day
+    ed = (Time.zone.now + months.to_i.months).end_of_month
+    where('("events"."start_at" BETWEEN ? AND ?) OR ("events"."end_at" BETWEEN ? AND ?)', st, ed, st, ed)
+  end
+
 
   scope :by_start, -> { order('start_at ASC') }
   # scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }

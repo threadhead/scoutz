@@ -18,6 +18,10 @@ class EventsController < ApplicationController
 
     if params.key?(:start) && params.key?(:end)
       @events = @events.time_range(params[:start], params[:end])
+    elsif params.key?(:months)
+      @events = @events.now_plus_months(params[:months]).by_start
+      # @events = @events.by_start
+      @end_month = (Time.zone.now + params[:months].to_i.months).end_of_month
     else
       @events = @events.from_today.by_start.page(params[:page]).per(10)
     end
@@ -25,7 +29,13 @@ class EventsController < ApplicationController
 
 
     respond_to do |format|
-      format.html
+      format.html do
+        if params[:commit] == 'Print'
+          render :index_print, layout: 'print'
+        else
+          render :index
+        end
+      end
       format.json { render json: @events }
       format.js
     end
@@ -34,6 +44,11 @@ class EventsController < ApplicationController
 
   def calendar
     authorize Event
+    if params[:print]
+      render :calendar_print, layout: 'print'
+    else
+      render :calendar
+    end
   end
 
   def last_unit_meeting

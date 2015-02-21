@@ -1,10 +1,8 @@
-.row
-  .col-md-12
-    .page-header
-      - if controller.action_name == 'new'
-        %h2 New Event for #{@unit.name}
-      - else
-        %h2 Edit Event
+.page-header
+  - if controller.action_name == 'new'
+    %h2 New Event for #{@unit.name}
+  - else
+    %h2 Edit Event
 
 
 = bootstrap_form_for @event do |f|

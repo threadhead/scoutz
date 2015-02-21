@@ -1,38 +1,33 @@
-.row
-  .col-md-12
-    = render partial: 'layouts/flash', locals: {flash: flash}
+.page-header
+  .row
+    .col-md-8
+      %h2
+        %i.fa.fa-users
+        = @unit.sub_unit_name.pluralize
 
-    .panel.panel-index-table.panel-default
-      .panel-heading
-        %span.xxlarge
-          %i.fa.fa-users
-          = @unit.sub_unit_name.pluralize
-
-      .panel-body
-        .panel-nav
-          - if policy(SubUnit).new?
-            .pull-right
-              = link_to(new_unit_sub_unit_path(@unit), class: "btn btn-default") do
-                %i.fa.fa-plus
-                New #{@unit.sub_unit_name}
+    .col-md-4.right-aligned
+      - if policy(SubUnit).new?
+        .pull-right
+          = link_to(new_unit_sub_unit_path(@unit), class: "btn btn-default") do
+            %i.fa.fa-plus
+            New #{@unit.sub_unit_name}
 
 
-        .row
-          .col-md-12
-            %br
-            #sub-unit-index
-              %table.table.table-outside-bordered
-                %tr
-                  %th Name
-                  %th.hidden-xs Description
-                  %th Scouts
+= render partial: 'layouts/flash', locals: {flash: flash}
 
-                  = cache ["unit-#{@unit.id}", cache_key_for_sub_units(@sub_units)] do
-                    - @sub_units.each do |sub_unit|
-                      -# = cache ["unit-#{unit.id}", sub_unit] do
-                      %tr
-                        %td.xlarge
-                          = link_to sub_unit.name, unit_sub_unit_path(@unit, sub_unit)
-                          %span.badge= sub_unit.scouts.count
-                        %td.hidden-xs= sub_unit.description
-                        %td.scout-list= sub_unit.scouts.by_name_lf.map(&:name).join(', ')
+#sub-unit-index
+  %table.table.table-outside-bordered
+    %tr
+      %th Name
+      %th.hidden-xs Description
+      %th Scouts
+
+      = cache ["unit-#{@unit.id}", cache_key_for_sub_units(@sub_units)] do
+        - @sub_units.each do |sub_unit|
+          -# = cache ["unit-#{unit.id}", sub_unit] do
+          %tr
+            %td.xlarge
+              = link_to sub_unit.name, unit_sub_unit_path(@unit, sub_unit)
+              %span.badge= sub_unit.scouts.count
+            %td.hidden-xs= sub_unit.description
+            %td.scout-list= sub_unit.scouts.by_name_lf.map(&:name).join(', ')

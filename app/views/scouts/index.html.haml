@@ -1,30 +1,31 @@
+.page-header
+  .row
+    .col-md-8
+      %h2
+        %i.fa.fa-user{style: "color: #808000;"}
+        Scouts in #{@unit.name_unit}
+
+    .col-md-4.right-aligned
+      - if policy(Scout).new?
+        .pull-right
+          = link_to(new_unit_scout_path(@unit), class: "btn btn-default") do
+            %i.fa.fa-plus
+            New Scout
+
 .row
   .col-md-9
     = render partial: 'layouts/flash', locals: {flash: flash}
 
-    .panel.panel-index-table.panel-default
-      .panel-heading
-        %span.xxlarge
-          %i.fa.fa-group
-          Scouts in #{@unit.name_unit}
-
-      .panel-body
-        .panel-nav
-          - if policy(Scout).new?
-            .pull-right
-              = link_to(new_unit_scout_path(@unit), class: "btn btn-default") do
-                %i.fa.fa-plus
-                New Scout
-
-          = cache ["unit-#{@unit.id}", ":scouts_search"] do
-            = render partial: 'layouts/search', locals: {type: 'scouts', search_url: "/units/#{@unit.id}/scouts.js?search_typeahead="}
+    = cache ["unit-#{@unit.id}", ":scouts_search"] do
+      = render partial: 'layouts/search', locals: {type: 'scouts', search_url: "/units/#{@unit.id}/scouts.js?search_typeahead="}
+      %br
 
 
-        #scout-index
-          - if current_user.admin?
-            = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
-          - else
-            = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+    #scout-index
+      - if current_user.admin?
+        = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+      - else
+        = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
 
 
   .col-md-3

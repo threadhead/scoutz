@@ -2,32 +2,30 @@
   .row
     .col-md-6
       %h2
-        My Sent SMS (#{@unit.name_unit})
-        %span.badge= @sms_messages.size
+        %i.fa.fa-mobile-phone.fa-lg
+        My Sent SMS Messages (#{@unit.name_unit})
 
     .col-md-6.right-aligned
       = link_to(new_unit_sms_message_path(@unit), class: "btn btn-default") do
         %i.fa.fa-plus
         New SMS Message
 
-.row
-  .col-md-12
-    %table.table
-      %thead
-        %th Sent at
-        %th Sender
-        %th Recipients
-        %th Message
-        %th Actions
+%table.table
+  %thead
+    %th Sent at
+    %th Sender
+    %th Recipients
+    %th Message
+    %th Actions
 
-      - @sms_messages.each do |sms_message|
-        %tr
-          %td
-            - if sms_message.sent_at
-              = sms_message.sent_at.to_s(:short_ampm)
-            - else
-              %em pending
-          %td= sms_message.sender.name
-          %td= sms_message.send_to
-          %td= sms_message.message
-          %td= link_to 'view', unit_sms_message_path(@unit, sms_message), class: 'btn btn-mini'
+  - @sms_messages.each do |sms_message|
+    %tr
+      %td
+        - if sms_message.sent_at
+          = sms_message.sent_at.to_s(:short_ampm)
+        - else
+          %em pending
+      %td= sms_message.sender.name
+      %td= sms_message.send_to
+      %td= sms_message.message
+      %td= link_to 'view', unit_sms_message_path(@unit, sms_message), class: 'btn btn-mini'

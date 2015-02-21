@@ -17,6 +17,16 @@ module EventsHelper
     "#{sanitize_br(event.location_name)}#{sanitize_br(event.location_address1)}#{sanitize_br(event.location_address2)}#{sanitize_br(city_state_zip(event))}".html_safe
   end
 
+  def location_single_line(event)
+    [ event.location_name,
+      event.location_address1,
+      event.location_address2,
+      event.location_city,
+      event.location_state,
+      event.location_zip_code
+      ].reject(&:blank?).join(', ')
+  end
+
   def location_link(event)
     link_to(truncate(event.location_map_url), event.location_map_url, target: '_blank') unless event.location_map_url.blank?
   end

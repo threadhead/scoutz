@@ -1,8 +1,4 @@
-.row
-  .col-md-12
-    .page-header
-      %h2 New Health Form for #{@health_form.user.name}
+.page-header
+  %h2 New Health Form for #{@health_form.user.name}
 
-.row
-  .col-md-12
-    = render partial: 'form'
+= render partial: 'form'

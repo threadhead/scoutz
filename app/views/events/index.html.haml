@@ -1,14 +1,20 @@
-.row
-  .col-md-12
-    .page-header
-      .pull-right
+.page-header
+  .row
+    .col-md-8
+      %h2
+        %i.fa.fa-list
+        #{@unit.name_unit} Upcoming Events
+
+    .col-md-4.right-aligned
+      .btn-group
         - if policy(Event).new?
           = link_to(new_unit_event_path(@unit), class: "btn btn-default") do
             %i.fa.fa-plus
             New Event
 
-      %h2 #{@unit.name_unit} Upcoming Events
-
+        = link_to '#', data: { toggle: 'modal', target: '#print-event-list'}, class: 'btn btn-default' do
+          %i.fa.fa-print
+          Print
 
 .row
   .col-md-9
@@ -50,3 +56,25 @@
                 = link_to 'edit', edit_unit_page_path(@unit, page), class: 'small'
                 %span.small= '|'
                 = link_to 'reorder', unit_pages_path(@unit), class: 'small'
+
+
+.modal.fade#print-event-list
+  .modal-dialog
+    .modal-content
+      = form_tag unit_events_path(@unit), method: :get do
+        .modal-header
+          %h4.modal-title Print List of Events
+
+        .modal-body
+          .form-group
+            = label_tag :months, 'Events From Today Until...'
+            = select_tag :months, options_for_select({ 'End of This Month' => '0', '+1 Month' => '1', '+2 Months' => '2', '+3 Months' => '3', '+4 Months' => '4', '+5 Months' => '5', '+6 Months' => '6' }), class: 'form-control'
+
+          %p &nbsp;
+          %p This will display a page you can print with a list of events (no attendees). This is suitable for a PLC or Committee meeting.
+          %p
+            %strong Only #{ @unit.unit_type_title } events, camping, PLC and #{ @unit.sub_unit_name } events will print. Adult/leader events will not be displayed.
+
+        .modal-footer
+          = button_tag 'Cancel', type: 'button', data: { dismiss: 'modal' }, class: 'btn btn-default'
+          = submit_tag 'Print', class: 'btn btn-success'

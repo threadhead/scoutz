@@ -1,57 +1,55 @@
 .page-header
   .row
-    .col-md-6
+    .col-md-8
       %h2
+        %i.fa.fa-envelope
         My Sent Messages (#{@unit.name_unit})
 
-    .col-md-6.right-aligned
+    .col-md-4.right-aligned
       - if policy(EmailMessage).create?
         = link_to(new_unit_email_message_path(@unit), class: "btn btn-default") do
           %i.fa.fa-plus
           New Email Blast
 
 
-.row
-  .col-md-12
-    = render partial: 'layouts/flash', locals: {flash: flash}
+= render partial: 'layouts/flash', locals: {flash: flash}
 
-    %table.table
-      %thead
-        %th Sent
-        %th Subject
-        %th.hidden-xs From
-        %th Recipients
-        %th Actions
+%table.table
+  %thead
+    %th Sent
+    %th Subject
+    %th.hidden-xs From
+    %th Recipients
+    %th Actions
 
-      - @email_messages.each do |email_message|
-        %tr
-          %td
-            - if email_message.sent_at
-              = email_message.sent_at.to_s(:short_ampm)
-            - elsif email_message.deactivated?
-              cancelled
-            - else
-              %em pending
+  - @email_messages.each do |email_message|
+    %tr
+      %td
+        - if email_message.sent_at
+          = email_message.sent_at.to_s(:short_ampm)
+        - elsif email_message.deactivated?
+          cancelled
+        - else
+          %em pending
 
-          %td
-            = link_to email_message.subject, unit_email_message_path(@unit, email_message)
-            - if email_message.has_attachments?
-              %i.fa.fa-paper-clip
+      %td
+        = link_to email_message.subject, unit_email_message_path(@unit, email_message)
+        - if email_message.has_attachments?
+          %i.fa.fa-paper-clip
 
-          %td.hidden-xs= email_message.sender.email
+      %td.hidden-xs= email_message.sender.email
 
-          %td
-            = email_message.send_to
-            %span.badge= email_message.recipients_ids.size
+      %td
+        = email_message.send_to
+        %span.badge= email_message.recipients_ids.size
 
-          %td
-            .btn-group
-              = link_to 'View', unit_email_message_path(@unit, email_message), class: 'btn btn-default btn-xs'
-              - if email_message.sent_at.nil? && email_message.active? && policy(email_message).destroy?
-                = link_to 'Cancel Sending', unit_email_message_path(@unit, email_message), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs'
+      %td
+        .btn-group
+          = link_to 'View', unit_email_message_path(@unit, email_message), class: 'btn btn-default btn-xs'
+          - if email_message.sent_at.nil? && email_message.active? && policy(email_message).destroy?
+            = link_to 'Cancel Sending', unit_email_message_path(@unit, email_message), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-xs'
 
-    = paginate @email_messages, theme: 'bootstrap'
+= paginate @email_messages, theme: 'bootstrap'
 
-.row
-  .col-md-12
-    %em.text-muted email messages are stored for about 1.5 years
+%p
+  %em.text-muted email messages are stored for about 1.5 years

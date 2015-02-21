@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
     def set_unit
       unit_id = params[:unit_id] || params[:select_default_unit] || session[:current_unit_id]
-      @unit = unit_id.nil? ? @units.first : current_user.units.where(id: unit_id).first
+      @unit = unit_id.nil? ? @units.first : current_user.units.where(id: unit_id).first!
       session[:current_unit_id] = @unit.try(:id)
     end
 

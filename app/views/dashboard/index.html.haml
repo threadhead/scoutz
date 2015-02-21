@@ -1,7 +1,0 @@
-.row
-  .col-md-12
-    %h2 What's Happening
-
-- @units.each do |unit|
-  %div{id: "unit-events-#{unit.id}"}
-    = render partial: 'event_list', locals: {unit: unit, limit: @limit}

@@ -1,0 +1,11 @@
+= render partial: 'layouts/print_header', locals: { return_link: calendar_unit_events_path(@unit) }
+
+.row.no-print.print-button-section
+  .col-md-12
+    %span.xl Select the month you woud like to print
+
+%h3 #{ @unit.name } Calendar
+
+= hidden_field_tag :current_unit_id, @unit.id
+#calendar
+

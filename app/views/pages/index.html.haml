@@ -1,23 +1,19 @@
-.row
-  .col-md-12
-    = render partial: 'layouts/flash', locals: {flash: flash}
+.page-header
+  .row
+    .col-md-8
+      %h2 Pages in #{@unit.name_unit}
 
-    .panel.panel-index-table.panel-default
-      .panel-heading
-        %span.xxlarge
-          %i.fa.fa-file-text-o
-          Pages in #{@unit.name_unit}
+    .col-md-4.right-aligned
+      - if policy(Page).new?
+        .pull-right
+          = link_to(new_unit_page_path(@unit), class: "btn btn-default") do
+            %i.fa.fa-plus
+            New Page
 
-      .panel-body
-        .panel-nav
-          - if policy(Page).new?
-            .pull-right
-              = link_to(new_unit_page_path(@unit), class: "btn btn-default") do
-                %i.fa.fa-plus
-                New Page
+= render partial: 'layouts/flash', locals: {flash: flash}
 
-          %h4 Active pages will be shown to all users under the Pages menu in the order below.
+%h4 Active pages will be shown to all users under the Pages menu in the order below.
 
-        %p &nbsp;
-        #page-index
-          = render partial: 'index', locals: {unit: @unit, pages: @pages}
+%p &nbsp;
+#page-index
+  = render partial: 'index', locals: {unit: @unit, pages: @pages}

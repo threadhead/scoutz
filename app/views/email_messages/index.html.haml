@@ -1,7 +1,9 @@
 .page-header
   .row
     .col-md-8
-      %h2 My Sent Messages (#{@unit.name_unit})
+      %h2
+        %i.fa.fa-envelope
+        My Sent Messages (#{@unit.name_unit})
 
     .col-md-4.right-aligned
       - if policy(EmailMessage).create?

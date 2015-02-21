@@ -1,7 +1,9 @@
 .page-header
   .row
     .col-md-8
-      %h2= @unit.sub_unit_name.pluralize
+      %h2
+        %i.fa.fa-users
+        = @unit.sub_unit_name.pluralize
 
     .col-md-4.right-aligned
       - if policy(SubUnit).new?

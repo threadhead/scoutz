@@ -2,7 +2,8 @@
   .row
     .col-md-6
       %h2
-        My Sent SMS Messages
+        %i.fa.fa-mobile-phone.fa-lg
+        My Sent SMS Messages (#{@unit.name_unit})
 
     .col-md-6.right-aligned
       = link_to(new_unit_sms_message_path(@unit), class: "btn btn-default") do

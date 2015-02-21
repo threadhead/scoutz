@@ -1,27 +1,25 @@
-.row
-  .col-md-12
-    = render partial: 'layouts/flash', locals: {flash: flash}
+= render partial: 'layouts/flash', locals: {flash: flash}
 
-    .panel.panel-index-table.panel-default
-      .panel-heading
-        %span.xxlarge
-          %i.fa.fa-group
-          Adults in #{@unit.name_unit}
+.panel.panel-index-table.panel-default
+  .panel-heading
+    %span.xxlarge
+      %i.fa.fa-group
+      Adults in #{@unit.name_unit}
 
-      .panel-body
-        .panel-nav
-          - if policy(Adult).new?
-            .pull-right
-              = link_to(new_unit_adult_path(@unit), class: "btn btn-default") do
-                %i.fa.fa-plus
-                New Adult
+  .panel-body
+    .panel-nav
+      - if policy(Adult).new?
+        .pull-right
+          = link_to(new_unit_adult_path(@unit), class: "btn btn-default") do
+            %i.fa.fa-plus
+            New Adult
 
-          = cache ["unit-#{@unit.id}", ":adults_search"] do
-            = render partial: 'layouts/search', locals: {type: 'adults', search_url: "/units/#{@unit.id}/adults.js?search_typeahead="}
+      = cache ["unit-#{@unit.id}", ":adults_search"] do
+        = render partial: 'layouts/search', locals: {type: 'adults', search_url: "/units/#{@unit.id}/adults.js?search_typeahead="}
 
 
-        #adult-index
-          - if current_user.admin?
-            = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
-          - else
-            = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+    #adult-index
+      - if current_user.admin?
+        = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+      - else
+        = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}

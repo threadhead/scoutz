@@ -1,41 +1,38 @@
 .page-header
-  .row
-    .col-md-6
-      %h2 Adult: #{@user.full_name}
+  .pull-right
+    .btn-group
+      = link_to(unit_adults_path(@unit), class: 'btn btn-default') do
+        %i.fa.fa-reply.hidden-xs
+        #{@unit.name_unit} Adults
 
-    .col-md-6.right-aligned
-      .btn-group
-        = link_to(unit_adults_path(@unit), class: 'btn btn-default') do
-          %i.fa.fa-reply.hidden-xs
-          #{@unit.name_unit} Adults
+      - if policy(@user).edit?
+        = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
+          %i.fa.fa-edit.hidden-xs
+          Edit
 
-        - if policy(@user).edit?
-          = link_to(edit_unit_adult_path(@unit, @user), class: 'btn btn-default') do
-            %i.fa.fa-edit.hidden-xs
-            Edit
+      - if policy(@user).new? || policy(@user).destroy?
+        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+          %i.fa.fa-gear.hidden-xs
+          Actions
+          %span.caret
+        %ul.dropdown-menu.pull-right
+          - if policy(@user).destroy?
+            %li
+              = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+                %i.fa.fa-trash-o
+                Destroy #{@user.first_name}
 
-        - if policy(@user).new? || policy(@user).destroy?
-          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
-            %i.fa.fa-gear.hidden-xs
-            Actions
-            %span.caret
-          %ul.dropdown-menu.pull-right
-            - if policy(@user).destroy?
-              %li
-                = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
-                  %i.fa.fa-trash-o
-                  Destroy #{@user.first_name}
+          - if policy(@user).new?
+            %li
+              = link_to(new_unit_adult_path(@unit), class: "") do
+                %i.fa.fa-plus
+                New Adult
 
-            - if policy(@user).new?
-              %li
-                = link_to(new_unit_adult_path(@unit), class: "") do
-                  %i.fa.fa-plus
-                  New Adult
+          - if !@user.email.blank? && policy(@user).send_welcome_reset_password?
+            %li
+              = link_to 'Send Welcome Email', '#', data: { toggle: 'modal', target: '#send-welcome-email'}
 
-            - if !@user.email.blank? && policy(@user).send_welcome_reset_password?
-              %li
-                = link_to 'Send Welcome Email', '#', data: { toggle: 'modal', target: '#send-welcome-email'}
-
+  %h2 Adult: #{@user.full_name}
 
 = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
 

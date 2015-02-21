@@ -44,15 +44,15 @@
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
 
     .pull-right
-      = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-xs' do
-        %i.fa.fa-print
-        Print
-      &nbsp;
+      .btn-group
+        = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-xs' do
+          %i.fa.fa-print
+          Print
 
-      - if @event.ical.present?
-        = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
-          %i.fa.fa-calendar
-          iCal File
+        - if @event.ical.present?
+          = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
+            %i.fa.fa-calendar
+            iCal File
 
     %p &nbsp;
     .text-xlarge

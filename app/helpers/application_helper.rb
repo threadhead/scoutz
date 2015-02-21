@@ -58,4 +58,11 @@ module ApplicationHelper
     return if str.nil?
     str.gsub(" ", "\u00A0")
   end
+
+  def cache_key_for_header(unit)
+    count = unit.pages.active.count
+    max_updated_at = unit.pages.active.maximum(:updated_at).try(:utc).try(:to_s, :number)
+    "unit-#{unit.id}/header/user-#{current_user.id}/pages-#{count}-#{max_updated_at}"
+  end
+
 end

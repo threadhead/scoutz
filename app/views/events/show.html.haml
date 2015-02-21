@@ -51,6 +51,7 @@
       = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-xs' do
         %i.fa.fa-print
         Print
+      &nbsp;
 
       - if @event.ical.present?
         = link_to @event.ical.url, class: 'btn btn-default btn-xs' do

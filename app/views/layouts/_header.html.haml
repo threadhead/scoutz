@@ -129,10 +129,10 @@
             %ul.dropdown-menu
               - if policy(EmailMessage).create?
                 %li.non-link-text
-                  %i.fa.fa-envelope
                   %strong Email Blast
                 %li
                   = link_to unit_email_messages_path(@unit) do
+                    %i.fa.fa-envelope
                     My Sent Email
                 %li
                   = link_to new_unit_email_message_path(@unit) do
@@ -143,10 +143,10 @@
 
               - if policy(SmsMessage).create?
                 %li.non-link-text
-                  %i.fa.fa-mobile-phone.fa-lg
                   %strong SMS Blast
                 %li
                   = link_to unit_sms_messages_path(@unit) do
+                    %i.fa.fa-mobile-phone.fa-lg
                     My Sent SMS
                 %li
                   = link_to new_unit_sms_message_path(@unit) do
@@ -165,10 +165,12 @@
           %ul.dropdown-menu
             %li
               = link_to unit_events_path(@unit) do
+                %i.fa.fa-list
                 Event List
 
             %li
               = link_to calendar_unit_events_path(@unit) do
+                %i.fa.fa-calendar
                 Event Calendar
 
             - if policy(Event).create?

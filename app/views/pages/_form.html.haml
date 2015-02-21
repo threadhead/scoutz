@@ -1,13 +1,12 @@
+.page-header
+  - if controller.action_name == 'new'
+    %h2 New Page for #{@unit.name}
+  - else
+    %h2 Edit Page
+
 = bootstrap_form_for [@unit, @page] do |f|
   = hidden_field_tag :unit_id, @unit.id
   = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
-
-  .page-header
-    .form-inline
-      - if controller.action_name == 'new'
-        %h2 New Page for #{@unit.name}
-      - else
-        %h2 Edit Page
 
   .row
     .col-md-4

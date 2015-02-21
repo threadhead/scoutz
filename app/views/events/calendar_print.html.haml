@@ -1,0 +1,9 @@
+.row
+  .col-md-12
+    %h3 #{ @unit.name } Calendar
+
+.row
+  .col-md-12
+    = hidden_field_tag :current_unit_id, @unit.id
+    #calendar
+

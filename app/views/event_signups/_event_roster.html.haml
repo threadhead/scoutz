@@ -56,14 +56,17 @@
 
   - # don't display the action menu unless the user can edit signups
   - #   BUT there is no need to display action manu if user is looking at their own scout's signup either
-  - if policy(EventSignup.new(event: event_roster.event)).update?
+  - if policy(EventSignup.new(event: event_roster.event)).update? || policy(event_roster).activity_consent_form?
     %td
       .btn-group
         %a.btn.dropdown-toggle.btn-default.btn-xs{href: '#', data: {toggle: 'dropdown'}}
           %i.fa.fa-gear
           %span.caret
+
         %ul.dropdown-menu
-          %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: {event_signup_id: event_roster.id}
+          - if policy(EventSignup.new(event: event_roster.event)).update?
+            %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: {event_signup_id: event_roster.id}
+
           - if event_roster.event.consent_required? && policy(event_roster).activity_consent_form?
             %li
               - if event_roster.has_activity_consent_form?

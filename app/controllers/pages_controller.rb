@@ -85,7 +85,8 @@ class PagesController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_page
-      @page = Page.find(params[:id])
+      # @page = Page.find(params[:id])
+      @page = @unit.pages.where(id: params[:id]).first!
     end
 
     def set_pages

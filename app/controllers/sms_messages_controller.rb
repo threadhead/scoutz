@@ -66,7 +66,8 @@ class SmsMessagesController < ApplicationController
 
     # Use callbacks to share common setup or constraints between actions.
     def set_sms_message
-      @sms_message = SmsMessage.find(params[:id])
+      # @sms_message = SmsMessage.find(params[:id])
+      @sms_message = @unit.sms_messages.where(id: params[:id]).first!
     end
 
     # Only allow a trusted parameter "white list" through.

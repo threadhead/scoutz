@@ -84,7 +84,8 @@ class EmailMessagesController < ApplicationController
 
   private
     def set_email_message
-      @email_message = EmailMessage.find(params[:id])
+      # @email_message = EmailMessage.find(params[:id])
+      @email_message = @unit.email_messages.where(id: params[:id]).first!
     end
 
     def set_send_to_lists

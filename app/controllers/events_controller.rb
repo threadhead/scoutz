@@ -86,12 +86,10 @@ class EventsController < ApplicationController
   end
 
   def create
-    # @event = Event.new(event_params)
     @event = @unit.events.build(event_params)
     authorize @event
 
     if @event.save
-      current_user.events << @event
       redirect_to unit_event_url(@unit, @event), notice: 'Event was successfully created.'
     else
       @sub_unit_ids = sub_unit_ids(params[:event][:sub_unit_ids])
@@ -135,7 +133,8 @@ class EventsController < ApplicationController
 
   private
     def set_event
-      @event = Event.find(params[:id])
+      # @event = Event.find(params[:id])
+      @event = @unit.events.where(id: params[:id]).first!
     end
 
     def set_new_event

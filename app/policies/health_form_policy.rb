@@ -1,22 +1,22 @@
 class HealthFormPolicy < ApplicationPolicy
   def index?
-    adult_leader_or_above
+    adult_leader_or_above || health_form_coordinator?
   end
 
   def show?
-    adult_leader_or_above || health_form_owner?
+    adult_leader_or_above || health_form_owner? || health_form_coordinator?
   end
 
   def create?
-    adult_leader_or_above
+    adult_leader_or_above || health_form_coordinator?
   end
 
   def update?
-    adult_leader_or_above
+    adult_leader_or_above || health_form_coordinator?
   end
 
   def destroy?
-    adult_leader_or_above
+    adult_leader_or_above || health_form_coordinator?
   end
 
 
@@ -27,6 +27,11 @@ class HealthFormPolicy < ApplicationPolicy
     record.user_id == user.id || user.unit_scouts(record.unit).where(users: {id: record.user_id}).exists?
   end
 
+
+  def health_form_coordinator?
+    return false if unit.nil?
+    unit.health_form_coordinator_ids.include?(user.id.to_s)
+  end
 
   # class Scope < Struct.new(:user, :scope)
   #   def resolve

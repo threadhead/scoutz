@@ -6,6 +6,15 @@
       = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, help: '*all* dates and times will be displayed in this time zone, for all users'
 
   %fieldset
+    %legend Health Form Coordinators
+    %p You can select users who are authorized to edit health form dates. Users with 'Leader' roles can not edit health form dates, you need to add them as coordinators.
+    %p Users with 'Admin' roles can always edit health form dates.
+    .row
+      .col-md-8
+        = f.collection_select :health_form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Health Form Coordinators'}, multiple: true, class: 'form-control'
+
+
+  %fieldset
     %legend Activity Consent Form
     .row
       .col-md-8

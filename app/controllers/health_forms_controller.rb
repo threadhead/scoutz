@@ -5,7 +5,8 @@ class HealthFormsController < ApplicationController
   after_action :verify_authorized
 
   def index
-    authorize HealthForm
+    # authorize HealthForm
+    authorize_health_form
     @users = @unit.users.order(:type).by_name_lf
     @users_count = @unit.users.count
     if params[:search_typeahead] && !params[:search_typeahead].blank?
@@ -16,21 +17,25 @@ class HealthFormsController < ApplicationController
   end
 
   def show
-    authorize @health_form
+    # authorize @health_form
+    authorize_health_form
   end
 
   def new
-    authorize HealthForm
+    # authorize HealthForm
+    authorize_health_form
     @user = User.find(params[:user_id])
     @health_form = HealthForm.new(user: @user, unit: @unit)
   end
 
   def edit
-    authorize @health_form
+    # authorize @health_form
+    authorize_health_form
   end
 
   def create
-    authorize HealthForm
+    # authorize HealthForm
+    authorize_health_form
     @health_form = HealthForm.new(health_form_params)
 
     if @health_form.save
@@ -41,7 +46,8 @@ class HealthFormsController < ApplicationController
   end
 
   def update
-    authorize @health_form
+    # authorize @health_form
+    authorize_health_form
 
     if @health_form.update_attributes(health_form_params)
       redirect_to @return || unit_health_forms_url(@unit), notice: 'Health form was successfully updated.'
@@ -51,7 +57,8 @@ class HealthFormsController < ApplicationController
   end
 
   def destroy
-    authorize @health_form
+    # authorize @health_form
+    authorize_health_form
     user = @health_form.user
     @health_form.destroy
     redirect_to unit_health_forms_url(@unit), notice: "#{user.name} health form was successfully removed."
@@ -66,7 +73,8 @@ class HealthFormsController < ApplicationController
     end
 
     def set_health_form
-      @health_form = HealthForm.find(params[:id])
+      # @health_form = HealthForm.find(params[:id])
+      @health_form = @unit.health_forms.where(id: params[:id]).first!
     end
 
     def set_return
@@ -76,6 +84,17 @@ class HealthFormsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def health_form_params
       params.require(:health_form).permit(:part_a_date, :part_b_date, :part_c_date, :florida_sea_base_date, :northern_tier_date, :philmont_date, :summit_tier_date, :user_id, :unit_id)
+    end
+
+
+    def authorize_health_form
+      # https://github.com/elabs/pundit/blob/master/lib/pundit.rb
+      # basically following the pundit.authorize method
+      query = params[:action].to_s + "?"
+      @_policy_authorized = true
+      @_pundit_policy_authorized = true
+      policy = HealthFormPolicy.new(current_user, @health_form, @unit)
+      raise Pundit::NotAuthorizedError.new("not allowed to edit this health form") unless policy.public_send(query)
     end
 
 end

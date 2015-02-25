@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130035850) do
+ActiveRecord::Schema.define(version: 20150225154728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -389,6 +389,7 @@ ActiveRecord::Schema.define(version: 20150130035850) do
     t.string   "home_map_url"
     t.datetime "monthly_newsletter_sent_at"
     t.datetime "weekly_newsletter_sent_at"
+    t.string   "health_form_coordinator_ids",                 default: "--- []\n"
   end
 
   add_index "units", ["council_id"], name: "index_units_on_council_id", using: :btree

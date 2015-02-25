@@ -4,6 +4,7 @@ class Unit < ActiveRecord::Base
   before_save :update_consent_form_attributes
   # before_create :save_original_filename
 
+  serialize :health_form_coordinator_ids, Array
 
   has_and_belongs_to_many :users
   # has_many :scouts, through: :users
@@ -143,6 +144,23 @@ class Unit < ActiveRecord::Base
     # SUB_UNIT_TYPES.keys
   end
 
+
+
+
+  def health_form_coordinators
+    if has_heath_form_coordinators
+      # adults in the form_coordinators_ids list, or an admin
+      t = User.arel_table
+      # unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
+      self.adults.where(id: health_form_coordinator_ids.reject(&:empty?))
+    else
+      self.adults.role_is_leader_or_above
+    end
+  end
+
+  def has_heath_form_coordinators
+    !health_form_coordinator_ids.reject(&:empty?).empty?
+  end
 
 
 

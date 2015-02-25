@@ -28,7 +28,7 @@
                 %td.centered= user_picture_circle(user)
 
                 - if user_health_form
-                  - if policy(HealthForm).edit?
+                  - if HealthFormPolicy.new(current_user, user_health_form, unit).edit?
                     %td= link_to user.name_lf, edit_unit_health_form_path(unit, user_health_form)
                   - else
                     %td= user.name_lf
@@ -37,16 +37,22 @@
                     %td.centered
                       %span.label.large{class: form_date_label(user_health_form.try(hf))}= user_health_form.send(hf).try(:to_s, :mo_abbr_year)
 
-                  %td.centered= link_to 'remove all', unit_health_form_path(unit, user_health_form), method: :delete, data: {confirm: "Are you sure you want to remove ALL health forms?"}, class: 'btn btn-default btn-xs'
+                  %td.centered
+                    .btn-group
+                      - if HealthFormPolicy.new(current_user, user_health_form, unit).edit?
+                        = link_to 'Edit', edit_unit_health_form_path(unit, user_health_form), class: 'btn btn-default btn-xs'
+
+                      - if HealthFormPolicy.new(current_user, user_health_form, unit).destroy?
+                        = link_to 'Remove All', unit_health_form_path(unit, user_health_form), method: :delete, data: {confirm: "Are you sure you want to remove ALL health forms?"}, class: 'btn btn-default btn-xs'
 
                 - else
-                  - if policy(HealthForm).create?
+                  - if HealthFormPolicy.new(current_user, nil, unit).create?
                     %td= link_to user.name_lf, new_unit_health_form_path(unit, user_id: user.id)
                   - else
                     %td= user.name_lf
 
                   %td{colspan: '7'}
-                  %td.centered= link_to 'add', new_unit_health_form_path(unit, user_id: user.id), class: 'btn btn-default btn-xs'
+                  %td.centered= link_to 'Add', new_unit_health_form_path(unit, user_id: user.id), class: 'btn btn-default btn-xs'
 
       %small showing #{users.size} of #{users_count}
 

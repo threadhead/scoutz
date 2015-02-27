@@ -1,8 +1,6 @@
 require 'open-uri'
 
 class MessageMailer < MailerBase
-  add_template_helper(UsersHelper)
-
   def email_blast(recipient, email_message)
     @email_message = email_message
     @events = @email_message.events

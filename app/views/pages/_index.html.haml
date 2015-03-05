@@ -21,7 +21,7 @@
 
   = cache ["unit-#{unit.id}", cache_key_for_pages(pages)] do
     - pages.each do |page|
-      = cache ["unit-#{unit.id}", page] do
+      = cache ["unit-#{unit.id}", :page_index, page] do
         %tr{class: ('warning' if page.deactivated?)}
           %td
             - if page.active?

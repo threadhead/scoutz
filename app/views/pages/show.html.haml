@@ -1,14 +1,6 @@
 .page-header
-  %h2= @page.title
+  %h2 Page: #{@page.title}
 
 .row
   .col-md-10.col-md-offset-1
-    .panel.panel-default
-      = cache ["unit-#{@unit.id}", @page] do
-        .panel-body= @page.body.html_safe
-      .panel-footer
-        .small Updated: #{@page.updated_at.to_s(:short_ampm)}
-        - if policy(@page).edit?
-          = link_to 'edit', edit_unit_page_path(@unit, @page), class: 'small'
-          %span.small= '|'
-          = link_to 'reorder', unit_pages_path(@unit), class: 'small'
+    = render @page

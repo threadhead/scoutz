@@ -1,0 +1,13 @@
+.panel.panel-default
+  .panel-heading
+    .panel-title= page.title
+
+  = cache ["unit-#{page.unit.id}", page] do
+    .panel-body= page.body.html_safe
+
+  .panel-footer
+    .small Updated: #{page.updated_at.to_s(:short_ampm)}
+    - if policy(page).edit?
+      = link_to 'edit', edit_unit_page_path(page.unit, page), class: 'small'
+      %span.small= '|'
+      = link_to 'reorder', unit_pages_path(page.unit), class: 'small'

@@ -32,31 +32,32 @@
 
 = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
 
-= cache ["unit-#{@unit.id}", :admin, @page] do
-  .row
-    .col-md-8
-      .text-xlarge
-        %table.table
-          %tr
-            %td.td-label Public
-            %td= @page.public ? 'Yes' : 'No'
+-# = cache ["unit-#{@unit.id}", :admin, @page] do
+.row
+  .col-md-8
+    .text-xlarge
+      %table.table
+        %tr
+          %td.td-label Public
+          %td= @page.public ? 'Yes' : 'No'
 
-          %tr
-            %td.td-label Created by
-            %td= @page.created_by.try(:name)
+        %tr
+          %td.td-label Created by
+          %td= @page.created_by.try(:name)
 
-          %tr
-            %td.td-label Last update
-            %td= @page.updated_at.to_s(:short_ampm)
+        %tr
+          %td.td-label Last update
+          %td= @page.updated_at.to_s(:short_ampm)
 
-          %tr
-            %td.td-label Updates
-            %td
-              %span.small= simple_format @page.update_history
+        %tr
+          %td.td-label Updates
+          %td
+            %span.small= simple_format @page.update_history
 
-  .row
-    .col-md-10.col-md-offset-1
-      %h4 How this page will appear:
-      .panel.panel-default
+.row
+  .col-md-10.col-md-offset-1
+    %h4 How this page will appear:
+    .panel.panel-default
+      = cache ["unit-#{@unit.id}", @page] do
         .panel-body= @page.body.html_safe
 

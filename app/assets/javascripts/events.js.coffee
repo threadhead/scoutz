@@ -277,3 +277,10 @@ jQuery ->
     placeholder: 'Select recipients'
 
   $("select#event_user_ids").select2()
+
+  $("#event-list em.signup-deadline").each ->
+    signupDeadline = $(@).data('signup-deadline')
+    if signupDeadline != ""
+      mTime = moment(signupDeadline)
+      if mTime.isValid()
+        $(@).html("signup ends #{mTime.fromNow()}")

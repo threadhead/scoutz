@@ -20,17 +20,19 @@
   .col-md-9
     = render partial: 'layouts/flash', locals: {flash: flash}
 
-    - @events.each do |event|
-      = #cache ["unit-#{@unit.id}", event] do
-      %p
-        = render partial: 'event_icon', locals: {event: event}
-        = link_to event_list_name(event), unit_event_path(@unit, event)
-        - if event.signup_required
-          %span.label.label-default #{event.attendee_count} going
-          %smaller
-            %em signup ends in #{distance_of_time_in_words_to_now(event.signup_deadline)}
+    #event-list
+      - @events.each do |event|
+        = cache ["unit-#{@unit.id}", event] do
+          %p
+            = render partial: 'event_icon', locals: {event: event}
+            = link_to event_list_name(event), unit_event_path(@unit, event)
+            - if event.signup_required
+              %span.label.label-default #{event.attendee_count} going
+              %smaller
+                -# %em signup ends in #{distance_of_time_in_words_to_now(event.signup_deadline)}
+                %em.signup-deadline{ data: { 'signup-deadline' => event.signup_deadline.iso8601 } }
 
-    = paginate @events, theme: 'bootstrap'
+      = paginate @events, theme: 'bootstrap'
 
   .col-md-3
     .panel.panel-default

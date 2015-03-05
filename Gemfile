@@ -16,7 +16,7 @@ gem 'haml'
 gem 'pundit'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog', require: "fog/aws/storage"
+gem 'fog', require: 'fog/aws/storage'
 gem 'mini_magick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'
@@ -26,7 +26,7 @@ gem 'wicked'
 gem 'sanitize', '~> 2.1.0'
 # gem 'gmaps4rails'
 gem 'public_activity'
-gem "non-stupid-digest-assets"
+gem 'non-stupid-digest-assets'
 gem 'bootstrap_form'
 gem 'kaminari'
 gem 'acts_as_list' #, git: 'https://github.com/swanandp/acts_as_list.git'
@@ -63,7 +63,7 @@ gem 'jquery-rails'
 
 #fullCalendar is sensitive to the jQuery/jQuery UI version!
 # gem 'jquery-ui-rails'
-gem 'whenever', :require => false
+gem 'whenever', require: false
 
 group :development, :test do
     # Call 'debugger' anywhere in the code to stop execution and get a debugger console
@@ -75,7 +75,7 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem "spring-commands-rspec"
+  gem 'spring-commands-rspec'
   gem 'whiny_validation'
   gem 'haml-rails'
   gem 'rspec-rails'
@@ -97,6 +97,7 @@ group :development do
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
+  gem 'airbrussh', require: false
   # gem 'capistrano-inspeqtor'
 
   gem 'guard'
@@ -106,7 +107,7 @@ group :development do
 
   # gem 'meta_request'
   gem 'rack-livereload'
-  gem "letter_opener"
+  gem 'letter_opener'
   gem 'wirble', require: false
   gem 'hirb', require: false
   gem 'brakeman', require: false

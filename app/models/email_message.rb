@@ -49,7 +49,7 @@ class EmailMessage < ActiveRecord::Base
 
 
   def subject_with_unit
-    "#{self.unit.email_name} #{subject}"
+    "#{subject} #{self.unit.email_name}"
   end
 
   def recipients

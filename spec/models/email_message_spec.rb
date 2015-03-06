@@ -170,7 +170,7 @@ RSpec.describe EmailMessage do
 
     it 'returns the subject with unit name' do
       @email_message.subject = "Home with Homies"
-      expect(@email_message.subject_with_unit).to eq("[BS Troop 535] Home with Homies")
+      expect(@email_message.subject_with_unit).to eq("Home with Homies [BS Troop 535]")
     end
   end
 

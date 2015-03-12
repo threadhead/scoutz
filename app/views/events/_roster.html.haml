@@ -1,0 +1,52 @@
+.roster-header
+  Roster
+
+  -# we can use use .print_roster? here because it is the same as sms_attendees? and email_attendees?
+  - if !event.event_signups.empty? && policy(event).print_roster?
+    .pull-right.btn-group
+      %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
+        %i.fa.fa-gear
+        %span.caret
+      %ul.dropdown-menu
+        - if policy(event).print_roster?
+          %li
+            = link_to unit_event_path(event.unit, event, print: true) do
+              %i.fa.fa-print
+              Print
+        - if policy(event).sms_attendees?
+          %li
+            = link_to sms_attendees_event_path(event) do
+              %i.fa.fa-phone
+              SMS all attendees
+        - if policy(event).email_attendees?
+          %li
+            = link_to email_attendees_event_path(event) do
+              %i.fa.fa-envelope
+              Email all attendees
+    %div.clearfix
+
+%div.clearfix
+-# && !event.after_signup_deadline?
+- if event.signup_required && policy(event).add_signups?
+  %p#event-signup-add
+    = render partial: 'event_signups/signup_add', locals: { event: event }
+
+%table.table-condensed.table-striped.table-roster
+  %thead
+    %tr
+      %th{colspan: '3'} Name
+      - if event.health_forms_required?
+        %th.centered HF
+      %th.centered Driving
+      %th.centered Ride
+      - if event.consent_required?
+        %th.centered ACF
+      %th Info
+      - # only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
+      - if policy(EventSignup.new(event: event)).update?
+        %th.right-aligned Action
+  %tbody#event-signup-roster
+    = render partial: 'event_signups/event_roster', collection: event.event_signups.by_scout_name_lf
+%br
+.bottom-border
+

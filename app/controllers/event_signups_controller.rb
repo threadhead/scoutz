@@ -32,12 +32,11 @@ class EventSignupsController < ApplicationController
       if @event_signup.save
         flash.now[:info] = "#{@event_signup.scout.full_name} is now registered."
         create_activity(:create)
+        set_event
         # format.html { redirect_for_signups }
-        # format.json { render json: @event_signup, status: :created, location: @event_signup }
         format.js   { js_update_success }
       else
         # format.html { redirect_for_signups }
-        # format.json { render json: @event_signup.errors, status: :unprocessable_entity }
         format.js   { render :edit }
       end
     end
@@ -52,11 +51,10 @@ class EventSignupsController < ApplicationController
         flash.now[:info] = "#{@event_signup.scout.full_name}'s sign up changed."
 
         # format.html { redirect_for_signups }
-        # format.json { head :no_content }
+        set_event
         format.js   { js_update_success }
       else
         # format.html { redirect_for_signups }
-        # format.json { render json: @event_signup.errors, status: :unprocessable_entity }
         format.js   { render :edit }
       end
     end
@@ -69,7 +67,6 @@ class EventSignupsController < ApplicationController
     @event_signup.destroy
     respond_to do |format|
       # format.html { redirect_to (event_submit? ? event_url(@event) : event_signups_url) }
-      # format.json { head :no_content }
       format.js   { js_update_success }
     end
   end
@@ -84,6 +81,7 @@ class EventSignupsController < ApplicationController
         else
           "#{@event_signup.scout.full_name}'s activty consent form removed."
         end
+        set_event
         format.js { js_update_success }
       else
         format.js { render :edit }

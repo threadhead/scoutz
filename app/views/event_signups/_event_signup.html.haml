@@ -8,6 +8,7 @@
               = user_picture_circle(event_signup.scout)
             %p.xlarge
               %strong Sign Up #{event_signup.scout.f_name_l_initial}
+
             - if event_signup.new_record? && event_signup.event.after_signup_deadline?
               %br
               .alert.alert-info Signup has passed for this event.

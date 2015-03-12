@@ -256,7 +256,8 @@ jQuery ->
             lng: latlng.lng()
 
 
-  $("#event-signup-add").on("click", "button#add-event-signup-button", ->
+  # $("#event-signup-add").on("click", "button#add-event-signup-button", ->
+  $("#event-roster").on("click", "#event-signup-add button#add-event-signup-button", ->
     scoutId = $("select#add-event-signup-select").val()
     eventId = $("select#add-event-signup-select").data("event-id")
     if scoutId
@@ -266,7 +267,8 @@ jQuery ->
         )
     )
 
-  $("tbody#event-signup-roster").on("click", "a.edit-event-signup-modal", ->
+  # $("tbody#event-signup-roster").on("click", "a.edit-event-signup-modal", ->
+  $("#event-roster").on("click", "tbody#event-signup-roster a.edit-event-signup-modal", ->
     eventSignupId = $(@).data("event-signup-id")
     $.getScript("/event_signups/#{eventSignupId}/edit.js", (data, textStatus, jqxhr) ->
       $("div#event-signup-modal-form").modal()
@@ -278,6 +280,9 @@ jQuery ->
 
   $("select#event_user_ids").select2()
 
+
+
+  # in the activity list, set the activity signup deadline 'xxx from now' time string using moment.js
   $("#event-list em.signup-deadline").each ->
     signupDeadline = $(@).data('signup-deadline')
     if signupDeadline != ""
@@ -288,6 +293,7 @@ jQuery ->
         else
           $(@).html("signup ends #{mTime.fromNow()}")
 
+  # in the activity list, set the 'xxx ago' time string using moment.js
   $("ul#event-activity smaller.activity-created").each ->
     activityCreated = $(@).data('activity-created')
     if activityCreated != ""

@@ -11,11 +11,12 @@
 
 
   // update the event roster
-  $("tbody#event-signup-roster").html("#{escape_javascript(render partial: 'event_signups/event_roster', collection: @event_rosters)}");
+  // $("tbody#event-signup-roster").html("#{escape_javascript(render partial: 'event_signups/event_roster', collection: @event_rosters)}");
+  $("#event-roster").html("#{escape_javascript(render partial: 'events/roster', locals: { event: @event })}");
 
 
   // update the signup add select
-  $("p#event-signup-add").html("#{escape_javascript(render partial: 'event_signups/signup_add', locals: { event: @event_signup.event })}");
+  // $("p#event-signup-add").html("#{escape_javascript(render partial: 'event_signups/signup_add', locals: { event: @event_signup.event })}");
 
   // re-bind tooltips to replacement elements
   $("[data-toggle='tooltip']").tooltip()

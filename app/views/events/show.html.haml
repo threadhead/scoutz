@@ -206,7 +206,7 @@
         .bottom-border
 
   .col-md-4
-    - if @event.signup_required && !@event.after_signup_deadline?
+    - if @event.signup_required #&& !@event.after_signup_deadline?
       #event-signups-list
         = render partial: 'event_signups/event_signup', collection: @event_signups, locals: {event: @event}
     - else

@@ -93,7 +93,7 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'capistrano'
+  gem 'capistrano', '~> 3.3.5'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
   gem 'capistrano-rvm'

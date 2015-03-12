@@ -154,30 +154,35 @@
 
       - if @event.signup_required
         .bottom-border
-        %strong Roster
-        - unless @event_rosters.empty?
-          .pull-right.btn-group
-            %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
-              %i.fa.fa-gear
-              %span.caret
-            %ul.dropdown-menu
-              %li
-                = link_to unit_event_path(@unit, @event, print: true) do
-                  %i.fa.fa-print
-                  Print
-              - if policy(@event).sms_attendees?
+
+        .roster-header
+          Roster
+
+          - unless @event_rosters.empty?
+            .pull-right.btn-group
+              %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
+                %i.fa.fa-gear
+                %span.caret
+              %ul.dropdown-menu
                 %li
-                  = link_to sms_attendees_event_path(@event) do
-                    %i.fa.fa-phone
-                    SMS all attendees
-              - if policy(@event).email_attendees?
-                %li
-                  = link_to email_attendees_event_path(@event) do
-                    %i.fa.fa-envelope
-                    Email all attendees
+                  = link_to unit_event_path(@unit, @event, print: true) do
+                    %i.fa.fa-print
+                    Print
+                - if policy(@event).sms_attendees?
+                  %li
+                    = link_to sms_attendees_event_path(@event) do
+                      %i.fa.fa-phone
+                      SMS all attendees
+                - if policy(@event).email_attendees?
+                  %li
+                    = link_to email_attendees_event_path(@event) do
+                      %i.fa.fa-envelope
+                      Email all attendees
+            %div.clearfix
 
         %div.clearfix
-        - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
+        -# && !@event.after_signup_deadline?
+        - if @event.signup_required && policy(@event).add_signups?
           %p#event-signup-add
             = render partial: 'event_signups/signup_add', locals: { event: @event }
 

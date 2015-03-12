@@ -156,15 +156,22 @@
         .bottom-border
         %strong Roster
         - unless @event_rosters.empty?
-          .pull-right
-            - if policy(@event).sms_attendees?
-              = link_to sms_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                %i.fa.fa-phone
-                SMS all attendees
-            - if policy(@event).email_attendees?
-              = link_to email_attendees_event_path(@event), class: 'btn btn-default btn-sm' do
-                %i.fa.fa-envelope
-                Email all attendees
+          .pull-right.btn-group
+            %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
+              %i.fa.fa-gear
+              %span.caret
+            %ul.dropdown-menu
+              - if policy(@event).sms_attendees?
+                %li
+                  = link_to sms_attendees_event_path(@event) do
+                    %i.fa.fa-phone
+                    SMS all attendees
+              - if policy(@event).email_attendees?
+                %li
+                  = link_to email_attendees_event_path(@event) do
+                    %i.fa.fa-envelope
+                    Email all attendees
+
         %div.clearfix
         - if policy(@event).add_signups? && @event.signup_required && !@event.after_signup_deadline?
           %p#event-signup-add

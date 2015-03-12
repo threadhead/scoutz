@@ -29,7 +29,7 @@ RSpec.describe MessageMailer, type: :mailer do
 
   shared_examples 'renders headers' do
     it "renders the headers" do
-      expect(mail.subject).to eq("[CS Pack 134] Email Test Message Subject")
+      expect(mail.subject).to eq("Email Test Message Subject [CS Pack 134]")
       expect(mail.from).to eq(["noreply@scoutt.in"])
       expect(mail.to).to eq([@recipient.email])
       expect(mail.reply_to).to eq([@sender.email])

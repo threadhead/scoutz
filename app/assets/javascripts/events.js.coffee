@@ -283,7 +283,10 @@ jQuery ->
     if signupDeadline != ""
       mTime = moment(signupDeadline)
       if mTime.isValid()
-        $(@).html("signup ends #{mTime.fromNow()}")
+        if mTime <= moment()
+          $(@).html("signup closed")
+        else
+          $(@).html("signup ends #{mTime.fromNow()}")
 
   $("ul#event-activity smaller.activity-created").each ->
     activityCreated = $(@).data('activity-created')

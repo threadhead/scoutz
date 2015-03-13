@@ -74,7 +74,7 @@ CKEDITOR.editorConfig = function( config ) {
     var csrf_param = $('meta[name=csrf-param]').attr('content');
     var params = new Object();
     params[csrf_param] = csrf_token;
-    params['unit_id'] = $('input#unit_id').val();
+    params['unit_id'] = $('input#email_message_unit_id').val();
     return params;
     // var csrf_token, csrf_param, meta,
     //     metas = document.getElementsByTagName('meta'),

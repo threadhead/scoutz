@@ -1,8 +1,4 @@
 Scoutz::Application.routes.draw do
-  get 'user_email/edit'
-
-  get 'user_email/update'
-
   get "/ping/#{ENV['PING_KEY']}"   => 'status#ping'
   get "/health/#{ENV['PING_KEY']}" => 'status#health'
 

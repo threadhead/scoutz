@@ -11,6 +11,18 @@ class Scout < User
   end
 
 
+  # from an adult, find all scouts, and other adults related through those scouts
+  def unit_family(unit)
+    adult_ids = unit_adults(unit).pluck(:id)
+    scout_ids = Scout.joins(:adults).where(user_relationships: {adult_id: adult_ids})
+                     .joins(:units).where(units: {id: unit})
+                     .pluck(:id)
+    user_ids = (adult_ids + scout_ids) << self.id
+    User.where(id: user_ids)
+  end
+
+
+
   def has_adult?(user)
     self.adults.where(id: user).exists?
   end

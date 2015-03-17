@@ -64,7 +64,7 @@ class EventsController < ApplicationController
   def show
     authorize @event
     @event_signups = @event.user_signups(current_user)
-    @event_rosters = EventSignup.for_event(@event).by_scout_name_lf
+    # @event_rosters = EventSignup.for_event(@event).by_user_name_lf
     if params[:print]
       render :show_print, layout: 'print'
     else

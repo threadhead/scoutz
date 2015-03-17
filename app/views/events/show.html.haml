@@ -154,7 +154,7 @@
       - if @event.signup_required
         .bottom-border
         #event-roster
-          = render partial: 'roster', locals: { event: @event, event_rosters: @event_rosters }
+          = render partial: 'roster', locals: { event: @event }
 
   .col-md-4
     - if @event.signup_required #&& !@event.after_signup_deadline?

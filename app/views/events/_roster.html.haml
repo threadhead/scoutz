@@ -28,13 +28,18 @@
 %div.clearfix
 -# && !event.after_signup_deadline?
 - if event.signup_required && policy(event).add_signups?
-  %p#event-signup-add
-    = render partial: 'event_signups/signup_add', locals: { event: event }
+  #event-signup-add.row
+    .col-xs-12
+      = select_tag :add_signup, options_from_collection_for_select(event.users_without_signup, :id, :name_lf), prompt: '', data: { 'event-id' => event.id }, id: 'add-event-signup-select', style: "width: 50%;"
+      = button_tag 'add', class: 'btn btn-default', id: 'add-event-signup-button'
+      %br
+      %br
+
 
 %table.table-condensed.table-striped.table-roster
   %thead
     %tr
-      %th{colspan: '3'} Name
+      %th{colspan: '2'} Name
       - if event.health_forms_required?
         %th.centered HF
       %th.centered Driving
@@ -46,7 +51,7 @@
       - if policy(EventSignup.new(event: event)).update?
         %th.right-aligned Action
   %tbody#event-signup-roster
-    = render partial: 'event_signups/event_roster', collection: event.event_signups.by_scout_name_lf
+    = render partial: 'event_signups/event_roster', collection: event.event_signups.by_user_name_lf
 %br
 .bottom-border
 

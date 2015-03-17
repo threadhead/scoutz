@@ -258,11 +258,11 @@ jQuery ->
 
   # $("#event-signup-add").on("click", "button#add-event-signup-button", ->
   $("#event-roster").on("click", "#event-signup-add button#add-event-signup-button", ->
-    scoutId = $("select#add-event-signup-select").val()
+    userId = $("select#add-event-signup-select").val()
     eventId = $("select#add-event-signup-select").data("event-id")
-    if scoutId
+    if userId
       # console.log "s: #{scoutId}, e: #{eventId}"
-      $.getScript("/event_signups/new.js?scout_id=#{scoutId}&event_id=#{eventId}", (data, textStatus, jqxhr) ->
+      $.getScript("/event_signups/new.js?user_id=#{userId}&event_id=#{eventId}", (data, textStatus, jqxhr) ->
         $("div#event-signup-modal-form").modal()
         )
     )
@@ -279,6 +279,10 @@ jQuery ->
     placeholder: 'Select recipients'
 
   $("select#event_user_ids").select2()
+
+  $("select#add-event-signup-select").select2
+    placeholder: '-- add signup --'
+    allowClear: true
 
 
 

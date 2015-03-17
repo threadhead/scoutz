@@ -2,13 +2,15 @@ class EventSignup < ActiveRecord::Base
   include PublicActivity::Common
 
   belongs_to :event, touch: true
+  belongs_to :user
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"
   belongs_to :parent, :class_name => "Adult", :foreign_key => "permission_by"
 
   validates :adults_attending, numericality: { greater_than: -1 }
   validates :scouts_attending, numericality: { greater_than: -1 }
   validates :siblings_attending, numericality: { greater_than: -1 }
-  validates :scout_id, uniqueness: {scope: :event_id}
+  # validates :scout_id, uniqueness: {scope: :event_id}
+  validates :user_id, presence: true, uniqueness: {scope: :event_id}
 
   validate :at_least_one_attending
   def at_least_one_attending
@@ -54,7 +56,7 @@ class EventSignup < ActiveRecord::Base
 
   ## scopes
   scope :for_event, -> event { where(event_id: event.id) }
-  scope :by_scout_name_lf, -> { joins(:scout).order('"users"."last_name" ASC, "users"."first_name" ASC') }
+  scope :by_user_name_lf, -> { joins(:user).order('"users"."last_name" ASC, "users"."first_name" ASC') }
 
 
   def self.need_carpool_select_options

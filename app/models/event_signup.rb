@@ -4,7 +4,7 @@ class EventSignup < ActiveRecord::Base
   belongs_to :event, touch: true
   belongs_to :user
   belongs_to :scout, class_name: "Scout", foreign_key: "scout_id"
-  belongs_to :parent, :class_name => "Adult", :foreign_key => "permission_by"
+  belongs_to :parent, class_name: "Adult", foreign_key: "permission_by"
 
   validates :adults_attending, numericality: { greater_than: -1 }
   validates :scouts_attending, numericality: { greater_than: -1 }
@@ -15,7 +15,7 @@ class EventSignup < ActiveRecord::Base
   validate :at_least_one_attending
   def at_least_one_attending
     if adults_attending == 0 && scouts_attending == 0 && siblings_attending == 0
-      errors.add(:base, "#{self.scout.try(:full_name)}: at least one person must attend.")
+      errors.add(:base, "#{self.user.try(:full_name)}: at least one person must attend.")
     end
   end
 

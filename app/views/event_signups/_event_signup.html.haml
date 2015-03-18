@@ -20,7 +20,6 @@
 
 
             - if event_signup.new_record? && event_signup.event.after_signup_deadline?
-              %br
-              .alert.alert-info Signup has passed for this event.
+              .alert.alert-info.alert-no-margin Signup has passed for this event.
             - else
               = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: false}

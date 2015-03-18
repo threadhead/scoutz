@@ -27,13 +27,6 @@ class Scout < User
     self.adults.where(id: user).exists?
   end
 
-  def signed_up_for_event?(event)
-    EventSignup.where(scout_id: self.id, event_id: event.id).exists?
-  end
-
-  def event_signup_up(event)
-    EventSignup.where(scout_id: self.id, event_id: event.id).first
-  end
 
 
   def self.meta_search(unit_scope: nil, keywords:)

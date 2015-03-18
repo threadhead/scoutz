@@ -15,7 +15,7 @@ class EventSignupsController < ApplicationController
   end
 
   def new
-    @event_signup = EventSignup.new(scout_id: params[:scout_id], event_id: params[:event_id])
+    @event_signup = EventSignup.new(user_id: params[:user_id], event_id: params[:event_id])
     authorize @event_signup
     render :edit
   end
@@ -30,7 +30,7 @@ class EventSignupsController < ApplicationController
 
     respond_to do |format|
       if @event_signup.save
-        flash.now[:info] = "#{@event_signup.scout.full_name} is now registered."
+        flash.now[:info] = "#{@event_signup.user.full_name} is now registered."
         create_activity(:create)
         set_event
         # format.html { redirect_for_signups }
@@ -48,7 +48,7 @@ class EventSignupsController < ApplicationController
 
     respond_to do |format|
       if @event_signup.update_attributes(event_signup_params)
-        flash.now[:info] = "#{@event_signup.scout.full_name}'s sign up changed."
+        flash.now[:info] = "#{@event_signup.user.full_name}'s sign up changed."
 
         # format.html { redirect_for_signups }
         set_event
@@ -62,7 +62,7 @@ class EventSignupsController < ApplicationController
 
   def destroy
     authorize @event_signup
-    flash.now[:notice] = "#{@event_signup.scout.full_name}'s sign up cancelled."
+    flash.now[:notice] = "#{@event_signup.user.full_name}'s sign up cancelled."
     create_activity(:destroy)
     @event_signup.destroy
     respond_to do |format|
@@ -77,9 +77,9 @@ class EventSignupsController < ApplicationController
     respond_to do |format|
       if @event_signup.save
         flash.now[:info] = if @event_signup.has_activity_consent_form?
-          "#{@event_signup.scout.full_name}'s activty consent form was received."
+          "#{@event_signup.user.full_name}'s activty consent form was received."
         else
-          "#{@event_signup.scout.full_name}'s activty consent form removed."
+          "#{@event_signup.user.full_name}'s activty consent form removed."
         end
         set_event
         format.js { js_update_success }
@@ -113,7 +113,7 @@ class EventSignupsController < ApplicationController
     end
 
     def set_event_rosters(event)
-      @event_rosters = EventSignup.for_event(event).by_scout_name_lf
+      @event_rosters = EventSignup.for_event(event).by_user_name_lf
     end
 
     def js_update_success
@@ -149,11 +149,11 @@ class EventSignupsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_signup_params
-      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :need_carpool_seats, :has_carpool_seats, :scout_id, :event_id, :permission_check_box)
+      params.require(:event_signup).permit(:adults_attending, :comment, :scouts_attending, :siblings_attending, :need_carpool_seats, :has_carpool_seats, :user_id, :event_id, :permission_check_box)
     end
 
     def create_activity(task)
-      @event_signup.create_activity task, owner: current_user, unit_id: @event_signup.unit.id, parameters: {event_id: @event_signup.event.id, scout_id: @event_signup.scout.id}
+      @event_signup.create_activity task, owner: current_user, unit_id: @event_signup.unit.id, parameters: {event_id: @event_signup.event.id, user_id: @event_signup.user.id}
     end
 
 end

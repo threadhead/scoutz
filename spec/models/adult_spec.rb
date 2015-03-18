@@ -92,4 +92,40 @@ RSpec.describe Adult do
 
     end
   end
+
+
+  describe '#unit_family(unit)' do
+    it 'should find the adult with all their scouts in a unit' do
+      unit_family = @adult.unit_family(@unit1)
+      expect(unit_family).to include(@adult)
+      expect(unit_family).to include(@scout1)
+
+      expect(unit_family).not_to include(@adult2)
+      expect(unit_family).not_to include(@adult3)
+      expect(unit_family).not_to include(@scout2)
+      expect(unit_family).not_to include(@scout3)
+    end
+
+    it 'should find the adult with all their related scouts in antoher unit' do
+      unit_family = @adult.unit_family(@unit2)
+      expect(unit_family).to include(@adult)
+      expect(unit_family).to include(@scout2)
+
+      expect(unit_family).not_to include(@adult2)
+      expect(unit_family).not_to include(@adult3)
+      expect(unit_family).not_to include(@scout1)
+      expect(unit_family).not_to include(@scout3)
+    end
+
+    it 'if only an adult, then it just returns that adult' do
+      unit_family = @adult2.unit_family(@unit1)
+      expect(unit_family).to include(@adult2)
+
+      expect(unit_family).not_to include(@scout1)
+      expect(unit_family).not_to include(@scout2)
+      expect(unit_family).not_to include(@scout3)
+      expect(unit_family).not_to include(@adult1)
+      expect(unit_family).not_to include(@adult3)
+    end
+  end
 end

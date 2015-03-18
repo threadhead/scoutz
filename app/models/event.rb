@@ -158,23 +158,23 @@ class Event < ActiveRecord::Base
   end
 
   def user_signups(user)
-    user.unit_scouts(self.unit).map do |scout|
-      self.event_signups.where(scout_id: scout.id).first || EventSignup.new(scout_id: scout.id, event_id: self.id)
+    user.unit_family(self.unit).order(type: :desc).map do |user|
+      self.event_signups.where(user_id: user.id).first || EventSignup.new(user_id: user.id, event_id: self.id)
     end
   end
 
-  def scouts_without_signup
-    all_ids = unit.scouts.pluck(:id)
-    signed_up_ids = event_signups.pluck(:scout_id)
-    Scout.where(id: all_ids - signed_up_ids).by_name_lf
+  def users_without_signup
+    all_ids = unit.users.pluck(:id)
+    signed_up_ids = event_signups.pluck(:user_id)
+    User.where(id: all_ids - signed_up_ids).by_name_lf
     # unit.scouts.by_name_lf - Scout.where(id: event_signups.pluck(:scout_id))
   end
 
   def event_signup_users
-    scout_ids = self.event_signups.pluck(:scout_id)
-    scouts_with_email = Scout.where(id: scout_ids).with_email
-    adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: {scout_id: scout_ids})
-    scouts_with_email + adults_with_email
+    user_ids = self.event_signups.pluck(:user_id)
+    users_with_email = User.where(id: user_ids).with_email
+    adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: {scout_id: user_ids})
+    (users_with_email + adults_with_email).uniq
   end
 
   def event_signup_user_ids

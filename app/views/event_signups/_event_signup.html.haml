@@ -1,13 +1,23 @@
 = cache_unless event_signup.new_record?, event_signup do
   .row
     .col-md-12
-      .well.well-sm.well-reduced-text
+      .well.well-sm.well-reduced-text{class: signup_well_class(event_signup) }
         .row
           .col-md-12
             .pull-right
-              = user_picture_circle(event_signup.scout)
+              = user_picture_circle(event_signup.user)
+
             %p.xlarge
-              %strong Sign Up #{event_signup.scout.f_name_l_initial}
+              - if event_signup.new_record?
+                %strong Sign Up #{event_signup.user.f_name_l_initial}
+                %br
+                %br
+              - else
+                %span.fa-stack
+                  %i.fa.fa-circle.fa-stack-2x.green-color
+                  %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
+                %strong #{ event_signup.user.f_name_l_initial } is Signed Up!
+
 
             - if event_signup.new_record? && event_signup.event.after_signup_deadline?
               %br

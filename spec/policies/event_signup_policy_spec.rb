@@ -8,14 +8,14 @@ RSpec.describe EventSignupPolicy do
     @user.scouts << @scout
     @user.units << @unit
     @event = FactoryGirl.create(:event, unit: @unit)
-    @record = FactoryGirl.create(:event_signup, scout: @scout, event: @event)
+    @record = FactoryGirl.create(:event_signup, user: @scout, event: @event)
 
     @user2 = FactoryGirl.create(:adult)
     @user2.units << @unit
     @scout2 = FactoryGirl.create(:scout)
     @event2 = FactoryGirl.create(:event, unit: @unit)
     @event2.users << @user2
-    @record2 = FactoryGirl.create(:event_signup, scout: @scout2, event: @event2)
+    @record2 = FactoryGirl.create(:event_signup, user: @scout2, event: @event2)
   end
 
   def self.options

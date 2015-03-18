@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe EventSignup do
   it { should belong_to(:event).touch(true) }
-  it { should belong_to(:scout) }
+  it { should belong_to(:user) }
 
   it { should validate_numericality_of(:adults_attending) }
   it { should validate_numericality_of(:scouts_attending) }
@@ -14,8 +14,9 @@ RSpec.describe EventSignup do
     @event_signup = FactoryGirl.build(:event_signup, scouts_attending: 0)
     @event_signup.should_not be_valid
     # @event_signup.should have(1).error_on(:base)
-    expect(@event_signup.errors.count).to eq(1)
+    expect(@event_signup.errors.count).to eq(2)
     expect(@event_signup.errors).to include(:base)
+    expect(@event_signup.errors).to include(:user_id)
   end
 
 
@@ -23,7 +24,7 @@ RSpec.describe EventSignup do
     before do
       @event = FactoryGirl.create(:event)
       @scout = FactoryGirl.create(:scout)
-      @event_signup = FactoryGirl.build(:event_signup, event: @event, scout: @scout)
+      @event_signup = FactoryGirl.build(:event_signup, event: @event, user: @scout)
     end
 
     it 'on save' do

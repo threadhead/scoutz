@@ -1,80 +1,73 @@
-= form_for event_signup, remote: true do |f|
-  = f.hidden_field :scout_id
+= form_for event_signup, remote: true, html: { class: 'form-horizontal' } do |f|
+  = f.hidden_field :user_id
   = f.hidden_field :event_id
+  - if event_signup.user.scout?
+    = f.hidden_field :scouts_attending, value: '1'
+    = f.hidden_field :adults_attending, value: '0'
+    = f.hidden_field :siblings_attending, value: '0'
+  - elsif
+    = f.hidden_field :adults_attending, value: '1'
+    = f.hidden_field :scouts_attending, value: '0'
 
-  %table.table.table-condensed.table-borderless
-    %tr
-      %th.centered= f.label :scouts_attending, 'Scouts'
-      %th.centered= f.label :siblings_attending, 'Siblings'
-      %th.centered= f.label :adults_attending, 'Adults'
-    %tr
-      %td
-        .col-md-10.col-md-offset-1
-          = f.select :scouts_attending, [0,1], {}, {class: 'form-control input-sm'}
-      %td
-        .col-md-10.col-md-offset-1
-          = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control input-sm'}
-      %td
-        .col-md-10.col-md-offset-1
-          = f.select :adults_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control input-sm'}
+
 
   = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 100%;"
+  %br
 
-  %fieldset.fieldset-sm
-    %legend
-      %span.fa-stack.fa-stack-sm
-        %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
-        %i.fa.fa-car.fa-stack-1x.fa-inverse
-      Carpool
-    .form-horizontal
-      .form-group
-        = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-xs-4'
-        .col-xs-4
-          = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control input-sm'}
-        .col-xs-2.col-no-padding
-          %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need.'}
-            %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
-            %i.fa.fa-question.fa-stack-1x.fa-inverse
 
-      .form-group
-        = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-xs-4'
-        .col-xs-6
-          = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control input-sm'}
-        .col-xs-2.col-no-padding
-          %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle. Select  0 if you are driving but can\'t carpool.'}
-            %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
-            %i.fa.fa-question.fa-stack-1x.fa-inverse
+  - if event_signup.user.adult?
+    .form-group.form-group-xs
+      = f.label :siblings_attending, 'Children', class: 'control-label col-xs-4'
+      .col-xs-4
+        = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control input-xs'}
 
-  - if event_signup.event.consent_required? && policy(event_signup).activity_consent_form?
-    %fieldset.fieldset-sm
-      %legend
-        %span.fa-stack.fa-stack-sm
-          %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
-          %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
-        Activity Consent Form
 
-      .checkbox
-        .pull-right
-          - if event_signup.has_activity_consent_form?
-            %span.fa-stack.fa-lg
-              %i.fa.fa-circle.fa-stack-2x.green-color
-              %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
-          - else
-            %span.fa-stack.fa-lg
-              %i.fa.fa-circle.fa-stack-2x.red-color
-              %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
+  .form-group.form-group-xs
+    = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-xs-4'
+    .col-xs-4
+      = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control input-xs'}
+    .col-xs-2.col-no-padding
+      %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need.'}
+        %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+        %i.fa.fa-question.fa-stack-1x.fa-inverse
 
-        = f.label :permision_check_box do
-          = f.check_box :permission_check_box, value: event_signup.has_activity_consent_form?
-          ACF Received
-          - unless event_signup.permission_at.nil?
-            on: #{event_signup.permission_at.to_s(:short_ampm)}
+  - if event_signup.user.adult?
+    .form-group.form-group-xs
+      = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-xs-4'
+      .col-xs-4
+        = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control input-xs'}
+      .col-xs-2.col-no-padding
+        %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle.'}
+          %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
+          %i.fa.fa-question.fa-stack-1x.fa-inverse
+
+
+  - if event_signup.user.scout? && event_signup.event.consent_required? && policy(event_signup).activity_consent_form?
+
+    .checkbox
+      -# .pull-right
+      -#   - if event_signup.has_activity_consent_form?
+      -#     %span.fa-stack.fa-lg
+      -#       %i.fa.fa-circle.fa-stack-2x.green-color
+      -#       %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
+      -#   - else
+      -#     %span.fa-stack.fa-lg
+      -#       %i.fa.fa-circle.fa-stack-2x.red-color
+      -#       %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
+
+      = f.label :permision_check_box do
+        = f.check_box :permission_check_box, value: event_signup.has_activity_consent_form?
+        ACF Received
+        - unless event_signup.permission_at.nil?
+          on: #{event_signup.permission_at.to_s(:short_ampm)}
 
 
   %br
   .right-aligned
     - if close_button
       = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }
+
     - unless event_signup.new_record?
-      = link_to "Cancel reservation", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+      = link_to "Cancel", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+
     = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'

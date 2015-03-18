@@ -26,7 +26,7 @@ class EventSignupPolicy < ApplicationPolicy
 
   def users_signup?
     if record.respond_to?(:id)
-      EventSignup.where(id: record.id).where(scout_id: user.scouts).exists?
+      EventSignup.where(id: record.id).where(user_id: user.scouts).exists?
     else
       true
     end

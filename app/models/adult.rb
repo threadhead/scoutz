@@ -18,6 +18,17 @@ class Adult < User
   end
 
 
+  # from an adult, find all scouts, and other adults related through those scouts
+  def unit_family(unit)
+    scout_ids = unit_scouts(unit).pluck(:id)
+    adult_ids = Adult.joins(:scouts).where(user_relationships: {scout_id: scout_ids})
+                     .joins(:units).where(units: {id: unit.id})
+                     .pluck(:id)
+    user_ids = (adult_ids + scout_ids) << self.id
+    User.where(id: user_ids)
+  end
+
+
 
   def handle_relations_update(unit, update)
     # We need the ability to update adult/scout relationships using the standard controller methods

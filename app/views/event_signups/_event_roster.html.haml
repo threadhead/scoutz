@@ -1,25 +1,29 @@
 -# TODO: disable caching for now, need to figure how to cache whe users health form changes
 -# = cache event_roster do
 %tr
-  %td.centered= user_picture_circle(event_roster.scout)
-  %td.text-nobreak= event_roster.scout.name_lf
+  %td.centered= user_picture_circle(event_roster.user)
+  %td.text-nobreak
+    = event_roster.user.name_lf
+    - if event_roster.user.adult? && event_roster.siblings_attending > 0
+      %br
+      %small.text-grey + #{event_roster.siblings_attending} children
 
-  %td.text-grey.text-nobreak
-    Scout: #{event_roster.scouts_attending}
-    %br
-    Siblings: #{event_roster.siblings_attending}
-    %br
-    Adults: #{event_roster.adults_attending}
+  -# %td.text-grey.text-nobreak
+  -#   Scout: #{event_roster.scouts_attending}
+  -#   %br
+  -#   Siblings: #{event_roster.siblings_attending}
+  -#   %br
+  -#   Adults: #{event_roster.adults_attending}
 
   - if event_roster.event.health_forms_required?
     %td
-      - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
+      - user_health_form = event_roster.user.health_forms.unit(event_roster.event.unit)
       - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
         %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "All health forms up-to-date"}
           %i.fa.fa-circle.fa-stack-2x.green-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
       - else
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "One of #{event_roster.scout.first_name.possessive} required health forms will expire by event end"}
+        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "One of #{event_roster.user.first_name.possessive} required health forms will expire by event end"}
           %i.fa.fa-circle.fa-stack-2x.red-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
 
@@ -42,14 +46,15 @@
 
   - if event_roster.event.consent_required?
     %td
-      - if event_roster.has_activity_consent_form?
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Activity Consent Submitted: #{event_roster.permission_at.to_s(:short_ampm)}"}
-          %i.fa.fa-circle.fa-stack-2x.green-color
-          %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
-      - else
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Need to collect Activity Consent Form"}
-          %i.fa.fa-circle.fa-stack-2x.red-color
-          %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
+      - if event_roster.user.scout?
+        - if event_roster.has_activity_consent_form?
+          %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Activity Consent Submitted: #{event_roster.permission_at.to_s(:short_ampm)}"}
+            %i.fa.fa-circle.fa-stack-2x.green-color
+            %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
+        - else
+          %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Need to collect Activity Consent Form"}
+            %i.fa.fa-circle.fa-stack-2x.red-color
+            %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
 
 
   %td.signup-comment= event_roster.comment
@@ -68,7 +73,7 @@
           - if policy(EventSignup.new(event: event_roster.event)).update?
             %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: {event_signup_id: event_roster.id}
 
-          - if event_roster.event.consent_required? && policy(event_roster).activity_consent_form?
+          - if event_roster.user.scout? && event_roster.event.consent_required? && policy(event_roster).activity_consent_form?
             %li
               - if event_roster.has_activity_consent_form?
                 = link_to 'Remove Activity Consent', activity_consent_form_event_signup_path(event_roster, value: '0'), remote: true, method: :put
@@ -76,5 +81,5 @@
                 = link_to 'Activity Consent Received', activity_consent_form_event_signup_path(event_roster, value: '1'), remote: true, method: :put
 
       %br
-      %em.xs.text-muted.text-nobreak=event_roster.updated_at.to_s(:short_ampm)
+      %em.xs.text-muted.text-nobreak=event_roster.created_at.to_s(:short_ampm)
 

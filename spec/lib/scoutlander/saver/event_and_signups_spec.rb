@@ -3,12 +3,14 @@ require 'rails_helper'
 RSpec.describe Scoutlander::Saver::EventAndSignups do
   before(:all) do
     @unit = FactoryGirl.create(:unit)
+    @scout = FactoryGirl.create(:scout)
+    @scout.units << @unit
   end
 
   before do
     @datum = Scoutlander::Datum::Event.new(name: "Flubber", sl_profile: '654321')
     @event = FactoryGirl.create(:event, name: 'Minnie', unit: @unit, sl_profile: '654321')
-    @event_signup = FactoryGirl.create(:event_signup, event: @event)
+    @event_signup = FactoryGirl.create(:event_signup, event: @event, user: @scout)
   end
 
 
@@ -82,16 +84,16 @@ RSpec.describe Scoutlander::Saver::EventAndSignups do
       end
 
       it 'adds signup to existing event' do
-        expect(@event.event_signups.joins(:scout).where(scout_id: @scout.id).count).to eq(0)
+        expect(@event.event_signups.joins(:scout).where(user_id: @scout.id).count).to eq(0)
         event_saver.create_or_update_event_signups
         expect(@event.event_signups.count).to eq(1)
-        expect(@event.event_signups.first.scout_id).to eq(@scout.id)
+        expect(@event.event_signups.first.user_id).to eq(@scout.id)
       end
 
       it 'removes existing signups' do
-        expect(@event.event_signups.first.scout_id).to be_blank
+        expect(@event.event_signups.first.user_id).not_to be_blank
         event_saver.create_or_update_event_signups
-        expect(@event.event_signups.first.scout_id).to eq(@scout.id)
+        expect(@event.event_signups.first.user_id).to eq(@scout.id)
       end
 
       it 'does not save signups without matching scout' do

@@ -6,7 +6,7 @@
     = @event.users.map { |u| mail_to u.email, u.full_name }.join(", ").html_safe
 
 - else
-  %h4 Signup for #{@scout.f_name_l_initial}
+  %h4 Signup for #{@event_signup.user.f_name_l_initial}
 
   .well
     %p.xxlarge

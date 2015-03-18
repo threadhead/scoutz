@@ -73,14 +73,14 @@
 
 
 
-- if @event_rosters.size > 0 && policy(@event).print_roster?
+- if @event.event_signups.size > 0 && policy(@event).print_roster?
   .row
     .col-md-12
       %table.table.table-condensed.table-bordered
         %thead
           %tr
             %th Name
-            %th Attending
+            -# %th Attending
             %th HF
             %th Seats
             %th Driving
@@ -90,24 +90,27 @@
             %th Emergency Contact
 
         %tbody
-          - @event_rosters.each do |event_roster|
+          - @event.event_signups.by_user_name_lf.each do |event_roster|
             %tr
               %td
                 .no-break
                   %br
-                  = event_roster.scout.name_lf
+                  = event_roster.user.name_lf
+                  - if event_roster.siblings_attending > 0
+                    %br
+                    + #{ event_roster.siblings_attending } children
 
-              %td
-                .no-break
-                  = space_to_nbsp "Scout: #{event_roster.scouts_attending}"
-                  %br
-                  = space_to_nbsp "Siblings: #{event_roster.siblings_attending}"
-                  %br
-                  = space_to_nbsp "Adults: #{event_roster.adults_attending}"
+              -# %td
+              -#   .no-break
+              -#     = space_to_nbsp "Scout: #{event_roster.scouts_attending}"
+              -#     %br
+              -#     = space_to_nbsp "Siblings: #{event_roster.siblings_attending}"
+              -#     %br
+              -#     = space_to_nbsp "Adults: #{event_roster.adults_attending}"
 
               %td.xl
                 .no-break
-                  - user_health_form = event_roster.scout.health_forms.unit(event_roster.event.unit)
+                  - user_health_form = event_roster.user.health_forms.unit(event_roster.event.unit)
                   - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
                     %i.fa.fa-check
                   - else
@@ -128,20 +131,21 @@
 
               - if @event.consent_required?
                 %td.xl
-                  .no-break
-                    - if event_roster.has_activity_consent_form?
-                      %i.fa.fa-check
-                    - else
-                      %span.fa-stack.fa-stack-sm
-                        %i.fa.fa-check.fa-stack-1x
-                        %i.fa.fa-ban.fa-stack-2x
+                  - if event_roster.user.scout?
+                    .no-break
+                      - if event_roster.has_activity_consent_form?
+                        %i.fa.fa-check
+                      - else
+                        %span.fa-stack.fa-stack-sm
+                          %i.fa.fa-check.fa-stack-1x
+                          %i.fa.fa-ban.fa-stack-2x
 
               %td
                 .no-break= event_roster.comment
 
               %td
                 .no-break
-                  - event_roster.scout.unit_adults(@event.unit).each do |adult|
+                  - event_roster.user.unit_adults(@event.unit).each do |adult|
                     = adult.name
                     (
                     = adult.phones.map{ |phone| "#{phone.kind}: #{number_to_phone phone.number}" }.join(', ')

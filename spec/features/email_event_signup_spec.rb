@@ -22,7 +22,7 @@ RSpec.describe 'Email Event Signup' do
   end
 
   def existing_signup
-    @event_signup = @event.event_signups.create(scout_id: @scout.id, scouts_attending: 1)
+    @event_signup = @event.event_signups.create(user_id: @scout.id, scouts_attending: 1)
   end
 
   def with_custom_options
@@ -32,7 +32,7 @@ RSpec.describe 'Email Event Signup' do
   context 'with valid user and event tokens' do
     before { @opts = {event_token: @event.signup_token,
                       user_token: @user.signup_token,
-                      scout_id: @scout.id,
+                      user_id: @scout.id,
                       scouts_attending: 1,
                       siblings_attending: 1,
                       adults_attending: 1
@@ -85,7 +85,7 @@ RSpec.describe 'Email Event Signup' do
 
         context 'with custom options selected from email' do
           before { visit event_email_event_signups_path(@event, with_custom_options) }
-          it { should have_text("The deadline for signup has passed, but you can change your existing signup") }
+          it { should have_text("The deadline for signup has passed, but you can change your existing signup.") }
         end
       end
 

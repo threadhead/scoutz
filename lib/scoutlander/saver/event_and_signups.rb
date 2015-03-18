@@ -70,7 +70,7 @@ module Scoutlander
 
                 # we need to turn off validataions because we ARE going to save duplicates, but later
                 #   remove the existing records below. Thus, we will be left with only the new signups
-                event_signup = @event.event_signups.build(signup.to_params.merge({scout_id: scout.id}))
+                event_signup = @event.event_signups.build(signup.to_params.merge({user_id: scout.id}))
                 event_signup.save(validate: false)
                 at_least_one_signup = true
               else

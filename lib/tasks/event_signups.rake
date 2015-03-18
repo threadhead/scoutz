@@ -15,6 +15,7 @@ namespace :event_signups do
         end
       end
 
+      event_signup.scouts_attending = 1
       event_signup.adults_attending = 0
       event_signup.siblings_attending = 0
       event_signup.user_id = event_signup.scout_id

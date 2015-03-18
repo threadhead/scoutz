@@ -1,6 +1,10 @@
 module PublicActivitiesHelper
   def activity_scout(activity)
-    Scout.where(id: activity.parameters[:scout_id]).first if activity.parameters.has_key?(:scout_id)
+    if activity.parameters.has_key?(:scout_id)
+      Scout.where(id: activity.parameters[:scout_id]).first
+    elsif activity.parameters.has_key?(:user_id)
+      User.where(id: activity.parameters[:user_id]).first
+    end
   end
 
   def activity_event(activity)
@@ -8,9 +12,9 @@ module PublicActivitiesHelper
   end
 
   def activity_scout_link(activity)
-    scout = activity_scout(activity)
-    if scout
-      link_to scout.f_name_l_initial, unit_scout_path(activity.unit_id, scout)
+    user = activity_scout(activity)
+    if user
+      unit_user_link(activity.unit_id, user)
     end
   end
 

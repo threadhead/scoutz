@@ -139,12 +139,12 @@ end
   rnd_scouts = unit1.scouts.order("RANDOM()")
   rand(5).times do |t|
     event.save
-    event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scouts[t].id)
+    event_signup = event.event_signups.create(scouts_attending: 1, user_id: rnd_scouts[t].id)
     event_signup.save!
     # unit1.save
     # event.save!
     # rnd_scout.save
-    event_signup.create_activity :create, unit_id: unit1.id, parameters: {event_id: event.id, scout_id: rnd_scouts[t].id}
+    event_signup.create_activity :create, unit_id: unit1.id, parameters: {event_id: event.id, user_id: rnd_scouts[t].id}
     log_item(event_signup, 10)
   end
 end
@@ -176,12 +176,12 @@ end
   # add some signups
   rnd_scouts = unit2.scouts.order("RANDOM()")
   rand(5).times do |t|
-    event_signup = event.event_signups.create(adults_attending: rand(4), scouts_attending: 1, siblings_attending: rand(2), scout_id: rnd_scouts[t].id)
+    event_signup = event.event_signups.create(scouts_attending: 1, user_id: rnd_scouts[t].id)
     event_signup.save
     # event.save!
     # unit2.save
     # rnd_scout.save
-    event_signup.create_activity :create, unit_id: unit2.id, parameters: {event_id: event.id, scout_id: rnd_scouts[t].id}
+    event_signup.create_activity :create, unit_id: unit2.id, parameters: {event_id: event.id, user_id: rnd_scouts[t].id}
     log_item(event_signup, 10)
   end
 end

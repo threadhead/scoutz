@@ -1,0 +1,29 @@
+.row
+  .col-md-12
+    .well.well-sm.well-reduced-text
+      %p
+        %strong.xlarge Quick Signups
+      %p
+        %strong Going:
+        = event_signups.select {|u| u.persisted?}.map(&:user).map(&:first_name).join(', ')
+
+      - event_signups.each do |event_signup|
+        - if event_signup.persisted?
+          = link_to "Cancel #{event_signup.user.first_name}", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+
+        - else
+          = form_for event_signup, remote: true, html: {style: "display: inline-block;"} do |f|
+            = f.hidden_field :user_id
+            = f.hidden_field :event_id
+            - if event_signup.user.scout?
+              = f.hidden_field :scouts_attending, value: '1'
+              = f.hidden_field :adults_attending, value: '0'
+              = f.hidden_field :siblings_attending, value: '0'
+            - elsif
+              = f.hidden_field :adults_attending, value: '1'
+              = f.hidden_field :scouts_attending, value: '0'
+
+            = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'
+
+
+

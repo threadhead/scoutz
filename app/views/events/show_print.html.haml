@@ -98,7 +98,7 @@
                   = event_roster.user.name_lf
                   - if event_roster.siblings_attending > 0
                     %br
-                    + #{ event_roster.siblings_attending } children
+                    + #{ event_roster.siblings_attending } #{ 'child'.pluralize(event_roster.siblings_attending) }
 
               -# %td
               -#   .no-break

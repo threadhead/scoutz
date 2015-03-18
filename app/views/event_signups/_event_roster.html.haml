@@ -6,7 +6,7 @@
     = event_roster.user.name_lf
     - if event_roster.user.adult? && event_roster.siblings_attending > 0
       %br
-      %small.text-grey + #{event_roster.siblings_attending} children
+      %small.text-grey + #{event_roster.siblings_attending} #{'child'.pluralize(event_roster.siblings_attending)}
 
   -# %td.text-grey.text-nobreak
   -#   Scout: #{event_roster.scouts_attending}

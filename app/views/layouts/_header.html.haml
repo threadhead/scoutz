@@ -31,25 +31,25 @@
             %ul.dropdown-menu
               %li
                 = link_to corrected_unit_user_path(@unit, current_user) do
-                  %i.fa.fa-user
+                  %i.fa.fa-user.text-muted-more
                   Profile
               %li
                 = link_to edit_unit_user_password_path(@unit, current_user) do
-                  %i.fa.fa-key
+                  %i.fa.fa-key.text-muted-more
                   Change Password
               %li
                 = link_to edit_unit_user_email_path(@unit, current_user) do
-                  %i.fa.fa-envelope-o
+                  %i.fa.fa-envelope-o.text-muted-more
                   Change Email
               - if policy(@unit).edit?
                 %li
                   = link_to edit_unit_path(@unit) do
-                    %i.fa.fa-gear
+                    %i.fa.fa-gear.text-muted-more
                     #{@unit.unit_type_title} Settings
               %li.divider
               %li
                 = link_to destroy_user_session_url, method: :delete do
-                  %i.fa.fa-power-off
+                  %i.fa.fa-power-off.text-muted-more
                   Sign out
 
         %form.navbar-form.navbar-right
@@ -93,29 +93,29 @@
             %ul.dropdown-menu
               %li
                 = link_to unit_scouts_path(@unit) do
-                  %i.fa.fa-user{style: "color: #808000;"}
+                  %i.fa.fa-user{style: "color: #C9CD08;"}
                   Scouts
 
               %li
                 = link_to unit_adults_path(@unit) do
-                  %i.fa.fa-user{style: "color: #CC1814;"}
+                  %i.fa.fa-user{style: "color: #D64C4F;"}
                   Adults
 
               - if @unit.unit_type == "Boy Scouts"
                 %li
                   = link_to unit_merit_badges_path(@unit) do
-                    %i.fa.fa-graduation-cap
+                    %i.fa.fa-graduation-cap.text-muted-more
                     MB Counselors
 
               - if HealthFormPolicy.new(current_user, nil, @unit).index?
                 %li
                   = link_to unit_health_forms_path(@unit) do
-                    %i.fa.fa-medkit
+                    %i.fa.fa-medkit.text-muted-more
                     Health Forms
 
               %li
                 = link_to unit_sub_units_path(@unit) do
-                  %i.fa.fa-users
+                  %i.fa.fa-users.text-muted-more
                   = @unit.sub_unit_name.try(:pluralize)
 
 
@@ -133,11 +133,11 @@
                     %strong Email Blast
                   %li
                     = link_to unit_email_messages_path(@unit) do
-                      %i.fa.fa-envelope
+                      %i.fa.fa-envelope.text-muted-more
                       My Sent Email
                   %li
                     = link_to new_unit_email_message_path(@unit) do
-                      %i.fa.fa-plus
+                      %i.fa.fa-plus.text-muted-more
                       New Email Blast
                   %li.divider
 
@@ -147,11 +147,11 @@
                     %strong SMS Blast
                   %li
                     = link_to unit_sms_messages_path(@unit) do
-                      %i.fa.fa-mobile-phone.fa-lg
+                      %i.fa.fa-mobile-phone.fa-lg.text-muted-more
                       My Sent SMS
                   %li
                     = link_to new_unit_sms_message_path(@unit) do
-                      %i.fa.fa-plus
+                      %i.fa.fa-plus.text-muted-more
                       New SMS Blast
 
 
@@ -166,18 +166,18 @@
             %ul.dropdown-menu
               %li
                 = link_to unit_events_path(@unit) do
-                  %i.fa.fa-list
+                  %i.fa.fa-list.text-muted-more
                   Event List
 
               %li
                 = link_to calendar_unit_events_path(@unit) do
-                  %i.fa.fa-calendar
+                  %i.fa.fa-calendar.text-muted-more
                   Event Calendar
 
               - if policy(Event).create?
                 %li
                   = link_to new_unit_event_path(@unit) do
-                    %i.fa.fa-plus
+                    %i.fa.fa-plus.text-muted-more
                     New Event
 
 

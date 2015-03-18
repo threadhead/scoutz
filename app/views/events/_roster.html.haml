@@ -11,17 +11,17 @@
         - if policy(event).print_roster?
           %li
             = link_to unit_event_path(event.unit, event, print: true) do
-              %i.fa.fa-print
+              %i.fa.fa-print.text-muted-more
               Print
         - if policy(event).sms_attendees?
           %li
             = link_to sms_attendees_event_path(event) do
-              %i.fa.fa-phone
+              %i.fa.fa-phone.text-muted-more
               SMS all attendees
         - if policy(event).email_attendees?
           %li
             = link_to email_attendees_event_path(event) do
-              %i.fa.fa-envelope
+              %i.fa.fa-envelope.text-muted-more
               Email all attendees
 
 %div.clearfix

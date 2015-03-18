@@ -19,18 +19,20 @@
           - if policy(@user).destroy?
             %li
               = link_to(unit_adult_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
-                %i.fa.fa-trash-o
+                %i.fa.fa-trash-o.text-muted-more
                 Destroy #{@user.first_name}
 
           - if policy(@user).new?
             %li
               = link_to(new_unit_adult_path(@unit), class: "") do
-                %i.fa.fa-plus
+                %i.fa.fa-plus.text-muted-more
                 New Adult
 
           - if !@user.email.blank? && policy(@user).send_welcome_reset_password?
             %li
-              = link_to 'Send Welcome Email', '#', data: { toggle: 'modal', target: '#send-welcome-email'}
+              = link_to '#', data: { toggle: 'modal', target: '#send-welcome-email'} do
+                %i.fa.fa-envelope.text-muted-more
+                Send Welcome Email
 
   %h2 Adult: #{@user.full_name}
 

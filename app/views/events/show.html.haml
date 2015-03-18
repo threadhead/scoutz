@@ -159,8 +159,16 @@
 
   .col-md-4
     - if @event.signup_required #&& !@event.after_signup_deadline?
-      #event-signups-list
-        = render partial: 'event_signups/event_signup', collection: @event.user_signups(current_user), locals: {event: @event}
+      #event-quick-signup
+        = render partial: 'event_signups/quick_signup', locals: { event_signups: @event.user_signups(current_user) }
+
+      .panel.panel-info
+        .panel-heading
+          %h4.panel-title
+            %a#signups-accordian-button{ href: '#signups-accordian', data: { toggle: 'collapse' } } Show Signup Details
+        #signups-accordian.collapse.panel-collapse
+          .panel-body
+            #event-signups-list= render partial: 'event_signups/event_signup', collection: @event.user_signups(current_user), locals: {event: @event}
     - else
       - if @event.signup_required
         .alert.alert-info Signup has passed for this event.

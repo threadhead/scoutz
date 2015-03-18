@@ -17,7 +17,7 @@
       = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, class: 'form-control'
 
   .form-group
-    = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-md-4'
+    = f.label :need_carpool_seats, 'Needs Ride', class: 'control-label col-md-4'
     .col-md-4
       = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control'}
     .col-md-2.col-no-padding

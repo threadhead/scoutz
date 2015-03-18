@@ -284,6 +284,14 @@ jQuery ->
     placeholder: '-- add signup --'
     allowClear: true
 
+  $("#signups-accordian").on('show.bs.collapse', ->
+    $("#signups-accordian-button").text("Hide Signup Details")
+    )
+
+  $("#signups-accordian").on('hide.bs.collapse', ->
+      $("#signups-accordian-button").text("Show Signup Details")
+    )
+
 
 
   # in the activity list, set the activity signup deadline 'xxx from now' time string using moment.js

@@ -3,7 +3,11 @@
   $("div#event-signup-modal-form").modal('hide');
 
 
-  // update the current users's signups (their scouts)
+  // update the current users's quick signups
+  $("div#event-quick-signup").html("#{escape_javascript(render partial: 'event_signups/quick_signup', locals: {event_signups: @event_signups})}");
+
+
+  // update the current users's signups (their family)
   $("div#event-signups-list").html("#{escape_javascript(render partial: 'event_signups/event_signup', collection: @event_signups)}");
 
 

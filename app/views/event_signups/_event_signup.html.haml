@@ -1,25 +1,19 @@
 = cache_unless event_signup.new_record?, event_signup do
-  .row
-    .col-md-12
-      .well.well-sm.well-reduced-text{class: signup_well_class(event_signup) }
-        .row
-          .col-md-12
-            .pull-right
-              = user_picture_circle(event_signup.user)
+  .well.well-sm.well-reduced-text{class: signup_well_class(event_signup) }
+    .signup-heading.text-xlarge
+      .pull-right
+        = user_picture_circle(event_signup.user)
 
-            %p.xlarge
-              - if event_signup.new_record?
-                %strong Sign Up #{event_signup.user.f_name_l_initial}
-                %br
-                %br
-              - else
-                %span.fa-stack
-                  %i.fa.fa-circle.fa-stack-2x.green-color
-                  %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
-                %strong #{ event_signup.user.f_name_l_initial } is Signed Up!
+      - if event_signup.new_record?
+        %strong Sign Up #{event_signup.user.f_name_l_initial}
+      - else
+        %span.fa-stack
+          %i.fa.fa-circle.fa-stack-2x.green-color
+          %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
+        %strong #{ event_signup.user.f_name_l_initial } is Signed Up!
 
 
-            - if event_signup.new_record? && event_signup.event.after_signup_deadline?
-              .alert.alert-info.alert-no-margin Signup has passed for this event.
-            - else
-              = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: false}
+    - if event_signup.new_record? && event_signup.event.after_signup_deadline?
+      .alert.alert-info.alert-no-margin Signup has passed for this event.
+    - else
+      = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: false}

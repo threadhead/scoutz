@@ -11,7 +11,7 @@
 
 
 
-  = f.text_area :comment, placeholder: 'comments', rows: 3, style: "width: 100%;"
+  = f.text_area :comment, placeholder: 'comments', rows: 2, style: "width: 100%;"
   %br
 
 
@@ -23,7 +23,7 @@
 
 
   .form-group.form-group-xs
-    = f.label :need_carpool_seats, 'Need Ride', class: 'control-label col-xs-4'
+    = f.label :need_carpool_seats, 'Needs Ride', class: 'control-label col-xs-4'
     .col-xs-4
       = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control input-xs'}
     .col-xs-2.col-no-padding
@@ -62,7 +62,6 @@
           on: #{event_signup.permission_at.to_s(:short_ampm)}
 
 
-  %br
   .right-aligned
     - if close_button
       = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }

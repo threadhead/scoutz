@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20150316180425) do
     t.integer  "height"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "data_original_file_name"
+    t.string   "data_original_file_name", limit: 255
     t.integer  "user_id"
   end
 
@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(version: 20150316180425) do
     t.datetime "canceled_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "need_carpool_seats", default: 0
-    t.integer  "has_carpool_seats",  default: 0
+    t.integer  "need_carpool_seats"
+    t.integer  "has_carpool_seats"
     t.datetime "permission_at"
     t.integer  "permission_by"
     t.integer  "user_id"
@@ -175,11 +175,11 @@ ActiveRecord::Schema.define(version: 20150316180425) do
     t.integer  "unit_id"
     t.string   "kind",                 limit: 255
     t.string   "name",                 limit: 255
-    t.boolean  "send_reminders",                                           default: true
+    t.boolean  "send_reminders",                   default: true
     t.string   "notifier_type",        limit: 255
     t.datetime "start_at"
     t.datetime "end_at"
-    t.boolean  "signup_required",                                          default: false
+    t.boolean  "signup_required",                  default: false
     t.datetime "signup_deadline"
     t.string   "location_name",        limit: 255
     t.string   "location_address1",    limit: 255
@@ -190,26 +190,26 @@ ActiveRecord::Schema.define(version: 20150316180425) do
     t.string   "location_map_url",     limit: 255
     t.string   "attire",               limit: 255
     t.text     "message"
+    t.text     "fees"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"
     t.float    "longitude"
     t.boolean  "gmaps"
-    t.integer  "attendee_count",                                           default: 0
+    t.integer  "attendee_count",                   default: 0
     t.string   "signup_token",         limit: 255
     t.datetime "reminder_sent_at"
     t.string   "ical",                 limit: 255
     t.integer  "ical_file_size"
     t.string   "ical_content_type",    limit: 255
     t.datetime "ical_updated_at"
-    t.integer  "ical_sequence",                                            default: 0
+    t.integer  "ical_sequence",                    default: 0
     t.string   "ical_uuid",            limit: 255
     t.string   "sl_profile",           limit: 255
     t.string   "sl_uid",               limit: 255
-    t.integer  "type_of_health_forms",                                     default: 0
+    t.integer  "type_of_health_forms",             default: 0
     t.boolean  "consent_required"
-    t.string   "form_coordinator_ids",                                     default: "--- []\n"
-    t.decimal  "fees",                             precision: 8, scale: 2, default: 0.0
+    t.string   "form_coordinator_ids",             default: "--- []\n"
   end
 
   add_index "events", ["end_at"], name: "index_events_on_end_at", using: :btree
@@ -285,16 +285,16 @@ ActiveRecord::Schema.define(version: 20150316180425) do
   add_index "notifiers", ["user_id"], name: "index_notifiers_on_user_id", using: :btree
 
   create_table "pages", force: :cascade do |t|
-    t.string   "title"
+    t.string   "title",          limit: 255
     t.text     "body"
     t.integer  "position"
     t.integer  "unit_id"
     t.integer  "user_id"
-    t.boolean  "public",         default: false
+    t.boolean  "public",                     default: false
     t.text     "update_history"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "front_page",     default: false
+    t.boolean  "front_page",                 default: false
     t.datetime "deactivated_at"
   end
 
@@ -351,9 +351,9 @@ ActiveRecord::Schema.define(version: 20150316180425) do
   create_table "unit_positions", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
-    t.string   "leadership"
-    t.string   "additional"
-    t.integer  "role",       default: 0
+    t.string   "leadership", limit: 255
+    t.string   "additional", limit: 255
+    t.integer  "role",                   default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -369,7 +369,6 @@ ActiveRecord::Schema.define(version: 20150316180425) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "sl_uid",                          limit: 255
-    t.integer  "council_id"
     t.string   "address1"
     t.string   "address2"
     t.string   "zip_code"
@@ -393,8 +392,6 @@ ActiveRecord::Schema.define(version: 20150316180425) do
     t.datetime "weekly_newsletter_sent_at"
     t.string   "health_form_coordinator_ids",                 default: "--- []\n"
   end
-
-  add_index "units", ["council_id"], name: "index_units_on_council_id", using: :btree
 
   create_table "units_users", id: false, force: :cascade do |t|
     t.integer "unit_id"

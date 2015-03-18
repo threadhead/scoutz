@@ -52,6 +52,25 @@
         %th.right-aligned Action
   %tbody#event-signup-roster
     = render partial: 'event_signups/event_roster', collection: event.event_signups.by_user_name_lf
+
 %br
+.row
+  .col-xs-3.text-large
+    %table.table-xcondensed
+      %tr
+        %td Scouts:
+        %td.right-aligned= event.event_signups.to_a.sum(&:scouts_attending)
+      %tr
+        %td Adults:
+        %td.right-aligned= event.event_signups.to_a.sum(&:adults_attending)
+      %tr
+        %td Children:
+        %td.right-aligned= event.event_signups.to_a.sum(&:siblings_attending)
+      %tr
+        %td
+          %strong Total:
+        %td.right-aligned
+          %strong= event.attendee_count
+
 .bottom-border
 

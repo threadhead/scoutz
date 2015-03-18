@@ -1,6 +1,6 @@
 = render partial: 'layouts/flash', locals: {flash: flash}
 
-%h3 #{@event_signup.scout.f_name_l_initial} is signed up for:
+%h3 #{@event_signup.user.f_name_l_initial} is signed up for:
 %table.table.table-condensed
   %tr
     %th Event:
@@ -10,19 +10,10 @@
       - else
         = event_name_date(@event)
 
-  %tr
-    %th Scouts:
-    %td
-      = @event_signup.scouts_attending
-      (#{@event_signup.scout.first_name})
-
-  %tr
-    %th Adults:
-    %td= @event_signup.adults_attending
-
-  %tr
-    %th Siblings:
-    %td= @event_signup.siblings_attending
+  - if @event_signup.user.adult?
+    %tr
+      %th Additional Children:
+      %td= @event_signup.siblings_attending
 
   %tr
     %th Comment:

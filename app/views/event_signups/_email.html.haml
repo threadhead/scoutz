@@ -1,0 +1,101 @@
+- event_signup = user.event_signup_up(event)
+
+%div{style: "background-color: dimgray; color: white; padding: 4px 12px; margin-bottom: 12px"}
+  %strong{style: "font-size: 18px;"} Signup for #{user.full_name}
+- if event.after_signup_deadline?
+  %h4{style: "color: maroon;"} Signup for this event has passed. You can not signup, but you can change your existing reservation.
+
+%table{ style: "margin-bottom: 18px; width: 100%" }
+  %tr
+    %td{style: "width: 50%; vertical-align: top; font-size: 0.8em;"}
+
+      -if event_signup.blank?
+        %strong #{user.first_name} is not currenly signed up to go.
+
+      - else
+        %table
+          %tr
+            %td Signed Up on:
+            %td= event_signup.updated_at.to_s(:short_ampm)
+
+          - if user.adult?
+            %tr
+              %td Add'l Children:
+              %td= event_signup.siblings_attending
+
+          %tr
+            %td Comments:
+            %td= event_signup.comment
+
+          %tr
+            %td Needs a Ride:
+            %td
+              - if event_signup.need_carpool_seats && event_signup.need_carpool_seats > 0
+                Yes, #{event_signup.need_carpool_seats} #{'seat'.pluralize(event_signup.need_carpool_seats)}
+              - else
+                No
+
+          - if user.scout? && event.consent_required?
+            %tr
+              %td Activity Consent:
+              %td
+                - if event_signup.has_activity_consent_form?
+                  %span{style: "background-color: green; color: white; padding: 2px;"} Submitted
+                - else
+                  %span{style: "background-color: yellow; color: red; font-weight: bold; padding: 2px"} NOT SUBMITTED
+
+          %tr
+            %td Can Drive:
+            %td
+              - if event_signup.has_carpool_seats
+                - if event_signup.has_carpool_seats == 0
+                  Driving, but no available seats
+                - else
+                  Driving, has #{event_signup.has_carpool_seats} available #{'seat'.pluralize(event_signup.has_carpool_seats)}
+              - else
+                No
+
+
+    - if event_signup.present? || !event.after_signup_deadline?
+      %td{ style: "vertical-align: top;" }
+        - defaults = { user_id: user.id, user_token: recipient.signup_token, event_token: event.signup_token }
+
+        -# %p{style: "text-align: center; font-size: 1.1em; margin: 0 0 8px 0;"} - #{user.first_name} is Signed Up To Go -
+
+        - if event_signup.present?
+          %a{ style: "background-color: #ED5565;" + flat_button , href: event_email_event_signups_url(event, defaults.merge({cancel_reservation: true})) } Cancel #{ user.first_name.possessive } Signup
+
+          %a{ style: "background-color: #8CC152;" + flat_button, href: event_email_event_signups_url(event, defaults)} Change Signup Options
+
+        - else
+          %a{ style: "background-color: #4A89DC;" + flat_button, href: event_email_event_signups_url(event, defaults) } Signup #{ user.first_name }
+
+-# %table
+-#   %tr
+-#     %td &nbsp;
+-#     %td{colspan: 3, style: "text-align: center; font-size: 1.3em; padding-bottom: 8px;"} - #{user.first_name} is -
+-#   %tr{style: "text-align: center;"}
+-#     %th &nbsp;
+-#     %th 0 Adults
+-#     %th 1 Adult
+-#     %th 2 Adults
+
+-#   %tr{style: "text-align: center;"}
+-#     %th 0 Siblings
+-#     %td= email_signup_link(defaults.merge(adults: 0, siblings: 0, body: "#{user.first_name} alone"))
+-#     %td= email_signup_link(defaults.merge(adults: 1, siblings: 0))
+-#     %td= email_signup_link(defaults.merge(adults: 2, siblings: 0))
+
+-#   %tr{style: "text-align: center;"}
+-#     %th 1 Sibling
+-#     %td= email_signup_link(defaults.merge(adults: 0, siblings: 1))
+-#     %td= email_signup_link(defaults.merge(adults: 1, siblings: 1))
+-#     %td= email_signup_link(defaults.merge(adults: 2, siblings: 1))
+
+-#   %tr
+-#     %td &nbsp;
+-#     %td{colspan: 3, style: "text-align: center; padding-top: 12px;"}
+
+-#   %tr
+-#     %td{colspan: 4, style: "text-align: center; padding-top: 8px;"}
+-#       %span{style: "font-size: 10px; margin-top: 8px;"} Selecting any link above will create a new signup for the #{event.name} event, or modify your existing signup.

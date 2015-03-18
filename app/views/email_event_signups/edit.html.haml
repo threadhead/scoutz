@@ -5,8 +5,8 @@
   .panel-heading
     %h3
       Event:
-      = @event.name
-    %h4 Change signup for #{@scout.f_name_l_initial}
+      = link_to @event.name, unit_event_path(@event.unit, @event)
+    %h4 Change signup for #{@event_signup.user.f_name_l_initial}
 
   .panel-body
     %p.xxlarge

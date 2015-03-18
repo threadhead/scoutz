@@ -34,10 +34,10 @@
   - if event_signup.user.adult?
     .form-group.form-group-xs
       = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-xs-4'
-      .col-xs-6
+      .col-xs-4
         = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control input-xs'}
       .col-xs-2.col-no-padding
-        %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle. Select  0 if you are driving but can\'t carpool.'}
+        %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle.'}
           %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
           %i.fa.fa-question.fa-stack-1x.fa-inverse
 

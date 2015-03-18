@@ -23,8 +23,7 @@ class EmailEventSignupsController < ApplicationController
       end
 
       # existing signup, update with options from email
-    elsif !@event_signup.new_record? && !select_custom_options
-      # if @event_signup.update_attributes(params.extract!(*valid_keys).except(:comment))
+    elsif @event_signup.persisted? && !select_custom_options
       if @event_signup.update_attributes(email_event_signups_params(params))
         redirect_to event_email_event_signup_path(@event, @event_signup, event_token: params[:event_token], user_token: params[:user_token]), notice: "Signup changed."
       else
@@ -33,7 +32,7 @@ class EmailEventSignupsController < ApplicationController
       end
 
       # user can edit their existing signup
-    elsif !@event_signup.new_record?
+    elsif @event_signup.persisted?
       flash[:info] = "The deadline for signup has passed, but you can change your existing signup." if @event.after_signup_deadline?
       render :edit
 
@@ -116,15 +115,21 @@ class EmailEventSignupsController < ApplicationController
 
   private
     def email_event_signups_params(params)
-      params.permit(:siblings_attending, :scouts_attending, :adults_attending, :scout_id, :comment)
+      params.permit(:siblings_attending, :scouts_attending, :adults_attending, :comment, :need_carpool_seats, :has_carpool_seats, :user_id, :event_id, :permission_check_box)
     end
 
     def set_user_event_scout_signup
       return false unless set_user_and_event
       Time.zone = @user.time_zone || "Pacific Time (US & Canada)"
-      @scout = Scout.find(params[:scout_id])
-      @event_signup = EventSignup.where(scout_id: @scout.id, event_id: @event.id).first
-      @event_signup = EventSignup.new(scout_id: @scout.id) if @event_signup.blank?
+      @signup_user = User.find(params[:user_id])
+      @event_signup = EventSignup.where(user_id: @signup_user.id, event_id: @event.id).first
+      if @event_signup.blank?
+        @event_signup = if @signup_user.scout?
+          EventSignup.new(user_id: @signup_user.id, scouts_attending: 1)
+        else
+          EventSignup.new(user_id: @signup_user.id, adults_attending: 1)
+        end
+      end
       return true
     end
 
@@ -164,6 +169,6 @@ class EmailEventSignupsController < ApplicationController
     # end
 
     def create_activity(task)
-      @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, scout_id: @event_signup.scout.id, created_at: Time.now}
+      @event_signup.create_activity task, owner: @user, unit_id: @event_signup.unit.id, parameters: {event_id: @event.id, user_id: @event_signup.user.id, created_at: Time.now}
     end
 end

@@ -74,106 +74,108 @@
 
     %p &nbsp;
     .text-xlarge
-      %table.table
-        %tr
-          %td
-            %strong Kind
-          %td
-            = @event.kind
-            = " - #{event_kind_sub_units(@event)}" if @event.sub_unit_kind?
+      .row.row-tablized
+        .col-md-3
+          %strong Kind
+        .col-md-9
+          = @event.kind
+          = " - #{event_kind_sub_units(@event)}" if @event.sub_unit_kind?
 
-        %tr
-          %td
-            %strong Times
-          %td #{@event.start_at.to_s(:long_ampm)} - #{@event.end_at.to_s(:long_ampm)}
+      .row.row-tablized
+        .col-md-3
+          %strong Times
+        .col-md-9
+          %span.text-nobreak= @event.start_at.to_s(:long_ampm)
+          = '-'
+          %span.text-nobreak= @event.end_at.to_s(:long_ampm)
 
-        %tr
-          %td
-            %strong Organizers
-          %td= unit_users_link_list(@unit, @event.users.by_name_lf)
+      .row.row-tablized
+        .col-md-3
+          %strong Organizers
+        .col-md-9= unit_users_link_list(@unit, @event.users.by_name_lf)
 
-        %tr
-          %td
-            %strong Reminders?
-          %td #{@event.send_reminders ? 'Yes' : 'No'}
+      .row.row-tablized
+        .col-md-3
+          %strong Reminders?
+        .col-md-9 #{@event.send_reminders ? 'Yes' : 'No'}
 
-        %tr
-          %td
-            %strong Sign Up
-          %td #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
-
-
-        - if @event.signup_required?
-          %tr
-            %td
-              %strong Forms
-            %td
-              - if @event.health_forms_required?
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
-                  %i.fa.fa-inverse.fa-medkit.fa-stack-1x
-              - else
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-medkit.fa-stack-1x
-                  %i.fa.fa-ban.fa-stack-2x.text-danger
-              Healh Forms: #{Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)}
-
-              %br
-              - if @event.consent_required?
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
-                  %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
-              - else
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-thumbs-up.fa-stack-1x
-                  %i.fa.fa-ban.fa-stack-2x.text-danger
-              Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
-
-              - if @event.consent_required?
-                - if @unit.attach_consent_form?
-                  %br
-                  = link_to consent_form_url(@event) do
-                    %i.fa.fa-download
-                    Download Consent Form
+      .row.row-tablized
+        .col-md-3
+          %strong Sign Up
+        .col-md-9 #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
 
 
-                %p.small
-                  Coordinator#{'s' if @event.form_coordinators.count > 1 }:
-                  = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'
+      - if @event.signup_required?
+        .row.row-tablized
+          .col-md-3
+            %strong Forms
+          .col-md-9
+            - if @event.health_forms_required?
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+                %i.fa.fa-inverse.fa-medkit.fa-stack-1x
+            - else
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-medkit.fa-stack-1x
+                %i.fa.fa-ban.fa-stack-2x.text-danger
+            Healh Forms: #{Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)}
 
-        %tr
-          %td
-            %strong Attire
-          %td= @event.attire
+            %br
+            - if @event.consent_required?
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+                %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
+            - else
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-thumbs-up.fa-stack-1x
+                %i.fa.fa-ban.fa-stack-2x.text-danger
+            Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
 
-        %tr
-          %td
-            %strong Location
-          %td
-            %address= location_show(@event)
+            - if @event.consent_required?
+              - if @unit.attach_consent_form?
+                %br
+                = link_to consent_form_url(@event) do
+                  %i.fa.fa-download
+                  Download Consent Form
 
-            - unless @event.gmaps4rails_address.blank?
-              = #gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
-              #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
 
-            - unless @event.location_map_url.blank?
-              %br
-              %p
-                = link_to(@event.location_map_url, target: '_blank') do
-                  %i.fa.fa-external-link
-                  Show map...
+              %p.small
+                Coordinator#{'s' if @event.form_coordinators.count > 1 }:
+                = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'
 
-            -#   .iframe-rwd
-            -#     %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+      .row.row-tablized
+        .col-md-3
+          %strong Attire
+        .col-md-9= @event.attire
 
-          %tr
-            %td &nbsp;
-            %td= @event.message.html_safe
+      .row.row-tablized
+        .col-md-3
+          %strong Location
+        .col-md-9
+          %address= location_show(@event)
 
-      - if @event.signup_required
-        .bottom-border
-        #event-roster
-          = render partial: 'roster', locals: { event: @event }
+          - unless @event.gmaps4rails_address.blank?
+            = #gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
+            #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
+
+          - unless @event.location_map_url.blank?
+            %br
+            %p
+              = link_to(@event.location_map_url, target: '_blank') do
+                %i.fa.fa-external-link
+                Show map...
+
+          -#   .iframe-rwd
+          -#     %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+      .row.row-tablized
+        .col-md-3 &nbsp;
+        .col-md-9= @event.message.html_safe
+
+    - if @event.signup_required
+      .bottom-border
+      #event-roster
+        = render partial: 'roster', locals: { event: @event }
 
 
 #event-signup-modal

@@ -34,7 +34,7 @@
 
       = paginate @events, theme: 'bootstrap'
 
-  .col-md-3
+  .col-md-3.hidden-xs.hidden-sm
     .panel.panel-default
       .panel-heading #{@unit.unit_type_title} Activity
       .panel-body
@@ -45,7 +45,7 @@
               = render_activity activity
 
 .row
-  .col-md-10.col-md-offset-1.hidden-xs
+  .col-md-10.col-md-offset-1
     = cache ["unit-#{@unit.id}", :event_index, cache_key_for_pages(@pages)] do
       - @pages.each do |page|
         = render page

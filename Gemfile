@@ -4,7 +4,7 @@ ruby '2.2.1'
 gem 'dotenv-rails'
 gem 'dotenv-deployment'
 
-gem 'rails', '~> 4.2.0'
+gem 'rails', '~> 4.2.1'
 
 gem 'pg'
 gem 'dalli'

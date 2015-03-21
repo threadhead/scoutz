@@ -14,11 +14,14 @@ namespace :event_signups do
         adult = event_signup.scout.unit_adults(event_signup.event.unit).first
         logger.info "  transfer adults/siblings to first associated adult: #{adult.name}(#{adult.id})"
 
+        comment = event_signup.adults_attending > 1 ? "Conversion note: #{event_signup.adults_attending} additional adults" : nil
+
         if adult && event_signup.canceled_at.blank?
           es = EventSignup.create( event_id: event_signup.event.id,
                                    user_id: adult.id,
                                    adults_attending: event_signup.adults_attending,
-                                   siblings_attending: event_signup.siblings_attending
+                                   siblings_attending: event_signup.siblings_attending,
+                                   comment: comment
                                    )
           logger.info "  transfered to EventSignup(#{es.id}):, adults_attending: #{es.adults_attending}, siblings_attending: #{es.siblings_attending}"
         end

@@ -108,7 +108,7 @@ class EventSignupsController < ApplicationController
     # end
 
     def set_signups_rosters(event)
-      @event_signups = event.user_signups(current_user)
+      # @event_signups = event.user_signups(current_user)
       set_event_rosters(event)
     end
 

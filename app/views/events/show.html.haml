@@ -40,21 +40,30 @@
 .row
   .col-md-4.col-md-push-8
     - if @event.signup_required #&& !@event.after_signup_deadline?
-      - if @event.after_signup_deadline? && policy(@event).add_signups?
-        .alert.alert-danger.alert-sm Signup has passed. But you can edit signups because you are an admin or event organizer.
-      #event-quick-signup
-        = render partial: 'event_signups/quick_signup', locals: { event_signups: @event.user_signups(current_user) }
+      - if @event.after_signup_deadline?
+        - if policy(@event).add_signups?
+          .alert.alert-danger.alert-sm Signup has passed. But you can edit signups because you are an admin or event organizer.
 
-      .panel.panel-info
-        .panel-heading
-          %h4.panel-title
-            %a#signups-accordian-button{ href: '#signups-accordian', data: { toggle: 'collapse' } } Show Signup Details
-        #signups-accordian.collapse.panel-collapse
-          .panel-body
-            #event-signups-list= render partial: 'event_signups/event_signup', collection: @event.user_signups(current_user), locals: {event: @event}
-    - else
-      - if @event.signup_required
-        .alert.alert-info Signup has passed for this event.
+        - elsif @event.user_has_signup?(current_user)
+          .alert.alert-info Signup has passed for thie event. You can cancel your signup, but you can not add any new signups.
+
+        - else
+          .alert.alert-info Signup has passed for this event.
+
+      - if !@event.after_signup_deadline? || policy(@event).add_signups? || @event.user_has_signup?(current_user)
+        #event-quick-signup
+          = render partial: 'event_signups/quick_signup', locals: { event: @event }
+
+
+        .panel.panel-info
+          .panel-heading
+            %h4.panel-title
+              %a#signups-accordian-button{ href: '#signups-accordian', data: { toggle: 'collapse' } } Show Signup Details
+          #signups-accordian.collapse.panel-collapse
+            .panel-body
+              #event-signups-list= render partial: 'event_signups/event_signup', collection: @event.user_signups(current_user), locals: {event: @event}
+
+
 
   .col-md-8.col-md-pull-4
     #event-signup-flash

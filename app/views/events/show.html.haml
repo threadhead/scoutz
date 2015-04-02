@@ -35,7 +35,7 @@
               %li
                 = link_to @event.ical.url do
                   %i.fa.fa-calendar.text-muted-more
-                  iCal File
+                  Add to My Calendar
 
             - if policy(@event).destroy?
               %li
@@ -96,7 +96,8 @@
         .col-md-9
           - if @event.ical.present?
             .pull-right
-              = link_to @event.ical.url, class: '', title: 'iCal File' do
+              = link_to @event.ical.url, class: '', title: 'Add to My Calendar' do
+                +
                 %i.fa.fa-calendar.fa-lg
           %span.text-nobreak= @event.start_at.to_s(:long_ampm)
           = '-'

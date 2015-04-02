@@ -1,39 +1,39 @@
 .row
   .col-md-12
-    .well.well-sm.well-reduced-text
-      %p
+
+    %ul.list-group.list-group-buttons
+      %li.list-group-item.disabled
         %strong.xlarge Quick Signups
+      - event.user_signups(current_user).each do |event_signup|
 
-      %ul.list-group.list-group-buttons
-        - event.user_signups(current_user).each do |event_signup|
+        - # show the users current signups for all
+        - if event_signup.persisted?
+          %li.list-group-item.list-group-item-success
+            .pull-right
+              = link_to event_signup, method: :delete, remote: true, class: 'btn btn-danger btn-sm', title: 'Cancel Signup' do
+                %i.fa.fa-minus
 
-          - # show the users current signups for all
-          - if event_signup.persisted?
-            %li.list-group-item.list-group-item-success
+            %strong.xlarge #{ event_signup.user.first_name } is Going
+            .clearfix
+
+        - else
+
+          - # if the user can add signups (an admin), or signup has not passed
+          - if policy(event).add_signups? || !event.after_signup_deadline?
+            %li.list-group-item
               .pull-right
-                = link_to event_signup, method: :delete, remote: true, class: 'btn btn-danger btn-sm' do
-                  %i.fa.fa-minus
+                = form_for event_signup, remote: true, html: {style: "display: inline-block;"} do |f|
+                  = f.hidden_field :user_id
+                  = f.hidden_field :event_id
+                  - if event_signup.user.scout?
+                    = f.hidden_field :scouts_attending, value: '1'
+                  - else
+                    = f.hidden_field :adults_attending, value: '1'
 
-              %strong.xlarge #{ event_signup.user.first_name } is Going
+                  %a{ href: '#', onclick: "$(this).closest('form').submit();", class: 'btn btn-success btn-sm', title: 'Signup to go' }
+                    %i.fa.fa-plus
+                  = #f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'
+
+              %strong.xlarge #{ event_signup.user.first_name } is not going
               .clearfix
-
-          - else
-
-            - # if the user can add signups (an admin), or signup has not passed
-            - if policy(event).add_signups? || !event.after_signup_deadline?
-              %li.list-group-item
-                .pull-right
-                  = form_for event_signup, remote: true, html: {style: "display: inline-block;"} do |f|
-                    = f.hidden_field :user_id
-                    = f.hidden_field :event_id
-                    - if event_signup.user.scout?
-                      = f.hidden_field :scouts_attending, value: '1'
-                    - else
-                      = f.hidden_field :adults_attending, value: '1'
-
-                    %a{ href: '#', onclick: "$(this).closest('form').submit();", class: 'btn btn-success btn-sm' }
-                      %i.fa.fa-plus
-                    = #f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'
-
-                %strong.xlarge #{ event_signup.user.first_name } is not going
-                .clearfix
+%br

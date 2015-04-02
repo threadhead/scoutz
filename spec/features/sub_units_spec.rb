@@ -129,8 +129,8 @@ RSpec.describe 'Sub Units' do
         expect(page).to have_text("Scout: #{@scout2.name}")
       end
 
-      it 'clicking the change button goes to the edit page' do
-        click_link 'change'
+      it 'clicking the edit button goes to the edit page' do
+        click_link 'Edit'
 
         expect(page).to have_text('Edit Den')
         expect(page).to have_selector('form')

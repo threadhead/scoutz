@@ -4,7 +4,7 @@
       %table.table.table-borderless{ style: "margin-bottom: 0;" }
         %tr
           %td{ style: "font-size: 36px; font-weight: 500;padding: 0;line-height: 1;width: 50px;" }= render partial: 'event_icon', locals: {event: @event}
-          %td{ style: "padding: 0 0 0 8px;" }
+          %td{ style: "padding: 0 0 8px 8px;" }
             %span{ style: "font-size: 30px; font-weight: 500;line-height: 1;" }= @event.name
             %br
             .text-grey= @event.kind
@@ -24,7 +24,6 @@
         - if policy(@event).destroy? || policy(Event).new?
           %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
             %i.fa.fa-gear
-            Actions
             %span.caret
           %ul.dropdown-menu.pull-right
             %li
@@ -73,15 +72,6 @@
     #event-signup-flash
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
 
-    .hidden-xs.hidden-sm.event-show-heading-buttons.right-aligned
-      .btn-group
-        = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-sm', title: 'print' do
-          %i.fa.fa-print
-
-        - if @event.ical.present?
-          = link_to @event.ical.url, class: 'btn btn-default btn-sm', title: 'iCal File' do
-            %i.fa.fa-calendar
-
 
     .text-xlarge
       - if @event.sub_unit_kind?
@@ -95,9 +85,14 @@
         .col-md-3
           %strong Times
         .col-md-9
+          - if @event.ical.present?
+            .pull-right
+              = link_to @event.ical.url, class: '', title: 'iCal File' do
+                %i.fa.fa-calendar.fa-lg
           %span.text-nobreak= @event.start_at.to_s(:long_ampm)
           = '-'
           %span.text-nobreak= @event.end_at.to_s(:long_ampm)
+
 
       .row.row-tablized
         .col-md-3

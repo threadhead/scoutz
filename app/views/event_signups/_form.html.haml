@@ -67,6 +67,6 @@
       = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }
 
     - unless event_signup.new_record?
-      = link_to "Cancel", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+      = link_to "Cancel Signup", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
 
     = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'

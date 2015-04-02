@@ -4,7 +4,7 @@
   -# we can use use .print_roster? here because it is the same as sms_attendees? and email_attendees?
   - if !event.event_signups.empty? && policy(event).print_roster?
     .pull-right.btn-group
-      %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+      %a.btn.dropdown-toggle.btn-default.btn-sm{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
         %i.fa.fa-gear
         %span.caret
       %ul.dropdown-menu
@@ -52,7 +52,8 @@
   %tbody#event-signup-roster
     = render partial: 'event_signups/event_roster', collection: event.event_signups.by_user_name_lf
 
-%br
+.bottom-border
+
 .row
   .col-xs-3.text-large
     %table.table-xcondensed
@@ -70,6 +71,4 @@
           %strong Total:
         %td.right-aligned
           %strong= event.attendee_count
-
-.bottom-border
 

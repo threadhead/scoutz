@@ -11,7 +11,7 @@
           Edit
 
       - if policy(@user).new? || policy(@user).destroy?
-        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
+        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
           %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu.pull-right

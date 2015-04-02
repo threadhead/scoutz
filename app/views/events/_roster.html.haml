@@ -4,7 +4,7 @@
   -# we can use use .print_roster? here because it is the same as sms_attendees? and email_attendees?
   - if !event.event_signups.empty? && policy(event).print_roster?
     .pull-right.btn-group
-      %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
+      %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
         %i.fa.fa-gear
         %span.caret
       %ul.dropdown-menu

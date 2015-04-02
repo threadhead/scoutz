@@ -153,6 +153,8 @@ class Event < ActiveRecord::Base
   end
 
 
+
+
   def after_signup_deadline?
     signup_deadline <= Time.zone.now
   end
@@ -181,6 +183,13 @@ class Event < ActiveRecord::Base
     event_signup_users.map(&:id)
   end
 
+  def user_has_signup?(user)
+    user_signups(user).any?(&:persisted?)
+  end
+
+
+
+
   def form_coordinators
     if has_form_coordinators
       # adults in the form_coordinators_ids list, or an admin
@@ -208,7 +217,7 @@ class Event < ActiveRecord::Base
   end
 
 
-  # the types of helath forms required based on the event's type_of_health_forms selection
+  # the types of health forms required based on the event's type_of_health_forms selection
   def health_forms_required
     case type_of_health_forms
     when 'not_required'

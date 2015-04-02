@@ -4,7 +4,7 @@
 
 
   // update the current users's quick signups
-  $("div#event-quick-signup").html("#{escape_javascript(render partial: 'event_signups/quick_signup', locals: {event_signups: @event_signups})}");
+  $("div#event-quick-signup").html("#{escape_javascript(render partial: 'event_signups/quick_signup', locals: {event: @event})}");
 
 
   // update the current users's signups (their family)

@@ -8,7 +8,7 @@
 
 
   // update the current users's signups (their family)
-  $("div#event-signups-list").html("#{escape_javascript(render partial: 'event_signups/event_signup', collection: @event_signups)}");
+  $("div#event-signups-list").html("#{escape_javascript(render partial: 'event_signups/event_signup', collection: @event.user_signups(current_user))}");
 
 
   // update the event roster

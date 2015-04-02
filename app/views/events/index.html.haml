@@ -35,14 +35,12 @@
       = paginate @events, theme: 'bootstrap'
 
   .col-md-3.hidden-xs.hidden-sm
-    .panel.panel-default
-      .panel-heading #{@unit.unit_type_title} Activity
-      .panel-body
-        %ul.list-unstyled#event-activity
-          -# = cache ["unit-#{@unit.id}", @unit.activities.limit(10).first], expires_in: 30.minutes do
-          = cache ["unit-#{@unit.id}", @unit.activities.limit(10).first] do
-            - @unit.activities.limit(10).each do |activity|
-              = render_activity activity
+    %ul.list-group#event-activity{ style: "max-height: 500px; overflow-y: scroll;" }
+      %li.list-group-item.list-group-item-compact.disabled #{@unit.unit_type_title} Activity
+      .scrollable-content-300
+        = cache ["unit-#{@unit.id}", @unit.activities.limit(10).first] do
+          - @unit.activities.limit(10).each do |activity|
+            %li.list-group-item.list-group-item-compact= render_activity activity
 
 .row
   .col-md-10.col-md-offset-1

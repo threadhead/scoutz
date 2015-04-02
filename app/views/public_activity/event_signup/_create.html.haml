@@ -1,7 +1,6 @@
-%li
-  %smaller.activity-created{ data: { 'activity-created' => activity.created_at.iso8601 } }
-  -# %smaller= "#{time_ago_in_words(activity.created_at)} ago"
-  = activity_scout_link(activity)
-  .activity-info
-    signed up for
-    = activity_event_link(activity)
+%smaller.activity-created{ data: { 'activity-created' => activity.created_at.iso8601 } }
+-# %smaller= "#{time_ago_in_words(activity.created_at)} ago"
+= activity_scout_link(activity)
+.activity-info
+  signed up for
+  = activity_event_link(activity)

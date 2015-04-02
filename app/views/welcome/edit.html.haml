@@ -26,7 +26,7 @@
                 = f.submit "Create my password", class: 'btn btn-primary btn-block btn-lg'
                 %br
 
-              - if devise_mapping.registerable? && controller_name != 'registrations'
+              - if devise_mapping.registerable? && controller_name != 'registrations' && false
                 %p.centered
                   Don't have an account?
                   = link_to "Sign up", new_registration_path(resource_name)

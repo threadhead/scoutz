@@ -1,41 +1,54 @@
 .page-header
-  .pull-right
-    .btn-group
-      = link_to unit_events_path(@unit), class: 'btn btn-default' do
-        %i.fa.fa-reply
-        Event List
+  .row
+    .col-md-7
+      %table.table.table-borderless{ style: "margin-bottom: 0;" }
+        %tr
+          %td{ style: "font-size: 36px; font-weight: 500;padding: 0;line-height: 1;width: 50px;" }= render partial: 'event_icon', locals: {event: @event}
+          %td{ style: "padding-top: 0;" }
+            %span{ style: "font-size: 30px; font-weight: 500;line-height: 1;" }= @event.name
+            %br
+            .text-grey= @event.kind
 
-      - if policy(@event).update?
-        = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
-          %i.fa.fa-edit
-          Edit
 
-      - if policy(@event).destroy? || policy(Event).new?
-        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
-          %i.fa.fa-gear
-          Actions
-          %span.caret
-        %ul.dropdown-menu.pull-right
-          %li
-            = link_to unit_event_path(@unit, @event, print: true) do
-              %i.fa.fa-print.text-muted-more
-              Print
+    .col-md-5.right-aligned
+      .btn-group
+        = link_to unit_events_path(@unit), class: 'btn btn-default' do
+          %i.fa.fa-reply.hidden-xs
+          Event List
 
-          - if policy(@event).destroy?
+        - if policy(@event).update?
+          = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
+            %i.fa.fa-edit.hidden-xs
+            Edit
+
+        - if policy(@event).destroy? || policy(Event).new?
+          %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+            %i.fa.fa-gear
+            Actions
+            %span.caret
+          %ul.dropdown-menu.pull-right
             %li
-              = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
-                %i.fa.fa-trash-o.text-muted-more
-                Destroy Event
+              = link_to unit_event_path(@unit, @event, print: true) do
+                %i.fa.fa-print.text-muted-more
+                Print
 
-          - if policy(Event).new?
-            %li
-              = link_to new_unit_event_path(@unit) do
-                %i.fa.fa-plus.text-muted-more
-                New Event
+            - if @event.ical.present?
+              %li
+                = link_to @event.ical.url do
+                  %i.fa.fa-calendar.text-muted-more
+                  iCal File
 
-  %h2
-    = render partial: 'event_icon', locals: {event: @event}
-    = @event.name
+            - if policy(@event).destroy?
+              %li
+                = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
+                  %i.fa.fa-trash-o.text-muted-more
+                  Destroy Event
+
+            - if policy(Event).new?
+              %li
+                = link_to new_unit_event_path(@unit) do
+                  %i.fa.fa-plus.text-muted-more
+                  New Event
 
 .row
   .col-md-4.col-md-push-8
@@ -60,19 +73,16 @@
     #event-signup-flash
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
 
-    .pull-right
+    .hidden-xs.hidden-sm.event-show-heading-buttons.right-aligned
       .btn-group
-        = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-xs' do
+        = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-sm', title: 'print' do
           %i.fa.fa-print
-          Print
 
         - if @event.ical.present?
-          = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
+          = link_to @event.ical.url, class: 'btn btn-default btn-sm', title: 'iCal File' do
             %i.fa.fa-calendar
-            iCal File
 
 
-    %p &nbsp;
     .text-xlarge
       .row.row-tablized
         .col-md-3

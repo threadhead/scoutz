@@ -4,7 +4,7 @@
       %table.table.table-borderless{ style: "margin-bottom: 0;" }
         %tr
           %td{ style: "font-size: 36px; font-weight: 500;padding: 0;line-height: 1;width: 50px;" }= render partial: 'event_icon', locals: {event: @event}
-          %td{ style: "padding-top: 0;" }
+          %td{ style: "padding: 0 0 0 8px;" }
             %span{ style: "font-size: 30px; font-weight: 500;line-height: 1;" }= @event.name
             %br
             .text-grey= @event.kind
@@ -84,12 +84,12 @@
 
 
     .text-xlarge
-      .row.row-tablized
-        .col-md-3
-          %strong Kind
-        .col-md-9
-          = @event.kind
-          = " - #{event_kind_sub_units(@event)}" if @event.sub_unit_kind?
+      - if @event.sub_unit_kind?
+        .row.row-tablized
+          .col-md-3
+            %strong= @unit.sub_unit_name.pluralize
+          .col-md-9
+            = event_kind_sub_units(@event)
 
       .row.row-tablized
         .col-md-3

@@ -65,7 +65,7 @@
   - if policy(EventSignup.new(event: event_roster.event)).update? || policy(event_roster).activity_consent_form?
     %td.right-aligned
       .btn-group
-        %a.btn.dropdown-toggle.btn-default.btn-xs{href: '#', data: {toggle: 'dropdown'}}
+        %a.btn.dropdown-toggle.btn-default.btn-xs{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
           %i.fa.fa-gear
           %span.caret
 

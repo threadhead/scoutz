@@ -6,17 +6,16 @@
     .col-md-4.right-aligned
       .btn-group
         = link_to unit_sub_units_path(@unit), class: 'btn btn-default' do
-          %i.fa.fa-users
+          %i.fa.fa-reply
           #{@unit.name_unit} Patrols
 
         - if policy(@sub_unit).edit?
           = link_to(edit_unit_sub_unit_path(@unit, @sub_unit), class: 'btn btn-default') do
             %i.fa.fa-edit
-            change
+            Edit
 
-        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
+        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
           %i.fa.fa-gear
-          Actions
           %span.caret
         %ul.dropdown-menu.pull-right
           - if policy(@sub_unit).destroy? && @sub_unit.scouts.count == 0

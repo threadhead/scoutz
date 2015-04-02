@@ -37,7 +37,7 @@ jQuery ->
 
 
   $("select#event_kind").change ->
-    return if $("input#new_record").val() == 'false'
+    # return if $("input#new_record").val() == 'false'
     unitMeeting = /troop meeting|pack meeting|crew meeting/i
     unitEvent = /troop event|pack event|crew event|lodge event/i
     subUnitEvent = /patrol event|den event|lodge event/i
@@ -49,6 +49,7 @@ jQuery ->
 
     if selected.match unitMeeting
       eventShowElemHideOthers("#unit-meeting-kind")
+      return if $("input#new_record").val() == 'false'
       setUnitMeetingDefaults()
 
     else if selected.match subUnitEvent
@@ -56,19 +57,23 @@ jQuery ->
 
     else if selected.match outingEvent
       eventShowElemHideOthers("#camping-outing-kind")
+      return if $("input#new_record").val() == 'false'
       setCampingOutingDefaults()
       setSignupDateTime()
 
     else if selected.match leaderEvent
       eventShowElemHideOthers("#adult-leader-kind")
+      return if $("input#new_record").val() == 'false'
       setAdultLeaderDefaults()
 
     else if selected.match unitEvent
       eventShowElemHideOthers("#unit-event-kind")
+      return if $("input#new_record").val() == 'false'
       setUnitEventDefaults()
 
     else if selected.match plcEvent
       eventShowElemHideOthers("#plc-kind")
+      return if $("input#new_record").val() == 'false'
       setPlcDefaults()
 
     setSignupDateTimeDisable()

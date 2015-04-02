@@ -14,8 +14,8 @@
             %i.fa.fa-edit
             Edit
 
-        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
-          Actions
+        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+          %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu.pull-right
           - if policy(@page).destroy?

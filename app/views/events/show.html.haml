@@ -1,41 +1,53 @@
 .page-header
-  .pull-right
-    .btn-group
-      = link_to unit_events_path(@unit), class: 'btn btn-default' do
-        %i.fa.fa-reply
-        Event List
+  .row
+    .col-md-7
+      %table.table.table-borderless{ style: "margin-bottom: 0;" }
+        %tr
+          %td{ style: "font-size: 36px; font-weight: 500;padding: 0;line-height: 1;width: 50px;" }= render partial: 'event_icon', locals: {event: @event}
+          %td{ style: "padding: 0 0 8px 8px;" }
+            %span{ style: "font-size: 30px; font-weight: 500;line-height: 1;" }= @event.name
+            %br
+            .text-grey= @event.kind
 
-      - if policy(@event).update?
-        = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
-          %i.fa.fa-edit
-          Edit
 
-      - if policy(@event).destroy? || policy(Event).new?
-        %a.btn.dropdown-toggle.btn-warning{href: '#', data: {toggle: 'dropdown'}}
-          %i.fa.fa-gear
-          Actions
-          %span.caret
-        %ul.dropdown-menu.pull-right
-          %li
-            = link_to unit_event_path(@unit, @event, print: true) do
-              %i.fa.fa-print.text-muted-more
-              Print
+    .col-md-5.right-aligned
+      .btn-group
+        = link_to unit_events_path(@unit), class: 'btn btn-default' do
+          %i.fa.fa-reply.hidden-xs
+          Event List
 
-          - if policy(@event).destroy?
+        - if policy(@event).update?
+          = link_to edit_unit_event_path(@unit, @event), class: 'btn btn-default' do
+            %i.fa.fa-edit.hidden-xs
+            Edit
+
+        - if policy(@event).destroy? || policy(Event).new?
+          %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+            %i.fa.fa-gear
+            %span.caret
+          %ul.dropdown-menu.pull-right
             %li
-              = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
-                %i.fa.fa-trash-o.text-muted-more
-                Destroy Event
+              = link_to unit_event_path(@unit, @event, print: true) do
+                %i.fa.fa-print.text-muted-more
+                Print
 
-          - if policy(Event).new?
-            %li
-              = link_to new_unit_event_path(@unit) do
-                %i.fa.fa-plus.text-muted-more
-                New Event
+            - if @event.ical.present?
+              %li
+                = link_to @event.ical.url do
+                  %i.fa.fa-calendar.text-muted-more
+                  iCal File
 
-  %h2
-    = render partial: 'event_icon', locals: {event: @event}
-    = @event.name
+            - if policy(@event).destroy?
+              %li
+                = link_to(unit_event_path(@unit, @event), method: :delete, data: {confirm: 'Are you sure?'}) do
+                  %i.fa.fa-trash-o.text-muted-more
+                  Destroy Event
+
+            - if policy(Event).new?
+              %li
+                = link_to new_unit_event_path(@unit) do
+                  %i.fa.fa-plus.text-muted-more
+                  New Event
 
 .row
   .col-md-4.col-md-push-8
@@ -69,120 +81,115 @@
     #event-signup-flash
       = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
 
-    .pull-right
-      .btn-group
-        = link_to unit_event_path(@unit, @event, print: true), class: 'btn btn-default btn-xs' do
-          %i.fa.fa-print
-          Print
 
-        - if @event.ical.present?
-          = link_to @event.ical.url, class: 'btn btn-default btn-xs' do
-            %i.fa.fa-calendar
-            iCal File
-
-
-    %p &nbsp;
     .text-xlarge
-      %table.table
-        %tr
-          %td
-            %strong Kind
-          %td
-            = @event.kind
-            = " - #{event_kind_sub_units(@event)}" if @event.sub_unit_kind?
+      - if @event.sub_unit_kind?
+        .row.row-tablized
+          .col-md-3
+            %strong= @unit.sub_unit_name.pluralize
+          .col-md-9
+            = event_kind_sub_units(@event)
 
-        %tr
-          %td
-            %strong Times
-          %td #{@event.start_at.to_s(:long_ampm)} - #{@event.end_at.to_s(:long_ampm)}
-
-        %tr
-          %td
-            %strong Organizers
-          %td= unit_users_link_list(@unit, @event.users.by_name_lf)
-
-        %tr
-          %td
-            %strong Reminders?
-          %td #{@event.send_reminders ? 'Yes' : 'No'}
-
-        %tr
-          %td
-            %strong Sign Up
-          %td #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
+      .row.row-tablized
+        .col-md-3
+          %strong Times
+        .col-md-9
+          - if @event.ical.present?
+            .pull-right
+              = link_to @event.ical.url, class: '', title: 'iCal File' do
+                %i.fa.fa-calendar.fa-lg
+          %span.text-nobreak= @event.start_at.to_s(:long_ampm)
+          = '-'
+          %span.text-nobreak= @event.end_at.to_s(:long_ampm)
 
 
-        - if @event.signup_required?
-          %tr
-            %td
-              %strong Forms
-            %td
-              - if @event.health_forms_required?
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
-                  %i.fa.fa-inverse.fa-medkit.fa-stack-1x
-              - else
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-medkit.fa-stack-1x
-                  %i.fa.fa-ban.fa-stack-2x.text-danger
-              Healh Forms: #{Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)}
+      .row.row-tablized
+        .col-md-3
+          %strong Organizers
+        .col-md-9= unit_users_link_list(@unit, @event.users.by_name_lf)
 
-              %br
-              - if @event.consent_required?
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
-                  %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
-              - else
-                %span.fa-stack.fa-stack-sm
-                  %i.fa.fa-thumbs-up.fa-stack-1x
-                  %i.fa.fa-ban.fa-stack-2x.text-danger
-              Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
+      .row.row-tablized
+        .col-md-3
+          %strong Reminders?
+        .col-md-9 #{@event.send_reminders ? 'Yes' : 'No'}
 
-              - if @event.consent_required?
-                - if @unit.attach_consent_form?
-                  %br
-                  = link_to consent_form_url(@event) do
-                    %i.fa.fa-download
-                    Download Consent Form
+      .row.row-tablized
+        .col-md-3
+          %strong Sign Up
+        .col-md-9 #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
 
 
-                %p.small
-                  Coordinator#{'s' if @event.form_coordinators.count > 1 }:
-                  = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'
+      - if @event.signup_required?
+        .row.row-tablized
+          .col-md-3
+            %strong Forms
+          .col-md-9
+            - if @event.health_forms_required?
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+                %i.fa.fa-inverse.fa-medkit.fa-stack-1x
+            - else
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-medkit.fa-stack-1x
+                %i.fa.fa-ban.fa-stack-2x.text-danger
+            Healh Forms: #{Event.type_of_health_forms_for_select.key(@event.type_of_health_forms)}
 
-        %tr
-          %td
-            %strong Attire
-          %td= @event.attire
+            %br
+            - if @event.consent_required?
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-circle.fa-stack-2x.fa-stack-gray
+                %i.fa.fa-inverse.fa-thumbs-up.fa-stack-1x
+            - else
+              %span.fa-stack.fa-stack-sm
+                %i.fa.fa-thumbs-up.fa-stack-1x
+                %i.fa.fa-ban.fa-stack-2x.text-danger
+            Activity Consent: #{@event.consent_required ? '<em>required</em>'.html_safe : 'Not required'}
 
-        %tr
-          %td
-            %strong Location
-          %td
-            %address= location_show(@event)
+            - if @event.consent_required?
+              - if @unit.attach_consent_form?
+                %br
+                = link_to consent_form_url(@event) do
+                  %i.fa.fa-download
+                  Download Consent Form
 
-            - unless @event.gmaps4rails_address.blank?
-              = #gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
-              #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
 
-            - unless @event.location_map_url.blank?
-              %br
-              %p
-                = link_to(@event.location_map_url, target: '_blank') do
-                  %i.fa.fa-external-link
-                  Show map...
+              %p.small
+                Coordinator#{'s' if @event.form_coordinators.count > 1 }:
+                = @event.has_form_coordinators ? unit_users_link_list(@unit, @event.form_coordinators) : 'all adult leaders'
 
-            -#   .iframe-rwd
-            -#     %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+      .row.row-tablized
+        .col-md-3
+          %strong Attire
+        .col-md-9= @event.attire
 
-          %tr
-            %td &nbsp;
-            %td= @event.message.html_safe
+      .row.row-tablized
+        .col-md-3
+          %strong Location
+        .col-md-9
+          %address= location_show(@event)
 
-      - if @event.signup_required
-        .bottom-border
-        #event-roster
-          = render partial: 'roster', locals: { event: @event }
+          - unless @event.gmaps4rails_address.blank?
+            = #gmaps(map_options: {zoom: 13, auto_zoom: false}, markers: {data: @event.to_gmaps4rails})
+            #gmap.map_container{style: "width: 100%; height: 300px;", data: {address: @event.gmaps4rails_address}}
+
+          - unless @event.location_map_url.blank?
+            %br
+            %p
+              = link_to(@event.location_map_url, target: '_blank') do
+                %i.fa.fa-external-link
+                Show map...
+
+          -#   .iframe-rwd
+          -#     %iframe{src: location_map_url_iframe(@event), frameborder: "0", width: "300", height: "300", scrolling: "no", marginheight: "0", marginwidth: "0"}
+
+      .row.row-tablized
+        .col-md-3 &nbsp;
+        .col-md-9= @event.message.html_safe
+
+    - if @event.signup_required
+      .bottom-border
+      #event-roster
+        = render partial: 'roster', locals: { event: @event }
 
 
 #event-signup-modal

@@ -6,7 +6,10 @@
   background-color: $bs-khaki-dark
   border-color: #665e02
 
-
+.page-header
+  margin: 20px 0 20px
+  h2
+    margin-top: 0px
 
 fieldset
   margin-top: 3em
@@ -275,11 +278,18 @@ img.merit-badge-patch-thumb
   height: 200px
 
 .activity-info
-  font-size: 12px
-  display: block
-  border-bottom: 1px #ddd solid
-  margin-bottom: 4px
-  padding-bottom: 2px
+  font-size: 11px
+  // display: block
+  // border-bottom: 1px #ddd solid
+  // margin-bottom: 4px
+  // padding-bottom: 2px
+
+.list-group-item-compact
+  padding: 4px 8px
+
+.scrollable-content-300
+  height: 300px
+  overflow-y: scroll
 
 div.text-xs, p.xs, p xs, i.xs, span.xs, strong.xs, em.xs, a.xs
   font-size: 10px
@@ -455,6 +465,9 @@ body
   line-height: 1.2em !important
   width: 40%
 
+.event-show-heading-buttons
+  margin-bottom: 12px
+
 .input-append-start-end
   width: 220px
   display: inline-block
@@ -487,8 +500,7 @@ body
   height: 140px
   overflow-y: scroll
 
-.page-header h2
-  margin-top: 0px
+
 
 .text-grey
   color: grey
@@ -604,6 +616,16 @@ select.input-xs
   font-size: 12px
   line-height: 1.5
   border-radius: 3px
+
+.row-tablized
+  padding: 8px 0
+  line-height: 1.42
+  border-top: 1px solid #ddd
+  margin-left: 0px
+  // margin-right: 8px
+
+.row-tablized div[class*=col-]
+  padding-left: 6px
 
 
 i.tooltip_circle

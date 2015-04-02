@@ -77,10 +77,10 @@
 
 
       .navbar-collapse.collapse#unit-navbar-collapse
-        %ul.nav.navbar-nav.navbar-left
+        %ul.nav.navbar-nav
           %li
             - if @units.size > 1
-              = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form navbar-left col-xs-12' do
+              = form_tag change_default_unit_units_path, method: :get, class: 'navbar-form col-xs-11' do
                 = select_tag :select_default_unit, options_from_collection_for_select(@units, :id, :name_short, [@unit.id]), class: 'form-control'
               .clearfix.visible-xs-block
 
@@ -202,10 +202,10 @@
         %ul.nav.navbar-nav.navbar-right
           %li
             = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
-              %i.fa.fa-list
+              %i.fa.fa-list.fa-lg
               .visible-xs-inline Event List
           %li
             = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
-              %i.fa.fa-calendar
+              %i.fa.fa-calendar.fa-lg
               .visible-xs-inline Calendar
 

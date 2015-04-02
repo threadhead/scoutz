@@ -127,7 +127,8 @@
 
     .col-md-3
       = f.select :kind, @unit.event_kinds, include_blank: 'select the kind of event..'
-      #kinds-of-events.collapse{class: @event.new_record? ? 'in' : '' }
+
+      - if @event.new_record?
         .alert.alert-warning
           %small
             %strong #{@unit.unit_type_title} Meeting:
@@ -145,77 +146,77 @@
             adult leaders, no scouts
 
 
-      #unit-meeting-kind.collapse
-        .alert.alert-info
-          %small
-            %strong #{@unit.unit_type_title} Meeting
-            %br
-            We set some sensible defaults:
-            %ul
-              %li Attire -> uniform
-              %li Send reminder -> off
-              %li Heath forms -> off
-              %li Signup required -> off
-              %li ACF required -> off
-          %button.btn.btn-default.btn-sm.btn-block#copy-last-unit-meeting{type: 'button'}
-            %i.fa.fa-copy
-            Copy Last #{@unit.unit_type_title} Meeting Values
-          %p.small.centered (+ 1 week)
+        #unit-meeting-kind.collapse
+          .alert.alert-info
+            %small
+              %strong #{@unit.unit_type_title} Meeting
+              %br
+              We set some sensible defaults:
+              %ul
+                %li Attire -> uniform
+                %li Send reminder -> off
+                %li Heath forms -> off
+                %li Signup required -> off
+                %li ACF required -> off
+            %button.btn.btn-default.btn-sm.btn-block#copy-last-unit-meeting{type: 'button'}
+              %i.fa.fa-copy
+              Copy Last #{@unit.unit_type_title} Meeting Values
+            %p.small.centered (+ 1 week)
 
-      #camping-outing-kind.collapse
-        .alert.alert-info
-          %small
-            %strong Camping/Outing
-            %br
-            We set some sensible defaults:
-            %ul
-              %li Attire -> t-shirt
-              %li Send reminder -> on
-              %li Health form -> on
-              %li Signup required -> on
-              %li ACF required -> on
+        #camping-outing-kind.collapse
+          .alert.alert-info
+            %small
+              %strong Camping/Outing
+              %br
+              We set some sensible defaults:
+              %ul
+                %li Attire -> t-shirt
+                %li Send reminder -> on
+                %li Health form -> on
+                %li Signup required -> on
+                %li ACF required -> on
 
-      #unit-event-kind.collapse
-        .alert.alert-info
-          %small
-            %strong #{@unit.unit_type_title} Event
-            %br
-            We set some sensible defaults:
-            %ul
-              %li Attire -> uniform
-              %li Send reminder -> on
-              %li Health form -> off
-              %li Signup required -> off
-              %li ACF required -> off
+        #unit-event-kind.collapse
+          .alert.alert-info
+            %small
+              %strong #{@unit.unit_type_title} Event
+              %br
+              We set some sensible defaults:
+              %ul
+                %li Attire -> uniform
+                %li Send reminder -> on
+                %li Health form -> off
+                %li Signup required -> off
+                %li ACF required -> off
 
-      #adult-leader-kind.collapse
-        .alert.alert-info
-          %small
-            %strong Adult Leader Event
-            %br
-            We set some sensible defaults:
-            %ul
-              %li Attire -> casual
-              %li Send reminder -> on
-              %li Health form -> off
-              %li Signup required -> off
-              %li ACF required -> off
+        #adult-leader-kind.collapse
+          .alert.alert-info
+            %small
+              %strong Adult Leader Event
+              %br
+              We set some sensible defaults:
+              %ul
+                %li Attire -> casual
+                %li Send reminder -> on
+                %li Health form -> off
+                %li Signup required -> off
+                %li ACF required -> off
 
-      #plc-kind.collapse
-        .alert.alert-info
-          %small
-            %strong Patrol Leaders Council (PLC)
-            %br
-            We set some sensible defaults:
-            %ul
-              %li Attire -> uniform
-              %li Send reminder -> on
-              %li Health form -> off
-              %li Signup required -> off
-              %li ACF required -> off
+        #plc-kind.collapse
+          .alert.alert-info
+            %small
+              %strong Patrol Leaders Council (PLC)
+              %br
+              We set some sensible defaults:
+              %ul
+                %li Attire -> uniform
+                %li Send reminder -> on
+                %li Health form -> off
+                %li Signup required -> off
+                %li ACF required -> off
 
 
-      #sub-unit-kind.collapse
+      #sub-unit-kind.collapse{ class: @event.sub_unit_kind? ? 'in' : '' }
         .well.well-sm
           %small
             %strong Select #{@unit.sub_unit_name}s for event

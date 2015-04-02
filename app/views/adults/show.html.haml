@@ -12,8 +12,7 @@
 
       - if policy(@user).new? || policy(@user).destroy?
         %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}}
-          %i.fa.fa-gear.hidden-xs
-          Actions
+          %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu.pull-right
           - if policy(@user).destroy?

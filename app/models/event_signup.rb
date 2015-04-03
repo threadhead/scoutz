@@ -80,6 +80,12 @@ class EventSignup < ActiveRecord::Base
       '4 seats' => 4,
       '5 seats' => 5,
       '6 seats' => 6,
+      '7 seats' => 7,
+      '8 seats' => 8,
+      '9 seats' => 9,
+      '10 seats' => 10,
+      '11 seats' => 11,
+      '12 seats' => 12
     }
   end
 

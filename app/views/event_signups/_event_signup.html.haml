@@ -4,9 +4,9 @@
       = user_picture_circle(event_signup.user)
 
     - if event_signup.new_record?
-      %strong Sign Up #{event_signup.user.f_name_l_initial}
+      %strong Sign Up #{event_signup.user.first_name}
     - else
-      %strong #{ event_signup.user.f_name_l_initial } is Going
+      %strong #{ event_signup.user.first_name } is Going
 
 
   - if event_signup.new_record? && event_signup.event.after_signup_deadline?

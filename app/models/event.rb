@@ -193,7 +193,7 @@ class Event < ActiveRecord::Base
   def form_coordinators
     if has_form_coordinators
       # adults in the form_coordinators_ids list, or an admin
-      t = User.arel_table
+      # t = User.arel_table
       # unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
       unit.adults.where(id: form_coordinator_ids.reject(&:empty?))
     else

@@ -29,7 +29,7 @@
 - if event.signup_required && policy(event).add_signups?
   #event-signup-add.row
     .col-xs-12
-      = select_tag :add_signup, options_from_collection_for_select(event.users_without_signup, :id, :name_lf), prompt: '', data: { 'event-id' => event.id }, id: 'add-event-signup-select', style: "width: 50%;"
+      = select_tag :add_signup, options_from_collection_for_select(event.users_without_signup, :id, :name_lf), data: { 'event-id' => event.id }, id: 'add-event-signup-select', style: "width: 50%;"
       = button_tag 'add', class: 'btn btn-default', id: 'add-event-signup-button'
       %br
       %br
@@ -38,17 +38,17 @@
 %table.table-condensed.table-striped.table-roster
   %thead
     %tr
-      %th{colspan: '2'} Name
+      %th{ colspan: '2' } Name
       - if event.health_forms_required?
         %th.centered HF
       %th.centered Driving
       %th.centered Ride
       - if event.consent_required?
         %th.centered ACF
-      %th Info
+      %th{ colspan: '2' } Info
       - # only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
-      - if policy(EventSignup.new(event: event)).update?
-        %th.right-aligned Action
+      -# - if policy(EventSignup.new(event_id: event.id)).update? || policy(EventSignup.new(event_id: event.id)).activity_consent_form?
+        -# %th.right-aligned Action
   %tbody#event-signup-roster
     = render partial: 'event_signups/event_roster', collection: event.event_signups.by_user_name_lf
 

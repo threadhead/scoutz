@@ -13,7 +13,7 @@
     %tr
       %td{style: td_border + td_col_1}
         %strong Times
-      %td{style: td_border} #{event.start_at.in_time_zone(event.unit.time_zone).to_s(:long_ampm)} - #{event.end_at.in_time_zone(event.unit.time_zone).to_s(:long_ampm)}
+      %td{style: td_border}= Google::TimeDisplay.new(event.start_at.in_time_zone(event.unit.time_zone), event.end_at.in_time_zone(event.unit.time_zone))
 
 
     %tr
@@ -27,7 +27,7 @@
       %td{style: td_border + td_col_1}
         %strong Sign Up
       %td{style: td_border}
-        #{event.signup_required ? "by #{event.signup_deadline.in_time_zone(event.unit.time_zone).to_s(:short_ampm)}" : 'not required'}
+        = event.signup_required ? "by #{Google::TimeDisplay.new(event.signup_deadline.in_time_zone(event.unit.time_zone))}" : 'not required'
         - if event.signup_required
           - if event.after_signup_deadline?
             %strong (PASSED)
@@ -86,5 +86,5 @@
 
 
   - if event.signup_required
-    %div{style: "border: 1px solid gainsboro; margin: 0 0 12px 20px; background-color: whitesmoke; padding: 12px 12px 0 12px; border-radius: 4px;"}
+    %div{style: "border: 1px solid gainsboro; margin: 0 60px 12px 20px; background-color: whitesmoke; padding: 12px 12px 0 12px; border-radius: 4px;"}
       = render partial: 'event_signups/email', collection: recipient_signup_users_for_event(@recipient, event), as: :user, locals: { recipient: @recipient, event: event }

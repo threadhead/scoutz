@@ -4,7 +4,8 @@ module EventsHelper
   end
 
   def event_list_name(event)
-    "#{event.start_at.to_s(:short_ampm)} • #{event.name} (#{event.event_kind_details})"
+    # "#{event.start_at.to_s(:short_ampm)} • #{event.name} (#{event.event_kind_details})"
+    "#{Google::TimeDisplay.new(event.start_at).to_s} • #{event.name} (#{event.event_kind_details})"
   end
 
   def event_kind_sub_units(event)

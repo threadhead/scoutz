@@ -99,9 +99,10 @@
               = link_to @event.ical.url, class: '', title: 'Add to My Calendar' do
                 +
                 %i.fa.fa-calendar.fa-lg
-          %span.text-nobreak= @event.start_at.to_s(:long_ampm)
-          = '-'
-          %span.text-nobreak= @event.end_at.to_s(:long_ampm)
+          = Google::TimeDisplay.new(@event.start_at, @event.end_at).to_s
+          -# %span.text-nobreak= @event.start_at.to_s(:long_ampm)
+          -# = '-'
+          -# %span.text-nobreak= @event.end_at.to_s(:long_ampm)
 
 
       .row.row-tablized
@@ -117,7 +118,7 @@
       .row.row-tablized
         .col-md-3
           %strong Sign Up
-        .col-md-9 #{@event.signup_required ? "by #{@event.signup_deadline.to_s(:short_ampm)}" : 'Not required'}
+        .col-md-9= @event.signup_required ? "by #{Google::TimeDisplay.new(@event.signup_deadline)}" : 'Not required'
 
 
       - if @event.signup_required?

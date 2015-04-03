@@ -16,7 +16,7 @@
         %table
           %tr
             %td Signed Up on:
-            %td= event_signup.updated_at.to_s(:short_ampm)
+            %td= Google::TimeDisplay.new(event_signup.updated_at).to_s
 
           - if user.adult?
             %tr
@@ -27,14 +27,6 @@
             %td Comments:
             %td= event_signup.comment
 
-          %tr
-            %td Needs a Ride:
-            %td
-              - if event_signup.need_carpool_seats && event_signup.need_carpool_seats > 0
-                Yes, #{event_signup.need_carpool_seats} #{'seat'.pluralize(event_signup.need_carpool_seats)}
-              - else
-                No
-
           - if user.scout? && event.consent_required?
             %tr
               %td Activity Consent:
@@ -43,6 +35,14 @@
                   %span{style: "background-color: green; color: white; padding: 2px;"} Submitted
                 - else
                   %span{style: "background-color: yellow; color: red; font-weight: bold; padding: 2px"} NOT SUBMITTED
+
+          %tr
+            %td Needs a Ride:
+            %td
+              - if event_signup.need_carpool_seats && event_signup.need_carpool_seats > 0
+                Yes, #{event_signup.need_carpool_seats} #{'seat'.pluralize(event_signup.need_carpool_seats)}
+              - else
+                No
 
           %tr
             %td Can Drive:

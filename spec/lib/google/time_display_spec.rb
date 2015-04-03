@@ -15,11 +15,11 @@ RSpec.describe Google::TimeDisplay do
     end
 
     it 'displays the range with only time when stat and end are on same day' do
-      expect(Google::TimeDisplay.new(start_time, end_time).to_s).to eq('Fri, February 2, 12am - 1am')
+      expect(Google::TimeDisplay.new(start_time, end_time).to_s).to eq('Fri, February 2, 12am — 1am')
     end
 
     it 'displays the range in full when stat and end are on different days' do
-      expect(Google::TimeDisplay.new(start_time, end_time + 1.day).to_s).to eq('Fri, February 2, 12am - Sat, February 3, 1am')
+      expect(Google::TimeDisplay.new(start_time, end_time + 1.day).to_s).to eq('Fri, February 2, 12am — Sat, February 3, 1am')
     end
 
     it 'displays the hour only when no minutes' do
@@ -31,7 +31,7 @@ RSpec.describe Google::TimeDisplay do
     end
 
     it 'displays the hour plus minutes if any time has minutes' do
-      expect(Google::TimeDisplay.new(start_time + 1.minute, end_time).to_s).to eq('Fri, February 2, 12:01am - 1:00am')
+      expect(Google::TimeDisplay.new(start_time + 1.minute, end_time).to_s).to eq('Fri, February 2, 12:01am — 1:00am')
     end
 
 
@@ -77,11 +77,11 @@ RSpec.describe Google::TimeDisplay do
     end
 
     it 'displays the range with only time when stat and end are on same day' do
-      expect(Google::TimeDisplay.new(start_time, end_time).to_s).to eq('Sat, February 2, 2002, 12am - 1am')
+      expect(Google::TimeDisplay.new(start_time, end_time).to_s).to eq('Sat, February 2, 2002, 12am — 1am')
     end
 
     it 'displays the range in full when stat and end are on different days' do
-      expect(Google::TimeDisplay.new(start_time, end_time + 1.day).to_s).to eq('Sat, February 2, 2002, 12am - Sun, February 3, 2002, 1am')
+      expect(Google::TimeDisplay.new(start_time, end_time + 1.day).to_s).to eq('Sat, February 2, 2002, 12am — Sun, February 3, 2002, 1am')
     end
 
     it 'displays the hour only when no minutes' do
@@ -93,7 +93,7 @@ RSpec.describe Google::TimeDisplay do
     end
 
     it 'displays the hour plus minutes if any time has minutes' do
-      expect(Google::TimeDisplay.new(start_time + 1.minute, end_time).to_s).to eq('Sat, February 2, 2002, 12:01am - 1:00am')
+      expect(Google::TimeDisplay.new(start_time + 1.minute, end_time).to_s).to eq('Sat, February 2, 2002, 12:01am — 1:00am')
     end
   end
 end

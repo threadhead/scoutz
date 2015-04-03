@@ -10,15 +10,17 @@ module Google
       @abbr_weekday = true
     end
 
+
+    # note: those are em dashes!
     def to_s
       if no_ending_time?
         formatted_s(@time_start)
 
       elsif start_end_on_same_day?
-        "#{formatted_s(@time_start)} - #{time_only(@time_end)}"
+        "#{formatted_s(@time_start)} — #{time_only(@time_end)}"
 
       else
-        "#{formatted_s(@time_start)} - #{formatted_s(@time_end)}"
+        "#{formatted_s(@time_start)} — #{formatted_s(@time_end)}"
       end
     end
 
@@ -89,6 +91,10 @@ module Google
     end
 
 
+
+    def nbsp
+      0xC2.chr + 0xA0.chr
+    end
 
 
 

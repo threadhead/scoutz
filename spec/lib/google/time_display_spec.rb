@@ -2,6 +2,7 @@ require 'rails_helper'
 include ActiveSupport::Testing::TimeHelpers
 
 RSpec.describe Google::TimeDisplay do
+  before { Time.zone = "UTC" }
 
   context 'in the current year, displays no year' do
     before { travel_to DateTime.new(2001, 2, 2, 0, 0, 0) }

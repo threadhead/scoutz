@@ -37,7 +37,7 @@
             - @unit.ranks.each do |rank|
               %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
 
-    = cache ["unit-#{@unit.id}", :sub_unit_count, cache_key_for_users(@users) ] do
+    = cache ["unit-#{@unit.id}", :sub_unit_count, cache_key_for_users(@users), cache_key_for_sub_units(@unit.sub_units) ] do
       .panel.panel-index-table.panel-default
         .panel-heading #{@unit.sub_unit_name} Count (all)
         .panel-body

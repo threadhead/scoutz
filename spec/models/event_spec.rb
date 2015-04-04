@@ -77,21 +77,21 @@ RSpec.describe Event do
     end
   end
 
-  describe '.sub_unit_kind' do
-    ['Den Event', 'Patrol Event'].each do |type|
-      it "returns TRUE when '#{type}'" do
-        event.kind = type
-        expect(event.sub_unit_kind?).to be(true)
-      end
-    end
+  # describe '.sub_unit_kind' do
+  #   ['Den Event', 'Patrol Event'].each do |type|
+  #     it "returns TRUE when '#{type}'" do
+  #       event.kind = type
+  #       expect(event.sub_unit_kind?).to be(true)
+  #     end
+  #   end
 
-    ['Pack Event', 'Troop Event', 'Lodge Event'].each do |type|
-      it "returns FALSE when '#{type}'" do
-        event.kind = type
-        expect(event.sub_unit_kind?).to be(false)
-      end
-    end
-  end
+  #   ['Pack Event', 'Troop Event', 'Lodge Event'].each do |type|
+  #     it "returns FALSE when '#{type}'" do
+  #       event.kind = type
+  #       expect(event.sub_unit_kind?).to be(false)
+  #     end
+  #   end
+  # end
 
 
   describe 'Event.format_time' do
@@ -250,6 +250,65 @@ RSpec.describe Event do
         end
     end
   end
+
+
+
+  describe 'event kinds' do
+    let(:event) { FactoryGirl.build(:event) }
+
+    let(:sub_unit_kinds) { ['Patrol Event', 'Den Event'] }
+    let(:unit_meeting_kinds) { ['Troop Meeting', 'Pack Meeting', 'Crew Meeting', 'Lodge Meeting'] }
+    let(:unit_event_kinds) { ['Troop Event', 'Pack Event', 'Crew Event', 'Lodge Event'] }
+    let(:camping_outing_kinds) { ['Camping/Outing'] }
+    let(:plc_kinds) { ['PLC'] }
+    let(:adult_leader_kinds) { ['Adult Leader Event'] }
+    let(:all_kinds) { sub_unit_kinds + unit_meeting_kinds + unit_event_kinds + camping_outing_kinds + plc_kinds + adult_leader_kinds }
+
+    def kind_test(event, method, kinds, expect_result)
+      kinds.each do |kind|
+        event.kind = kind
+        expect(event.send(method)).to eq(expect_result)
+      end
+    end
+
+    it 'all return false when kind is blank' do
+      event.kind = nil
+      [:sub_unit_kind?, :unit_meeting_kind?, :camping_outing_kind?, :unit_event_kind?, :adult_leader_kind?, :plc_kind?].each do |kind|
+        expect(event.send(kind)).to eq(false)
+      end
+    end
+
+    it 'if a unit meeting kind, return true, else false' do
+      kind_test(event, :unit_meeting_kind?, unit_meeting_kinds, true)
+      kind_test(event, :unit_meeting_kind?, all_kinds - unit_meeting_kinds, false)
+    end
+
+    it 'if a unit event kind, return true, else false' do
+      kind_test(event, :unit_event_kind?, unit_event_kinds, true)
+      kind_test(event, :unit_event_kind?, all_kinds - unit_event_kinds, false)
+    end
+
+    it 'if a camping/outing kind, return true, else false' do
+      kind_test(event, :camping_outing_kind?, camping_outing_kinds, true)
+      kind_test(event, :camping_outing_kind?, all_kinds - camping_outing_kinds, false)
+    end
+
+    it 'if a plc kind, return true, else false' do
+      kind_test(event, :plc_kind?, plc_kinds, true)
+      kind_test(event, :plc_kind?, all_kinds - plc_kinds, false)
+    end
+
+    it 'if a adult leader kind, return true, else false' do
+      kind_test(event, :adult_leader_kind?, adult_leader_kinds, true)
+      kind_test(event, :adult_leader_kind?, all_kinds - adult_leader_kinds, false)
+    end
+
+    it 'if a sub unti kind, return true, else false' do
+      kind_test(event, :sub_unit_kind?, sub_unit_kinds, true)
+      kind_test(event, :sub_unit_kind?, all_kinds - sub_unit_kinds, false)
+    end
+  end
+
 
 
 

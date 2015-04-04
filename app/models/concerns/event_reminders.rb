@@ -50,7 +50,7 @@ module EventReminders
 
 
   def users_to_email
-    if unit_meeting_kind?
+    if unit_meeting_event_camping_plc_kind?
       self.unit.users.gets_email_reminder
     elsif sub_unit_kind?
       sub_unit_users = []
@@ -64,7 +64,7 @@ module EventReminders
   end
 
   def users_to_sms
-    if unit_meeting_kind?
+    if unit_meeting_event_camping_plc_kind?
       self.unit.users.gets_sms_reminder
     elsif sub_unit_kind?
       sub_unit_users = []

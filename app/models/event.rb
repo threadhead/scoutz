@@ -72,14 +72,10 @@ class Event < ActiveRecord::Base
     [location_address1, location_city, location_state].reject(&:blank?).join(', ')
   end
 
-  def sub_unit_kind?
-    return false if kind.blank?
-    !!(kind =~ /patrol event|den event/i)
-  end
 
   def unit_meeting_kind?
     return false if kind.blank?
-    !!(kind =~ /troop meeting|pack meeting|crew meeting|lodge meeting|plc/i) || plc_kind? || unit_event_kind? || camping_outing_kind?
+    !!(kind =~ /troop meeting|pack meeting|crew meeting|lodge meeting/i)
   end
 
   def camping_outing_kind?
@@ -92,15 +88,29 @@ class Event < ActiveRecord::Base
     !!(kind =~ /troop event|pack event|crew event|lodge event/i)
   end
 
+  def plc_kind?
+    return false if kind.blank?
+    !!(kind =~ /plc/i)
+  end
+
+  def unit_meeting_event_camping_plc_kind?
+    unit_meeting_kind? || plc_kind? || unit_event_kind? || camping_outing_kind?
+  end
+
+
+
+
   def adult_leader_kind?
     return false if kind.blank?
     !!(kind =~ /adult leader event/i)
   end
 
-  def plc_kind?
+  def sub_unit_kind?
     return false if kind.blank?
-    !!(kind =~ /plc/i)
+    !!(kind =~ /patrol event|den event/i)
   end
+
+
 
 
   before_create :ensure_signup_token

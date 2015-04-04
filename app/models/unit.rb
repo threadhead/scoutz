@@ -56,6 +56,9 @@ class Unit < ActiveRecord::Base
     "[#{unit_type_short} #{unit_type_title} #{unit_number}]"
   end
 
+
+
+
   def scouts
     self.users.where(type: 'Scout')
   end
@@ -64,6 +67,9 @@ class Unit < ActiveRecord::Base
     self.users.where(type: 'Adult')
   end
 
+
+
+
   def scout_rank_count
     @scout_rank_count ||= self.scouts.group(:rank).count
   end
@@ -71,6 +77,9 @@ class Unit < ActiveRecord::Base
   def scout_sub_unit_count
     @scout_sub_unit_count ||= self.scouts.joins(:sub_unit).group('"sub_units"."name"').count
   end
+
+
+
 
   # example: :cub_scouts, :boy_scouts
   def unit_type_to_sym

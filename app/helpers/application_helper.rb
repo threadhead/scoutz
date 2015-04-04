@@ -60,7 +60,7 @@ module ApplicationHelper
   end
 
   def cache_key_for_header(unit)
-    count = unit.pages.active.count
+    count = unit.pages.active.size
     max_updated_at = unit.pages.active.maximum(:updated_at).try(:utc).try(:to_s, :number)
     unit_updated_at = unit.updated_at.utc.to_s(:number)
     "unit-#{unit.id}-#{unit_updated_at}/header/user-#{current_user.id}/pages-#{count}-#{max_updated_at}"

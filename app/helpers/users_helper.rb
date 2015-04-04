@@ -90,7 +90,7 @@ module UsersHelper
 
 
   def cache_key_for_users(users)
-    count = users.count
+    count = users.size
     max_updated_at = users.maximum(:updated_at).try(:utc).try(:to_s, :number)
     # "#{users.class.to_s.split('::').first.downcase}s/index-#{count}-#{max_updated_at}"
     "users/index-#{count}-#{max_updated_at}"

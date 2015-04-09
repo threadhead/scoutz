@@ -113,10 +113,12 @@ ActiveRecord::Schema.define(version: 20150409172154) do
   create_table "email_groups", force: :cascade do |t|
     t.integer  "unit_id"
     t.integer  "user_id"
-    t.text     "users_ids",  default: "--- []\n"
+    t.string   "name"
+    t.text     "users_ids",   default: "--- []\n"
     t.boolean  "private"
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.text     "description"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "email_groups", ["unit_id"], name: "index_email_groups_on_unit_id", using: :btree

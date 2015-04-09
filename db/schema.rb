@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150408050836) do
+ActiveRecord::Schema.define(version: 20150409193328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,6 +110,20 @@ ActiveRecord::Schema.define(version: 20150408050836) do
 
   add_index "email_attachments", ["email_message_id"], name: "index_email_attachments_on_email_message_id", using: :btree
 
+  create_table "email_groups", force: :cascade do |t|
+    t.integer  "unit_id"
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "users_ids",   default: "--- []\n"
+    t.boolean  "private"
+    t.text     "description"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "email_groups", ["unit_id"], name: "index_email_groups_on_unit_id", using: :btree
+  add_index "email_groups", ["user_id"], name: "index_email_groups_on_user_id", using: :btree
+
   create_table "email_messages", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "unit_id"
@@ -123,6 +137,7 @@ ActiveRecord::Schema.define(version: 20150408050836) do
     t.string   "id_token",       limit: 255
     t.text     "sent_to_hash",               default: "--- {}\n"
     t.datetime "deactivated_at"
+    t.integer  "email_group_id"
   end
 
   add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token", using: :btree
@@ -487,4 +502,6 @@ ActiveRecord::Schema.define(version: 20150408050836) do
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
   add_index "users", ["updated_at"], name: "index_users_on_updated_at", using: :btree
 
+  add_foreign_key "email_groups", "units"
+  add_foreign_key "email_groups", "users"
 end

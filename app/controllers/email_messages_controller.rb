@@ -102,7 +102,7 @@ class EmailMessagesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_message_params
-      params.require(:email_message).permit(:message, :subject, :user_id, {email_attachments_attributes: [:id, :attachment, :_destroy]}, {sub_unit_ids: []}, {event_ids: []}, {user_ids: []}, :send_to_option)
+      params.require(:email_message).permit(:message, :subject, :user_id, {email_attachments_attributes: [:id, :attachment, :_destroy]}, {sub_unit_ids: []}, {event_ids: []}, {user_ids: []}, :send_to_option, :email_group_id)
       # filter_params(params[:email_message])
     end
 
@@ -114,6 +114,8 @@ class EmailMessagesController < ApplicationController
         params.except(:user_ids)
       when '4' # selected users
         params.except(:sub_unit_ids)
+      when '8' # email group
+        params.except(:email_group_id)
       end
 
     end

@@ -1,6 +1,7 @@
 class SubUnitsController < ApplicationController
   before_action :auth_and_time_zone
   before_action :set_sub_unit, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
 
   def index
     authorize SubUnit

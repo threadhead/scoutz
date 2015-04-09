@@ -21,11 +21,14 @@ jQuery ->
       when "5"
         emailShowElemHideOthers("#email-scoutmasters-list")
 
+      when "8"
+        emailShowElemHideOthers("#email-group-list")
+
       else
         emailShowElemHideOthers('')
 
   emailKindDivs = ->
-    ['#email-leaders-list', '#email-send-to-users-list', '#email-sub-unit-list', '#email-scoutmasters-list']
+    ['#email-leaders-list', '#email-send-to-users-list', '#email-sub-unit-list', '#email-scoutmasters-list', '#email-group-list']
 
   $.each(emailKindDivs(), (idx, elem) ->
     $(elem).collapse(toggle: false)
@@ -73,3 +76,8 @@ jQuery ->
       $("button.add-attachment").attr("disabled", "disabled")
     else
       $("button.add-attachment").removeAttr("disabled")
+
+
+  $("select#email_message_email_group_id").change ->
+    $(".email-groups").addClass("hidden")
+    $("#email-group-#{$(@).val()}").removeClass("hidden")

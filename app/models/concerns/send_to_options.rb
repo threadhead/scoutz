@@ -8,6 +8,7 @@ module SendToOptions
     def send_to_options(unit)
       [
         ["Everyone in #{unit.name}", 1],
+        ["Group", 8],
         ["#{unit.name} Leaders", 2],
         ["Selected #{unit.sub_unit_name.pluralize}", 3],
         ["Selected Adults/Scouts", 4],
@@ -18,7 +19,7 @@ module SendToOptions
     end
 
     def options_to_reject(unit)
-      case unit.unit_type
+      rejected = case unit.unit_type
       when "Boy Scouts"
         [7,6]
       when "Cub Scouts"
@@ -30,6 +31,11 @@ module SendToOptions
       when "Order of the Arrow"
         [7,5,6]
       end
+
+      if unit.email_groups.size == 0
+        rejected << 8
+      end
+      rejected
     end
   end
 
@@ -40,6 +46,8 @@ module SendToOptions
     case send_to_option
     when 1
       "Everyone in #{to_unit.name}"
+    when 8
+      "Group: #{email_group.try(:name)}"
     when 2
       "All #{to_unit.name} Leaders"
     when 3
@@ -82,6 +90,10 @@ module SendToOptions
 
   def send_to_cubmasters_den_leaders?
     send_to_option == 7
+  end
+
+  def send_to_group?
+    send_to_option == 8
   end
 
 end

@@ -1,4 +1,5 @@
 Scoutz::Application.routes.draw do
+  resources :email_groups
   get "/ping/#{ENV['PING_KEY']}"   => 'status#ping'
   get "/health/#{ENV['PING_KEY']}" => 'status#health'
 

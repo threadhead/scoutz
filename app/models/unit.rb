@@ -17,6 +17,7 @@ class Unit < ActiveRecord::Base
   has_many :pages, -> { order(deactivated_at: :desc, position: :asc) }, dependent: :destroy
   has_many :pictures, class_name: 'Ckeditor::Picture', dependent: :destroy
   has_many :attachment_files, class_name: 'Ckeditor::AttachmentFile', dependent: :destroy
+  has_many :email_groups, dependent: :destroy
 
   has_many :sub_units, dependent: :destroy
   accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }

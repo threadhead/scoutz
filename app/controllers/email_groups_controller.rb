@@ -1,46 +1,51 @@
 class EmailGroupsController < ApplicationController
+  before_action :auth_and_time_zone
   before_action :set_email_group, only: [:show, :edit, :update, :destroy]
+  after_action :verify_authorized
 
-  # GET /email_groups
+
   def index
-    @email_groups = EmailGroup.all
+    authorize EmailGroup
+    @email_groups = @unit.email_groups.order(:name)
   end
 
-  # GET /email_groups/1
   def show
+    authorize @email_group
   end
 
-  # GET /email_groups/new
   def new
+    authorize EmailGroup
     @email_group = EmailGroup.new
   end
 
-  # GET /email_groups/1/edit
   def edit
+    authorize @email_group
   end
 
-  # POST /email_groups
   def create
     @email_group = EmailGroup.new(email_group_params)
+    @email_group.user = current_user
+    @email_group.unit = @unit
+    authorize @email_group
 
     if @email_group.save
-      redirect_to @email_group, notice: 'Email group was successfully created.'
+      redirect_to unit_email_group_url(@unit, @email_group), notice: 'Email Group was successfully created.'
     else
       render :new
     end
   end
 
-  # PATCH/PUT /email_groups/1
   def update
+    authorize @email_group
     if @email_group.update(email_group_params)
-      redirect_to @email_group, notice: 'Email group was successfully updated.'
+      redirect_to @email_group, notice: 'Email Group was successfully updated.'
     else
       render :edit
     end
   end
 
-  # DELETE /email_groups/1
   def destroy
+    authorize @email_group
     @email_group.destroy
     redirect_to email_groups_url, notice: 'Email group was successfully destroyed.'
   end
@@ -48,11 +53,11 @@ class EmailGroupsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_email_group
-      @email_group = EmailGroup.find(params[:id])
+      @email_group = @unit.email_groups.where(id: params[:id]).first!
     end
 
     # Only allow a trusted parameter "white list" through.
     def email_group_params
-      params.require(:email_group).permit(:unit_id, :user_ids, :user_id)
+      params.require(:email_group).permit(:name, :description, users_ids: [])
     end
 end

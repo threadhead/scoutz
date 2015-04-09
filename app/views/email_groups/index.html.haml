@@ -1,25 +1,34 @@
-%h1 Listing email_groups
+.page-header
+  .row
+    .col-md-8
+      %h2
+        %i.fa.fa-users
+        #{ @unit.name_unit } Email Groups
+      %p.smaller all users in #{ @unit.name_unit } can see and use all groups
 
-%table
-  %thead
+    .col-md-4.right-aligned
+      - if policy(EmailGroup).new?
+        .pull-right
+          = link_to(new_unit_email_group_path(@unit), class: "btn btn-default") do
+            %i.fa.fa-plus
+            New Email Group
+
+
+= render partial: 'layouts/flash', locals: {flash: flash}
+
+#sub-unit-index
+  %table.table.table-outside-bordered
     %tr
-      %th Unit
-      %th User ids
-      %th User
-      %th
-      %th
-      %th
+      %th Name
+      %th.hidden-xs Description
+      %th Recipients
 
-  %tbody
-    - @email_groups.each do |email_group|
-      %tr
-        %td= email_group.unit
-        %td= email_group.user_ids
-        %td= email_group.user
-        %td= link_to 'Show', email_group
-        %td= link_to 'Edit', edit_email_group_path(email_group)
-        %td= link_to 'Destroy', email_group, :method => :delete, :data => { :confirm => 'Are you sure?' }
-
-%br
-
-= link_to 'New Email group', new_email_group_path
+      -# = cache ["unit-#{@unit.id}", cache_key_for_email_groups(@sub_units)] do
+      - @email_groups.each do |email_group|
+        -# = cache ["unit-#{unit.id}", email_group] do
+        %tr
+          %td.xlarge
+            = link_to email_group.name, unit_email_group_path(@unit, email_group)
+            %span.badge= email_group.users.size
+          %td.hidden-xs= email_group.description
+          %td.scout-list= email_group.users.map(&:name).join(', ')

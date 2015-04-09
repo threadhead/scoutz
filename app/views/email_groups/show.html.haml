@@ -1,15 +1,41 @@
-%p#notice= notice
+.page-header
+  .row
+    .col-md-7
+      %h2 Email Group
 
-%p
-  %b Unit:
-  = @email_group.unit
-%p
-  %b User ids:
-  = @email_group.user_ids
-%p
-  %b User:
-  = @email_group.user
+    .col-md-5.right-aligned
+      .btn-group
+        = link_to unit_email_groups_path(@unit), class: 'btn btn-default' do
+          %i.fa.fa-reply.hidden-xs
+          Email Groups
 
-= link_to 'Edit', edit_email_group_path(@email_group)
-\|
-= link_to 'Back', email_groups_path
+        - if policy(@email_group).edit?
+          = link_to(edit_unit_email_group_path(@unit, @email_group), class: 'btn btn-default') do
+            %i.fa.fa-edit
+            Edit
+
+        - if policy(EmailGroup).create?
+          = link_to new_unit_email_group_path(@unit), class: 'btn btn-default' do
+            %i.fa.fa-plus.hidden-xs
+            New Email Group
+
+= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_group}
+
+.text-xlarge
+  %table.table
+    %tr
+      %td
+        %strong Name
+      %td= @email_group.name
+
+    %tr
+      %td
+        %strong Description
+      %td= @email_group.description
+
+    %tr
+      %td
+        %strong Recipients
+        %span.badge= @email_group.users.size
+      %td
+        = @email_group.users.map(&:name).join(', ')

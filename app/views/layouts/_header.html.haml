@@ -135,6 +135,11 @@
                     = link_to unit_email_messages_path(@unit) do
                       %i.fa.fa-envelope.text-muted-more
                       My Sent Email
+                  - if policy(EmailGroup).index?
+                    %li
+                      = link_to unit_email_groups_path(@unit) do
+                        %i.fa.fa-users.text-muted-more
+                        Email Groups
                   %li
                     = link_to new_unit_email_message_path(@unit) do
                       %i.fa.fa-plus.text-muted-more

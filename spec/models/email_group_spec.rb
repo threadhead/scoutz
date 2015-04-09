@@ -10,6 +10,7 @@ RSpec.describe EmailGroup, type: :model do
 
   it { should validate_presence_of(:unit) }
   it { should validate_presence_of(:user) }
+  it { should validate_presence_of(:name) }
 
   specify { expect(email_group).to be_valid }
 

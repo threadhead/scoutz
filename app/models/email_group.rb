@@ -4,7 +4,7 @@ class EmailGroup < ActiveRecord::Base
 
   serialize :users_ids, Array
 
-  validates :unit, :user, presence: true
+  validates :unit, :user, :name, presence: true
 
   validate :users_ids_not_empty
   def users_ids_not_empty

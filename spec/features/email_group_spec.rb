@@ -69,7 +69,21 @@ RSpec.describe 'Email Groups' do
         expect(page.current_path).to eq(edit_unit_email_group_path(@unit, @eg))
         expect(page).to have_text("Edit Friends999 Email Group")
       end
-
     end
+
+    context 'deleting an email group' do
+      before do
+        @eg2 = FactoryGirl.create(:email_group, name: "Monster888", unit: @unit, user: @user, users_ids: [@user.id, @scout2.id])
+        visit unit_email_group_path(@unit, @eg2)
+      end
+
+      it 'deletes the group and returns to the group list' do
+        click_link "Destroy Monster888"
+
+        expect(EmailGroup.where(id: @eg2.id).exists?).to be(false)
+        expect(page.current_path).to eq(unit_email_groups_path(@unit))
+      end
+    end
+
   end
 end

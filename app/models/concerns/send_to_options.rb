@@ -8,7 +8,7 @@ module SendToOptions
     def send_to_options(unit)
       [
         ["Everyone in #{unit.name}", 1],
-        ["Email Group", 8],
+        ["Group", 8],
         ["#{unit.name} Leaders", 2],
         ["Selected #{unit.sub_unit_name.pluralize}", 3],
         ["Selected Adults/Scouts", 4],
@@ -47,7 +47,7 @@ module SendToOptions
     when 1
       "Everyone in #{to_unit.name}"
     when 8
-      "Email Group: #{email_group.try(:name)}"
+      "Group: #{email_group.try(:name)}"
     when 2
       "All #{to_unit.name} Leaders"
     when 3
@@ -94,7 +94,6 @@ module SendToOptions
 
   def send_to_group?
     send_to_option == 8
-
   end
 
 end

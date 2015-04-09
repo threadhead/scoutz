@@ -9,6 +9,7 @@ class EmailMessage < ActiveRecord::Base
 
   belongs_to :sender, class_name: "User", foreign_key: "user_id"
   belongs_to :unit
+  belongs_to :email_group
   has_many :email_attachments, dependent: :destroy
   has_and_belongs_to_many :events
   has_and_belongs_to_many :users
@@ -24,6 +25,11 @@ class EmailMessage < ActiveRecord::Base
   validate :has_selected_users, if: :send_to_users?
   def has_selected_users
     errors.add(:base, "You must select at least 1 adult or scout recipient") if user_ids.empty?
+  end
+
+  validate :has_selected_email_group, if: :send_to_group?
+  def has_selected_email_group
+    errors.add(:base, "You must select an email group") if email_group.blank?
   end
 
   before_create :ensure_id_token
@@ -67,6 +73,8 @@ class EmailMessage < ActiveRecord::Base
       self.users.gets_email_blast
     when 5
       self.unit.scoutmasters.gets_email_blast
+    when 8
+      self.email_group.users.gets_email_blast
     else
       []
     end

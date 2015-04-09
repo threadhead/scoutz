@@ -6,7 +6,7 @@ class EmailGroupsController < ApplicationController
 
   def index
     authorize EmailGroup
-    @email_groups = @unit.email_groups.order(:name)
+    @email_groups = @unit.email_groups
   end
 
   def show
@@ -38,7 +38,7 @@ class EmailGroupsController < ApplicationController
   def update
     authorize @email_group
     if @email_group.update(email_group_params)
-      redirect_to @email_group, notice: 'Email Group was successfully updated.'
+      redirect_to unit_email_group_url(@unit, @email_group), notice: 'Email Group was successfully updated.'
     else
       render :edit
     end
@@ -47,7 +47,7 @@ class EmailGroupsController < ApplicationController
   def destroy
     authorize @email_group
     @email_group.destroy
-    redirect_to email_groups_url, notice: 'Email group was successfully destroyed.'
+    redirect_to unit_email_groups_url(@unit), notice: 'Email group was successfully destroyed.'
   end
 
   private

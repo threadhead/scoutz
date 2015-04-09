@@ -12,6 +12,8 @@ class EmailGroup < ActiveRecord::Base
   end
 
 
+  default_scope { order(:name) }
+
   def users
     unit.users.where(id: users_ids).by_name_lf
   end

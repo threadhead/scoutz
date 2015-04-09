@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409172154) do
+ActiveRecord::Schema.define(version: 20150409193328) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(version: 20150409172154) do
     t.string   "id_token",       limit: 255
     t.text     "sent_to_hash",               default: "--- {}\n"
     t.datetime "deactivated_at"
+    t.integer  "email_group_id"
   end
 
   add_index "email_messages", ["id_token"], name: "index_email_messages_on_id_token", using: :btree

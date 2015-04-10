@@ -22,7 +22,7 @@ module ModelHelpers
     @scout1.unit_positions.create(unit_id: @unit1.id, leadership: 'Denner')
     @scout2 = FactoryGirl.create(:scout, email: 'bo@aol.com', sms_number: '3333333333', sms_provider: 'Verizon', event_reminder_sms: true, blast_email: true)
     @scout3 = FactoryGirl.create(:scout, email: 'asdf@aol.com', sms_number: '4444444444', sms_provider: 'Verizon', event_reminder_sms: true)
-    @scout_related_u1 = FactoryGirl.create(:scout, email: 'scout_related@aol.com', first_name: 'Related', last_name: 'Scout')
+    @scout_related_u1 = FactoryGirl.create(:scout, email: 'scout_related@aol.com', first_name: 'Related', last_name: 'Scout', blast_email: false)
 
     # associate scouts with adult
     @adult.scouts << @scout1

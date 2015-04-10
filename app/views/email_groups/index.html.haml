@@ -24,21 +24,21 @@
       %th Created By
       %th Recipients
 
-      -# = cache ["unit-#{@unit.id}", cache_key_for_email_groups(@sub_units)] do
-      - @email_groups.each do |email_group|
-        -# = cache ["unit-#{unit.id}", email_group] do
-        %tr
-          %td.xlarge
-            = link_to email_group.name, unit_email_group_path(@unit, email_group)
-            %span.badge= email_group.users.size
-            %br
-            %smaller
-              = link_to new_unit_email_message_path(@unit, email_group_id: email_group.id) do
-                %i.fa.fa-envelope
-                email
-          %td.hidden-xs= email_group.description
-          %td
-            =email_group.user.try(:name)
-            %br
-            %smaller= email_group.updated_at.to_s(:short_ampm)
-          %td.scout-list= email_group.users.map(&:name).join(', ')
+      = cache ["unit-#{@unit.id}", cache_key_for_email_groups(@email_groups)] do
+        - @email_groups.each do |email_group|
+          -# = cache ["unit-#{@unit.id}", email_group] do
+          %tr
+            %td.xlarge
+              = link_to email_group.name, unit_email_group_path(@unit, email_group)
+              %span.badge= email_group.users.size
+              %br
+              %smaller
+                = link_to new_unit_email_message_path(@unit, email_group_id: email_group.id) do
+                  %i.fa.fa-envelope
+                  email
+            %td.hidden-xs= email_group.description
+            %td
+              =email_group.user.try(:name)
+              %br
+              %smaller= email_group.updated_at.to_s(:short_ampm)
+            %td.scout-list= email_group.users.map(&:name).join(', ')

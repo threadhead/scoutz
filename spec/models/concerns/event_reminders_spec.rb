@@ -159,15 +159,15 @@ RSpec.describe EventReminders do
 
     it 'sends one email to all event recipients' do
       @event.send_reminder
-      expect(ActionMailer::Base.deliveries.size).to eq(6) # 3 emails, 2 sms
+      expect(ActionMailer::Base.deliveries.size).to eq(8) # 6 emails, 2 sms
       # ap ActionMailer::Base.deliveries
     end
 
-    it 'if signup required, sends separate emails and smsto all event recipients' do
+    it 'if signup required, sends separate emails and sms to all event recipients' do
       @event.signup_required = true
       @event.signup_deadline = Time.zone.now
       @event.send_reminder
-      expect(ActionMailer::Base.deliveries.size).to eq(6) # 3 emails, 2 sms
+      expect(ActionMailer::Base.deliveries.size).to eq(8) # 6 emails, 2 sms
     end
   end
 

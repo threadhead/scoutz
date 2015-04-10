@@ -19,7 +19,7 @@
 
             .col-md-8
               - @unit.email_groups.each do |email_group|
-                %div.email-groups.hidden{ id: "email-group-#{email_group.id}" }
+                %div.email-groups{ id: "email-group-#{email_group.id}", class: ('hidden' unless @email_message.email_group_id == email_group.id) }
                   %br
                   %p= email_group.description
                   %smaller.text-muted= email_group.users.gets_email_blast.map(&:name_email).join(', ')

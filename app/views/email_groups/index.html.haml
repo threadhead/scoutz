@@ -31,6 +31,11 @@
           %td.xlarge
             = link_to email_group.name, unit_email_group_path(@unit, email_group)
             %span.badge= email_group.users.size
+            %br
+            %smaller
+              = link_to new_unit_email_message_path(@unit, email_group_id: email_group.id) do
+                %i.fa.fa-envelope
+                email
           %td.hidden-xs= email_group.description
           %td
             =email_group.user.try(:name)

@@ -24,8 +24,9 @@ class EmailMessagesController < ApplicationController
 
   def new
     options = {}
-    options.merge!({send_to_option: 4, user_ids: params[:user_ids].split(',')}) if params[:user_ids]
-    options.merge!({event_ids: params[:event_ids].split(',')}) if params[:event_ids]
+    options.merge!({ send_to_option: 4, user_ids: params[:user_ids].split(',') }) if params[:user_ids]
+    options.merge!({ event_ids: params[:event_ids].split(',') }) if params[:event_ids]
+    options.merge!({ send_to_option: 8, email_group_id: params[:email_group_id] }) if params[:email_group_id]
     @email_message = EmailMessage.new(options)
     authorize @email_message
   end

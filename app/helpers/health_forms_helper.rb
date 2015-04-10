@@ -13,9 +13,10 @@ module HealthFormsHelper
   end
 
   def cache_key_for_health_form(health_forms)
-    count = health_forms.size
-    max_updated_at = health_forms.maximum(:updated_at).try(:utc).try(:to_s, :number)
-    "health_forms/index-#{count}-#{max_updated_at}"
+    # count = health_forms.size
+    # max_updated_at = health_forms.maximum(:updated_at).try(:utc).try(:to_s, :number)
+    count_max = [health_forms.size, health_forms.maximum(:updated_at)].map(&:to_i).join('-')
+    "health_forms/index-#{count_max}"
   end
 
 end

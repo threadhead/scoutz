@@ -131,8 +131,6 @@ GEM
     domain_name (0.5.23)
       unf (>= 0.0.5, < 1.0.0)
     dotenv (1.0.2)
-    dotenv-deployment (0.3.0)
-      dotenv (~> 1.0)
     dotenv-rails (1.0.2)
       dotenv (= 1.0.2)
     em-websocket (0.5.1)
@@ -522,7 +520,6 @@ DEPENDENCIES
   delayed_job
   delayed_job_active_record
   devise
-  dotenv-deployment
   dotenv-rails
   exception_notification
   factory_girl_rails

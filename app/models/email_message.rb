@@ -70,11 +70,13 @@ class EmailMessage < ActiveRecord::Base
       # su_users.flatten
       sub_units.inject([]) {|users, su| users + su.users_receiving_email_blast }.uniq
     when 4
-      self.users.gets_email_blast
+      # self.users.gets_email_blast
+      User.unit_users_with_adults(unit: unit, users_ids: users.pluck(:id)).gets_email_blast
     when 5
       self.unit.scoutmasters.gets_email_blast
     when 8
-      self.email_group.users.gets_email_blast
+      self.email_group.users_with_adults.gets_email_blast
+
     else
       []
     end

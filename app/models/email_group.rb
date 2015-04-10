@@ -17,4 +17,8 @@ class EmailGroup < ActiveRecord::Base
   def users
     unit.users.where(id: users_ids).by_name_lf
   end
+
+  def users_with_adults
+    User.unit_users_with_adults(unit: unit, users_ids: users_ids).by_name_lf
+  end
 end

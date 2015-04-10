@@ -286,6 +286,16 @@ class User < ActiveRecord::Base
     User.where(t[:role].gteq(User.roles[:leader]))
   end
 
+  def self.unit_users_with_adults(unit:, users_ids:)
+    users_ids_clean = users_ids.reject(&:blank?).map(&:to_i)
+
+    scouts_ids = unit.scouts.where(id: users_ids_clean).pluck(:id)
+    scouts_adults_ids = Adult.joins(:scouts).where(user_relationships: {scout_id: scouts_ids}).pluck(:id)
+    all_ids = (users_ids_clean + scouts_adults_ids).uniq
+
+    unit.users.where(id: all_ids)
+  end
+
 
 
   def turn_off_all_notifications

@@ -240,8 +240,7 @@ RSpec.describe EmailMessage do
         expect(email_message_c.recipients).not_to include(@scout2)
         expect(email_message_c.recipients).not_to include(@scout1)
         expect(email_message_c.recipients).not_to include(@adult3)
-        # expect(email_message_c.recipients).not_to include(@scout_related_u1)
-        puts email_message_c.recipients.map(&:name)
+        expect(email_message_c.recipients).not_to include(@scout_related_u1)
       end
     end
 
@@ -270,13 +269,13 @@ RSpec.describe EmailMessage do
       it 'returns all users in a unit with emails' do
         expect(email_message_c.recipients_emails).to include(@adult.email)
         expect(email_message_c.recipients_emails).to include(@adult_related_u1.email)
-        expect(email_message_c.recipients_emails).to include(@scout_related_u1.email)
       end
 
       it 'should not return users without emails' do
         expect(email_message_c.recipients_emails).not_to include(@adult2.email)
         expect(email_message_c.recipients_emails).not_to include(@scout1.email)
         expect(email_message_c.recipients_emails).not_to include(@scout2.email)
+        expect(email_message_c.recipients_emails).not_to include(@scout_related_u1.email)
       end
     end
 

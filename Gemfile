@@ -1,9 +1,11 @@
 source 'https://rubygems.org'
 
 ruby '2.2.1'
-gem 'dotenv-rails'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 
 gem 'rails', '~> 4.2.1'
+gem 'sprockets-rails', '2.2.3'
+gem 'sprockets', '~> 2.11.3'
 
 gem 'pg'
 gem 'dalli'

@@ -6,8 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Dotenv.load('.env')
-
 module Scoutz
   class Application < Rails::Application
     # config.middleware.use Rack::Deflater

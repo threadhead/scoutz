@@ -317,7 +317,7 @@ RSpec.describe EmailMessage do
       end
 
       it 'returns all users with emails' do
-        puts email_message_c.recipients_emails
+        # puts email_message_c.recipients_emails
         expect(email_message_c.recipients_emails).to include(@adult.email)
         # expect(email_message_c.recipients_emails).to include(@scout2.email)
       end

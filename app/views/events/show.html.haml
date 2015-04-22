@@ -121,7 +121,7 @@
         .col-md-9= @event.signup_required ? "by #{Google::TimeDisplay.new(@event.signup_deadline)}" : 'Not required'
 
 
-      - if @event.signup_required?
+      - if @event.signup_required? || @event.consent_required?
         .row.row-tablized
           .col-md-3
             %strong Forms

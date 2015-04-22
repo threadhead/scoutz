@@ -24,7 +24,7 @@
           = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
             %br
             = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
-            %a{href: '#'} (view BSA ACF)
+            %a{href: 'http://www.scouting.org/filestore/pdf/19-673.pdf'} (view BSA ACF)
 
             = f.radio_button :use_consent_form, 2, label: 'Use URL (link) to a page or form'
             .indent-sub-selection= f.text_field :url_consent_form, label: 'URL of custom consent form'

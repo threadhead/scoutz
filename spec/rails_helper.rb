@@ -138,7 +138,12 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/v/3-0/docs
   config.infer_spec_type_from_file_location!
+
+  Capybara::Screenshot.webkit_options = { width: 1200, height: 768 }
+  Capybara::Screenshot.prune_strategy = { keep: 20 }
 end
+
+
 
 if defined?(CarrierWave)
   CarrierWave::Uploader::Base.descendants.each do |klass|

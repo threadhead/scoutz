@@ -24,12 +24,14 @@ RSpec.describe 'User Email Change' do
     login_as(@user1, scope: :user)
   end
 
-  context 'the change email page' do
+  context 'user changing thier own email' do
     before{ visit edit_unit_user_email_path(@unit, @user1) }
+
 
     it 'shows the user current email address' do
       expect(page).to have_content(@user1.email)
     end
+
 
     describe 'entering the same email address' do
       before do
@@ -47,6 +49,7 @@ RSpec.describe 'User Email Change' do
         expect(page).to have_content('did not enter a different email')
       end
     end
+
 
     describe 'entering a new email address' do
       before do
@@ -69,6 +72,8 @@ RSpec.describe 'User Email Change' do
 
     end
   end
+
+
 
 
   describe 'changing anthother user\'s email address' do
@@ -101,6 +106,7 @@ RSpec.describe 'User Email Change' do
         end
       end
     end
+
 
 
     context 'as leader user' do

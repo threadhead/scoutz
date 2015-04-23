@@ -10,23 +10,27 @@ class UserEmailController < ApplicationController
 
   def update
     authorize_user_email
-    user_update = if user_params[:email] == @user.email
+
+    user_update = case
+    when email_not_changed?
+      flash[:notice] = 'You did not enter a different email address. Please enter an email different from the current, or cancel.'
       false
-    elsif editing_self?
+
+    when editing_self?
+      flash[:notice] ="Check your inbox for a confirmation email. You must confirm your email address change, or the change will not be made."
       @user.update(user_params)
+
+
     else
-      return false unless current_user.admin?
-      @user.update_column(:email, user_params[:email])
+      udt = @user.update_column(:email, user_params[:email])
+      @user.touch
+      flash[:notice] ="#{@user.name.possessive} email address was forcibly changed. No confirmation is required. A notification was sent to #{@user.email}."
+      UserConfirmationsMailer.forced_email_change(@user, current_user, @unit).deliver_later
+      udt
     end
 
-    if user_update
-      flash[:notice] = if editing_self?
-         "Check your inbox for a confirmation email. You must confirm your email address change, or the change will not be made. "
-      else
-        UserConfirmationsMailer.forced_email_change(@user, current_user, @unit).deliver_later
-        "#{@user.name} email address was forcibly changed. No confirmation is required. A notification was sent to #{@user.email}."
-      end
 
+    if user_update
       if @user.adult?
         redirect_to unit_adult_path(@unit, @user)
       else
@@ -34,9 +38,6 @@ class UserEmailController < ApplicationController
       end
 
     else
-      if !email_changed?
-        flash[:notice] = 'You did not enter a different email address. Please enter an email different from the current, or cancel.'
-      end
       render action: 'edit'
     end
   end
@@ -52,8 +53,8 @@ class UserEmailController < ApplicationController
       params[:id] == current_user.id.to_s
     end
 
-    def email_changed?
-      user_params[:email] != @user.email
+    def email_not_changed?
+      user_params[:email] == @user.email
     end
 
     def user_params

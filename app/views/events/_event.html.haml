@@ -42,7 +42,7 @@
         = event.attendee_count
         %span{style: "color: dimgray;"} (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
 
-
+    - if event.signup_required? || event.consent_required?
       %tr
         %td{style: td_border + td_col_1}
           %strong Forms

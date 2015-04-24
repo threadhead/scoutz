@@ -42,22 +42,25 @@
         = event.attendee_count
         %span{style: "color: dimgray;"} (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
 
-    - if event.signup_required? || event.consent_required?
+    - if event.signup_required?
       %tr
         %td{style: td_border + td_col_1}
           %strong Forms
         %td{style: td_border}
           Healh Forms: #{Event.type_of_health_forms_for_select.key(event.type_of_health_forms)}
 
-          %br
-          Activity Consent: #{event.consent_required ? '<em>required</em>'.html_safe : 'not required'}
+    %tr
+      %td{style: td_border + td_col_1}
+        %strong Consent Form
+      %td{style: td_border}
+        = event.consent_required ? '<em>required</em>'.html_safe : 'not required'
 
-          - if event.consent_required?
-            - if event.unit.attach_consent_form?
-              %small= link_to "(download consent form)", consent_form_url(event)
-            %br
-            Coordinator#{'s' if event.form_coordinators.count > 1 }:
-            = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
+        - if event.consent_required?
+          - if event.unit.attach_consent_form?
+            %small= link_to "(download consent form)", consent_form_url(event)
+          %br
+          Coordinator#{'s' if event.form_coordinators.count > 1 }:
+          = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
 
 
     %tr

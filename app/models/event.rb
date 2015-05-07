@@ -199,6 +199,15 @@ class Event < ActiveRecord::Base
     user_signups(user).any?(&:persisted?)
   end
 
+  def email_messages_for_display(ignore_email_message: nil)
+    # no need to display emails messages that have no message content
+    em = email_messages.where.not(email_messages: { message: '' })
+
+    # if an email_message is passed, we want to ignore it as it is the containing message
+    em = em.where.not(email_messages: {id: ignore_email_message.id}) unless ignore_email_message.nil?
+
+    em.order(:sent_at)
+  end
 
 
 

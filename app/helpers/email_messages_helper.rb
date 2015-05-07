@@ -23,6 +23,10 @@ module EmailMessagesHelper
   end
 
   def email_message_date_subject(email_message)
-    "#{Google::TimeDisplay.new email_message.sent_at} • #{email_message.subject}"
+    if email_message.sent_at.nil?
+      email_message.subject
+    else
+      "#{Google::TimeDisplay.new(email_message.sent_at).abbr_month} • #{email_message.subject}"
+    end
   end
 end

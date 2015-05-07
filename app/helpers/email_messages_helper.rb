@@ -21,4 +21,8 @@ module EmailMessagesHelper
       msg.html_safe
     end
   end
+
+  def email_message_date_subject(email_message)
+    "#{Google::TimeDisplay.new email_message.sent_at} • #{email_message.subject}"
+  end
 end

@@ -18,8 +18,7 @@ RSpec.describe EmailMessagePolicy do
   end
 
   permissions :show? do
-    it_behaves_like 'adult admin access'
-    it_behaves_like 'can access thier own'
+    permission_granted_role_level_up( options.merge({role_level: :basic}))
   end
 
   permissions :new? do
@@ -41,6 +40,11 @@ RSpec.describe EmailMessagePolicy do
   end
 
   permissions :update? do
+    it_behaves_like 'adult admin access'
+    it_behaves_like 'can access thier own'
+  end
+
+  permissions :show_recipients? do
     it_behaves_like 'adult admin access'
     it_behaves_like 'can access thier own'
   end

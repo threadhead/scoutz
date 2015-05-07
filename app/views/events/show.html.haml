@@ -188,6 +188,16 @@
         .col-md-3 &nbsp;
         .col-md-9= @event.message.html_safe
 
+      - unless @event.email_messages.order(:updated_at).empty?
+        .row.row-tablized
+          .col-md-3
+            %strong Emails
+          .col-md-9.text-small
+            - @event.email_messages.order(:updated_at).each do |email_message|
+              = link_to email_message_date_subject(email_message), unit_email_message_path(@unit, email_message)
+              %br
+
+
     - if @event.signup_required
       .bottom-border
       #event-roster

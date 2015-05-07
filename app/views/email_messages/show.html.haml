@@ -34,25 +34,26 @@
         %strong From
       %td= @email_message.sender.name_email
 
-    %tr
-      %td
-        %strong Recipients
-      %td
-        = @email_message.send_to
-        %span.badge= @email_message.sent_to_count
-        - if @email_message.send_to_option == 3
-          (
-          %small>
-            %em>= @email_message.sub_units.map(&:name).join(', ')
-          )
+    - if policy(@email_message).show_recipients?
+      %tr
+        %td
+          %strong Recipients
+        %td
+          = @email_message.send_to
+          %span.badge= @email_message.sent_to_count
+          - if @email_message.send_to_option == 3
+            (
+            %small>
+              %em>= @email_message.sub_units.map(&:name).join(', ')
+            )
 
-        %br
-        #sent-to-details
-          %p= unit_users_link_list(@email_message.unit, @email_message.sent_to)
-        %p.small
-          = link_to unit_email_message_path(@unit, @email_message), remote: true, id: 'details-reveal' do
-            %i.fa.fa-caret-square-o-right
-            show details...
+          %br
+          #sent-to-details
+            %p= unit_users_link_list(@email_message.unit, @email_message.sent_to)
+          %p.small
+            = link_to unit_email_message_path(@unit, @email_message), remote: true, id: 'details-reveal' do
+              %i.fa.fa-caret-square-o-right
+              show details...
 
     %tr
       %td
@@ -71,7 +72,8 @@
       %td
         - if @email_message.events.size > 0
           - @email_message.events.each do |event|
-            %p= link_to event_list_name(event), unit_event_path(@unit, event)
+            = link_to event.list_name, unit_event_path(@unit, event)
+            %br
         - else
           %em none selected
 

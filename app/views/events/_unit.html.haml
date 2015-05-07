@@ -17,7 +17,7 @@
           - events.each do |event|
             = cache event do
               %p
-                = link_to event_list_name(event), event
+                = link_to event.list_name, event
                 - if event.signup_required
                   %span.label.label-default #{event.attendee_count} going
                   %smaller

@@ -58,7 +58,7 @@
     .row
       .col-md-8
         .well.well-sm.email-message-events
-          = f.collection_check_boxes :event_ids, @unit.events.from_today.by_start, :id, :event_list_name, hide_label: true
+          = f.collection_check_boxes :event_ids, @unit.events.from_today.by_start, :id, :list_name, hide_label: true
       .col-md-4
         .alert.alert-info
           %strong Tip:

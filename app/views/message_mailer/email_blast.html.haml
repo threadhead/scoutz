@@ -7,7 +7,7 @@
 
     - if @email_message.has_events?
       %div{style: "height: 12px; background-color: darkgray; margin-bottom: 8px;"}
-      = render @events
+      = render partial: 'events/event', collection: @events, locals: { email_message: @email_message }
 
     - if @email_message.has_attachments?
       %div{style: "height: 12px; background-color: darkgray; margin-bottom: 8px;"}

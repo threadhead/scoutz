@@ -78,16 +78,26 @@
       %tr
         %td{style: td_border + td_col_1}
           %strong iCal
-        %td{style: td_border}
-          = link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
+        %td{style: td_border}= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
 
     %tr
-      %td{style: td_col_1 + "vertical-align: top;"}
+      %td{style: td_border + td_col_1 + "vertical-align: top;"}
         %strong Details
-      %td= event.message.html_safe
+      %td{style: td_border}= event.message.html_safe
+
+
+    - event_email_messages = event.email_messages_for_display(ignore_email_message: email_message)
+    - unless event_email_messages.empty?
+      %tr
+        %td{style: td_border + td_col_1}
+          %strong Emails
+        %td{ style: td_border + "font-size: 0.8em;" }
+          - event_email_messages.each do |em_message|
+            = link_to email_message_date_subject(em_message), unit_email_message_url(event.unit, em_message)
+            %br
 
 
 
   - if event.signup_required
-    %div{style: "border: 1px solid gainsboro; margin: 0 60px 12px 20px; background-color: whitesmoke; padding: 12px 12px 0 12px; border-radius: 4px;"}
+    %div{style: "border: 1px solid gainsboro; margin: 12px 60px 12px 20px; background-color: whitesmoke; padding: 12px 12px 0 12px; border-radius: 4px;"}
       = render partial: 'event_signups/email', collection: recipient_signup_users_for_event(@recipient, event), as: :user, locals: { recipient: @recipient, event: event }

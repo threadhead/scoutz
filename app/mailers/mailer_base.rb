@@ -3,6 +3,7 @@ class MailerBase < ActionMailer::Base
   add_template_helper(MailerBaseHelper)
   add_template_helper(EventsHelper)
   add_template_helper(UsersHelper)
+  add_template_helper(EmailMessagesHelper)
 
 
   default from: "noreply@scoutt.in"

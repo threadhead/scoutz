@@ -5,7 +5,8 @@ class EmailMessagePolicy < ApplicationPolicy
   end
 
   def show?
-    users_message? || adult_admin
+    user_role_at_least_basic
+    # users_message? || adult_admin
   end
 
   def create?
@@ -18,6 +19,10 @@ class EmailMessagePolicy < ApplicationPolicy
 
   def destroy?
     # users can delete their own messages, and adult admins as well
+    users_message? || adult_admin
+  end
+
+  def show_recipients?
     users_message? || adult_admin
   end
 

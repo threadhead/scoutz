@@ -2,26 +2,26 @@
   .row
     .col-md-8
       %h2
-        %i.fa.fa-user{style: "color: #CC1814;"}
+        %i.fa.fa-user{ style: 'color: #CC1814;' }
         Adults in #{@unit.name_unit}
 
     .col-md-4.right-aligned
       - if policy(Adult).new?
         .pull-right
-          = link_to(new_unit_adult_path(@unit), class: "btn btn-default") do
+          = link_to(new_unit_adult_path(@unit), class: 'btn btn-default') do
             %i.fa.fa-plus
             New Adult
 
-= render partial: 'layouts/flash', locals: {flash: flash}
+= render partial: 'layouts/flash', locals: { flash: flash }
 
 
-= cache ["unit-#{@unit.id}", ":adults_search"] do
-  = render partial: 'layouts/search', locals: {type: 'adults', search_url: "/units/#{@unit.id}/adults.js?search_typeahead="}
+= cache ["unit-#{@unit.id}", ':adults_search'] do
+  = render partial: 'layouts/search', locals: { type: 'adults', search_url: "/units/#{@unit.id}/adults.js?search_typeahead=" }
   %br
 
 
 #adult-index
   - if current_user.admin?
-    = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+    = render partial: 'index_admin', locals: { unit: @unit, users: @users, users_count: @users_count, searching: @searching }
   - else
-    = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+    = render partial: 'index', locals: { unit: @unit, users: @users, users_count: @users_count, searching: @searching }

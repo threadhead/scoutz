@@ -11,6 +11,7 @@ class Event < ActiveRecord::Base
   has_many :event_signups, dependent: :destroy
   has_and_belongs_to_many :users
   has_and_belongs_to_many :sub_units
+  has_and_belongs_to_many :email_messages
   # acts_as_gmappable process_geocoding: false, validation: false
 
   date_time_attribute :start_at, :end_at, :signup_deadline
@@ -146,8 +147,9 @@ class Event < ActiveRecord::Base
   end
 
 
-  def event_list_name
-    "#{start_at.to_s(:short_ampm)} - #{name} (#{event_kind_details})"
+  def list_name
+    "#{Google::TimeDisplay.new(start_at)} • #{name} (#{event_kind_details})"
+    # "#{start_at.to_s(:short_ampm)} - #{name} (#{event_kind_details})"
   end
 
   def event_kind_details

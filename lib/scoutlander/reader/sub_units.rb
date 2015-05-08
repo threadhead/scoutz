@@ -32,7 +32,7 @@ module Scoutlander
         unless sub_unit_names.nil? || sub_unit_names.empty?
           sub_unit_names = remove_dups(remove_empties(sub_unit_names)).map(&:strip)
           sub_unit_names.delete('Patrols')
-          @sub_units = sub_unit_names.map{ |su| Scoutlander::Datum::SubUnit.new(name: su, inspected: true) }
+          @sub_units = sub_unit_names.map { |su| Scoutlander::Datum::SubUnit.new(name: su, inspected: true) }
         end
       end
 

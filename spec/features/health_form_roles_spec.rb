@@ -117,7 +117,7 @@ RSpec.describe 'Health form viewing and roles' do
 
 
   context 'As a basic user' do
-    before{ login_as(@basic_user, scope: :user) }
+    before { login_as(@basic_user, scope: :user) }
 
     describe 'can see health form tags' do
       it 'for their user record' do

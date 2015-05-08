@@ -27,7 +27,7 @@ module Scoutlander
 
       # return a duplicated array with elements deleted
       def delete_attributes(*args)
-        @attributes.dup.delete_if{|a| args.include?(a) }
+        @attributes.dup.delete_if {|a| args.include?(a) }
       end
 
     end

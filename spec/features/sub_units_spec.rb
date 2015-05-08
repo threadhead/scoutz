@@ -17,10 +17,10 @@ RSpec.describe 'Sub Units' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
     context 'when viewing a list of unit sub units' do
-      before{ visit unit_sub_units_path(@unit) }
+      before { visit unit_sub_units_path(@unit) }
 
       it 'has a new sub unit button' do
         expect(page).to have_link('New Den')
@@ -105,7 +105,7 @@ RSpec.describe 'Sub Units' do
 
 
     context 'when showing a sub unit' do
-      before{ visit unit_sub_unit_path(@unit, @sub_unit2) }
+      before { visit unit_sub_unit_path(@unit, @sub_unit2) }
 
       it 'has the sub unit name' do
         expect(page).to have_text("Den: Den 55")
@@ -159,7 +159,7 @@ RSpec.describe 'Sub Units' do
 
 
     context 'editing an adult' do
-      before{ visit edit_unit_sub_unit_path(@unit, @sub_unit2) }
+      before { visit edit_unit_sub_unit_path(@unit, @sub_unit2) }
 
       it 'displays the edit form' do
         expect(page).to have_text('Edit Den')

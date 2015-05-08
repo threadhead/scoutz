@@ -15,11 +15,11 @@ RSpec.describe 'Email Messages' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
 
     context 'when viewing a list of email messages' do
-      before{ visit unit_email_messages_path(@unit) }
+      before { visit unit_email_messages_path(@unit) }
 
       it 'shows the event list' do
         expect(page.current_path).to eq(unit_email_messages_path(@unit))
@@ -40,7 +40,7 @@ RSpec.describe 'Email Messages' do
 
 
     context 'when showing an existing email message' do
-      before{ visit unit_email_message_path(@unit, @email_message) }
+      before { visit unit_email_message_path(@unit, @email_message) }
 
       it 'displays the email message show page' do
         expect(page.current_path).to eq(unit_email_message_path(@unit, @email_message))

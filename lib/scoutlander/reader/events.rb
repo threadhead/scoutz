@@ -147,7 +147,7 @@ module Scoutlander
       def sub_units_parse(datum)
         datum.kind_sub_units = if datum.kind == 'Patrol Event' || datum.kind == 'Den Event'
           return [] if datum.kind_sub_units.blank?
-          datum.kind_sub_units.strip.split(']').map{|v| clean_string v.sub('[','')}
+          datum.kind_sub_units.strip.split(']').map {|v| clean_string v.sub('[','')}
         else
           []
         end
@@ -169,8 +169,8 @@ module Scoutlander
         event_page = event_edit_page(datum)
 
         datum.kind = sl_kind event_page.search("select#ctl00_mainContent_EventEditProfile_cmbEventType option[@selected='selected']").attr('value').value
-        checked_sub_units = event_page.search("input[id^=ctl00_mainContent_EventEditProfile_chklstSubUnit][@checked='checked']").map{|e| e.attr('id')}
-        datum.kind_sub_units = checked_sub_units.map{ |su| event_page.search("label[@for='#{su}']").text }
+        checked_sub_units = event_page.search("input[id^=ctl00_mainContent_EventEditProfile_chklstSubUnit][@checked='checked']").map {|e| e.attr('id')}
+        datum.kind_sub_units = checked_sub_units.map { |su| event_page.search("label[@for='#{su}']").text }
 
         datum.name = event_page.search("input#ctl00_mainContent_EventEditProfile_txtEventName").attr('value').value
         datum.organizer_profile = event_page.search("select#ctl00_mainContent_EventEditProfile_cmbOrganizer option[@selected='selected']").attr('value').value
@@ -217,7 +217,7 @@ module Scoutlander
 
 
       def scrape_months
-        (-2..12).map{ |n| Date.today.beginning_of_month.months_since(n) }
+        (-2..12).map { |n| Date.today.beginning_of_month.months_since(n) }
       end
 
 

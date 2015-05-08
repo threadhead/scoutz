@@ -41,7 +41,7 @@ RSpec.describe 'EventCalendar' do
       expect(Event).to receive(:set_callback).once
       d = double
       expect(d).to receive(:yieldy).once
-      @event.skip_update_ical_background_callbacks{ d.yieldy }
+      @event.skip_update_ical_background_callbacks { d.yieldy }
     end
   end
 
@@ -53,7 +53,7 @@ RSpec.describe 'EventCalendar' do
       expect(tf).to receive(:unlink)
       d = double
       expect(d).to receive(:yieldy).once
-      @event.in_temp_file{ |tf| d.yieldy }
+      @event.in_temp_file { |tf| d.yieldy }
     end
   end
 

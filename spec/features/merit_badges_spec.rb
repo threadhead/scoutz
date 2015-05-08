@@ -16,10 +16,10 @@ RSpec.describe 'Merit Badges' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
     context 'when viewing a list of unit merit badges' do
-      before{ visit unit_merit_badges_path(@unit) }
+      before { visit unit_merit_badges_path(@unit) }
       it 'shows the scout list' do
         expect(page.current_path).to eq(unit_merit_badges_path(@unit))
       end
@@ -38,7 +38,7 @@ RSpec.describe 'Merit Badges' do
 
 
     context 'when showing an existing merit badge' do
-      before{ visit unit_merit_badge_path(@unit, @mb1) }
+      before { visit unit_merit_badge_path(@unit, @mb1) }
 
       it 'displays the scout show page' do
         expect(page.current_path).to eq(unit_merit_badge_path(@unit, @mb1))

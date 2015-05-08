@@ -35,7 +35,7 @@ module UsersHelper
 
   def options_for_user_roles
     roles = current_user.adult? ? User.roles : User.roles_at_and_below(:leader)
-    roles.keys.map{|r| [r.titleize, r]}
+    roles.keys.map {|r| [r.titleize, r]}
   end
 
   def all_leadership_positions(unit, user)

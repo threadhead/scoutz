@@ -14,10 +14,10 @@ RSpec.describe 'Scouts' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
     context 'when viewing a list of unit scouts' do
-      before{ visit unit_scouts_path(@unit) }
+      before { visit unit_scouts_path(@unit) }
       it 'shows the scout list' do
         expect(page.current_path).to eq(unit_scouts_path(@unit))
       end
@@ -37,7 +37,7 @@ RSpec.describe 'Scouts' do
 
 
     context 'when showing an existing scout' do
-      before{ visit unit_scout_path(@unit, @scout1) }
+      before { visit unit_scout_path(@unit, @scout1) }
 
       it 'displays the scout show page' do
         expect(page.current_path).to eq(unit_scout_path(@unit, @scout1))
@@ -72,7 +72,7 @@ RSpec.describe 'Scouts' do
         click_link "Edit"
       end
 
-      after{ @edit_scout.destroy }
+      after { @edit_scout.destroy }
 
       it 'displays the edit form page' do
         expect(page.current_path).to eq(edit_unit_scout_path(@unit, @edit_scout))

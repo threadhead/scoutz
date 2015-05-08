@@ -21,7 +21,7 @@ module Scoutlander
         # puts "unit page uri: #{unit_page.uri}"
 
         @logger.info "CLICK : Get Pages Links"
-        pages_links = unit_page.links.find_all{|l| l.uri.to_s =~ /CUSTOMID/}
+        pages_links = unit_page.links.find_all {|l| l.uri.to_s =~ /CUSTOMID/}
 
         pages_links.each do |link|
           page = Scoutlander::Datum::Page.new

@@ -69,7 +69,7 @@ module Scoutlander
             end
 
             if adult
-              scouts.each{ |scout| adult.add_relation(scout) }
+              scouts.each { |scout| adult.add_relation(scout) }
             end
           end
 

@@ -15,11 +15,11 @@ RSpec.describe 'Pages' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
 
     context 'when viewing a list of pages' do
-      before{ visit unit_pages_path(@unit) }
+      before { visit unit_pages_path(@unit) }
 
       it 'shows the page list' do
         expect(page.current_path).to eq(unit_pages_path(@unit))
@@ -40,7 +40,7 @@ RSpec.describe 'Pages' do
 
 
     context 'when showing an existing page' do
-      before{ visit unit_page_path(@unit, @page) }
+      before { visit unit_page_path(@unit, @page) }
 
       it 'displays the page show page' do
         expect(page.current_path).to eq(unit_page_path(@unit, @page))
@@ -73,7 +73,7 @@ RSpec.describe 'Pages' do
         click_link "edit" # this only works because there is only 1 page
       end
 
-      after{ @del_page.destroy }
+      after { @del_page.destroy }
 
       it 'displays the edit form page' do
         expect(page.current_path).to eq(edit_unit_page_path(@unit, @del_page))

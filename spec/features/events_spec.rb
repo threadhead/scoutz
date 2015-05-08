@@ -15,17 +15,17 @@ RSpec.describe 'Events' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
     context 'when viewing the event calendar' do
-      before{ visit calendar_unit_events_path(@unit) }
+      before { visit calendar_unit_events_path(@unit) }
       it 'shows the event calendar' do
         expect(page.current_path).to eq(calendar_unit_events_path(@unit))
       end
     end
 
     context 'when viewing a list of unit events' do
-      before{ visit unit_events_path(@unit) }
+      before { visit unit_events_path(@unit) }
       it 'shows the event list' do
         expect(page.current_path).to eq(unit_events_path(@unit))
       end
@@ -45,7 +45,7 @@ RSpec.describe 'Events' do
 
 
     context 'when showing an existing event' do
-      before{ visit unit_event_path(@unit, @event) }
+      before { visit unit_event_path(@unit, @event) }
 
       it 'displays the event show page' do
         expect(page.current_path).to eq(unit_event_path(@unit, @event))
@@ -78,7 +78,7 @@ RSpec.describe 'Events' do
         click_link "Edit"
       end
 
-      after{ @del_event.destroy }
+      after { @del_event.destroy }
 
       it 'displays the edit form page' do
         expect(page.current_path).to eq(edit_unit_event_path(@unit, @del_event))

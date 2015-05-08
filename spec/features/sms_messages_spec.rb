@@ -15,11 +15,11 @@ RSpec.describe 'Sms Messages' do
   end
 
   context 'as an admin user' do
-    before{ login_as(@user, scope: :user) }
+    before { login_as(@user, scope: :user) }
 
 
     context 'when viewing a list of sms messages' do
-      before{ visit unit_sms_messages_path(@unit) }
+      before { visit unit_sms_messages_path(@unit) }
 
       it 'shows the sms message list' do
         expect(page.current_path).to eq(unit_sms_messages_path(@unit))
@@ -40,7 +40,7 @@ RSpec.describe 'Sms Messages' do
 
 
     context 'when showing an existing sms message' do
-      before{ visit unit_sms_message_path(@unit, @sms_message) }
+      before { visit unit_sms_message_path(@unit, @sms_message) }
 
       it 'displays the sms message show page' do
         expect(page.current_path).to eq(unit_sms_message_path(@unit, @sms_message))

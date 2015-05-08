@@ -19,18 +19,18 @@
     %td
       - user_health_form = event_roster.user.health_forms.unit(event_roster.event.unit)
       - if user_health_form && user_health_form.valid_forms_for_event(event_roster.event)
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "All health forms up-to-date"}
+        %span.fa-stack.fa-lg{ data: { toggle: 'tooltip', container: 'body' }, title: 'All health forms up-to-date' }
           %i.fa.fa-circle.fa-stack-2x.green-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
       - else
-        %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "One of #{event_roster.user.first_name.possessive} required health forms will expire by event end"}
+        %span.fa-stack.fa-lg{ data: { toggle: 'tooltip', container: 'body' }, title: "One of #{ event_roster.user.first_name.possessive } required health forms will expire by event end" }
           %i.fa.fa-circle.fa-stack-2x.red-color
           %i.fa.fa-medkit.fa-inverse.fa-stack-1x
 
 
   %td
     - if event_roster.has_carpool_seats && event_roster.has_carpool_seats >= 0
-      %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Driving: has #{event_roster.has_carpool_seats} #{'seat'.pluralize(event_roster.has_carpool_seats)}"}
+      %span.fa-stack.fa-lg{ data: { toggle: 'tooltip', container: 'body' }, title: "Driving: has #{event_roster.has_carpool_seats} #{ 'seat'.pluralize(event_roster.has_carpool_seats) }" }
         %i.fa.fa-circle.fa-stack-2x.orange-color
         %i.fa.fa-tachometer.fa-inverse.fa-stack-1x
         %span.count-badge= event_roster.has_carpool_seats
@@ -38,7 +38,7 @@
 
   %td
     - if event_roster.need_carpool_seats && event_roster.need_carpool_seats > 0
-      %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Needs a ride: #{event_roster.need_carpool_seats} #{'seat'.pluralize(event_roster.need_carpool_seats)}"}
+      %span.fa-stack.fa-lg{ data: { toggle: 'tooltip', container: 'body' }, title: "Needs a ride: #{ event_roster.need_carpool_seats } #{ 'seat'.pluralize(event_roster.need_carpool_seats) }" }
         %i.fa.fa-circle.fa-stack-2x.yellow-color
         %i.fa.fa-car.fa-inverse.fa-stack-1x
         %span.count-badge= event_roster.need_carpool_seats
@@ -48,11 +48,11 @@
     %td
       - if event_roster.user.scout?
         - if event_roster.has_activity_consent_form?
-          %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Activity Consent Submitted: #{event_roster.permission_at.to_s(:short_ampm)}"}
+          %span.fa-stack.fa-lg{ data: { toggle: 'tooltip', container: 'body' }, title: "Activity Consent Submitted: #{ event_roster.permission_at.to_s(:short_ampm) }" }
             %i.fa.fa-circle.fa-stack-2x.green-color
             %i.fa.fa-thumbs-up.fa-inverse.fa-stack-1x
         - else
-          %span.fa-stack.fa-lg{data: {toggle: 'tooltip', container: 'body'}, title: "Need to collect Activity Consent Form"}
+          %span.fa-stack.fa-lg{ data: { toggle: 'tooltip', container: 'body' }, title: 'Need to collect Activity Consent Form' }
             %i.fa.fa-circle.fa-stack-2x.red-color
             %i.fa.fa-thumbs-down.fa-inverse.fa-stack-1x
 
@@ -60,18 +60,18 @@
   %td.signup-comment= event_roster.comment
 
 
-  - # don't display the action menu unless the user can edit signups
-  - #   BUT there is no need to display action manu if user is looking at their own scout's signup either
+  -# don't display the action menu unless the user can edit signups
+  -#   BUT there is no need to display action manu if user is looking at their own scout's signup either
   - if policy(EventSignup.new(event_id: event_roster.event.id)).update? || policy(event_roster).activity_consent_form?
     %td.right-aligned
       .btn-group
-        %a.btn.dropdown-toggle.btn-default.btn-xs{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+        %a.btn.dropdown-toggle.btn-default.btn-xs{ href: '#', data: { toggle: 'dropdown' }, title: 'Actions' }
           %i.fa.fa-gear
           %span.caret
 
         %ul.dropdown-menu
           - if policy(event_roster).update?
-            %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: {event_signup_id: event_roster.id}
+            %li= link_to 'Edit/Cancel', '#', class: 'edit-event-signup-modal', data: { event_signup_id: event_roster.id }
 
           - if event_roster.user.scout? && event_roster.event.consent_required? && policy(event_roster).activity_consent_form?
             %li
@@ -81,5 +81,5 @@
                 = link_to 'Activity Consent Received', activity_consent_form_event_signup_path(event_roster, value: '1'), remote: true, method: :put
 
       %br
-      %em.xs.text-muted.text-nobreak=event_roster.created_at.to_s(:short_ampm)
+      %em.xs.text-muted.text-nobreak= event_roster.created_at.to_s(:short_ampm)
 

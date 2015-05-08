@@ -11,7 +11,7 @@
 
 
 
-  = f.text_area :comment, placeholder: 'comments', rows: 2, style: "width: 100%;"
+  = f.text_area :comment, placeholder: 'comments', rows: 2, style: 'width: 100%;'
   %br
 
 
@@ -19,15 +19,15 @@
     .form-group.form-group-xs
       = f.label :siblings_attending, 'Children', class: 'control-label col-xs-4'
       .col-xs-4
-        = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, {class: 'form-control input-xs'}
+        = f.select :siblings_attending, [0,1,2,3,4,5,6], {}, { class: 'form-control input-xs' }
 
 
   .form-group.form-group-xs
     = f.label :need_carpool_seats, 'Needs Ride', class: 'control-label col-xs-4'
     .col-xs-4
-      = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control input-xs'}
+      = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, { class: 'form-control input-xs' }
     .col-xs-2.col-no-padding
-      %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need.'}
+      %span.fa-stack{ data: { toggle: 'tooltip', container: 'body' }, title: 'Select the number of seats you need.' }
         %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
         %i.fa.fa-question.fa-stack-1x.fa-inverse
 
@@ -35,9 +35,9 @@
     .form-group.form-group-xs
       = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-xs-4'
       .col-xs-4
-        = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control input-xs'}
+        = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, { class: 'form-control input-xs' }
       .col-xs-2.col-no-padding
-        %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle.'}
+        %span.fa-stack{ data: { toggle: 'tooltip', container: 'body' }, title: 'Select the number of seats you can take in vehicle.' }
           %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
           %i.fa.fa-question.fa-stack-1x.fa-inverse
 
@@ -67,6 +67,6 @@
       = link_to 'Close', '#', class: 'btn btn-default btn-sm', data: { dismiss: 'modal' }
 
     - unless event_signup.new_record?
-      = link_to "Cancel Signup", event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
+      = link_to 'Cancel Signup', event_signup, method: :delete, remote: true, confirm: 'Are you sure you want to cancel your sign up?', class: 'btn btn-warning btn-sm'
 
     = f.submit signup_submit(event_signup), class: 'btn btn-primary btn-sm'

@@ -1,4 +1,4 @@
-.well.well-sm.well-reduced-text{class: signup_well_class(event_signup) }
+.well.well-sm.well-reduced-text{ class: signup_well_class(event_signup) }
   .signup-heading.text-xlarge
     .pull-right
       = user_picture_circle(event_signup.user)
@@ -12,4 +12,4 @@
   - if event_signup.new_record? && event_signup.event.after_signup_deadline?
     .alert.alert-info.alert-no-margin Signup has passed for this event.
   - else
-    = render partial: 'event_signups/form', locals: {event_signup: event_signup, close_button: false}
+    = render partial: 'event_signups/form', locals: { event_signup: event_signup, close_button: false }

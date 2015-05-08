@@ -31,7 +31,8 @@ module Scoutz
     # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     # config.assets.precompile += ['jquery.js']
-    config.assets.precompile += [ 'landing.css',
+    config.assets.precompile += [
+                                  'landing.css',
                                   'landing/landing.js',
                                   'ckeditor_config.js',
                                   'ckeditor/config_ckeditor.js',

@@ -1,12 +1,11 @@
-
 .modal-content
   .modal-header
-    %button.close(data-dismiss='modal') &times;
+    %button.close{ data: { dismiss: 'modal' } } &times;
     %p.xxlarge
       %strong
-        -if remote_form.new_record?
+        - if remote_form.new_record?
           Add: #{remote_form.scout.name}
-        -else
+        - else
           Change #{remote_form.scout.name}
       / %small how does it work?
 
@@ -16,7 +15,7 @@
     = f.hidden_field :scout_id
     = f.hidden_field :event_id
     .modal-body
-      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: remote_form}
+      = render partial: 'layouts/flash', locals: { flash: flash, ar_object: remote_form }
 
       .form-group
         = f.label :scouts_attending, 'Scouts', class: 'control-label col-md-4'
@@ -43,7 +42,7 @@
     .modal-footer
       - unless remote_form.new_record?
         &nbsp;
-        = link_to "Cancel reservation", remote_form, method: :delete, class: 'btn btn-warning btn-sm', remote: true
+        = link_to 'Cancel reservation', remote_form, method: :delete, class: 'btn btn-warning btn-sm', remote: true
       = f.submit signup_submit(remote_form), class: 'btn btn-primary btn-sm'
       %br
       %br

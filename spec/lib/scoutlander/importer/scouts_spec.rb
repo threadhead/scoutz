@@ -24,7 +24,7 @@ RSpec.describe Scoutlander::Reader::Scouts do
     end
 
     context 'unloaded attributes' do
-      [ :sub_unit, :leadership_position, :additional_leadership_positions, :security_level, :email, :alternate_email, :send_reminders, :home_phone, :work_phone, :cell_phone, :address1, :city, :state, :zip_code, :rank].each do |attr|
+      [:sub_unit, :leadership_position, :additional_leadership_positions, :security_level, :email, :alternate_email, :send_reminders, :home_phone, :work_phone, :cell_phone, :address1, :city, :state, :zip_code, :rank].each do |attr|
         it "attribute #{attr} is nil" do
           expect(subject.send(attr)).to be_nil
         end
@@ -41,7 +41,7 @@ RSpec.describe Scoutlander::Reader::Scouts do
       VCR.use_cassette('fetch_scout_info') do
         @sl.fetch_unit_scouts
         b = (@sl.find_collection_elements_with first_name: 'Devin', last_name: 'Goins')
-        b.each {|s| @sl.fetch_person_info(:scout, s)}
+        b.each { |s| @sl.fetch_person_info(:scout, s) }
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe Scoutlander::Reader::Scouts do
     end
 
     context 'unloaded attributes' do
-      [ :alternate_email, :work_phone].each do |attr|
+      [:alternate_email, :work_phone].each do |attr|
         specify { expect(subject.send(attr)).to be_nil }
       end
     end

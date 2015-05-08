@@ -4,8 +4,8 @@ module EventsHelper
   end
 
   # def event_list_name(event)
-  #   # "#{event.start_at.to_s(:short_ampm)} • #{event.name} (#{event.event_kind_details})"
-  #   "#{Google::TimeDisplay.new(event.start_at).to_s} • #{event.name} (#{event.event_kind_details})"
+  # # "#{event.start_at.to_s(:short_ampm)} • #{event.name} (#{event.event_kind_details})"
+  # "#{Google::TimeDisplay.new(event.start_at).to_s} • #{event.name} (#{event.event_kind_details})"
   # end
 
   def event_kind_sub_units(event)
@@ -19,13 +19,14 @@ module EventsHelper
   end
 
   def location_single_line(event)
-    [ event.location_name,
+    [
+      event.location_name,
       event.location_address1,
       event.location_address2,
       event.location_city,
       event.location_state,
       event.location_zip_code
-      ].reject(&:blank?).join(', ')
+    ].reject(&:blank?).join(', ')
   end
 
   def location_link(event)
@@ -49,7 +50,7 @@ module EventsHelper
     unit = event.unit
     case unit.use_consent_form
     when 1
-      "http://www.scouting.org/filestore/pdf/19-673.pdf"
+      'http://www.scouting.org/filestore/pdf/19-673.pdf'
     when 2
       unit.url_consent_form
     when 3

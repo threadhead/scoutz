@@ -19,7 +19,7 @@ RSpec.describe Event do
   it { should validate_uniqueness_of(:sl_profile).allow_nil }
 
   describe 'signup_deadline validation' do
-    before { event.signup_required = true}
+    before { event.signup_required = true }
 
     it 'valid when specified and signup required' do
       event.signup_deadline = Time.now
@@ -68,7 +68,7 @@ RSpec.describe Event do
     context 'is before start_at' do
       before do
         @t = Time.zone.now
-        @event = FactoryGirl.build(:event, start_at: @t, end_at: @t-1)
+        @event = FactoryGirl.build(:event, start_at: @t, end_at: @t - 1)
         @event.valid?
       end
 
@@ -110,7 +110,7 @@ RSpec.describe Event do
     before(:all) do
       @time = Time.zone.now
       @unit = FactoryGirl.create(:unit)
-      @event = FactoryGirl.build_stubbed(:event, unit: @unit, start_at: @time, end_at: @time+1)
+      @event = FactoryGirl.build_stubbed(:event, unit: @unit, start_at: @time, end_at: @time + 1)
     end
     subject { @event.as_json }
 
@@ -120,14 +120,14 @@ RSpec.describe Event do
     specify { expect(subject[:allDay]).to be_falsy }
     specify { expect(subject[:recurring]).to be_falsy }
     specify { expect(subject[:start]).to eq(@time.iso8601) }
-    specify { expect(subject[:end]).to eq((@time+1).iso8601) }
+    specify { expect(subject[:end]).to eq((@time + 1).iso8601) }
     specify { expect(subject[:url]).to eq("/units/#{@unit.id}/events/#{@event.id}") }
   end
 
 
 
   describe '.after_signup_deadline?' do
-    before { @event = FactoryGirl.build(:event, signup_deadline: Time.zone.now)}
+    before { @event = FactoryGirl.build(:event, signup_deadline: Time.zone.now) }
 
     it 'retuns true when signup has passed' do
       @event.signup_deadline = 3.seconds.ago
@@ -237,17 +237,18 @@ RSpec.describe Event do
       expect(event.health_forms_required?).to eq(false)
     end
 
-    [ :parts_ab,
+    [
+      :parts_ab,
       :parts_abc,
       :northern_tier,
       :florida_sea_base,
       :philmont,
       :summit
-      ].each do |f|
-        it "returns true when health forms #{f} is rquired" do
-          event.type_of_health_forms = f.to_s
-          expect(event.health_forms_required?).to eq(true)
-        end
+    ].each do |f|
+      it "returns true when health forms #{f} is rquired" do
+        event.type_of_health_forms = f.to_s
+        expect(event.health_forms_required?).to eq(true)
+      end
     end
   end
 
@@ -308,8 +309,5 @@ RSpec.describe Event do
       kind_test(event, :sub_unit_kind?, all_kinds - sub_unit_kinds, false)
     end
   end
-
-
-
 
 end

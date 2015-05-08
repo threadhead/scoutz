@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-RSpec.describe HealthForm, :type => :model do
+RSpec.describe HealthForm, type: :model do
   let(:health_form) { FactoryGirl.build(:health_form) }
   let(:health_form_expired) { FactoryGirl.build(:health_form_expired) }
   let(:health_form_empty) { FactoryGirl.build(:health_form_empty) }
-  before{ Time.zone = 'Arizona' }
+  before { Time.zone = 'Arizona' }
 
   it { is_expected.to belong_to(:user).touch(true) }
   it { is_expected.to belong_to(:unit) }
@@ -19,18 +19,19 @@ RSpec.describe HealthForm, :type => :model do
       expect(health_form_empty.all_blank?).to eq(true)
     end
 
-    [ :part_a_date,
+    [
+      :part_a_date,
       :part_b_date,
       :part_c_date,
       :summit_tier_date,
       :florida_sea_base_date,
       :northern_tier_date,
       :philmont_date
-      ].each do |f|
-        it "returns false when field #{f} is not empty" do
-          health_form_empty.send("#{f}=", Date.today)
-          expect(health_form_empty.all_blank?).to eq(false)
-        end
+    ].each do |f|
+      it "returns false when field #{f} is not empty" do
+        health_form_empty.send("#{f}=", Date.today)
+        expect(health_form_empty.all_blank?).to eq(false)
+      end
     end
   end
 
@@ -44,7 +45,7 @@ RSpec.describe HealthForm, :type => :model do
       summit_tier_date:       :summit_tier_expires,
       philmont_date:          :philmont_expires,
       northern_tier_date:     :northern_tier_expires
-    }.each do |k,v|
+    }.each do |k, v|
       it "#{v} in 1 year" do
         health_form.send("#{k}=", Date.parse('2011-02-02'))
         expect(health_form.send(v)).to eq(Date.parse('2012-02-01'))
@@ -123,7 +124,7 @@ RSpec.describe HealthForm, :type => :model do
 
 
     describe 'if event is not required' do
-      before{ event.type_of_health_forms = 'not_required' }
+      before { event.type_of_health_forms = 'not_required' }
 
       it 'it always returns true' do
         expect(health_form_expired.valid_forms_for_event(event)).to eq(true)

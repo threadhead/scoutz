@@ -43,7 +43,8 @@ module ModelHelpers
   end
 
   def unit_meeting_kinds
-    [ 'Pack Event',
+    [
+      'Pack Event',
       'Troop Event',
       'Crew Event',
       'Lodge Event',

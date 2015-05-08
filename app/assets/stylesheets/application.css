@@ -4,7 +4,6 @@
  * the top of the compiled file, but it's generally better to create a new file per style scope.
  *= require devise
  *= require gmaps4rails
- *= require jquery-ui-timepicker-addon
  *= require rails_bootstrap_forms
  *= require screen
  *= require ckeditor

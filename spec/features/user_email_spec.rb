@@ -25,7 +25,7 @@ RSpec.describe 'User Email Change' do
   end
 
   context 'user changing thier own email' do
-    before{ visit edit_unit_user_email_path(@unit, @user1) }
+    before { visit edit_unit_user_email_path(@unit, @user1) }
 
 
     it 'shows the user current email address' do
@@ -62,7 +62,7 @@ RSpec.describe 'User Email Change' do
       it 'sends a confirmation email to the new email address' do
         expect(ActionMailer::Base.deliveries.size).to eq(1)
         expect(ActionMailer::Base.deliveries.first.to).to eq(['joe.smith@aol.com'])
-        expect(ActionMailer::Base.deliveries.first.body).to have_content("Confirm my email change to: joe.smith@aol.com")
+        expect(ActionMailer::Base.deliveries.first.body).to have_content('Confirm my email change to: joe.smith@aol.com')
       end
 
       it 'does not send an email to the user\'s old email address' do
@@ -84,7 +84,7 @@ RSpec.describe 'User Email Change' do
       end
 
       it 'displayes the Change password form' do
-        expect(page).to have_content ("Change #{@user2.name.possessive} Email")
+        expect(page).to have_content("Change #{@user2.name.possessive} Email")
       end
 
       describe 'can change email' do
@@ -112,12 +112,12 @@ RSpec.describe 'User Email Change' do
     context 'as leader user' do
       it 'can change their own email' do
         visit edit_unit_adult_path(@unit, @user1)
-        expect(page).to have_css("#change_user_email")
+        expect(page).to have_css('#change_user_email')
       end
 
       it 'can not change other user\'s email' do
         visit edit_unit_adult_path(@unit, @user2)
-        expect(page).not_to have_link("#change_user_email")
+        expect(page).not_to have_link('#change_user_email')
       end
 
       it 'can edit their scout\'s email' do
@@ -125,7 +125,7 @@ RSpec.describe 'User Email Change' do
         scout.units << @unit
         @user1.scouts << scout
         visit edit_unit_scout_path(@unit, scout)
-        expect(page).to have_css("#change_user_email")
+        expect(page).to have_css('#change_user_email')
       end
 
       it 'can not edit other scout\'s email' do
@@ -133,7 +133,7 @@ RSpec.describe 'User Email Change' do
         scout.units << @unit
         @user2.scouts << scout
         visit edit_unit_scout_path(@unit, scout)
-        expect(page).not_to have_css("#change_user_email")
+        expect(page).not_to have_css('#change_user_email')
       end
     end
   end

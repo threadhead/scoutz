@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe EmailGroup, type: :model do
-  let (:unit) { FactoryGirl.build_stubbed(:unit) }
-  let (:user) { FactoryGirl.build_stubbed(:adult) }
-  let (:email_group) { FactoryGirl.build(:email_group, unit: unit, user: user ) }
+  let(:unit) { FactoryGirl.build_stubbed(:unit) }
+  let(:user) { FactoryGirl.build_stubbed(:adult) }
+  let(:email_group) { FactoryGirl.build(:email_group, unit: unit, user: user) }
 
   it { should belong_to(:unit) }
   it { should belong_to(:user) }

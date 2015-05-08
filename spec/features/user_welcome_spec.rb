@@ -22,7 +22,7 @@ RSpec.describe 'User Welcome Email and Password Reset' do
       login_as(@user, scope: :user)
     end
     describe 'visiting a users page' do
-      before{ visit unit_adult_path(@unit, @adult) }
+      before { visit unit_adult_path(@unit, @adult) }
 
       it 'should have a link to send welcome eamil' do
         expect(page).to have_link('Send Welcome Email')
@@ -36,11 +36,11 @@ RSpec.describe 'User Welcome Email and Password Reset' do
         end
 
         it 'should return to the users show page' do
-          expect(page).to have_content ("Adult: #{@adult.name}")
+          expect(page).to have_content("Adult: #{@adult.name}")
         end
 
         it 'displays a notification of sent email' do
-          expect(page).to have_content("Welcome email was sent to")
+          expect(page).to have_content('Welcome email was sent to')
         end
 
         it 'sets the users password to nil, creates a password reset token, and sets confirmation' do
@@ -54,7 +54,7 @@ RSpec.describe 'User Welcome Email and Password Reset' do
         it 'sends and email to the reset user' do
           expect(ActionMailer::Base.deliveries.size).to eq(1)
           expect(ActionMailer::Base.deliveries.first.to).to eq([@adult.email])
-          expect(ActionMailer::Base.deliveries.first.subject).to eq("Welcome to Scoutt.in!")
+          expect(ActionMailer::Base.deliveries.first.subject).to eq('Welcome to Scoutt.in!')
         end
       end
     end
@@ -75,8 +75,8 @@ RSpec.describe 'User Welcome Email and Password Reset' do
     end
 
     it 'displays the welcome page' do
-      expect(page).to have_content("Welcome to Scoutt.in")
-      expect(page).to have_button("Create my password")
+      expect(page).to have_content('Welcome to Scoutt.in')
+      expect(page).to have_button('Create my password')
     end
 
     context 'entering valid password/confirmation' do
@@ -109,8 +109,8 @@ RSpec.describe 'User Welcome Email and Password Reset' do
             fill_in 'Password confirmation', with: 'asdf'
           end
           click_button 'Create my password'
-          expect(page).to have_css("div.alert.alert-danger")
-          expect(page).to have_content("Password is too short")
+          expect(page).to have_css('div.alert.alert-danger')
+          expect(page).to have_content('Password is too short')
         end
       end
 
@@ -123,7 +123,7 @@ RSpec.describe 'User Welcome Email and Password Reset' do
           end
           click_button 'Create my password'
 
-          expect(page).to have_css("div.alert.alert-danger")
+          expect(page).to have_css('div.alert.alert-danger')
           expect(page).to have_content("Password confirmation doesn't match Password")
         end
       end

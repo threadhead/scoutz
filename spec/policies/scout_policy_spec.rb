@@ -25,8 +25,8 @@ RSpec.describe ScoutPolicy do
 
   permissions :edit? do
     it_behaves_like 'user leader access'
-    permission_granted_role_level_up(options.merge ({ user: :scout, role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
+    permission_granted_role_level_up(options.merge(user: :scout, role_level: :leader))
+    permission_denied_role_level_down(options.merge(user: :scout, role_level: :basic))
 
     it_behaves_like 'can access thier own'
   end
@@ -42,8 +42,8 @@ RSpec.describe ScoutPolicy do
 
   permissions :update? do
     it_behaves_like 'user leader access'
-    permission_granted_role_level_up(options.merge ({ user: :scout, role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :basic }) )
+    permission_granted_role_level_up(options.merge(user: :scout, role_level: :leader))
+    permission_denied_role_level_down(options.merge(user: :scout, role_level: :basic))
 
     it_behaves_like 'can access thier own'
   end
@@ -51,7 +51,6 @@ RSpec.describe ScoutPolicy do
   permissions :edit_email? do
     it_behaves_like 'adult admin access'
     it_behaves_like 'can access thier own'
-
   end
 
   describe 'my scouts permissions' do

@@ -24,7 +24,7 @@ RSpec.describe AdultPolicy do
 
   permissions :edit? do
     it_behaves_like 'user leader access'
-    permission_denied_role_level_down(options.merge ({ user: :scout, role_level: :admin }) )
+    permission_denied_role_level_down(options.merge(user: :scout, role_level: :admin))
     it_behaves_like 'can access thier own'
   end
 

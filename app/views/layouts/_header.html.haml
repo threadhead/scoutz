@@ -2,7 +2,7 @@
   .navbar.navbar-fixed-top.navbar-inverse#navbar-fixed-upper
     .container-fluid
       .navbar-header
-        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#scoutz-navbar-collapse")
+        %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#scoutz-navbar-collapse' } }
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
@@ -17,7 +17,7 @@
       .navbar-collapse.collapse#scoutz-navbar-collapse
         %ul.nav.navbar-nav.navbar-right
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown', hover: 'dropdown' } do
               = image_tag user_picture_url(current_user), class: 'img-circle user-picture'
               %span.user-info.hidden-xs
                 %small Welcome,
@@ -67,7 +67,7 @@
   .navbar.navbar-default#navbar-fixed-lower
     .container-fluid
       .navbar-header
-        %button.navbar-toggle(type="button" data-toggle="collapse" data-target="#unit-navbar-collapse")
+        %button.navbar-toggle{ type: 'button', data: { toggle: 'collapse', target: '#unit-navbar-collapse' } }
           %span.icon-bar
           %span.icon-bar
           %span.icon-bar
@@ -85,7 +85,7 @@
               .clearfix.visible-xs-block
 
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown', hover: 'dropdown' } do
               %i.fa.fa-user
               People
               %i.fa.fa-caret-down
@@ -93,15 +93,15 @@
             %ul.dropdown-menu
               %li
                 = link_to unit_scouts_path(@unit) do
-                  %i.fa.fa-user{style: "color: #C9CD08;"}
+                  %i.fa.fa-user{ style: 'color: #C9CD08;' }
                   Scouts
 
               %li
                 = link_to unit_adults_path(@unit) do
-                  %i.fa.fa-user{style: "color: #D64C4F;"}
+                  %i.fa.fa-user{ style: 'color: #D64C4F;' }
                   Adults
 
-              - if @unit.unit_type == "Boy Scouts"
+              - if @unit.unit_type == 'Boy Scouts'
                 %li
                   = link_to unit_merit_badges_path(@unit) do
                     %i.fa.fa-graduation-cap.text-muted-more
@@ -122,7 +122,7 @@
 
           - if policy(EmailMessage).create? || policy(SmsMessage).create?
             %li.dropdown
-              = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+              = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown', hover: 'dropdown' } do
                 %i.fa.fa-phone
                 Communications
                 %i.fa.fa-caret-down
@@ -163,7 +163,7 @@
 
 
           %li.dropdown
-            = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+            = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown', hover: 'dropdown' } do
               %i.fa.fa-calendar
               Events
               %i.fa.fa-caret-down
@@ -189,7 +189,7 @@
 
           - if @unit.pages.active.count > 0 || policy(Page).index?
             %li.dropdown
-              = link_to '#', class: 'dropdown-toggle', data: {toggle: 'dropdown', hover: 'dropdown'} do
+              = link_to '#', class: 'dropdown-toggle', data: { toggle: 'dropdown', hover: 'dropdown' } do
                 %i.fa.fa-file-text-o
                 Pages
                 %i.fa.fa-caret-down
@@ -206,11 +206,11 @@
 
         %ul.nav.navbar-nav.navbar-right
           %li
-            = link_to unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event list' do
+            = link_to unit_events_path(@unit), data: { toggle: 'tooltip', placement: 'bottom', delay: { show: '1000' } }, title: 'event list' do
               %i.fa.fa-list.fa-lg
               .visible-xs-inline Event List
           %li
-            = link_to calendar_unit_events_path(@unit), data: {toggle: 'tooltip', placement: 'bottom', delay: {show: '1000'}}, title: 'event calendar' do
+            = link_to calendar_unit_events_path(@unit), data: { toggle: 'tooltip', placement: 'bottom', delay: { show: '1000' } }, title: 'event calendar' do
               %i.fa.fa-calendar.fa-lg
               .visible-xs-inline Calendar
 

@@ -57,23 +57,23 @@ RSpec.describe Unit do
 
 
   describe 'The units-users relationships' do
-  	it "units can have many users" do
-  		unit = FactoryGirl.create(:unit)
-  		user1 = FactoryGirl.build(:user)
-  		user2 = FactoryGirl.build(:user)
-  		unit.users << [user1, user2]
-  		unit.users.count.should eq(2)
-  		unit.users.first.id.should eq(user1.id)
-  	end
+    it "units can have many users" do
+      unit = FactoryGirl.create(:unit)
+      user1 = FactoryGirl.build(:user)
+      user2 = FactoryGirl.build(:user)
+      unit.users << [user1, user2]
+      unit.users.count.should eq(2)
+      unit.users.first.id.should eq(user1.id)
+    end
 
-  	it "users can have many units" do
-  		user = FactoryGirl.create(:user)
-  		unit1 = FactoryGirl.build(:unit)
-  		unit2 = FactoryGirl.build(:unit)
-  		user.units << [unit1, unit2]
-  		user.units.count.should eq(2)
-  		user.units.first.id.should eq(unit1.id)
-  	end
+    it "users can have many units" do
+      user = FactoryGirl.create(:user)
+      unit1 = FactoryGirl.build(:unit)
+      unit2 = FactoryGirl.build(:unit)
+      user.units << [unit1, unit2]
+      user.units.count.should eq(2)
+      user.units.first.id.should eq(unit1.id)
+    end
   end
 
   specify { expect(unit.name).to eq('Cub Scout Pack 134') }

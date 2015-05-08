@@ -4,6 +4,7 @@ module PolicyHelpers
   end
 
   module ClassMethods
+
     # def permission_granted_role_level_up(role_level, policy_class)
     def permission_granted_role_level_up(options={})
       role_level = options[:role_level]
@@ -13,7 +14,7 @@ module PolicyHelpers
 
       describe "grants access #{user_type} role = #{role_level} and up" do
         user = FactoryGirl.build_stubbed(user_type)
-        User.roles_at_and_above(role_level).each do |role, val|
+        User.roles_at_and_above(role_level).each do |role, _val|
           it "permission +granted+ #{user_type}.role = #{role}" do
             user.role = role
             expect(policy_class).to permit(user, policy_resource)
@@ -32,7 +33,7 @@ module PolicyHelpers
 
       describe "denies access #{user_type} below role = #{role_level}" do
         user = FactoryGirl.build_stubbed(user_type)
-        User.roles_at_and_below(role_level).each do |role, val|
+        User.roles_at_and_below(role_level).each do |role, _val|
           it "permission -denied- #{user_type}.role = #{role}" do
             user.role = role
             expect(policy_class).not_to permit(user, policy_resource)
@@ -46,34 +47,34 @@ module PolicyHelpers
 
 
   RSpec.shared_examples 'adult admin access' do
-    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
-    permission_granted_role_level_up( options.merge({user: :adult, role_level: :admin}))
-    permission_denied_role_level_down( options.merge({user: :adult, role_level: :leader}))
-    permission_denied_role_level_down( options.merge({user: :scout, role_level: :admin}))
+    fail(NoMethodError, 'must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up(options.merge(user: :adult, role_level: :admin))
+    permission_denied_role_level_down(options.merge(user: :adult, role_level: :leader))
+    permission_denied_role_level_down(options.merge(user: :scout, role_level: :admin))
   end
 
   RSpec.shared_examples 'adult leader access' do
-    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
-    permission_granted_role_level_up( options.merge({user: :adult, role_level: :leader}))
-    permission_denied_role_level_down( options.merge({user: :adult, role_level: :basic}))
-    permission_denied_role_level_down( options.merge({user: :scout, role_level: :admin}))
+    fail(NoMethodError, 'must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up(options.merge(user: :adult, role_level: :leader))
+    permission_denied_role_level_down(options.merge(user: :adult, role_level: :basic))
+    permission_denied_role_level_down(options.merge(user: :scout, role_level: :admin))
   end
 
   RSpec.shared_examples 'user leader access' do
-    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
-    permission_granted_role_level_up(options.merge ({ role_level: :leader }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :basic }) )
+    fail(NoMethodError, 'must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up(options.merge(role_level: :leader))
+    permission_denied_role_level_down(options.merge(role_level: :basic))
   end
 
   RSpec.shared_examples 'user basic access' do
-    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
-    permission_granted_role_level_up(options.merge ({ role_level: :basic }) )
-    permission_denied_role_level_down(options.merge ({ role_level: :inactive }) )
+    fail(NoMethodError, 'must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_granted_role_level_up(options.merge(role_level: :basic))
+    permission_denied_role_level_down(options.merge(role_level: :inactive))
   end
 
   RSpec.shared_examples 'no access' do
-    raise NoMethodError.new('must define an options class method inside spec') unless self.respond_to?(:options)
-    permission_denied_role_level_down(options.merge ({ role_level: :admin }) )
+    fail(NoMethodError, 'must define an options class method inside spec') unless self.respond_to?(:options)
+    permission_denied_role_level_down(options.merge(role_level: :admin))
   end
 
   RSpec.shared_examples 'can access thier own' do

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe User do
-	it { is_expected.to have_many(:phones) }
+  it { is_expected.to have_many(:phones) }
   it { is_expected.to have_many(:notifiers) }
   it { is_expected.to have_many(:email_messages) }
-	it { is_expected.to have_many(:sms_messages) }
+  it { is_expected.to have_many(:sms_messages) }
   it { is_expected.to have_and_belong_to_many(:scouts) }
   it { is_expected.to have_and_belong_to_many(:adults) }
   it { is_expected.to have_and_belong_to_many(:units) }
@@ -14,11 +14,11 @@ RSpec.describe User do
   it { is_expected.to have_many(:pages) }
   it { is_expected.to have_many(:unit_positions) }
   it { is_expected.to belong_to(:sub_unit).touch(true) }
-	# it { is_expected.to have_many(:adults) }
-	# it { is_expected.to have_many(:scouts) }
-	# it { is_expected.to have_many(:adult_scout_relationships) }
-	# it { is_expected.to have_many(:scout_adult_relationships) }
-	# it { is_expected.to have_and_belong_to_many(:units) }
+  # it { is_expected.to have_many(:adults) }
+  # it { is_expected.to have_many(:scouts) }
+  # it { is_expected.to have_many(:adult_scout_relationships) }
+  # it { is_expected.to have_many(:scout_adult_relationships) }
+  # it { is_expected.to have_and_belong_to_many(:units) }
 
   describe 'validators' do
     before { FactoryGirl.create(:user) }
@@ -32,35 +32,35 @@ RSpec.describe User do
   end
 
   # it 'should have an authentication token' do
-  # 	FactoryGirl.create(:user).authentication_token.empty?.should be_false
+  #   FactoryGirl.create(:user).authentication_token.empty?.should be_false
   # end
 
 
 
   describe 'The adult-scout relationships' do
-  	it "adult can have many scouts" do
-  		adult = FactoryGirl.create(:adult)
-  		scout1 = FactoryGirl.build(:scout)
-  		scout2 = FactoryGirl.build(:scout)
-  		adult.scouts << [scout1, scout2]
+    it 'adult can have many scouts' do
+      adult = FactoryGirl.create(:adult)
+      scout1 = FactoryGirl.build(:scout)
+      scout2 = FactoryGirl.build(:scout)
+      adult.scouts << [scout1, scout2]
       expect(adult.scouts.count).to eq(2)
       expect(adult.scouts).to include(scout1)
       expect(adult.scouts).to include(scout2)
       expect(scout1.adults).to include(adult)
       expect(scout2.adults).to include(adult)
-  	end
+    end
 
-  	it "scouts can have many adults" do
-  		scout = FactoryGirl.create(:scout)
-  		adult1 = FactoryGirl.build(:adult)
-  		adult2 = FactoryGirl.build(:adult)
-  		scout.adults << [adult1, adult2]
-  		expect(scout.adults.count).to eq(2)
+    it "scouts can have many adults" do
+      scout = FactoryGirl.create(:scout)
+      adult1 = FactoryGirl.build(:adult)
+      adult2 = FactoryGirl.build(:adult)
+      scout.adults << [adult1, adult2]
+      expect(scout.adults.count).to eq(2)
       expect(scout.adults).to include(adult1)
       expect(scout.adults).to include(adult2)
       # expect(adult1.scouts).to include(scout)
-  		# expect(adult2.scouts).to include(scout)
-  	end
+      # expect(adult2.scouts).to include(scout)
+    end
   end
 
 
@@ -87,7 +87,7 @@ RSpec.describe User do
     end
 
     it 'can have multiple users with no email' do
-      user1 = FactoryGirl.create(:user, email: '')
+      FactoryGirl.create(:user, email: '')
       FactoryGirl.build(:user, email: '').should be_valid
     end
 

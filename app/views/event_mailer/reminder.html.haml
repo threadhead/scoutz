@@ -1,6 +1,6 @@
 !!!
-%html{style: "font-family: sans-serif;"}
+%html{ style: 'font-family: sans-serif;' }
   %head
   %body
     = render partial: 'events/event', collection: [@event], locals: { email_message: nil }
-    = render partial: 'unsubscribe/email_footer', locals: {action: :event_reminder_email, user: @recipient}
+    = render partial: 'unsubscribe/email_footer', locals: { action: :event_reminder_email, user: @recipient }

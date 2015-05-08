@@ -334,7 +334,7 @@ class Event < ActiveRecord::Base
     {
       id:             self.id,
       title:          self.name,
-      description:    "",
+      description:    '',
       start:          self.start_at.iso8601,
       end:            self.end_at.iso8601,
       allDay:         false,

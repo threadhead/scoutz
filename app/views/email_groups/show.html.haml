@@ -15,26 +15,26 @@
             Edit
 
 
-        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+        %a.btn.dropdown-toggle.btn-default{ href: '#', data: { toggle: 'dropdown' }, title: 'Actions' }
           %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu.pull-right
           - if policy(@email_group).destroy?
             %li
-              = link_to(unit_email_group_path(@unit, @email_group), method: :delete, data: {confirm: 'Are you sure?'}, class: "") do
+              = link_to(unit_email_group_path(@unit, @email_group), method: :delete, data: { confirm: 'Are you sure?' }, class: '') do
                 %i.fa.fa-trash-o.text-muted-more
                 Destroy #{@email_group.name}
 
           - if policy(@email_group).new?
             %li
-              = link_to(new_unit_email_group_path(@unit), class: "") do
+              = link_to(new_unit_email_group_path(@unit), class: '') do
                 %i.fa.fa-plus.text-muted-more
                 New Email Group
 
 
 
 
-= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_group}
+= render partial: 'layouts/flash', locals: { flash: flash, ar_object: @email_group }
 
 .text-xlarge
   %table.table

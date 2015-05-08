@@ -1,7 +1,7 @@
 .row
   .col-md-9
     = bootstrap_form_for [@unit, @email_group] do |f|
-      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @email_group}
+      = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @email_group }
 
       .row
         .col-md-4
@@ -9,7 +9,7 @@
 
       = f.text_field :description, help: 'optional'
 
-      = f.collection_select :users_ids, @unit.users.by_name_lf, :id, :name_lf, {label: 'Recipients'}, multiple: true, class: 'form-control'
+      = f.collection_select :users_ids, @unit.users.by_name_lf, :id, :name_lf, { label: 'Recipients' }, multiple: true, class: 'form-control'
       .help-text You can select any user, adult or scout, to be in the email group; but only users that have elected to receive email messages will acutally receive the message.
 
 

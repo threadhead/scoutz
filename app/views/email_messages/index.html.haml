@@ -7,12 +7,12 @@
 
     .col-md-4.right-aligned
       - if policy(EmailMessage).create?
-        = link_to(new_unit_email_message_path(@unit), class: "btn btn-default") do
+        = link_to(new_unit_email_message_path(@unit), class: 'btn btn-default') do
           %i.fa.fa-plus
           New Email Blast
 
 
-= render partial: 'layouts/flash', locals: {flash: flash}
+= render partial: 'layouts/flash', locals: { flash: flash }
 
 %table.table
   %thead

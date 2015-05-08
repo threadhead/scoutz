@@ -20,7 +20,7 @@
 
 
 
-= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
+= render partial: 'layouts/flash', locals: { flash: flash, ar_object: @merit_badge }
 
 = cache ["unit-#{@unit.id}", @merit_badge] do
   .row
@@ -55,11 +55,11 @@
             %td
               %strong Worksheets
             %td
-              = link_to @merit_badge.mb_org_worksheet_pdf_url, target: "_blank" do
+              = link_to @merit_badge.mb_org_worksheet_pdf_url, target: '_blank' do
                 Adobe PDF
                 %i.fa.fa-file-pdf-o.fa-large
               %br
-              = link_to @merit_badge.mb_org_worksheet_doc_url, target: "_blank" do
+              = link_to @merit_badge.mb_org_worksheet_doc_url, target: '_blank' do
                 MS Word
                 %i.fa.fa-file-word-o.fa-large
 

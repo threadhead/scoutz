@@ -5,7 +5,7 @@
       You may only change counselors for your Troop
 
     = bootstrap_form_for [@unit, @merit_badge] do |f|
-      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @merit_badge}
+      = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @merit_badge }
 
       = f.text_field :name, disabled: true
       = f.text_field :year_created, disabled: true
@@ -14,12 +14,12 @@
       %fieldset
         %legend Merit Badge Counselors
         %br
-        = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label sr-only'
+        = label_tag :adult_merit_badge_ids, 'Counselor for', class: 'control-label sr-only'
         = hidden_field_tag 'merit_badge[user_ids][]', '0'
 
 
         - merit_badge_adult_ids = @merit_badge.counselors.unit(@unit.id).pluck(:user_id)
-        = select_tag "merit_badge[user_ids][]", options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids', class: 'form-control'
+        = select_tag 'merit_badge[user_ids][]', options_from_collection_for_select(@unit.adults.by_name_lf, :id, :name_lf, merit_badge_adult_ids), multiple: true, id: 'merit_badge_user_ids', class: 'form-control'
         .help-block counselors for #{@merit_badge.name} in #{@unit.name_unit}
 
         = #f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Counselors', help: ''}, multiple: true

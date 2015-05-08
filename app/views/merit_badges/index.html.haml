@@ -3,13 +3,13 @@
     %i.fa.fa-graduation-cap
     Merit Badges and Counselors
 
-= render partial: 'layouts/flash', locals: {flash: flash}
+= render partial: 'layouts/flash', locals: { flash: flash }
 
 
-= cache ["unit-#{@unit.id}", ":merit_badges_search"] do
-  = render partial: 'layouts/search', locals: {type: 'merit badges', search_url: "/units/#{@unit.id}/merit_badges.js?search_typeahead="}
+= cache ["unit-#{@unit.id}", ':merit_badges_search'] do
+  = render partial: 'layouts/search', locals: { type: 'merit badges', search_url: "/units/#{@unit.id}/merit_badges.js?search_typeahead=" }
   %br
 
 
 #merit-badge-index
-  = render partial: 'index', locals: {unit: @unit, merit_badges: @merit_badges, merit_badges_count: @merit_badges_count, searching: @searching}
+  = render partial: 'index', locals: { unit: @unit, merit_badges: @merit_badges, merit_badges_count: @merit_badges_count, searching: @searching }

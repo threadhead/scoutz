@@ -15,17 +15,17 @@ RSpec.describe Scoutlander::Reader::Events do
         @sl.fetch_unit_events
       end
     end
-    subject {@sl.events}
+    subject { @sl.events }
 
-    it "does something" do
+    it 'does something' do
       # puts subject.inspect
     end
 
     specify { expect(subject).to_not be_blank }
-    specify { expect(subject.first).to be_a(Scoutlander::Datum::Event)}
+    specify { expect(subject.first).to be_a(Scoutlander::Datum::Event) }
     specify { expect(subject.size).to eq(7) }
-    specify { expect(subject.map(&:name)).to include("Philmont Trek (Troop Event)") }
-    specify { expect(subject.map(&:name)).to include("No Troop Meeting (Troop Event)") }
+    specify { expect(subject.map(&:name)).to include('Philmont Trek (Troop Event)') }
+    specify { expect(subject.map(&:name)).to include('No Troop Meeting (Troop Event)') }
   end
 
 
@@ -40,18 +40,17 @@ RSpec.describe Scoutlander::Reader::Events do
         @sl.fetch_all_event_info_and_create
       end
     end
-    subject {@sl.events}
+    subject { @sl.events }
 
     it 'sumptin' do
       # pp subject[5]
     end
-
   end
 
 
 
 
-  describe ".sl_time_to_datetime" do
+  describe '.sl_time_to_datetime' do
     let(:sl) { Scoutlander::Reader::Events.new(unit: @unit) }
 
     specify { expect(sl.sl_time_to_datetime('2014.5.3.7.0.0')).to eq(DateTime.parse('2014-05-03 07:00:00')) }

@@ -4,7 +4,7 @@ module Scoutlander
 
       def perform
         if @vcr
-          VCR.use_cassette('fetch_sub_units') { }
+          VCR.use_cassette('fetch_sub_units') {}
         else
         end
       end

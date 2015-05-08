@@ -35,7 +35,7 @@ module UsersHelper
 
   def options_for_user_roles
     roles = current_user.adult? ? User.roles : User.roles_at_and_below(:leader)
-    roles.keys.map {|r| [r.titleize, r]}
+    roles.keys.map { |r| [r.titleize, r] }
   end
 
   def all_leadership_positions(unit, user)
@@ -46,9 +46,8 @@ module UsersHelper
 
 
   def birthdate_and_years_old(user)
-    if user.birth
-      "#{user.birth.to_s(:long)} (#{user.age} years old)"
-    end
+    return unless user.birth
+    "#{user.birth.to_s(:long)} (#{user.age} years old)"
   end
 
   def user_city_state_zip(user)
@@ -84,8 +83,8 @@ module UsersHelper
 
   def user_address_show(user)
     sanitize(user.address1.to_s) + add_break(user.address1) +
-    sanitize(user.address2.to_s) + add_break(user.address2) +
-    sanitize(user_city_state_zip(user)) + add_break(user_city_state_zip(user))
+      sanitize(user.address2.to_s) + add_break(user.address2) +
+      sanitize(user_city_state_zip(user)) + add_break(user_city_state_zip(user))
   end
 
 

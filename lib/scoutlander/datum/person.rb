@@ -11,13 +11,13 @@ module Scoutlander
           :leadership_position,
           :additional_leadership_positions,
           :security_level,
-          :email ,
+          :email,
           :alternate_email,
           :send_reminders,
           :home_phone,
           :work_phone,
           :cell_phone,
-          :address1 ,
+          :address1,
           :city,
           :state,
           :zip_code,
@@ -28,7 +28,7 @@ module Scoutlander
           :sl_profile,
           :role,
           :relations,
-          :parent,
+          :parent
         ]
         create_setters_getters_instance_variables(options)
         @relations = []

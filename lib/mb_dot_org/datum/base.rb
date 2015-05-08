@@ -16,7 +16,7 @@ module MbDotOrg
 
       def to_params_without(*args)
         atr = delete_attributes(*args)
-        #return a hash of all attributes and values
+        # return a hash of all attributes and values
         h = Hash.new
         atr.each do |a|
           val = send(a)
@@ -27,7 +27,7 @@ module MbDotOrg
 
       # return a duplicated array with elements deleted
       def delete_attributes(*args)
-        @attributes.dup.delete_if {|a| args.include?(a) }
+        @attributes.dup.delete_if { |a| args.include?(a) }
       end
 
     end

@@ -1,5 +1,5 @@
 require 'rubygems'
-ENV["RAILS_ENV"] ||= 'test'
+ENV['RAILS_ENV'] ||= 'test'
 
 require 'simplecov'
 # require 'simplecov-rcov'
@@ -8,7 +8,7 @@ SimpleCov.start 'rails'
 
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 # require 'rspec/autorun'
 require 'capybara/rails'
@@ -31,7 +31,7 @@ require 'capybara-screenshot/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
@@ -45,8 +45,8 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   # config.extend ControllerMacros, :type => :controller
   # config.include ModelMacros, :type => :model
-  config.include ModelHelpers #, type: :model
-  config.include FeatureHelpers #, type: :feature
+  config.include ModelHelpers # , type: :model
+  config.include FeatureHelpers # , type: :feature
 
   # config.include RequestMacros
   # config.include ViewMacros, :type => :view
@@ -93,7 +93,6 @@ RSpec.configure do |config|
     Phone.delete_all
     UserRelationship.delete_all
     EventSignup.delete_all
-
   end
 
 
@@ -108,9 +107,9 @@ RSpec.configure do |config|
   # order dependency and want to debug it, you can fix the order by providing
   # the seed, which is printed after each run.
   #     --seed 1234
-  config.order = "random"
+  config.order = 'random'
 
-  #some rspec configs
+  # some rspec configs
   # config.treat_symbols_as_metadata_keys_with_true_values = true
   config.filter_run_including focus: true
   config.run_all_when_everything_filtered = true

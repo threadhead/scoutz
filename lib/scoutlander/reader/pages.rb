@@ -20,8 +20,8 @@ module Scoutlander
         unit_page = dash_page.link_with(text: %r{#{@unit.unit_number}}).click
         # puts "unit page uri: #{unit_page.uri}"
 
-        @logger.info "CLICK : Get Pages Links"
-        pages_links = unit_page.links.find_all {|l| l.uri.to_s =~ /CUSTOMID/}
+        @logger.info 'CLICK : Get Pages Links'
+        pages_links = unit_page.links.find_all { |l| l.uri.to_s =~ /CUSTOMID/ }
 
         pages_links.each do |link|
           page = Scoutlander::Datum::Page.new
@@ -33,7 +33,7 @@ module Scoutlander
 
 
       def fetch_all_page_info_and_create
-        @logger.info "FETCH_ALL_PAGE_INFO_AND_CREATE: start"
+        @logger.info 'FETCH_ALL_PAGE_INFO_AND_CREATE: start'
         @pages.each do |page|
           fetch_page_info(page)
 
@@ -52,7 +52,7 @@ module Scoutlander
           end
         end
 
-        @logger.info "FETCH_ALL_PAGE_INFO_AND_CREATE: finish"
+        @logger.info 'FETCH_ALL_PAGE_INFO_AND_CREATE: finish'
       end
 
 
@@ -71,7 +71,7 @@ module Scoutlander
           datum.body << t.to_html
           c = pt.search('.//div[substring(@id, string-length(@id) -10) = "_lblContent"]')
           # puts c
-          datum.body << c.to_html.force_encoding("ASCII-8BIT").force_encoding("UTF-8")
+          datum.body << c.to_html.force_encoding('ASCII-8BIT').force_encoding('UTF-8')
           # page.body << c.to_html.force_encoding("UTF-8")
         end
         datum.inspected = true
@@ -82,4 +82,3 @@ module Scoutlander
     end
   end
 end
-

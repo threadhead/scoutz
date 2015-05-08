@@ -9,12 +9,12 @@ RSpec.describe Scoutlander::Reader::Units do
       end
     end
 
-    subject {@sl.units}
+    subject { @sl.units }
 
     specify { expect(subject.size).to eq(2) }
     specify { expect(subject.first).to be_kind_of(Scoutlander::Datum::Unit) }
-    specify { expect(subject.map(&:name)).to include("BS Troop 603 Website (Cave Creek, Arizona)") }
-    specify { expect(subject.map(&:name)).to include("CS Pack 134 Website (Cave Creek, Arizona)") }
+    specify { expect(subject.map(&:name)).to include('BS Troop 603 Website (Cave Creek, Arizona)') }
+    specify { expect(subject.map(&:name)).to include('CS Pack 134 Website (Cave Creek, Arizona)') }
   end
 
 
@@ -23,14 +23,14 @@ RSpec.describe Scoutlander::Reader::Units do
 
     it 'Chicago, IL' do
       city, state = @sl.split_city_state('Chicago, IL')
-      expect(city).to eq("Chicago")
-      expect(state).to eq("IL")
+      expect(city).to eq('Chicago')
+      expect(state).to eq('IL')
     end
 
     it 'San Diego, CA' do
       city, state = @sl.split_city_state('San Diego, CA')
-      expect(city).to eq("San Diego")
-      expect(state).to eq("CA")
+      expect(city).to eq('San Diego')
+      expect(state).to eq('CA')
     end
   end
 end

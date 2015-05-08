@@ -1,6 +1,6 @@
-.gal-item{ id: dom_id(asset), data: {url: image_path(asset.data_url)} }
+.gal-item{ id: dom_id(asset), data: { url: image_path(asset.data_url) } }
   - if policy(asset).destroy?
-    = link_to polymorphic_path(asset), method: :delete, data: {confirm: 'Are you sure you want to delete this file? It may be used by another message.'}, class: 'btn btn-danger btn-xs fileupload-cancel gal-del' do
+    = link_to polymorphic_path(asset), method: :delete, data: { confirm: 'Are you sure you want to delete this file? It may be used by another message.' }, class: 'btn btn-danger btn-xs fileupload-cancel gal-del' do
       %i.fa.fa-trash-o
 
   .fileupload-file.gal-inner-holder

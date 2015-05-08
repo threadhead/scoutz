@@ -4,6 +4,6 @@
   = link_to 'Close', '#', class: 'btn btn-default', id: 'close-window'
 
 %h3 Select file to use
-#fileupload.gal-holder
-  .fileupload-list{"data-endless" => "true"}
+.gal-holder#fileupload
+  .fileupload-list{ 'data-endless' => 'true' }
     = render partial: 'ckeditor/shared/asset', collection: @pictures

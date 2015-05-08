@@ -31,7 +31,14 @@ module Scoutz
     # config.autoload_paths += %W(#{config.root}/app/models/ckeditor)
 
     # config.assets.precompile += ['jquery.js']
-    config.assets.precompile += ['landing.css', 'landing/landing.js', 'ckeditor_config.js', 'ckeditor/config_ckeditor.js', 'print.css', 'printing/print.js']
+    config.assets.precompile += [ 'landing.css',
+                                  'landing/landing.js',
+                                  'ckeditor_config.js',
+                                  'ckeditor/config_ckeditor.js',
+                                  'ckeditor/pictures.js',
+                                  'print.css',
+                                  'printing/print.js'
+                                ]
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true

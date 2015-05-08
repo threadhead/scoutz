@@ -10,7 +10,7 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
 
   def create
     h = Hash.new
-    h[:picture] = {data: params[:upload]}
+    h[:picture] = { data: params[:upload] }
     @picture = Ckeditor::Picture.new(h[:picture])
     @picture.unit_id = params[:unit_id]
     @picture.user_id = current_user.id
@@ -40,6 +40,7 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
 
 
   protected
+
     def find_asset
       @picture = Ckeditor::Picture.find(params[:id])
     end

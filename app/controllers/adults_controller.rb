@@ -22,7 +22,7 @@ class AdultsController < UsersController
     begin
       user_save = @user.save
     rescue ActiveRecord::RecordNotUnique
-      @user.errors.add(:base, "Merit badges for each user muse be unique")
+      @user.errors.add(:base, 'Merit badges for each user muse be unique')
     end
 
 
@@ -45,7 +45,7 @@ class AdultsController < UsersController
     begin
       user_update = @user.update(user_params)
     rescue ActiveRecord::RecordNotUnique
-      @user.errors.add(:base, "Merit badges for each user muse be unique")
+      @user.errors.add(:base, 'Merit badges for each user muse be unique')
     end
 
     if user_update
@@ -68,8 +68,9 @@ class AdultsController < UsersController
   end
 
   private
+
     def set_counselor_attributes(user=nil)
-      return unless params[:adult].has_key?(:merit_badge_ids)
+      return unless params[:adult].key?(:merit_badge_ids)
       merit_badge_ids = params[:adult].extract!(:merit_badge_ids)
       params[:adult][:counselors_attributes] = User.create_counselors_attributes(
                                                                        user: user,
@@ -77,6 +78,5 @@ class AdultsController < UsersController
                                                                        mb_ids: merit_badge_ids['merit_badge_ids']
                                                                        )
     end
-
 
 end

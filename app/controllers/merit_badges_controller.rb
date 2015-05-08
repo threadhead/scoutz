@@ -11,7 +11,6 @@ class MeritBadgesController < ApplicationController
       @merit_badges = MeritBadge.name_contains(params[:search_typeahead]).by_name
       @searching = true
     end
-
   end
 
   def show
@@ -46,7 +45,7 @@ class MeritBadgesController < ApplicationController
     begin
       merit_badge_update = @merit_badge.update(merit_badge_params)
     rescue ActiveRecord::RecordNotUnique
-      @merit_badge.errors.add(:base, "Merit badges for each user muse be unique")
+      @merit_badge.errors.add(:base, 'Merit badges for each user muse be unique')
     end
 
     if merit_badge_update
@@ -64,6 +63,7 @@ class MeritBadgesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_merit_badge
       @merit_badge = MeritBadge.find(params[:id])
@@ -75,7 +75,7 @@ class MeritBadgesController < ApplicationController
     end
 
     def set_counselor_attributes(merit_badge=nil)
-      return unless params[:merit_badge].has_key?(:user_ids)
+      return unless params[:merit_badge].key?(:user_ids)
       user_ids = params[:merit_badge].extract!(:user_ids)
 
       params[:merit_badge][:counselors_attributes] = MeritBadge.create_counselors_attributes(

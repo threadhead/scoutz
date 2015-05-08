@@ -7,13 +7,13 @@ class EmailMessage < ActiveRecord::Base
   serialize :sub_unit_ids, Array
   serialize :sent_to_hash, Hash
 
-  belongs_to :sender, class_name: "User", foreign_key: "user_id"
+  belongs_to :sender, class_name: 'User', foreign_key: 'user_id'
   belongs_to :unit
   belongs_to :email_group
   has_many :email_attachments, dependent: :destroy
   has_and_belongs_to_many :events
   has_and_belongs_to_many :users
-  accepts_nested_attributes_for :email_attachments, allow_destroy: true, reject_if: proc { |a| a["attachment"].blank? }
+  accepts_nested_attributes_for :email_attachments, allow_destroy: true, reject_if: proc { |a| a['attachment'].blank? }
 
 
   validates :message, presence: true, if: :has_no_events?
@@ -24,12 +24,12 @@ class EmailMessage < ActiveRecord::Base
 
   validate :has_selected_users, if: :send_to_users?
   def has_selected_users
-    errors.add(:base, "You must select at least 1 adult or scout recipient") if user_ids.empty?
+    errors.add(:base, 'You must select at least 1 adult or scout recipient') if user_ids.empty?
   end
 
   validate :has_selected_email_group, if: :send_to_group?
   def has_selected_email_group
-    errors.add(:base, "You must select an email group") if email_group.blank?
+    errors.add(:base, 'You must select an email group') if email_group.blank?
   end
 
   before_create :ensure_id_token
@@ -68,7 +68,7 @@ class EmailMessage < ActiveRecord::Base
       # su_users = []
       # sub_units.each { |su| su_users << su.users_receiving_email_blast }
       # su_users.flatten
-      sub_units.inject([]) {|users, su| users + su.users_receiving_email_blast }.uniq
+      sub_units.inject([]) { |users, su| users + su.users_receiving_email_blast }.uniq
     when 4
       # self.users.gets_email_blast
       User.unit_users_with_adults(unit: unit, users_ids: users.pluck(:id)).gets_email_blast
@@ -104,10 +104,11 @@ class EmailMessage < ActiveRecord::Base
 
 
 
-  #scopes
+  # scopes
   scope :by_updated_at, -> { order(updated_at: :desc) }
 
   protected
+
     def has_no_events?
       if self.persisted?
         has_events?
@@ -130,7 +131,7 @@ class EmailMessage < ActiveRecord::Base
     end
 
     def generate_token
-      SecureRandom.urlsafe_base64(12) #.tr('+/=lIO0', 'pqrsxyz')
+      SecureRandom.urlsafe_base64(12) # .tr('+/=lIO0', 'pqrsxyz')
     end
 
 end

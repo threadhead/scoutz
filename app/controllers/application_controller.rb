@@ -5,12 +5,13 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   protected
+
     def auth_and_time_zone
       authenticate_user!
       User.current = current_user if current_user
       set_user_units
       set_unit
-      Time.zone = @unit.try(:time_zone) || current_user.time_zone || "Pacific Time (US & Canada)"
+      Time.zone = @unit.try(:time_zone) || current_user.time_zone || 'Pacific Time (US & Canada)'
 
       # logger.info "CURRENT_UNIT_ID: #{session[:current_unit_id]}"
       # @current_unit = @units.where(id: session[:current_unit_id]).first || @units.first
@@ -35,7 +36,7 @@ class ApplicationController < ActionController::Base
 
 
     def user_not_authorized
-      flash[:error] = "You are not authorized to perform this action."
+      flash[:error] = 'You are not authorized to perform this action.'
       render file: File.join(Rails.root, 'public', '403.html'), status: 403, layout: false
       # redirect_to(request.referrer || root_path)
     end
@@ -43,7 +44,7 @@ class ApplicationController < ActionController::Base
     def after_sign_in_path_for(resource)
       set_user_units
       set_unit
-      Time.zone = @unit.try(:time_zone) || current_user.time_zone || "Pacific Time (US & Canada)"
+      Time.zone = @unit.try(:time_zone) || current_user.time_zone || 'Pacific Time (US & Canada)'
       stored_location_for(resource) || unit_events_url(@unit)
     end
 

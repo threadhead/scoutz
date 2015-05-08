@@ -42,4 +42,3 @@ class ApplicationPolicy < Struct.new(:user, :record, :unit)
     Pundit.policy_scope!(user, record.class)
   end
 end
-

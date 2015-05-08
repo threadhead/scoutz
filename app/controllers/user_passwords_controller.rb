@@ -11,7 +11,7 @@ class UserPasswordsController < ApplicationController
     authorize UserPasswordsController
     if @user.update_with_password(user_params)
       sign_in @user, bypass: true
-      redirect_to unit_adult_path(@unit, @user), notice: "Your password was successfully updated."
+      redirect_to unit_adult_path(@unit, @user), notice: 'Your password was successfully updated.'
     else
       clean_up_passwords @user
       render action: 'edit'
@@ -19,6 +19,7 @@ class UserPasswordsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = current_user

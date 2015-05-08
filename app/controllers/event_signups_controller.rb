@@ -93,6 +93,7 @@ class EventSignupsController < ApplicationController
 
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_event_signup
       @event_signup = EventSignup.find(params[:id])
@@ -140,7 +141,7 @@ class EventSignupsController < ApplicationController
     # end
 
     def event_submit?
-      params.has_key?('event_signup_in_event_commit')
+      params.key?('event_signup_in_event_commit')
     end
 
     def in_create?
@@ -153,7 +154,7 @@ class EventSignupsController < ApplicationController
     end
 
     def create_activity(task)
-      @event_signup.create_activity task, owner: current_user, unit_id: @event_signup.unit.id, parameters: {event_id: @event_signup.event.id, user_id: @event_signup.user.id}
+      @event_signup.create_activity task, owner: current_user, unit_id: @event_signup.unit.id, parameters: { event_id: @event_signup.event.id, user_id: @event_signup.user.id }
     end
 
 end

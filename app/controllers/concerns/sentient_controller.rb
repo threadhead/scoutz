@@ -8,6 +8,7 @@ module SentientController
   end
 
   private
+
   def set_current_user
     User.current = current_user if current_user
   end

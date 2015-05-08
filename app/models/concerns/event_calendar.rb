@@ -55,7 +55,7 @@ module EventCalendar
     yield temp_file
 
     temp_file.close
-    temp_file.unlink #delete the temp file
+    temp_file.unlink # delete the temp file
   end
 
   def skip_update_ical_background_callbacks
@@ -67,9 +67,9 @@ module EventCalendar
   def ical_string
     # return unless ical_valid?
     cal = Icalendar::Calendar.new
-    e = self
+    # e = self
     cal.event do |e|
-      e.ip_class      = "PRIVATE"
+      e.ip_class      = 'PRIVATE'
       e.dtstart       = self.start_at.utc.to_s(:ical)
       e.dtend         = self.end_at.utc.to_s(:ical)
       e.summary       = self.name
@@ -84,16 +84,16 @@ module EventCalendar
   end
 
   private
+
     def ensure_ical_uuid
       self.ical_uuid = SecureRandom.uuid
     end
 
     def update_ical_attributes
-      if ical.present? && ical_changed?
-        self.ical_content_type = 'text/calendar'
-        self.ical_file_size = ical.file.size
-        self.ical_updated_at = Time.zone.now
-      end
+      return unless ical.present? && ical_changed?
+      self.ical_content_type = 'text/calendar'
+      self.ical_file_size = ical.file.size
+      self.ical_updated_at = Time.zone.now
     end
 
 end

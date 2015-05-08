@@ -10,7 +10,7 @@ class Ckeditor::AttachmentFilesController < Ckeditor::BaseController
 
   def create
     h = Hash.new
-    h[:attachment_file] = {data: params[:upload]}
+    h[:attachment_file] = { data: params[:upload] }
     @attachment_file = Ckeditor::AttachmentFile.new(h[:attachment_file])
     @attachment_file.unit_id = params[:unit_id]
     @attachment_file.user_id = current_user.id
@@ -40,6 +40,7 @@ class Ckeditor::AttachmentFilesController < Ckeditor::BaseController
 
 
   protected
+
     def find_asset
       @attachment_file = Ckeditor::AttachmentFile.find(params[:id])
     end

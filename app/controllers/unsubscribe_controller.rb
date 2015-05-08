@@ -17,6 +17,7 @@ class UnsubscribeController < ApplicationController
   end
 
   private
+
     def set_user
       if params.key?(:id)
         @user = User.find_by!(signup_token: params[:id])

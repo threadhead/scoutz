@@ -17,12 +17,12 @@ class HealthForm < ActiveRecord::Base
 
   def all_blank?
     part_a_date.blank? &&
-    part_b_date.blank? &&
-    part_c_date.blank? &&
-    philmont_date.blank? &&
-    northern_tier_date.blank? &&
-    florida_sea_base_date.blank? &&
-    summit_tier_date.blank?
+      part_b_date.blank? &&
+      part_c_date.blank? &&
+      philmont_date.blank? &&
+      northern_tier_date.blank? &&
+      florida_sea_base_date.blank? &&
+      summit_tier_date.blank?
   end
 
   def part_a_expires
@@ -54,6 +54,7 @@ class HealthForm < ActiveRecord::Base
   end
 
   private
+
     def expires_at(date)
       return nil if date.nil?
       date + 1.year - 1.day

@@ -32,6 +32,7 @@ class UsersController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       # @user = User.find(params[:id])
@@ -40,9 +41,8 @@ class UsersController < ApplicationController
     end
 
     def remove_new_phone_attribute
-      if params[controller_type][:phones_attributes]
-        params[controller_type][:phones_attributes].delete('new_phone')
-      end
+      return unless params[controller_type][:phones_attributes]
+      params[controller_type][:phones_attributes].delete('new_phone')
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -60,7 +60,7 @@ class UsersController < ApplicationController
             counselors_attributes: [:id, :merit_badge_id, :unit_id, :_destroy],
             unit_positions_attributes: [:id, :leadership, :additional, :unit_id],
             health_forms_attributes: [:id, :unit_id, :part_a_date, :part_b_date, :part_c_date, :florida_sea_base_date, :philmont_date, :northern_tier_date, :summit_tier_date]
-            )
+      )
     end
 
     def controller_type

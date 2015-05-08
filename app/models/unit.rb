@@ -20,20 +20,20 @@ class Unit < ActiveRecord::Base
   has_many :email_groups, dependent: :destroy
 
   has_many :sub_units, dependent: :destroy
-  accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a["name"].blank? }
+  accepts_nested_attributes_for :sub_units, allow_destroy: true, reject_if: proc { |a| a['name'].blank? }
 
 
   validates :unit_type, :unit_number, :time_zone, :state, :city, presence: true
   validates :sl_uid, uniqueness: { allow_nil: true }
 
 
-  validate :consent_form_size_validation, :if => "consent_form?"
+  validate :consent_form_size_validation, if: 'consent_form?'
   def consent_form_size_validation
-    errors.add(:consent_form, "should be less than 1M") if consent_form.size > 1.0.megabytes.to_i
+    errors.add(:consent_form, 'should be less than 1M') if consent_form.size > 1.0.megabytes.to_i
   end
 
-  validates :url_consent_form, presence: true,  if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 2}
-  validates :consent_form, presence: true, if: Proc.new {|u| u.attach_consent_form && u.use_consent_form == 3}
+  validates :url_consent_form, presence: true,  if: Proc.new { |u| u.attach_consent_form && u.use_consent_form == 2 }
+  validates :consent_form, presence: true, if: Proc.new { |u| u.attach_consent_form && u.use_consent_form == 3 }
 
 
 
@@ -137,8 +137,8 @@ class Unit < ActiveRecord::Base
 
   def committee_members
     adult_leadership_positions
-    committee_types_iliked = ["name1","name2"].map {|val| "%#{val}%" }
-    where("name ILIKE ANY ( array[?] )", myarray_with_percetage_signs)
+    committee_types_iliked = ['name1', 'name2'].map { |val| "%#{val}%" }
+    where('name ILIKE ANY ( array[?] )', myarray_with_percetage_signs)
   end
 
 
@@ -160,7 +160,7 @@ class Unit < ActiveRecord::Base
   def health_form_coordinators
     if has_heath_form_coordinators
       # adults in the form_coordinators_ids list, or an admin
-      t = User.arel_table
+      # t = User.arel_table
       # unit.adults.where(t[:id].in(form_coordinator_ids.reject(&:empty?)).or(t[:role].gteq(User.roles[:admin])))
       self.adults.where(id: health_form_coordinator_ids.reject(&:empty?))
     else
@@ -183,6 +183,7 @@ class Unit < ActiveRecord::Base
 
 
   private
+
     # def save_original_filename
     #   puts "consent_form present: #{consent_form.present?}"
     #   if consent_form.present?
@@ -190,12 +191,11 @@ class Unit < ActiveRecord::Base
     # end
 
     def update_consent_form_attributes
-      if consent_form.present? && consent_form_changed?
-        self.consent_form_original_file_name = consent_form.file.original_filename
-        self.consent_form_updated_at = Time.zone.now
-        self.consent_form_content_type = consent_form.file.content_type
-        self.consent_form_file_size = consent_form.file.size
-      end
+      return unless consent_form.present? && consent_form_changed?
+      self.consent_form_original_file_name = consent_form.file.original_filename
+      self.consent_form_updated_at = Time.zone.now
+      self.consent_form_content_type = consent_form.file.content_type
+      self.consent_form_file_size = consent_form.file.size
     end
 
 end

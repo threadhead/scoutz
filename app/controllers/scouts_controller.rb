@@ -66,15 +66,15 @@ class ScoutsController < UsersController
   end
 
   private
+
     def authorize_scout
       # https://github.com/elabs/pundit/blob/master/lib/pundit.rb
       # basically following the pundit.authorize method
-      query = params[:action].to_s + "?"
+      query = params[:action].to_s + '?'
       @_policy_authorized = true
       @_pundit_policy_authorized = true
       policy = ScoutPolicy.new(current_user, @user, @unit)
-      raise Pundit::NotAuthorizedError.new("not allowed to edit this scout") unless policy.public_send(query)
+      raise Pundit::NotAuthorizedError.new('not allowed to edit this scout') unless policy.public_send(query)
     end
-
 
 end

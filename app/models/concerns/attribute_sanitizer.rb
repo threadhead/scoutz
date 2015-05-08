@@ -20,6 +20,7 @@ module AttributeSanitizer
 
 
   private
+
     def sanitize_all_attributes
       self.class.attributes_to_sanitize.each do |attr|
         self.send("#{attr}=", Sanitize.clean(self.read_attribute(attr), whitelist))
@@ -28,15 +29,14 @@ module AttributeSanitizer
 
     def whitelist
       whitelist = Sanitize::Config::RELAXED.dup
-      whitelist[:elements] << "span"
-      whitelist[:attributes][:all] << "style"
+      whitelist[:elements] << 'span'
+      whitelist[:attributes][:all] << 'style'
       whitelist
       # Sanitize::Config.merge(
       #   Sanitize::Config::RELAXED,
       #   elements: Sanitize::Config::RELAXED[:elements] + ['span'],
       #   attributes: Sanitize::Config::RELAXED[:attributes]['span'] = ['style']
       #   )
-
     end
 
 end

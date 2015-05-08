@@ -50,6 +50,7 @@ class SubUnitsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_sub_unit
       # @sub_unit = SubUnit.find(params[:id])

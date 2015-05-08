@@ -22,11 +22,12 @@ module TrackableUpdates
     end
 
     def trackable_user
-      @trackable_user_resource ||= ( User if defined?(User) )
+      @trackable_user_resource ||= (User if defined?(User))
     end
   end
 
   private
+
     def history_update
       self.new_record? ? history_created : history_changed
     end
@@ -47,7 +48,7 @@ module TrackableUpdates
 
     def history_from_to(k, v)
       if k == 'body'
-        "edited the body"
+        'edited the body'
       else
         "changed #{k} from #{history_value k, v[0]} to #{history_value k, v[1]}"
       end
@@ -76,7 +77,7 @@ module TrackableUpdates
 
 
     def history_timestamp
-      "#{Time.zone.now.to_s} -"
+      "#{Time.zone.now} -"
     end
 
     def history_user
@@ -85,7 +86,7 @@ module TrackableUpdates
     end
 
     def history_value(k, v)
-      return "<FILTERED>" if history_masked_attributes.include?(k)
+      return '<FILTERED>' if history_masked_attributes.include?(k)
       v.blank? ? '<empty>' : v
     end
 

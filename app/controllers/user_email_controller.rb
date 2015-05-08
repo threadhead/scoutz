@@ -17,14 +17,14 @@ class UserEmailController < ApplicationController
       false
 
     when editing_self?
-      flash[:notice] ="Check your inbox for a confirmation email. You must confirm your email address change, or the change will not be made."
+      flash[:notice] = 'Check your inbox for a confirmation email. You must confirm your email address change, or the change will not be made.'
       @user.update(user_params)
 
 
     else
       udt = @user.update_column(:email, user_params[:email])
       @user.touch
-      flash[:notice] ="#{@user.name.possessive} email address was forcibly changed. No confirmation is required. A notification was sent to #{@user.email}."
+      flash[:notice] = "#{@user.name.possessive} email address was forcibly changed. No confirmation is required. A notification was sent to #{@user.email}."
       UserConfirmationsMailer.forced_email_change(@user, current_user, @unit).deliver_later
       udt
     end
@@ -44,6 +44,7 @@ class UserEmailController < ApplicationController
 
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = @unit.users.find(params[:id])
@@ -70,7 +71,7 @@ class UserEmailController < ApplicationController
       @_policy_authorized = true
 
       unless UserEmailControllerPolicy.new(current_user, @user, @unit).update?
-        error = Pundit::NotAuthorizedError.new("not allowed to edit the email of this user.")
+        error = Pundit::NotAuthorizedError.new('not allowed to edit the email of this user.')
         error.query, error.record, error.policy = 'update', @user, UserEmailControllerPolicy
 
         raise error

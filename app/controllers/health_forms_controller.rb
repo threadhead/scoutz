@@ -67,6 +67,7 @@ class HealthFormsController < ApplicationController
 
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:user_id])
@@ -90,11 +91,11 @@ class HealthFormsController < ApplicationController
     def authorize_health_form
       # https://github.com/elabs/pundit/blob/master/lib/pundit.rb
       # basically following the pundit.authorize method
-      query = params[:action].to_s + "?"
+      query = params[:action].to_s + '?'
       @_policy_authorized = true
       @_pundit_policy_authorized = true
       policy = HealthFormPolicy.new(current_user, @health_form, @unit)
-      raise Pundit::NotAuthorizedError.new("not allowed to edit this health form") unless policy.public_send(query)
+      raise Pundit::NotAuthorizedError.new('not allowed to edit this health form') unless policy.public_send(query)
     end
 
 end

@@ -3,7 +3,7 @@
     %i.fa.fa-medkit
     Health Forms
 
-= render partial: 'layouts/flash', locals: {flash: flash}
+= render partial: 'layouts/flash', locals: { flash: flash }
 
 .pull-right
   %p
@@ -12,10 +12,10 @@
     %span.label.label-danger Expired
 
 
-= cache ["unit-#{@unit.id}", ":health_form_search"] do
-  = render partial: 'layouts/search', locals: {type: 'health forms', search_url: "/units/#{@unit.id}/health_forms.js?search_typeahead="}
+= cache ["unit-#{@unit.id}", ':health_form_search'] do
+  = render partial: 'layouts/search', locals: { type: 'health forms', search_url: "/units/#{@unit.id}/health_forms.js?search_typeahead=" }
   %br
 
 
 #health-form-index
-  = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+  = render partial: 'index', locals: { unit: @unit, users: @users, users_count: @users_count, searching: @searching }

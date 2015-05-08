@@ -1,5 +1,5 @@
 class CreateTrigram < ActiveRecord::Migration
- def up
+  def up
     execute 'CREATE EXTENSION pg_trgm;'
   end
 

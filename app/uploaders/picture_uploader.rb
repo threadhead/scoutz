@@ -37,7 +37,7 @@ class PictureUploader < CarrierWave::Uploader::Base
   # process :scale => [200, 300]
   #
   # def scale(width, height)
-    # do something
+  # do something
   # end
 
   process :set_content_type

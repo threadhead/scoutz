@@ -78,7 +78,7 @@ RSpec.describe User do
     end
 
     # describe 'password is set to nil of email is blank' do
-      # it { FactoryGirl.create(:user, email: '').encrypted_password.should eq(nil) }
+    # it { FactoryGirl.create(:user, email: '').encrypted_password.should eq(nil) }
     # end
 
     it 'email must be unique if not blank' do

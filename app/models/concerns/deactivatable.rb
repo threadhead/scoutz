@@ -86,12 +86,6 @@ module Deactivatable
           @deactivatable_options[:dependencies] << reflection_name
         end
       end
-
-
-      # No longer required for Rails 3
-      # def scoped_methods_without_deactivated_at_scope
-      #   scoped_methods.reject {|m| m.active_record.map {|v| v.keys.first}.include?(:deactivated_at) }
-      # end
   end
 
 

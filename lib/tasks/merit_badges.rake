@@ -7,8 +7,8 @@ begin
 
 
   namespace :merit_badges do
-    desc "import merit badges - use vcr"
-    task :import_vcr => [:environment] do
+    desc 'import merit badges - use vcr'
+    task import_vcr: [:environment] do
       WebMock.enable! # disabled in development.rb
 
       mb = MbDotOrg::Importer::MeritBadges.new
@@ -18,15 +18,13 @@ begin
 
 
 rescue NameError
-    #no VCR
+  # no VCR
 end
 
 namespace :merit_badges do
-  desc "import merit badges"
-  task :import => [:environment] do
-    if defined?(WebMock)
-      WebMock.disable!
-    end
+  desc 'import merit badges'
+  task import: [:environment] do
+    WebMock.disable! if defined?(WebMock)
 
     mb = MbDotOrg::Importer::MeritBadges.new
     mb.fetch_merit_badges

@@ -1,10 +1,10 @@
 class Ckeditor::AttachmentFilePolicy < ApplicationPolicy
   def index?
-    true and ! user.nil?
+    true && !user.nil?
   end
 
   def create?
-    true and ! user.nil?
+    true && !user.nil?
   end
 
   def destroy?

@@ -6,7 +6,7 @@
 
 = bootstrap_form_for [@unit, @page] do |f|
   = hidden_field_tag :unit_id, @unit.id
-  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
+  = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @page }
 
   .row
     .col-md-4

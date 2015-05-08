@@ -3,7 +3,7 @@
     active
     %span.badge= @unit.pages.active.count
   |
-  =link_to unit_pages_path(@unit, active: false) do
+  = link_to unit_pages_path(@unit, active: false) do
     inactive
     %span.badge= @unit.pages.deactivated.count
 
@@ -22,7 +22,7 @@
   = cache ["unit-#{unit.id}", cache_key_for_pages(pages)] do
     - pages.each do |page|
       = cache ["unit-#{unit.id}", :page_index, page] do
-        %tr{class: ('warning' if page.deactivated?)}
+        %tr{ class: ('warning' if page.deactivated?) }
           %td
             - if page.active?
               = link_to move_higher_unit_page_path(@unit, page) do
@@ -51,7 +51,7 @@
                 = link_to 'activate', activate_unit_page_path(@unit, page), method: :patch, class: 'small green-color'
             - if policy(page).destroy? && page.deactivated?
               %span.small= '|'
-              = link_to 'delete', [@unit, page], method: :delete, data: {confirm: 'Are you sure?'}, class: 'small red-color'
+              = link_to 'delete', [@unit, page], method: :delete, data: { confirm: 'Are you sure?' }, class: 'small red-color'
 
 
           %td= page.updated_at.to_s(:short_ampm)

@@ -14,13 +14,13 @@
             %i.fa.fa-edit
             Edit
 
-        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+        %a.btn.dropdown-toggle.btn-default{ href: '#', data: { toggle: 'dropdown' }, title: 'Actions' }
           %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu.pull-right
           - if policy(@page).destroy?
             %li
-              = link_to(unit_page_path(@unit, @page), method: :delete, data: {confirm: 'Are you sure?'}, class: '') do
+              = link_to(unit_page_path(@unit, @page), method: :delete, data: { confirm: 'Are you sure?' }, class: '') do
                 %i.fa.fa-trash-o
                 Destroy #{@page.title}
 
@@ -30,7 +30,7 @@
                 %i.fa.fa-plus
                 New Page
 
-= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @page}
+= render partial: 'layouts/flash', locals: { flash: flash, ar_object: @page }
 
 -# = cache ["unit-#{@unit.id}", :admin, @page] do
 .row

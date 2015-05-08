@@ -3,7 +3,7 @@ class MeritBadge < ActiveRecord::Base
 
   has_many :counselors, inverse_of: :merit_badge, dependent: :destroy, autosave: true do
     def unit(unit_id)
-      where(counselors:{unit_id: unit_id})
+      where(counselors: { unit_id: unit_id })
     end
   end
   accepts_nested_attributes_for :counselors,
@@ -16,15 +16,15 @@ class MeritBadge < ActiveRecord::Base
 
 
   def unit_counselors(unit_id)
-    self.users.where(counselors:{unit_id: unit_id})
+    self.users.where(counselors: { unit_id: unit_id })
   end
 
   def create_unit_counselor(options={})
-    Counselor.create({merit_badge_id: self.id}.merge(options))
+    Counselor.create({ merit_badge_id: self.id }.merge(options))
   end
 
   def build_unit_counselor(options={})
-    Counselor.new({merit_badge_id: self.id}.merge(options))
+    Counselor.new({ merit_badge_id: self.id }.merge(options))
   end
 
   def initials
@@ -34,7 +34,7 @@ class MeritBadge < ActiveRecord::Base
 
   # Scopes
   scope :by_name, -> { order(name: :asc) }
-  scope :name_contains, ->(n) { where("merit_badges.name ILIKE ?", "%#{n}%") }
+  scope :name_contains, ->(n) { where('merit_badges.name ILIKE ?', "%#{n}%") }
   pg_search_scope :pg_meta_search,
     against: [:name],
     using: {
@@ -49,7 +49,7 @@ class MeritBadge < ActiveRecord::Base
   end
 
   def self.meta_search_counselors(unit_scope: nil, keywords:)
-    MeritBadge.joins(:counselors).where(counselors: {unit_id: unit_scope.id, user_id: User.pg_meta_search(keywords).map(&:id)})
+    MeritBadge.joins(:counselors).where(counselors: { unit_id: unit_scope.id, user_id: User.pg_meta_search(keywords).map(&:id) })
   end
 
 
@@ -92,7 +92,7 @@ class MeritBadge < ActiveRecord::Base
     end
 
     # get the difference in user ids from what currently exists. the diff will be NEW records to create
-    user_diff = merit_badge.nil? ? user_ids_uniq :  (user_ids_uniq - merit_badge.counselors.unit(unit.id).map{|c| c.user_id.to_s})
+    user_diff = merit_badge.nil? ? user_ids_uniq : (user_ids_uniq - merit_badge.counselors.unit(unit.id).map { |c| c.user_id.to_s })
     user_diff.each do |uid|
       h["#{idx}"] = {
                       'unit_id' => "#{unit.id}",

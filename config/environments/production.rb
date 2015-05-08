@@ -1,5 +1,5 @@
 Scoutz::Application.configure do
- # Settings specified here will take precedence over those in config/application.rb.
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -86,14 +86,14 @@ Scoutz::Application.configure do
   # config.action_mailer.delivery_method = :sendmail
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address:              "smtp.mandrillapp.com",
+      address:              'smtp.mandrillapp.com',
       port:                 2525, # ports 587 and 2525 are also supported with STARTTLS
       enable_starttls_auto: true, # detects and uses STARTTLS
       user_name:            ENV['MANDRILL_USERNAME'],
       password:             ENV['MANDRILL_PASSWORD'], # SMTP password is any valid API key
       authentication:       'login', # Mandrill supports 'plain' or 'login'
       domain:               'scoutt.in', # your domain to identify your server when connecting
-    }
+  }
 
   config.action_mailer.default_url_options = { host: 'http://www.scoutt.in' }
   config.action_mailer.asset_host = 'http://www.scoutt.in'
@@ -103,7 +103,7 @@ Scoutz::Application.configure do
   # execption notification
   config.middleware.use ExceptionNotification::Rack,
     email: {
-      email_prefix: "[SCOUTT.IN] ",
+      email_prefix: '[SCOUTT.IN] ',
       sender_address: %{"scoutt.in notifier" <notifier@scoutt.in>},
       exception_recipients: %w{threadhead@gmail.com}
     }

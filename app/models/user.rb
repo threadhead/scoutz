@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
 
-  enum role: {inactive: 0, basic: 10, leader: 20, admin: 30}
+  enum role: { inactive: 0, basic: 10, leader: 20, admin: 30 }
 
   # don't use Devise validations
   # validates_presence_of   :email, if: :email_required?
@@ -36,11 +36,10 @@ class User < ActiveRecord::Base
   validates :sl_profile, uniqueness: { allow_nil: true }
 
   # validates :picture, file_size: { maximum: 0.3.megabytes.to_i, message: 'should be less than 300K' }, if: "picture.present?"
-  validate :image_size_validation, if: "picture.present?"
+  validate :image_size_validation, if: 'picture.present?'
   def image_size_validation
-    if picture.file.exists?
-      errors.add(:picture, "should be less than 300K") if picture.size > 0.3.megabytes.to_i
-    end
+    return unless picture.file.exists?
+    errors.add(:picture, 'should be less than 300K') if picture.size > 0.3.megabytes.to_i
   end
 
 
@@ -55,7 +54,7 @@ class User < ActiveRecord::Base
 
   has_many :health_forms, inverse_of: :user, dependent: :destroy do
     def unit(unit_id)
-      where(health_forms: {unit_id: unit_id}).first
+      where(health_forms: { unit_id: unit_id }).first
     end
   end
   accepts_nested_attributes_for :health_forms
@@ -63,12 +62,12 @@ class User < ActiveRecord::Base
 
   has_many :counselors, inverse_of: :user, dependent: :destroy, autosave: true do
     def unit(unit_id)
-      where(counselors: {unit_id: unit_id})
+      where(counselors: { unit_id: unit_id })
     end
   end
   has_many :merit_badges, through: :counselors, autosave: true do
     def unit(unit_id)
-      where(counselors: {unit_id: unit_id})
+      where(counselors: { unit_id: unit_id })
     end
   end
   accepts_nested_attributes_for :counselors,
@@ -77,12 +76,12 @@ class User < ActiveRecord::Base
 
 
   has_many :phones, dependent: :destroy
-  accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a["number"].blank? }
+  accepts_nested_attributes_for :phones, allow_destroy: true, reject_if: proc { |a| a['number'].blank? }
 
 
   has_many :unit_positions, inverse_of: :user, dependent: :destroy do
     def unit(unit_id)
-      where(unit_positions: {unit_id: unit_id}).first
+      where(unit_positions: { unit_id: unit_id }).first
     end
   end
   accepts_nested_attributes_for :unit_positions
@@ -103,8 +102,8 @@ class User < ActiveRecord::Base
 
 
   # this may help: http://stackoverflow.com/questions/15056000/rails-habtm-self-join-error
-  has_and_belongs_to_many :scouts, class_name: 'User', join_table: "user_relationships", foreign_key: "adult_id", association_foreign_key: 'scout_id', after_add: :touch_updated_at, after_remove: :touch_updated_at
-  has_and_belongs_to_many :adults, class_name: 'User', join_table: "user_relationships", foreign_key: "scout_id", association_foreign_key: 'adult_id', after_add: :touch_updated_at, after_remove: :touch_updated_at
+  has_and_belongs_to_many :scouts, class_name: 'User', join_table: 'user_relationships', foreign_key: 'adult_id', association_foreign_key: 'scout_id', after_add: :touch_updated_at, after_remove: :touch_updated_at
+  has_and_belongs_to_many :adults, class_name: 'User', join_table: 'user_relationships', foreign_key: 'scout_id', association_foreign_key: 'adult_id', after_add: :touch_updated_at, after_remove: :touch_updated_at
 
   def touch_updated_at(user)
     # logger.info "TOUCH_UPDATED_AT, self: #{self.name}, user: #{user.name}"
@@ -193,10 +192,9 @@ class User < ActiveRecord::Base
   end
 
   def age
-    if birth
-      now = Time.now.utc.to_date
-      now.year - birth.year - ((now.month > birth.month || (now.month == birth.month && now.day >= birth.day)) ? 0 : 1)
-    end
+    return unless birth
+    now = Time.now.utc.to_date
+    now.year - birth.year - ((now.month > birth.month || (now.month == birth.month && now.day >= birth.day)) ? 0 : 1)
   end
 
 
@@ -226,7 +224,7 @@ class User < ActiveRecord::Base
 
 
   def sms_number_verified
-    sms_number_verified_at != nil
+    !sms_number_verified_at.nil?
   end
 
   # def all_leadership_positions
@@ -236,7 +234,7 @@ class User < ActiveRecord::Base
 
 
   def self.meta_search_json(users, unit_scope:)
-    users.map{ |user| user.meta_search_json(unit_scope: unit_scope) }.to_json
+    users.map { |user| user.meta_search_json(unit_scope: unit_scope) }.to_json
   end
 
 
@@ -259,7 +257,7 @@ class User < ActiveRecord::Base
   scope :gets_weekly_newsletter, -> { with_email.where(weekly_newsletter_email: true) }
   scope :gets_monthly_newsletter, -> { with_email.where(monthly_newsletter_email: true) }
 
-  scope :name_contains, ->(n) { where("users.first_name ILIKE ? OR users.last_name ILIKE ?", "%#{n}%", "%#{n}%") }
+  scope :name_contains, ->(n) { where('users.first_name ILIKE ? OR users.last_name ILIKE ?', "%#{n}%", "%#{n}%") }
 
   pg_search_scope :pg_meta_search,
     against: [:first_name, :last_name],
@@ -272,7 +270,7 @@ class User < ActiveRecord::Base
 
   def self.unit_leaders(unit)
     t = UnitPosition.arel_table
-    joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where( t[:leadership].not_eq('').or(t[:additional].not_eq('')) )
+    joins(:unit_positions).where(t[:unit_id].eq(unit.id)).where(t[:leadership].not_eq('').or(t[:additional].not_eq('')))
   end
 
   def self.without_units
@@ -290,7 +288,7 @@ class User < ActiveRecord::Base
     users_ids_clean = users_ids.reject(&:blank?).map(&:to_i)
 
     scouts_ids = unit.scouts.where(id: users_ids_clean).pluck(:id)
-    scouts_adults_ids = Adult.joins(:scouts).where(user_relationships: {scout_id: scouts_ids}).pluck(:id)
+    scouts_adults_ids = Adult.joins(:scouts).where(user_relationships: { scout_id: scouts_ids }).pluck(:id)
     all_ids = (users_ids_clean + scouts_adults_ids).uniq
 
     unit.users.where(id: all_ids)
@@ -343,7 +341,7 @@ class User < ActiveRecord::Base
     end
 
     # get the difference in mertibadge ids from what currently exists. the diff will be NEW records to create
-    mb_diff = user.nil? ? mb_ids_uniq :  (mb_ids_uniq - user.counselors.unit(unit.id).map{|c| c.merit_badge_id.to_s})
+    mb_diff = user.nil? ? mb_ids_uniq : (mb_ids_uniq - user.counselors.unit(unit.id).map { |c| c.merit_badge_id.to_s })
     # puts "md_diff: #{mb_diff.inspect}"
     mb_diff.each do |mbi|
       h["#{idx}"] = {
@@ -370,6 +368,7 @@ class User < ActiveRecord::Base
 
 
   protected
+
     # from https://github.com/plataformatec/devise/blob/master/lib/devise/models/validatable.rb
     # Checks whether a password is needed or not. For validations only.
     # Passwords are always required if it's a new record, or if the password
@@ -388,6 +387,7 @@ class User < ActiveRecord::Base
     # end Devise
 
   private
+
     def ensure_signup_token
       self.signup_token = valid_token
     end
@@ -400,25 +400,24 @@ class User < ActiveRecord::Base
     end
 
     def generate_token
-      SecureRandom.urlsafe_base64(24) #.tr('+/=lIO0', 'pqrsxyz')
+      SecureRandom.urlsafe_base64(24) # .tr('+/=lIO0', 'pqrsxyz')
     end
 
     def save_original_filename
-      if picture.present?
-        self.picture_original_file_name = picture.file.original_filename
-      end
+      return unless picture.present?
+      self.picture_original_file_name = picture.file.original_filename
     end
 
     def update_picture_attributes
-      if picture.present? && picture_changed?
-        if picture.file.exists?
-          self.picture_content_type = picture.file.content_type
-          self.picture_file_size = picture.file.size
-        else
-          self.picture_content_type = nil
-          self.picture_file_size = nil
-        end
-        self.picture_updated_at = Time.zone.now
+      return unless picture.present? && picture_changed?
+
+      if picture.file.exists?
+        self.picture_content_type = picture.file.content_type
+        self.picture_file_size = picture.file.size
+      else
+        self.picture_content_type = nil
+        self.picture_file_size = nil
       end
+      self.picture_updated_at = Time.zone.now
     end
 end

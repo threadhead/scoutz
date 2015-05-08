@@ -16,11 +16,11 @@
       %tr
         %td.centered.event-stacked-time
           .no-break
-            %span.start-month-day= event.start_at.strftime("%^b %e")
+            %span.start-month-day= event.start_at.strftime('%^b %e')
             %br
-            %span.start-year= event.start_at.strftime("%Y")
+            %span.start-year= event.start_at.strftime('%Y')
             %br
-            %span.start-time= event.start_at.strftime("%l:%M%p")
+            %span.start-time= event.start_at.strftime('%l:%M%p')
 
         %td.event-stacked-time
           .no-break
@@ -29,13 +29,13 @@
 
         %td.centered.event-stacked-time.td-end-at
           .no-break
-            %span.start-month-day= event.end_at.strftime("%^b %e")
+            %span.start-month-day= event.end_at.strftime('%^b %e')
             %br
-            %span.start-year= event.end_at.strftime("%Y")
+            %span.start-year= event.end_at.strftime('%Y')
             %br
-            %span.start-time= event.end_at.strftime("%l:%M%p")
+            %span.start-time= event.end_at.strftime('%l:%M%p')
 
-        %td{ style: "width: 35%;"}
+        %td{ style: 'width: 35%;' }
           .no-break
             %strong.lg= event.name
 

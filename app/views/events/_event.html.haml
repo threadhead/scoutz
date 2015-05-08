@@ -1,32 +1,32 @@
-%h3{style: "margin-bottom: 20px;"}= link_to  "#{event.unit.name} - #{event.name}", unit_event_url(@unit, event), style: " text-decoration: none;"
-%div{style: "margin-left: 24px; margin-bottom: 48px;"}
-  %table{style: 'border-spacing: 0; width: 80%;'}
+%h3{ style: 'margin-bottom: 20px;' }= link_to "#{ event.unit.name } - #{ event.name }", unit_event_url(@unit, event), style: ' text-decoration: none;'
+%div{ style: 'margin-left: 24px; margin-bottom: 48px;' }
+  %table{ style: 'border-spacing: 0; width: 80%;' }
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Kind
-      %td{style: td_border}
+      %td{ style: td_border }
         = event.kind
         = " - #{event_kind_sub_units(event)}" if event.sub_unit_kind?
 
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Times
-      %td{style: td_border}= Google::TimeDisplay.new(event.start_at.in_time_zone(event.unit.time_zone), event.end_at.in_time_zone(event.unit.time_zone))
+      %td{ style: td_border }= Google::TimeDisplay.new(event.start_at.in_time_zone(event.unit.time_zone), event.end_at.in_time_zone(event.unit.time_zone))
 
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Organizers
-      %td{style: td_border}
-        = event.users.map(&:full_name).join(", ")
+      %td{ style: td_border }
+        = event.users.map(&:full_name).join(', ')
 
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Sign Up
-      %td{style: td_border}
+      %td{ style: td_border }
         = event.signup_required ? "by #{Google::TimeDisplay.new(event.signup_deadline.in_time_zone(event.unit.time_zone))}" : 'not required'
         - if event.signup_required
           - if event.after_signup_deadline?
@@ -36,62 +36,62 @@
 
 
     - if event.signup_required
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Attending
-      %td{style: td_border}
+      %td{ style: td_border }
         = event.attendee_count
-        %span{style: "color: dimgray;"} (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
+        %span{ style: 'color: dimgray;' } (as of #{Time.zone.now.in_time_zone(event.unit.time_zone).to_s(:short_ampm)})
 
     - if event.signup_required?
       %tr
-        %td{style: td_border + td_col_1}
+        %td{ style: td_border + td_col_1 }
           %strong Forms
-        %td{style: td_border}
+        %td{ style: td_border }
           Healh Forms: #{Event.type_of_health_forms_for_select.key(event.type_of_health_forms)}
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Consent Form
-      %td{style: td_border}
+      %td{ style: td_border }
         = event.consent_required ? '<em>required</em>'.html_safe : 'not required'
 
         - if event.consent_required?
           - if event.unit.attach_consent_form?
-            %small= link_to "(download consent form)", consent_form_url(event)
+            %small= link_to '(download consent form)', consent_form_url(event)
           %br
           Coordinator#{'s' if event.form_coordinators.count > 1 }:
           = event.has_form_coordinators ? unit_users_link_list(event.unit, event.form_coordinators) : 'all adult leaders'
 
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Attire
-      %td{style: td_border}= event.attire
+      %td{ style: td_border }= event.attire
 
     %tr
-      %td{style: td_border + td_col_1}
+      %td{ style: td_border + td_col_1 }
         %strong Location
-      %td{style: td_border}
+      %td{ style: td_border }
         %address= email_location(event)
 
     - if event.ical.file.try(:exists?)
       %tr
-        %td{style: td_border + td_col_1}
+        %td{ style: td_border + td_col_1 }
           %strong iCal
-        %td{style: td_border}= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
+        %td{ style: td_border }= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
 
     %tr
-      %td{style: td_border + td_col_1 + "vertical-align: top;"}
+      %td{ style: td_border + td_col_1 + 'vertical-align: top;' }
         %strong Details
-      %td{style: td_border}= event.message.html_safe
+      %td{ style: td_border }= event.message.html_safe
 
 
     - event_email_messages = event.email_messages_for_display(ignore_email_message: email_message)
     - unless event_email_messages.empty?
       %tr
-        %td{style: td_border + td_col_1}
+        %td{ style: td_border + td_col_1 }
           %strong Emails
-        %td{ style: td_border + "font-size: 0.8em;" }
+        %td{ style: td_border + 'font-size: 0.8em;' }
           - event_email_messages.each do |em_message|
             = link_to email_message_date_subject(em_message), unit_email_message_url(event.unit, em_message)
             %br
@@ -99,5 +99,5 @@
 
 
   - if event.signup_required
-    %div{style: "border: 1px solid gainsboro; margin: 12px 60px 12px 20px; background-color: whitesmoke; padding: 12px 12px 0 12px; border-radius: 4px;"}
+    %div{ style: 'border: 1px solid gainsboro; margin: 12px 60px 12px 20px; background-color: whitesmoke; padding: 12px 12px 0 12px; border-radius: 4px;' }
       = render partial: 'event_signups/email', collection: recipient_signup_users_for_event(@recipient, event), as: :user, locals: { recipient: @recipient, event: event }

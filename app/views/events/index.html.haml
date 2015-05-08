@@ -8,23 +8,23 @@
     .col-md-4.right-aligned
       .btn-group
         - if policy(Event).new?
-          = link_to(new_unit_event_path(@unit), class: "btn btn-default") do
+          = link_to(new_unit_event_path(@unit), class: 'btn btn-default') do
             %i.fa.fa-plus
             New Event
 
-        = link_to '#', data: { toggle: 'modal', target: '#print-event-list'}, class: 'btn btn-default' do
+        = link_to '#', data: { toggle: 'modal', target: '#print-event-list' }, class: 'btn btn-default' do
           %i.fa.fa-print
           Print
 
 .row
   .col-md-9
-    = render partial: 'layouts/flash', locals: {flash: flash}
+    = render partial: 'layouts/flash', locals: { flash: flash }
 
     #event-list
       - @events.each do |event|
         = cache ["unit-#{@unit.id}", event] do
           %p
-            = render partial: 'event_icon', locals: {event: event}
+            = render partial: 'event_icon', locals: { event: event }
             = link_to event.list_name, unit_event_path(@unit, event)
             - if event.signup_required
               %span.label.label-default #{event.attendee_count} going
@@ -35,7 +35,7 @@
       = paginate @events, theme: 'bootstrap'
 
   .col-md-3.hidden-xs.hidden-sm
-    %ul.list-group#event-activity{ style: "max-height: 500px; overflow-y: scroll;" }
+    %ul.list-group#event-activity{ style: 'max-height: 500px; overflow-y: scroll;' }
       %li.list-group-item.list-group-item-compact.disabled #{@unit.unit_type_title} Activity
       .scrollable-content-300
         = cache ["unit-#{@unit.id}", @unit.activities.limit(10).first] do

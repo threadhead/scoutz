@@ -23,7 +23,7 @@
 
 
   = hidden_field_tag :unit_id, @unit.id
-  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event}
+  = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @event }
 
 
   .row
@@ -60,7 +60,7 @@
                 %li Heath forms -> off
                 %li Signup required -> off
                 %li ACF required -> off
-            %button.btn.btn-default.btn-sm.btn-block#copy-last-unit-meeting{type: 'button'}
+            %button.btn.btn-default.btn-sm.btn-block#copy-last-unit-meeting{ type: 'button' }
               %i.fa.fa-copy
               Copy Last #{@unit.unit_type_title} Meeting Values
             %p.small.centered (+ 1 week)
@@ -137,16 +137,16 @@
           .form-group
             = f.label :start_at, "Starts"
             %br
-            = f.text_field_without_bootstrap :start_at_date, class: 'form-control date start date-only-picker', style: "display: inline-block; width: 49%;"
-            = f.text_field_without_bootstrap :start_at_time, class: 'form-control time start time-only-picker', style: "display: inline-block; width: 49%;"
-        .col-md-1{style: "width: 30px; padding: 33px 0px 0px 0px; text-align: center;"}
+            = f.text_field_without_bootstrap :start_at_date, class: 'form-control date start date-only-picker', style: 'display: inline-block; width: 49%;'
+            = f.text_field_without_bootstrap :start_at_time, class: 'form-control time start time-only-picker', style: 'display: inline-block; width: 49%;'
+        .col-md-1{ style: 'width: 30px; padding: 33px 0px 0px 0px; text-align: center;' }
           to
         .col-md-4
           .form-group
             = f.label :end_at, "Ends"
             %br
-            = f.text_field_without_bootstrap :end_at_time, class: 'form-control time end time-only-picker', style: "display: inline-block; width: 49%;"
-            = f.text_field_without_bootstrap :end_at_date, class: 'form-control date end date-only-picker', style: "display: inline-block; width: 49%;"
+            = f.text_field_without_bootstrap :end_at_time, class: 'form-control time end time-only-picker', style: 'display: inline-block; width: 49%;'
+            = f.text_field_without_bootstrap :end_at_date, class: 'form-control date end date-only-picker', style: 'display: inline-block; width: 49%;'
 
 
       .row
@@ -155,12 +155,12 @@
 
       .row
         .col-md-10
-          = f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Organizers', help: 'allowed to edit and destroy events, signup users, regardless of security level'}, multiple: true
+          = f.collection_select :user_ids, @unit.adults.by_name_lf, :id, :name_lf, { label: 'Organizers', help: 'allowed to edit and destroy events, signup users, regardless of security level' }, multiple: true
 
 
       %fieldset
         %legend Reminder
-        = f.check_box :send_reminders, label: "Send reminder 48 hours before event start"
+        = f.check_box :send_reminders, label: 'Send reminder 48 hours before event start'
 
 
       %fieldset
@@ -174,11 +174,11 @@
 
               = #f.label :signup_deadline, "Signup by"
 
-              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: "display: inline-block; width: 15%;", disabled: !@event.signup_required
+              = f.text_field_without_bootstrap :signup_deadline_date, class: 'form-control date-only-picker', style: 'display: inline-block; width: 15%;', disabled: !@event.signup_required
 
-              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: "display: inline-block; width: 15%;", disabled: !@event.signup_required
+              = f.text_field_without_bootstrap :signup_deadline_time, class: 'form-control time-only-picker', style: 'display: inline-block; width: 15%;', disabled: !@event.signup_required
 
-              %span.bg-info.bg-info-sm#deadline-set-info{style: "display: none;"}
+              %span.bg-info.bg-info-sm#deadline-set-info{ style: 'display: none;' }
                 %i.fa.fa-info-circle
                 set to 1 hour before start
             .help-block even if date is entered, Signup Required must be checked to be honored
@@ -187,16 +187,16 @@
 
             .well.well-sm
               %h4 Forms to require when signup required
-              = f.label :type_of_health_forms, "Health form", class: 'control-label'
+              = f.label :type_of_health_forms, 'Health form', class: 'control-label'
               .form-inline
                 = select_tag 'event[type_of_health_forms]', options_for_select(Event.type_of_health_forms_for_select, @event.type_of_health_forms), class: 'form-control'
-                %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
+                %span.fa-stack{ data: { toggle: 'tooltip', container: 'body' }, title: 'Selecting the correct type of health forms allows automatic calculation of attendees health form status.'}
                   %i.fa.fa-circle.fa-stack-2x.tooltip_circle
                   %i.fa.fa-question.fa-stack-1x.fa-inverse
 
               %br
-              = f.check_box :consent_required, label: "Activity Consent Forms required"
-              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'ACF Coordinators', help: 'select adults authorized to accept forms, or leave blank for all adult leaders'}, multiple: true, class: 'form-control'
+              = f.check_box :consent_required, label: 'Activity Consent Forms required'
+              = f.collection_select :form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, { label: 'ACF Coordinators', help: 'select adults authorized to accept forms, or leave blank for all adult leaders' }, multiple: true, class: 'form-control'
 
 
       %fieldset

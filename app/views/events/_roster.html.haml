@@ -4,7 +4,7 @@
   -# we can use use .print_roster? here because it is the same as sms_attendees? and email_attendees?
   - if !event.event_signups.empty? && policy(event).print_roster?
     .pull-right.btn-group
-      %a.btn.dropdown-toggle.btn-default.btn-sm{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+      %a.btn.dropdown-toggle.btn-default.btn-sm{ href: '#', data: { toggle: 'dropdown' }, title: 'Actions' }
         %i.fa.fa-gear
         %span.caret
       %ul.dropdown-menu
@@ -24,12 +24,12 @@
               %i.fa.fa-envelope.text-muted-more
               Email all attendees
 
-%div.clearfix
+.clearfix
 -# && !event.after_signup_deadline?
 - if event.signup_required && policy(event).add_signups?
-  #event-signup-add.row
+  .row#event-signup-add
     .col-xs-12
-      = select_tag :add_signup, options_from_collection_for_select(event.users_without_signup, :id, :name_lf), data: { 'event-id' => event.id }, id: 'add-event-signup-select', style: "width: 50%;"
+      = select_tag :add_signup, options_from_collection_for_select(event.users_without_signup, :id, :name_lf), data: { 'event-id' => event.id }, id: 'add-event-signup-select', style: 'width: 50%;'
       = button_tag 'add', class: 'btn btn-default', id: 'add-event-signup-button'
       %br
       %br
@@ -46,7 +46,7 @@
       - if event.consent_required?
         %th.centered ACF
       %th{ colspan: '2' } Info
-      - # only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
+      -# only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
       -# - if policy(EventSignup.new(event_id: event.id)).update? || policy(EventSignup.new(event_id: event.id)).activity_consent_form?
         -# %th.right-aligned Action
   %tbody#event-signup-roster

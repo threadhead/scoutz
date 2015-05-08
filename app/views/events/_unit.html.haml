@@ -3,9 +3,9 @@
 
 .row
   .col-md-8
-    %div.unit-events-list
+    .unit-events-list
 
-      .well.well-sm{class: unit_well(unit)}
+      .well.well-sm{ class: unit_well(unit) }
         %p.xlarge
           %strong #{unit.name} Upcoming Events
         - if events.size == 0
@@ -21,10 +21,10 @@
                 - if event.signup_required
                   %span.label.label-default #{event.attendee_count} going
                   %smaller
-                    %em signup ends in #{distance_of_time_in_words_to_now(event.signup_deadline)}
+                    %em signup ends in #{ distance_of_time_in_words_to_now(event.signup_deadline) }
 
           - if all_events_count > events.size
-            %em= link_to "show #{show_more_amount(all_events_count, events.size)} more&hellip;".html_safe, unit_events_path(unit, limit: limit+5), remote: true, class: 'btn btn-mini'
+            %em= link_to "show #{ show_more_amount(all_events_count, events.size) } more&hellip;".html_safe, unit_events_path(unit, limit: limit + 5), remote: true, class: 'btn btn-mini'
 
   .col-md-4
     .unit-activities.well.well-sm

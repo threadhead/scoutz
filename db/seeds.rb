@@ -57,7 +57,7 @@ scout4.units << unit2
 
 
 6.times do |idx|
-  su = SubUnit.create(name: "Den #{idx+1}")
+  su = SubUnit.create(name: "Den #{idx + 1}")
   log_item(su, 2)
 
   unit1.sub_units << su
@@ -66,7 +66,7 @@ scout4.units << unit2
 end
 
 5.times do |idx|
-  su = SubUnit.create(name: "Patrol #{idx+1}")
+  su = SubUnit.create(name: "Patrol #{idx + 1}")
   log_item(su, 2)
 
   unit2.sub_units << su
@@ -83,41 +83,41 @@ def random_sub_unit(unit)
 end
 
 # Add some more fake adults and Cub Scouts
-['Mary Smith', 'Marty Black', 'Chris Masters', 'Juan Lopez', 'Frank Jones', 'Tommy Schlame', 'Mel Torme', 'Bill Withers', 'Clyde Cycle', 'Marilyn Manson', 'Bob Barnacle', 'Gene Snow', 'Cavlin Cooper'].each_with_index do |name, idx|
+['Mary Smith', 'Marty Black', 'Chris Masters', 'Juan Lopez', 'Frank Jones', 'Tommy Schlame', 'Mel Torme', 'Bill Withers', 'Clyde Cycle', 'Marilyn Manson', 'Bob Barnacle', 'Gene Snow', 'Cavlin Cooper'].each_with_index do |name, _idx|
   fname = name.split(' ').first
   lname = name.split(' ').last
-  userX = Adult.create(email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago)
-  log_item(userX, 2)
+  user_x = Adult.create(email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago)
+  log_item(user_x, 2)
 
-  userX.units << unit1
+  user_x.units << unit1
 
   ['Joey', 'Biff'].each do |scout|
-    scoutX = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(unit1), birth: rand(7*365..11*365).days.ago)
-    log_item(scoutX, 4)
+    scout_x = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(unit1), birth: rand(7 * 365..11 * 365).days.ago)
+    log_item(scout_x, 4)
 
-    scoutX.units << unit1
-    userX.scouts << scoutX
-    random_sub_unit(unit1).scouts << scoutX
+    scout_x.units << unit1
+    user_x.scouts << scout_x
+    random_sub_unit(unit1).scouts << scout_x
   end
 end
 
 
 # Add some more fake adults and Boy Scouts
-['Mark Smith', 'Sara Black', 'Chris Tripp', 'Juan DeNada', 'Frank Castle', 'Mark Tuttle', 'Marshall Moon', 'Franklin Pearce', 'Seamore Butts', 'Gregg Brady', 'Wilma Firestone', 'Rudy Diesel', 'Brad Pitts'].each_with_index do |name, idx|
+['Mark Smith', 'Sara Black', 'Chris Tripp', 'Juan DeNada', 'Frank Castle', 'Mark Tuttle', 'Marshall Moon', 'Franklin Pearce', 'Seamore Butts', 'Gregg Brady', 'Wilma Firestone', 'Rudy Diesel', 'Brad Pitts'].each_with_index do |name, _idx|
   fname = name.split(' ').first
   lname = name.split(' ').last
-  userX = Adult.create(email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago)
-  log_item(userX, 2)
+  user_x = Adult.create(email: "#{name.parameterize}@aol.com", password: 'pack1134', first_name: fname, last_name: lname, time_zone: 'Arizona', confirmed_at: 1.day.ago)
+  log_item(user_x, 2)
 
-  userX.units << unit2
+  user_x.units << unit2
 
   ['Chip', 'Mudd'].each do |scout|
-    scoutX = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(unit2), birth: rand(11*365..17*365).days.ago)
-    log_item(scoutX, 4)
+    scout_x = Scout.create(first_name: scout, last_name: lname, time_zone: 'Arizona', rank: random_rank(unit2), birth: rand(11 * 365..17 * 365).days.ago)
+    log_item(scout_x, 4)
 
-    scoutX.units << unit2
-    userX.scouts << scoutX
-    random_sub_unit(unit2).scouts << scoutX
+    scout_x.units << unit2
+    user_x.scouts << scout_x
+    random_sub_unit(unit2).scouts << scout_x
   end
 end
 
@@ -136,7 +136,7 @@ end
   event.save
 
   # add some signups
-  rnd_scouts = unit1.scouts.order("RANDOM()")
+  rnd_scouts = unit1.scouts.order('RANDOM()')
   rand(5).times do |t|
     event.save
     event_signup = event.event_signups.create(scouts_attending: 1, user_id: rnd_scouts[t].id)
@@ -144,7 +144,7 @@ end
     # unit1.save
     # event.save!
     # rnd_scout.save
-    event_signup.create_activity :create, unit_id: unit1.id, parameters: {event_id: event.id, user_id: rnd_scouts[t].id}
+    event_signup.create_activity :create, unit_id: unit1.id, parameters: { event_id: event.id, user_id: rnd_scouts[t].id }
     log_item(event_signup, 10)
   end
 end
@@ -174,14 +174,14 @@ end
   event.save
 
   # add some signups
-  rnd_scouts = unit2.scouts.order("RANDOM()")
+  rnd_scouts = unit2.scouts.order('RANDOM()')
   rand(5).times do |t|
     event_signup = event.event_signups.create(scouts_attending: 1, user_id: rnd_scouts[t].id)
     event_signup.save
     # event.save!
     # unit2.save
     # rnd_scout.save
-    event_signup.create_activity :create, unit_id: unit2.id, parameters: {event_id: event.id, user_id: rnd_scouts[t].id}
+    event_signup.create_activity :create, unit_id: unit2.id, parameters: { event_id: event.id, user_id: rnd_scouts[t].id }
     log_item(event_signup, 10)
   end
 end

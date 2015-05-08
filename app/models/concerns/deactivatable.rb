@@ -203,8 +203,9 @@ module Deactivatable
     end
 
     def update_changed_by
-      return unless self.class.deactivatable_resource && has_active_changed_by_id && self.class.deactivatable_resource.respond_to?(:current) && deactivated_at_changed?
-      self.active_changed_by_id = self.class.deactivatable_resource.current.try(:id)
+      if self.class.deactivatable_resource && has_active_changed_by_id && self.class.deactivatable_resource.respond_to?(:current) && deactivated_at_changed?
+        self.active_changed_by_id = self.class.deactivatable_resource.current.try(:id)
+      end
     end
 
 end

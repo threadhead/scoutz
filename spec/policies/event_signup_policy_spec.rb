@@ -68,6 +68,5 @@ RSpec.describe EventSignupPolicy do
   permissions :activity_consent_form? do
     it_behaves_like 'adult admin access'
     it_behaves_like 'event owner access'
-
   end
 end

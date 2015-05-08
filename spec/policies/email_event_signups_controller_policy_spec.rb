@@ -20,7 +20,7 @@ RSpec.describe EmailEventSignupsControllerPolicy do
 
   [:index?, :show?, :destroy?, :create?, :update?].each do |action|
     permissions action do
-      permission_granted_role_level_up( options.merge({role_level: :inactive}))
+      permission_granted_role_level_up(options.merge(role_level: :inactive))
     end
   end
 

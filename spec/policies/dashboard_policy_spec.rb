@@ -6,7 +6,7 @@ RSpec.describe DashboardPolicy do
   end
 
   permissions :index? do
-    permission_granted_role_level_up(options.merge({role_level: :basic}))
-    permission_denied_role_level_down(options.merge({role_level: :inactive}))
+    permission_granted_role_level_up(options.merge(role_level: :basic))
+    permission_denied_role_level_down(options.merge(role_level: :inactive))
   end
 end

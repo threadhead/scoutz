@@ -27,7 +27,7 @@ class PagesController < ApplicationController
   end
 
   def create
-    @page = @unit.pages.build(page_params.merge({user_id: current_user.id}))
+    @page = @unit.pages.build(page_params.merge(user_id: current_user.id))
     authorize @page
 
     if @page.save
@@ -62,7 +62,7 @@ class PagesController < ApplicationController
   def activate
     authorize @page
     @page.activate!
-    @page.insert_at(999999)
+    @page.insert_at(999_999)
     @page.move_to_bottom
     redirect_to unit_pages_url(@unit), notice: "The #{@page.title} page was activated and moved to the bottom."
   end
@@ -83,6 +83,7 @@ class PagesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_page
       # @page = Page.find(params[:id])

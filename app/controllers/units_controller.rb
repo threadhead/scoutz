@@ -57,6 +57,7 @@ class UnitsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     # def set_unit
     #   @unit = current_user.units.where(id: params[:id]).first
@@ -64,6 +65,6 @@ class UnitsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def unit_params
-      params.require(:unit).permit(:address1, :address2, :city, :state, :zip_code, :time_zone, :attach_consent_form, :use_consent_form, :consent_form, :url_consent_form, :home_address1, :home_address2, :home_zip_code, :home_state, :home_city, :home_map_url, :home_name, {health_form_coordinator_ids: []})
+      params.require(:unit).permit(:address1, :address2, :city, :state, :zip_code, :time_zone, :attach_consent_form, :use_consent_form, :consent_form, :url_consent_form, :home_address1, :home_address2, :home_zip_code, :home_state, :home_city, :home_map_url, :home_name, { health_form_coordinator_ids: [] })
     end
 end

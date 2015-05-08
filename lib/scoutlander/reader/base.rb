@@ -23,13 +23,14 @@ module Scoutlander
           file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
           Logger.new(file)
         end
-        @logger.formatter = proc do |severity, datetime, progname, msg|
-          "[#{datetime.utc.strftime "%Y-%m-%d %H:%M:%SZ"}] #{msg}\n"
+
+        @logger.formatter = proc do |_severity, datetime, _progname, msg|
+          "[#{datetime.utc.strftime '%Y-%m-%d %H:%M:%SZ'}] #{msg}\n"
         end
       end
 
       def class_name
-        self.class.name.split("::").last.downcase
+        self.class.name.split('::').last.downcase
       end
 
       def time_number
@@ -57,7 +58,7 @@ module Scoutlander
 
       def logout
         @agent.get('/common/LogOff.aspx')
-        @logger.info "Logout of Scoutlander.com - GET /common/LogOff.aspx"
+        @logger.info 'Logout of Scoutlander.com - GET /common/LogOff.aspx'
         @agent.current_page
       end
 
@@ -81,8 +82,8 @@ module Scoutlander
       def parse_query_params(url)
         h = {}
         url.split('?').last.split('&').each do |qe|
-          k,v = qe.split('=')
-          h.merge!({k.downcase.to_sym => v})
+          k, v = qe.split('=')
+          h.merge!(k.downcase.to_sym => v)
         end
         h
       end
@@ -102,7 +103,7 @@ module Scoutlander
       def find_collection_elements_with(*key_vals)
         self.collection.select do |elem|
           key_vals.all? do |kv|
-            k,v = kv.first
+            k, v = kv.first
             return unless elem.respond_to?(k.to_sym)
             elem.send(k.to_sym) == v
           end

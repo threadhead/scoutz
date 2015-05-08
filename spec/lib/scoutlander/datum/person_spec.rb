@@ -30,7 +30,7 @@ RSpec.describe Scoutlander::Datum::Person do
   end
 
   describe '.to_params' do
-    specify { expect(subject.to_params).to include({email: 'threadhead@gmail.com'}) }
+    specify { expect(subject.to_params).to include({ email: 'threadhead@gmail.com' }) }
     specify { expect(subject.to_params).not_to have_key(:included) }
     specify { expect(subject.to_params).not_to have_key(:relations) }
     specify { expect(subject.to_params).not_to have_key(:parent) }

@@ -17,7 +17,7 @@ class SmsMessagesController < ApplicationController
 
   def new
     options = {}
-    options.merge!({send_to_option: 4, user_ids: params[:user_ids].split(',')}) if params[:user_ids]
+    options.merge!(send_to_option: 4, user_ids: params[:user_ids].split(',')) if params[:user_ids]
     @sms_message = SmsMessage.new(options)
     authorize @sms_message
   end
@@ -58,6 +58,7 @@ class SmsMessagesController < ApplicationController
   end
 
   private
+
     def set_send_to_lists
       @leaders = @unit.users.unit_leaders(@unit).gets_sms_message.by_name_lf
       @sub_units = @unit.sub_units.by_name
@@ -72,6 +73,6 @@ class SmsMessagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def sms_message_params
-      params.require(:sms_message).permit(:user_id, :message, :send_to_option, {sub_unit_ids: []}, {user_ids: []})
+      params.require(:sms_message).permit(:user_id, :message, :send_to_option, { sub_unit_ids: [] }, { user_ids: [] })
     end
 end

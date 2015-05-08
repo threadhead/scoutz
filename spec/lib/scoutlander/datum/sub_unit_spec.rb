@@ -10,7 +10,7 @@ RSpec.describe Scoutlander::Datum::SubUnit do
   end
 
   describe '.to_params' do
-    specify { expect(subject.to_params).to eq({name: 'Blip'}) }
+    specify { expect(subject.to_params).to eq({ name: 'Blip' }) }
     specify { expect(subject.to_params).not_to have_key(:included) }
   end
 

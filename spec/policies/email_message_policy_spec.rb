@@ -14,11 +14,11 @@ RSpec.describe EmailMessagePolicy do
 
   permissions :index? do
     # everyone!
-    permission_granted_role_level_up( options.merge({role_level: :inactive}))
+    permission_granted_role_level_up(options.merge(role_level: :inactive))
   end
 
   permissions :show? do
-    permission_granted_role_level_up( options.merge({role_level: :basic}))
+    permission_granted_role_level_up(options.merge(role_level: :basic))
   end
 
   permissions :new? do

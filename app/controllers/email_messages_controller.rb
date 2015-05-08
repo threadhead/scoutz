@@ -24,9 +24,9 @@ class EmailMessagesController < ApplicationController
 
   def new
     options = {}
-    options.merge!({ send_to_option: 4, user_ids: params[:user_ids].split(',') }) if params[:user_ids]
-    options.merge!({ event_ids: params[:event_ids].split(',') }) if params[:event_ids]
-    options.merge!({ send_to_option: 8, email_group_id: params[:email_group_id] }) if params[:email_group_id]
+    options.merge!(send_to_option: 4, user_ids: params[:user_ids].split(',')) if params[:user_ids]
+    options.merge!(event_ids: params[:event_ids].split(',')) if params[:event_ids]
+    options.merge!(send_to_option: 8, email_group_id: params[:email_group_id]) if params[:email_group_id]
     @email_message = EmailMessage.new(options)
     authorize @email_message
   end
@@ -52,7 +52,7 @@ class EmailMessagesController < ApplicationController
       redirect_to unit_email_message_path(@unit, @email_message)
     else
       set_send_to_lists
-      render action: "new"
+      render action: 'new'
     end
   end
 
@@ -62,7 +62,7 @@ class EmailMessagesController < ApplicationController
     if @email_message.update_attributes(email_message_params)
       redirect_to unit_email_message_path(@unit, @email_message), notice: 'Email message was successfully updated.'
     else
-      render action: "edit"
+      render action: 'edit'
     end
   end
 
@@ -84,6 +84,7 @@ class EmailMessagesController < ApplicationController
 
 
   private
+
     def set_email_message
       # @email_message = EmailMessage.find(params[:id])
       @email_message = @unit.email_messages.where(id: params[:id]).first!
@@ -96,14 +97,13 @@ class EmailMessagesController < ApplicationController
     end
 
     def remove_new_email_attachment_attribute
-      if params[:email_message][:email_attachments_attributes]
-        params[:email_message][:email_attachments_attributes].delete('new_email_attachment')
-      end
+      return unless params[:email_message][:email_attachments_attributes]
+      params[:email_message][:email_attachments_attributes].delete('new_email_attachment')
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_message_params
-      params.require(:email_message).permit(:message, :subject, :user_id, {email_attachments_attributes: [:id, :attachment, :_destroy]}, {sub_unit_ids: []}, {event_ids: []}, {user_ids: []}, :send_to_option, :email_group_id)
+      params.require(:email_message).permit(:message, :subject, :user_id, { email_attachments_attributes: [:id, :attachment, :_destroy] }, { sub_unit_ids: [] }, { event_ids: [] }, { user_ids: [] }, :send_to_option, :email_group_id)
       # filter_params(params[:email_message])
     end
 
@@ -118,7 +118,6 @@ class EmailMessagesController < ApplicationController
       when '8' # email group
         params.except(:email_group_id)
       end
-
     end
 
 end

@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 RSpec.describe MessageMailer, type: :mailer do
   before(:all) do
@@ -7,12 +7,12 @@ RSpec.describe MessageMailer, type: :mailer do
     @recipient.units << @unit
     @sender = FactoryGirl.build_stubbed(:adult)
   end
-  after(:all) { [@unit, @recipient].each {|f| f.delete} }
+  after(:all) { [@unit, @recipient].each(&:delete) }
 
   before(:each) do
     Event.class_variable_set(:@@disable_ical_generation, false)
     @event = FactoryGirl.create(:event, unit: @unit)
-    @email_message = FactoryGirl.create(:email_message, sender: @sender, unit: @unit, message: "<em>A Message Today!</em>")
+    @email_message = FactoryGirl.create(:email_message, sender: @sender, unit: @unit, message: '<em>A Message Today!</em>')
     @email_message.events << @event
     @email_attachment = FactoryGirl.create(:email_attachment)
     @email_message.email_attachments << @email_attachment
@@ -21,16 +21,16 @@ RSpec.describe MessageMailer, type: :mailer do
 
   shared_examples 'renders unsubscribe block' do
     it 'renders unsubscribe block' do
-      expect(mail.body.encoded).to include("UNSUBSCRIBE")
-      expect(mail.body.encoded).to include("All times (GMT-07:00) Arizona")
+      expect(mail.body.encoded).to include('UNSUBSCRIBE')
+      expect(mail.body.encoded).to include('All times (GMT-07:00) Arizona')
       expect(mail.body.encoded).to include("href=\"http://www.testing.com/unsubscribe/blast_email?id=#{@recipient.signup_token}\"")
     end
   end
 
   shared_examples 'renders headers' do
-    it "renders the headers" do
-      expect(mail.subject).to eq("Email Test Message Subject [CS Pack 134]")
-      expect(mail.from).to eq(["noreply@scoutt.in"])
+    it 'renders the headers' do
+      expect(mail.subject).to eq('Email Test Message Subject [CS Pack 134]')
+      expect(mail.from).to eq(['noreply@scoutt.in'])
       expect(mail.to).to eq([@recipient.email])
       expect(mail.reply_to).to eq([@sender.email])
     end
@@ -38,7 +38,7 @@ RSpec.describe MessageMailer, type: :mailer do
 
   shared_examples 'renders body' do
     it 'renders the body' do
-      expect(mail.body.encoded).to include("<em>A Message Today!</em>")
+      expect(mail.body.encoded).to include('<em>A Message Today!</em>')
     end
   end
 
@@ -49,7 +49,7 @@ RSpec.describe MessageMailer, type: :mailer do
   end
 
 
-  describe "email_blast with no events" do
+  describe 'email_blast with no events' do
     let(:mail) { MessageMailer.email_blast(@recipient, @email_message) }
 
     include_examples 'renders headers'
@@ -59,7 +59,7 @@ RSpec.describe MessageMailer, type: :mailer do
 
     it 'does not renders events' do
       @event.delete
-      expect(mail.body.encoded).to_not include("USS Midway Overnight")
+      expect(mail.body.encoded).to_not include('USS Midway Overnight')
     end
 
     it 'does not render ical links' do
@@ -70,7 +70,7 @@ RSpec.describe MessageMailer, type: :mailer do
 
 
 
-  describe "email_blast with events" do
+  describe 'email_blast with events' do
     let(:mail) { MessageMailer.email_blast(@recipient, @email_message) }
 
     include_examples 'renders headers'
@@ -79,7 +79,7 @@ RSpec.describe MessageMailer, type: :mailer do
     include_examples 'renders attachments as links'
 
     it 'renders events' do
-      expect(mail.body.encoded).to include("USS Midway Overnight")
+      expect(mail.body.encoded).to include('USS Midway Overnight')
       expect(mail.body.encoded).to include("<img src=\"http://www.testing.com/assets/ical_email.png\"")
     end
 

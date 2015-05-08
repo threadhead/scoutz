@@ -14,7 +14,7 @@ RSpec.describe 'Email Event Signup' do
 
   def sign_in_user(email, password)
     visit new_user_session_path
-    within("#new_user") do
+    within('#new_user') do
       fill_in 'Email', with: email
       fill_in 'Password', with: password
     end
@@ -30,34 +30,36 @@ RSpec.describe 'Email Event Signup' do
   end
 
   context 'with valid user and event tokens' do
-    before { @opts = {event_token: @event.signup_token,
-                      user_token: @user.signup_token,
-                      user_id: @scout.id,
-                      scouts_attending: 1,
-                      siblings_attending: 1,
-                      adults_attending: 1
-                     }
-            }
+    before do
+      @opts = { event_token: @event.signup_token,
+                user_token: @user.signup_token,
+                user_id: @scout.id,
+                scouts_attending: 1,
+                siblings_attending: 1,
+                adults_attending: 1
+              }
+    end
+
     subject { page }
 
     context 'event signup has not passed' do
       context 'options selected from email' do
         context 'with valid options' do
           before { visit event_email_event_signups_path(@event, @opts) }
-          it { should have_text("Signup successful") }
+          it { should have_text('Signup successful') }
         end
 
         context 'with invalid options' do
-          before { visit event_email_event_signups_path(@event, @opts.merge({scouts_attending: 0, siblings_attending: 0, adults_attending: 0})) }
-          it { should have_text("Signup failed")}
-          it { should have_text("at least one person must attend")}
+          before { visit event_email_event_signups_path(@event, @opts.merge(scouts_attending: 0, siblings_attending: 0, adults_attending: 0)) }
+          it { should have_text('Signup failed') }
+          it { should have_text('at least one person must attend') }
         end
       end
 
       context 'with custom option selected from email' do
         context 'without existing signup' do
           before { visit event_email_event_signups_path(@event, with_custom_options) }
-          it { should have_text("Signup for #{@scout.first_name}")}
+          it { should have_text("Signup for #{@scout.first_name}") }
         end
 
         context 'with existing signup' do
@@ -80,24 +82,24 @@ RSpec.describe 'Email Event Signup' do
         before { existing_signup }
         context 'options selected from email' do
           before { visit event_email_event_signups_path(@event, @opts) }
-          it { should have_text("Signup changed") }
+          it { should have_text('Signup changed') }
         end
 
         context 'with custom options selected from email' do
           before { visit event_email_event_signups_path(@event, with_custom_options) }
-          it { should have_text("The deadline for signup has passed, but you can change your existing signup.") }
+          it { should have_text('The deadline for signup has passed, but you can change your existing signup.') }
         end
       end
 
       context 'without existing signup' do
         context 'options selected from email' do
           before { visit event_email_event_signups_path(@event, @opts) }
-          it { should have_text("The deadline for signup has passed.") }
+          it { should have_text('The deadline for signup has passed.') }
         end
 
         context 'with custom options selected from email' do
           before { visit event_email_event_signups_path(@event, with_custom_options) }
-          it { should have_text("The deadline for signup has passed.") }
+          it { should have_text('The deadline for signup has passed.') }
         end
 
       end

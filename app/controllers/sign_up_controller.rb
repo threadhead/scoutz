@@ -32,6 +32,7 @@ class SignUpController < ApplicationController
   end
 
   private
+
     def remove_new_sub_unit_attributes
       params[:unit][:sub_units_attributes].delete('new_sub_unit')
     end

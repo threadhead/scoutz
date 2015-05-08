@@ -50,7 +50,7 @@ RSpec.describe User do
       expect(scout2.adults).to include(adult)
     end
 
-    it "scouts can have many adults" do
+    it 'scouts can have many adults' do
       scout = FactoryGirl.create(:scout)
       adult1 = FactoryGirl.build(:adult)
       adult2 = FactoryGirl.build(:adult)
@@ -150,7 +150,7 @@ RSpec.describe User do
         @s3 = FactoryGirl.create(:scout)
         @s3.unit_positions.create(unit_id: @u1.id, additional: 'Quartermaster')
       end
-      after(:all) { [@u1, @a1, @a2, @a3, @s1, @s2, @s3].each {|d| d.delete } }
+      after(:all) { [@u1, @a1, @a2, @a3, @s1, @s2, @s3].each(&:delete) }
 
       specify { expect(Adult.unit_leaders(@u1).count).to eq(2) }
       specify { expect(Adult.unit_leaders(@u1)).to include(@a3) }
@@ -171,7 +171,7 @@ RSpec.describe User do
         @s1 = FactoryGirl.create(:scout)
         @s2 = FactoryGirl.create(:scout, email: 'adsf@gmail.com')
       end
-      after(:all) { [@a1, @a2, @a3, @s1, @s2].each {|d| d.delete } }
+      after(:all) { [@a1, @a2, @a3, @s1, @s2].each(&:delete) }
 
       specify { expect(Adult.with_email.count).to eq(1) }
       specify { expect(Adult.with_email).to include(@a1) }
@@ -192,7 +192,7 @@ RSpec.describe User do
           @s1 = FactoryGirl.create(:scout, sms_provider: 'Verizon')
           @s2 = FactoryGirl.create(:scout, sms_number: '8885551212', sms_provider: 'Verizon')
         end
-        after(:all) { [@a1, @a2, @a3, @s1, @s2].each {|d| d.delete } }
+        after(:all) { [@a1, @a2, @a3, @s1, @s2].each(&:delete) }
 
         specify { expect(Adult.with_sms.count).to eq(1) }
         specify { expect(Adult.with_sms).to include(@a2) }
@@ -213,7 +213,7 @@ RSpec.describe User do
         @scout_basic = FactoryGirl.create(:scout, role: :basic)
         @scout_leader = FactoryGirl.create(:scout, role: :leader)
       end
-      after(:all) { [@adult_basic, @adult_leader, @adult_admin, @scout_basic, @scout_leader].each {|d| d.delete } }
+      after(:all) { [@adult_basic, @adult_leader, @adult_admin, @scout_basic, @scout_leader].each(&:delete) }
 
       it 'finds users with role leader or above' do
         expect(User.role_is_leader_or_above).to include(@adult_leader)

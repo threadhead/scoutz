@@ -28,23 +28,21 @@ class Event < ActiveRecord::Base
 
 
   validates :name, :start_at, :end_at, :message, :kind,
-      presence: true
+            presence: true
 
   validates :sl_profile, uniqueness: { allow_nil: true }
   validates :signup_deadline, presence: true, if: :signup_required?
 
   validate :signup_deadline_before_start
   def signup_deadline_before_start
-    if signup_required? && start_at && signup_deadline
-      errors.add(:signup_deadline, "must be before the start time") if signup_deadline >= start_at
-    end
+    return unless signup_required? && start_at && signup_deadline
+    errors.add(:signup_deadline, 'must be before the start time') if signup_deadline >= start_at
   end
 
   validate :validate_start_at_before_end_at
   def validate_start_at_before_end_at
-    if end_at && start_at
-      errors.add(:end_at, "must be after the start time") if end_at <= start_at
-    end
+    return unless end_at && start_at
+    errors.add(:end_at, 'must be after the start time') if end_at <= start_at
   end
 
   sanitize_attributes :message
@@ -62,13 +60,13 @@ class Event < ActiveRecord::Base
   end
 
   def self.meta_search_json(events)
-    events.map{ |event| event.meta_search_json }.to_json
+    events.map(&:meta_search_json).to_json
   end
 
 
 
   def gmaps4rails_address
-    #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
+    # describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
     # "#{self.location_address1}, #{self.location_city}, #{self.location_state}"
     [location_address1, location_city, location_state].reject(&:blank?).join(', ')
   end
@@ -138,12 +136,8 @@ class Event < ActiveRecord::Base
 
 
 
-  def full_address
-    "#{location_address1} #{}"
-  end
-
   def full_location
-    @full_location ||= [location_name, location_address1, location_address2, location_city, "#{location_state} #{location_zip_code}".strip].reject{ |a| a.blank? }.join(', ')
+    @full_location ||= [location_name, location_address1, location_address2, location_city, "#{location_state} #{location_zip_code}".strip].reject(&:blank?).join(', ')
   end
 
 
@@ -171,8 +165,8 @@ class Event < ActiveRecord::Base
     signup_deadline <= Time.zone.now
   end
 
-  def user_signups(user)
-    user.unit_family(self.unit).order(type: :desc).map do |user|
+  def user_signups(event_user)
+    event_user.unit_family(self.unit).order(type: :desc).map do |user|
       self.event_signups.where(user_id: user.id).first || EventSignup.new(user_id: user.id, event_id: self.id)
     end
   end
@@ -187,7 +181,7 @@ class Event < ActiveRecord::Base
   def event_signup_users
     user_ids = self.event_signups.pluck(:user_id)
     users_with_email = User.where(id: user_ids).with_email
-    adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: {scout_id: user_ids})
+    adults_with_email = Adult.uniq.with_email.joins(:scouts).where(user_relationships: { scout_id: user_ids })
     (users_with_email + adults_with_email).uniq
   end
 
@@ -204,7 +198,7 @@ class Event < ActiveRecord::Base
     em = email_messages.where.not(email_messages: { message: '' })
 
     # if an email_message is passed, we want to ignore it as it is the containing message
-    em = em.where.not(email_messages: {id: ignore_email_message.id}) unless ignore_email_message.nil?
+    em = em.where.not(email_messages: { id: ignore_email_message.id }) unless ignore_email_message.nil?
 
     em.order(:sent_at)
   end
@@ -298,7 +292,7 @@ class Event < ActiveRecord::Base
   scope :by_start, -> { order('start_at ASC') }
   # scope :from_today, -> { where('start_at >= ?', Time.zone.now.beginning_of_day) }
   scope :from_today, -> { where('start_at >= ? OR end_at >= ?', Time.zone.now.beginning_of_day, Time.zone.now.beginning_of_day) }
-  scope :newsletter_next_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week)}
+  scope :newsletter_next_week, -> { where(start_at: Time.zone.now.beginning_of_day..Time.zone.now.next_week.end_of_week) }
   scope :newsletter_next_month, -> { where(start_at: Time.zone.now.next_month.beginning_of_month..Time.zone.now.next_month.end_of_month) }
   # scope :contains_search, ->(n) { where("events.name ILIKE ? OR events.location_name ILIKE ? OR events.message ILIKE ?", "%#{n}%", "%#{n}%", "%#{n}%") }
   # scope :contains_search, ->(n) { where("to_tsvector('english', name) @@ to_tsquery('english', ?)", n) }
@@ -306,9 +300,9 @@ class Event < ActiveRecord::Base
   pg_search_scope :pg_meta_search,
     against: { name: 'A', location_name: 'B', message: 'C' },
     using: {
-             tsearch: { dictionary: 'english', any_word: true, prefix: true },
-             trigram: { threshold: 0.5 }
-           }
+              tsearch: { dictionary: 'english', any_word: true, prefix: true },
+              trigram: { threshold: 0.5 }
+    }
 
   def self.meta_search(unit_scope: nil, keywords:)
     meta_events = unit_scope.nil? ? Event.all : unit_scope.events
@@ -323,14 +317,13 @@ class Event < ActiveRecord::Base
 
 
   def disable_reminder_if_old
-    if start_at <= 2.days.ago
-      self.reminder_sent_at = Time.at(0).to_datetime
-    end
+    return unless start_at <= 2.days.ago
+    self.reminder_sent_at = Time.at(0).to_datetime
   end
 
 
   # for calendar.js
-  def as_json(options = {})
+  def as_json(_options={})
     {
       id:             self.id,
       title:          self.name,
@@ -340,7 +333,7 @@ class Event < ActiveRecord::Base
       allDay:         false,
       recurring:      false,
       url:            Rails.application.routes.url_helpers.unit_event_path(unit, id),
-      color:          unit.unit_type == "Boy Scouts" ? 'darkkhaki' : 'midnightblue'
+      color:          unit.unit_type == 'Boy Scouts' ? 'darkkhaki' : 'midnightblue'
     }
   end
 
@@ -366,7 +359,6 @@ class Event < ActiveRecord::Base
       consent_required: consent_required,
       form_coordinator_ids: form_coordinator_ids
     }
-
   end
 
   def self.format_time(date_time)
@@ -375,6 +367,7 @@ class Event < ActiveRecord::Base
 
 
   private
+
     def ensure_signup_token
       self.signup_token = valid_token
     end

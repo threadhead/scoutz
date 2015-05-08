@@ -14,7 +14,7 @@ class EventsController < ApplicationController
     # else
     #   @events = Event.joins(unit: :users).where(users: {id: current_user.id}).by_start
     # end
-    @events = Event.joins(unit: :users).where(units: {id: @unit.id}).where(users: {id: current_user.id}).includes(:unit)
+    @events = Event.joins(unit: :users).where(units: { id: @unit.id }).where(users: { id: current_user.id }).includes(:unit)
 
     if params.key?(:start) && params.key?(:end)
       @events = @events.time_range(params[:start], params[:end])
@@ -119,17 +119,18 @@ class EventsController < ApplicationController
     redirect_to new_unit_email_message_path(@event.unit,
                                             event_ids: @event.id,
                                             user_ids: @event.event_signup_user_ids.join(',')
-                                            )
+                                           )
   end
 
   def sms_attendees
     authorize @event
     redirect_to new_unit_sms_message_path(@event.unit,
                                           user_ids: @event.event_signup_user_ids.join(',')
-                                          )
+                                         )
   end
 
   private
+
     def set_event
       # @event = Event.find(params[:id])
       @event = @unit.events.where(id: params[:id]).first!
@@ -144,13 +145,13 @@ class EventsController < ApplicationController
     def event_params
       params.require(:event).permit(
         :end_at_date, :end_at_time, :start_at_date, :start_at_time, :signup_deadline_date, :signup_deadline_time,
-        :attire, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_required, :start_at, {user_ids: []}, :message, :type_of_health_forms, :consent_required, {sub_unit_ids: []}, {form_coordinator_ids: []})
+        :attire, :kind, :location_address1, :location_address2, :location_city, :location_map_url, :location_name, :location_state, :location_zip_code, :name, :notifier_type, :unit_id, :send_reminders, :signup_required, :start_at, { user_ids: [] }, :message, :type_of_health_forms, :consent_required, { sub_unit_ids: [] }, { form_coordinator_ids: [] })
     end
 
 
     def sub_unit_ids(params)
       if params
-        params.map{|id| id.to_i}
+        params.map(&:to_i)
       else
         []
       end

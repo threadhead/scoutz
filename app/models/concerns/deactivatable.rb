@@ -64,33 +64,34 @@ module Deactivatable
     end
 
     def deactivatable_resource
-      @deactivatable_user_resource ||= ( User if defined?(User) )
+      @deactivatable_user_resource ||= (User if defined?(User))
     end
 
 
 
     private
-    # Scan the reflection associations defined on the current class,
-    # if the :dependent option is set to :destroy or :delete_all then add that reflection to the list of dependencies to be deactivated.
-    #
-    def setup_autoconfigured_dependencies
-      self.reflections.each_key { |reflection_name| setup_auto_configured_dependency(reflection_name) }
-    end
 
-    def setup_auto_configured_dependency(reflection_name)
-      @deactivatable_options[:dependencies] ||= []
-      reflection = self.reflections[reflection_name]
-
-      if [:destroy, :delete_all].include?(reflection.options[:dependent])
-        @deactivatable_options[:dependencies] << reflection_name
+      # Scan the reflection associations defined on the current class,
+      # if the :dependent option is set to :destroy or :delete_all then add that reflection to the list of dependencies to be deactivated.
+      #
+      def setup_autoconfigured_dependencies
+        self.reflections.each_key { |reflection_name| setup_auto_configured_dependency(reflection_name) }
       end
-    end
+
+      def setup_auto_configured_dependency(reflection_name)
+        @deactivatable_options[:dependencies] ||= []
+        reflection = self.reflections[reflection_name]
+
+        if [:destroy, :delete_all].include?(reflection.options[:dependent])
+          @deactivatable_options[:dependencies] << reflection_name
+        end
+      end
 
 
-    # No longer required for Rails 3
-    # def scoped_methods_without_deactivated_at_scope
-    #   scoped_methods.reject {|m| m.active_record.map {|v| v.keys.first}.include?(:deactivated_at) }
-    # end
+      # No longer required for Rails 3
+      # def scoped_methods_without_deactivated_at_scope
+      #   scoped_methods.reject {|m| m.active_record.map {|v| v.keys.first}.include?(:deactivated_at) }
+      # end
   end
 
 
@@ -143,68 +144,67 @@ module Deactivatable
   end
 
   def active_check_box=(value)
-    if deactivated? and value == "1"
+    if deactivated? && value == '1'
       self.deactivated_at = nil
-      with_transaction{ activate_dependencies }
-    elsif active? and value == "0"
+      with_transaction { activate_dependencies }
+    elsif active? && value == '0'
       self.deactivated_at = Time.now
-      with_transaction{ deactivate_dependencies }
+      with_transaction { deactivate_dependencies }
     end
   end
 
 
   private
-  # Iterate the list of associated objects that need to be deactivated, and deactivate each of them.
-  #
-  def deactivate_dependencies
-    traverse_dependencies(:deactivate!)
-  end
 
-  # Iterate the list of associated objects that need to be activated, and activate each of them.
-  #
-  def activate_dependencies
-    traverse_dependencies(:activate!)
-  end
-
-  # Traverse the list of dependencies, executing *method* on each of them.
-  #
-  def traverse_dependencies(method)
-    if dependencies = self.class.deactivatable_options[:dependencies]
-      dependencies.each { |dependency_name| execute_on_dependency(dependency_name, method) }
+    # Iterate the list of associated objects that need to be deactivated, and deactivate each of them.
+    #
+    def deactivate_dependencies
+      traverse_dependencies(:deactivate!)
     end
-  end
 
-  # Find the dependency indicated by *dependency_name* and execute *method* on it.
-  # Execution must be wrapped in the dependency's with_deactivated_objects_scope for activate! to work.
-  #
-  def execute_on_dependency(dependency_name, method)
-    self.class.reflections[dependency_name].klass.send(:with_exclusive_scope) do
-      if dependency = self.__send__(dependency_name)
-        dependency.respond_to?(:map) ? dependency.map(&method) : dependency.__send__(method)
+    # Iterate the list of associated objects that need to be activated, and activate each of them.
+    #
+    def activate_dependencies
+      traverse_dependencies(:activate!)
+    end
+
+    # Traverse the list of dependencies, executing *method* on each of them.
+    #
+    def traverse_dependencies(method)
+      if (dependencies = self.class.deactivatable_options[:dependencies])
+        dependencies.each { |dependency_name| execute_on_dependency(dependency_name, method) }
       end
     end
-  end
 
-  def with_transaction
-    self.class.transaction do
-       yield
+    # Find the dependency indicated by *dependency_name* and execute *method* on it.
+    # Execution must be wrapped in the dependency's with_deactivated_objects_scope for activate! to work.
+    #
+    def execute_on_dependency(dependency_name, method)
+      self.class.reflections[dependency_name].klass.send(:with_exclusive_scope) do
+        if dependency == self.__send__(dependency_name)
+          dependency.respond_to?(:map) ? dependency.map(&method) : dependency.__send__(method)
+        end
+      end
     end
-  end
 
-  def has_active_changed_by_id
-    self.class.column_names.include?('active_changed_by_id')
-  end
+    def with_transaction
+      self.class.transaction do
+        yield
+      end
+    end
+
+    def has_active_changed_by_id
+      self.class.column_names.include?('active_changed_by_id')
+    end
 
 
-  def after_deactivation_callback
-    self.class.after_deactivation_filters.each{ |filter| self.send(filter) }
-  end
+    def after_deactivation_callback
+      self.class.after_deactivation_filters.each { |filter| self.send(filter) }
+    end
 
-  def update_changed_by
-    if self.class.deactivatable_resource && has_active_changed_by_id && self.class.deactivatable_resource.respond_to?(:current) && deactivated_at_changed?
+    def update_changed_by
+      return unless self.class.deactivatable_resource && has_active_changed_by_id && self.class.deactivatable_resource.respond_to?(:current) && deactivated_at_changed?
       self.active_changed_by_id = self.class.deactivatable_resource.current.try(:id)
     end
-  end
-
 
 end

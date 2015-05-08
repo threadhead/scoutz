@@ -34,13 +34,12 @@ module Scoutlander
 
 
       def create_or_update_sub_units
-        if @event.sub_unit_kind?
-          @datum.kind_sub_units.each do |sub_unit|
-            event_sub_unit = @event.sub_units.where(name: sub_unit).first
-            if event_sub_unit.nil?
-              su = @unit.sub_units.where(name: sub_unit).first
-              @event.sub_units << su if su
-            end
+        return unless @event.sub_unit_kind?
+        @datum.kind_sub_units.each do |sub_unit|
+          event_sub_unit = @event.sub_units.where(name: sub_unit).first
+          if event_sub_unit.nil?
+            su = @unit.sub_units.where(name: sub_unit).first
+            @event.sub_units << su if su
           end
         end
       end
@@ -65,12 +64,12 @@ module Scoutlander
           at_least_one_signup = false
           @datum.event_signups.each do |signup|
             if signup.valid?
-              if scout = Scout.where(sl_profile: signup.sl_profile).first
+              if (scout = Scout.where(sl_profile: signup.sl_profile).first)
                 @logger.info "CREATE_EVENT_SIGNUP: #{@datum.name}, scout profile: #{signup.sl_profile}, s:#{signup.scouts_attending}, sib:#{signup.siblings_attending}, a:#{signup.adults_attending}"
 
                 # we need to turn off validataions because we ARE going to save duplicates, but later
                 #   remove the existing records below. Thus, we will be left with only the new signups
-                event_signup = @event.event_signups.build(signup.to_params.merge({user_id: scout.id}))
+                event_signup = @event.event_signups.build(signup.to_params.merge(user_id: scout.id))
                 event_signup.save(validate: false)
                 at_least_one_signup = true
               else
@@ -85,7 +84,7 @@ module Scoutlander
             EventSignup.destroy_all(id: existing_signups)
           else
             @logger.info "ROLLBACK - EVENT_SIGNUPS: #{@datum.name}, there was not at least one new signup imported"
-           raise ActiveRecord::Rollback
+            raise ActiveRecord::Rollback
           end
 
         end

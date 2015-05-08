@@ -33,9 +33,8 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   process :read_dimensions
 
   def read_dimensions
-    if file && model
-      model.width, model.height = ::MiniMagick::Image.open(file.file)[:dimensions]
-    end
+    return unless file && model
+    model.width, model.height = ::MiniMagick::Image.open(file.file)[:dimensions]
   end
 
   # Create different versions of your uploaded files:
@@ -58,9 +57,10 @@ class CkeditorPictureUploader < CarrierWave::Uploader::Base
   end
 
   protected
+
     def secure_token
       var = :"@#{mounted_as}_secure_token"
-      model.instance_variable_get(var) or model.instance_variable_set(var, SecureRandom.uuid)
+      model.instance_variable_get(var) || model.instance_variable_set(var, SecureRandom.uuid)
     end
 
 end

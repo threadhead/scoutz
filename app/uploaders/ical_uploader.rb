@@ -53,10 +53,11 @@ class IcalUploader < CarrierWave::Uploader::Base
   # end
 
   def filename
-     "#{secure_token}.#{file.extension}" if original_filename.present?
+    "#{secure_token}.#{file.extension}" if original_filename.present?
   end
 
   protected
+
     def secure_token
       model[:ical_uuid] or model[:ical_uuid] = SecureRandom.uuid
     end

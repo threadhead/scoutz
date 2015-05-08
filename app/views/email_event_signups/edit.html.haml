@@ -1,5 +1,4 @@
-= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @event_signup}
-
+= render partial: 'layouts/flash', locals: { flash: flash, ar_object: @event_signup }
 
 .panel.panel-default
   .panel-heading
@@ -11,4 +10,4 @@
   .panel-body
     %p.xxlarge
     = form_for ([@event, :email, @event_signup]), html: { class: 'form-horizontal' } do |f|
-      = render partial: 'form', locals: {f: f}
+      = render partial: 'form', locals: { f: f }

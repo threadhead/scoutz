@@ -19,9 +19,9 @@
   .form-group
     = f.label :need_carpool_seats, 'Needs Ride', class: 'control-label col-md-4'
     .col-md-4
-      = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, {class: 'form-control'}
+      = f.select :need_carpool_seats, EventSignup.need_carpool_select_options, {}, { class: 'form-control' }
     .col-md-2.col-no-padding
-      %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you need.'}
+      %span.fa-stack{ data: { toggle: 'tooltip', container: 'body' }, title: 'Select the number of seats you need.' }
         %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
         %i.fa.fa-question.fa-stack-1x.fa-inverse
 
@@ -29,9 +29,9 @@
     .form-group.form-group-xs
       = f.label :has_carpool_seats, 'Can Drive', class: 'control-label col-md-4'
       .col-md-4
-        = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, {class: 'form-control'}
+        = f.select :has_carpool_seats, EventSignup.has_carpool_select_options, {}, { class: 'form-control' }
       .col-md-2.col-no-padding
-        %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'Select the number of seats you can take in vehicle.'}
+        %span.fa-stack{ data: { toggle: 'tooltip', container: 'body' }, title: 'Select the number of seats you can take in vehicle.' }
           %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
           %i.fa.fa-question.fa-stack-1x.fa-inverse
 

@@ -57,3 +57,6 @@ Style/NumericLiterals:
 
 Metrics/CyclomaticComplexity:
   Max: 14
+
+Style/ClassAndModuleChildren:
+  Enabled: false

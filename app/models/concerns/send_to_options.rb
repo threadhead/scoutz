@@ -8,29 +8,29 @@ module SendToOptions
     def send_to_options(unit)
       [
         ["Everyone in #{unit.name}", 1],
-        ["Group", 8],
+        ['Group', 8],
         ["#{unit.name} Leaders", 2],
         ["Selected #{unit.sub_unit_name.pluralize}", 3],
-        ["Selected Adults/Scouts", 4],
-        ["Scoutmasters (SM/ASM)", 5],
-        ["Committee Members", 6],
-        ["Cubmaster/ACM/Den Leaders", 7]
+        ['Selected Adults/Scouts', 4],
+        ['Scoutmasters (SM/ASM)', 5],
+        ['Committee Members', 6],
+        ['Cubmaster/ACM/Den Leaders', 7]
       ].reject { |a| options_to_reject(unit).include? a[1] }
     end
 
     def options_to_reject(unit)
       rejected = case unit.unit_type
-      when "Boy Scouts"
-        [7,6]
-      when "Cub Scouts"
-        [5,6,7]
-      when "Venturing Crew"
-        [7,5,6]
-      when "Girl Scouts"
-        [7,5,6]
-      when "Order of the Arrow"
-        [7,5,6]
-      end
+                 when 'Boy Scouts'
+                   [7,6]
+                 when 'Cub Scouts'
+                   [5,6,7]
+                 when 'Venturing Crew'
+                   [7,5,6]
+                 when 'Girl Scouts'
+                   [7,5,6]
+                 when 'Order of the Arrow'
+                   [7,5,6]
+                 end
 
       if unit.email_groups.size == 0
         rejected << 8
@@ -53,13 +53,13 @@ module SendToOptions
     when 3
       "Selected #{to_unit.sub_unit_name.pluralize}"
     when 4
-      "Selected Adults/Scouts"
+      'Selected Adults/Scouts'
     when 5
-      "Scoutmasters (SM/ASM)"
+      'Scoutmasters (SM/ASM)'
     when 6
-      "Committee Members"
+      'Committee Members'
     when 7
-      "Cubmaster/ACM/Den Leaders"
+      'Cubmaster/ACM/Den Leaders'
     end
   end
 

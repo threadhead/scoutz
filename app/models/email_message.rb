@@ -60,26 +60,26 @@ class EmailMessage < ActiveRecord::Base
 
   def recipients
     @recipients ||= case send_to_option
-    when 1
-      self.unit.users.gets_email_blast
-    when 2
-      self.unit.users.unit_leaders(self.unit).gets_email_blast
-    when 3
-      # su_users = []
-      # sub_units.each { |su| su_users << su.users_receiving_email_blast }
-      # su_users.flatten
-      sub_units.inject([]) { |users, su| users + su.users_receiving_email_blast }.uniq
-    when 4
-      # self.users.gets_email_blast
-      User.unit_users_with_adults(unit: unit, users_ids: users.pluck(:id)).gets_email_blast
-    when 5
-      self.unit.scoutmasters.gets_email_blast
-    when 8
-      self.email_group.users_with_adults.gets_email_blast
+                    when 1
+                      self.unit.users.gets_email_blast
+                    when 2
+                      self.unit.users.unit_leaders(self.unit).gets_email_blast
+                    when 3
+                      # su_users = []
+                      # sub_units.each { |su| su_users << su.users_receiving_email_blast }
+                      # su_users.flatten
+                      sub_units.inject([]) { |users, su| users + su.users_receiving_email_blast }.uniq
+                    when 4
+                      # self.users.gets_email_blast
+                      User.unit_users_with_adults(unit: unit, users_ids: users.pluck(:id)).gets_email_blast
+                    when 5
+                      self.unit.scoutmasters.gets_email_blast
+                    when 8
+                      self.email_group.users_with_adults.gets_email_blast
 
-    else
-      []
-    end
+                    else
+                      []
+                    end
   end
 
   def recipients_emails

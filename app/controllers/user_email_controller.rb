@@ -12,21 +12,21 @@ class UserEmailController < ApplicationController
     authorize_user_email
 
     user_update = case
-    when email_not_changed?
-      flash[:notice] = 'You did not enter a different email address. Please enter an email different from the current, or cancel.'
-      false
+                  when email_not_changed?
+                    flash[:notice] = 'You did not enter a different email address. Please enter an email different from the current, or cancel.'
+                    false
 
-    when editing_self?
-      flash[:notice] = 'Check your inbox for a confirmation email. You must confirm your email address change, or the change will not be made.'
-      @user.update(user_params)
+                  when editing_self?
+                    flash[:notice] = 'Check your inbox for a confirmation email. You must confirm your email address change, or the change will not be made.'
+                    @user.update(user_params)
 
 
-    else
-      udt = @user.update_column(:email, user_params[:email])
-      @user.touch
-      flash[:notice] = "#{@user.name.possessive} email address was forcibly changed. No confirmation is required. A notification was sent to #{@user.email}."
-      UserConfirmationsMailer.forced_email_change(@user, current_user, @unit).deliver_later
-      udt
+                  else
+                    udt = @user.update_column(:email, user_params[:email])
+                    @user.touch
+                    flash[:notice] = "#{@user.name.possessive} email address was forcibly changed. No confirmation is required. A notification was sent to #{@user.email}."
+                    UserConfirmationsMailer.forced_email_change(@user, current_user, @unit).deliver_later
+                    udt
     end
 
 

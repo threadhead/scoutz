@@ -78,13 +78,13 @@ module Scoutlander
 
       def sl_role(datum)
         datum.role = case datum.security_level.downcase
-        when /leader access/
-          'leader'
-        when /admin access/
-          'admin'
-        else
-          'basic'
-        end
+                     when /leader access/
+                       'leader'
+                     when /admin access/
+                       'admin'
+                     else
+                       'basic'
+                     end
       end
 
 

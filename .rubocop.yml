@@ -24,3 +24,6 @@ Style/AccessorMethodName:
 
 Style/EmptyLinesAroundBlockBody:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 87

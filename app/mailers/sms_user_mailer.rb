@@ -1,7 +1,7 @@
 class SmsUserMailer < MailerBase
   def remind_verify
-    @greeting = "Hi"
+    @greeting = 'Hi'
 
-    mail to: "to@example.org"
+    mail to: 'to@example.org'
   end
 end

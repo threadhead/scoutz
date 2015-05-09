@@ -8,7 +8,7 @@ class UserConfirmationsMailer < MailerBase
 
     mail to: @original_email,
          reply_to: 'info@scoutt.in',
-         subject: "Email Address Change Notification"
+         subject: 'Email Address Change Notification'
   end
 
   def forced_email_change(user, user_making_change, unit)

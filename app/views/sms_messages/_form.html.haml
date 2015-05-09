@@ -1,5 +1,5 @@
-= bootstrap_form_for @sms_message, url: unit_sms_messages_path(@unit), html: {multipart: true} do |f|
-  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sms_message}
+= bootstrap_form_for @sms_message, url: unit_sms_messages_path(@unit), html: { multipart: true } do |f|
+  = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @sms_message }
 
   %fieldset
     %legend Send to
@@ -9,23 +9,23 @@
 
     .row
       .col-md-offset-1.col-md-10
-        #email-leaders-list.collapse{ class: ('in' if @sms_message.send_to_leaders?) }
+        .collapse#email-leaders-list{ class: ('in' if @sms_message.send_to_leaders?) }
           .well.well-sm
             %h4 #{@unit.name_unit} Leaders
             %smaller.text-grey= @leaders.map(&:name_sms).join(', ')
 
-        #email-sub-unit-list.collapse{ class: ('in' if @sms_message.send_to_sub_units?) }
+        .collapse#email-sub-unit-list{ class: ('in' if @sms_message.send_to_sub_units?) }
           .well.well-sm
             - @sub_units.each do |sub_unit|
               .checkbox
-                = f.label :sub_unit, class: 'sub-unit', data: {'original-title' => sub_unit_emails(sub_unit)} do
+                = f.label :sub_unit, class: 'sub-unit', data: { 'original-title' => sub_unit_emails(sub_unit) } do
                   = check_box_tag 'email_message[sub_unit_ids][]', sub_unit.id, @sms_message.sub_unit_ids.include?(sub_unit.id.to_s)
                   %strong= sub_unit.name
                   %smaller.text-grey= sub_unit_sms(sub_unit)
 
-        #email-send-to-users-list.collapse{ class: ('in' if @sms_message.send_to_users?) }
+        .collapse#email-send-to-users-list{ class: ('in' if @sms_message.send_to_users?) }
           .well.well-sm
-            = f.collection_select :user_ids, @unit_users, :id, :name_lf, {hide_label: true}, {multiple: true}
+            = f.collection_select :user_ids, @unit_users, :id, :name_lf, { hide_label: true }, { multiple: true }
 
     = f.form_group do
       .help-block only users who have elected to receve sms messages will be shown

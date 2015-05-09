@@ -15,13 +15,13 @@
             Edit
 
         - if policy(@user).new? || policy(@user).destroy?
-          %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+          %a.btn.dropdown-toggle.btn-default{ href: '#', data: { toggle: 'dropdown' }, title: 'Actions' }
             %i.fa.fa-gear
             %span.caret
           %ul.dropdown-menu.pull-right
             - if policy(@user).destroy?
               %li
-                = link_to(unit_scout_path(@unit, @user), method: :delete, data: {confirm: 'Are you sure?'}, class: '') do
+                = link_to(unit_scout_path(@unit, @user), method: :delete, data: { confirm: 'Are you sure?' }, class: '') do
                   %i.fa.fa-trash-o.text-muted-more
                   Destroy #{@user.first_name}
 
@@ -33,13 +33,13 @@
 
             - if policy(@user).send_welcome_reset_password?
               %li
-                = link_to '#', data: { toggle: 'modal', target: '#send-welcome-email'} do
+                = link_to '#', data: { toggle: 'modal', target: '#send-welcome-email' } do
                   %i.fa.fa-envelope.text-muted-more
                   Send Welcome Email
 
 
 
-= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+= render partial: 'layouts/flash', locals: { flash: flash, ar_object: @user }
 
 .row
   = cache ["unit-#{@unit.id}", @user] do
@@ -83,7 +83,7 @@
             %td
               - @user.phones.each do |phone|
                 #{phone.kind}:
-                = link_to (number_to_phone phone.number), "tel:1-#{number_to_phone phone.number}"
+                = link_to number_to_phone(phone.number), "tel:1-#{number_to_phone phone.number}"
                 %br
 
           %tr
@@ -97,15 +97,15 @@
             %td
               %address= user_address_show(@user)
 
-          = render partial: 'users/health_form_show', locals: {user: @user, unit: @unit}
+          = render partial: 'users/health_form_show', locals: { user: @user, unit: @unit }
 
 
   .col-md-3.col-md-offset-1
-    = render partial: 'users/picture_panel_lg', locals: {user: @user}
+    = render partial: 'users/picture_panel_lg', locals: { user: @user }
     - if current_user.admin?
-      = render partial: 'users/show_admin_panel', locals: {user: @user}
+      = render partial: 'users/show_admin_panel', locals: { user: @user }
 
 - if !@user.email.blank? && policy(@user).send_welcome_reset_password?
   = render layout: 'users/send_welcome_email_modal' do
-    = link_to "Send Welcome Email", send_welcome_reset_password_unit_scout_path(@unit, @user), class: 'btn btn-primary'
+    = link_to 'Send Welcome Email', send_welcome_reset_password_unit_scout_path(@unit, @user), class: 'btn btn-primary'
 

@@ -1,5 +1,5 @@
 = bootstrap_form_for @unit do |f|
-  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @unit}
+  = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @unit }
 
   .row
     .col-md-6
@@ -11,7 +11,7 @@
     %p Users with 'Admin' roles can always edit health form dates.
     .row
       .col-md-8
-        = f.collection_select :health_form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, {label: 'Health Form Coordinators'}, multiple: true, class: 'form-control'
+        = f.collection_select :health_form_coordinator_ids, @unit.adults.by_name_lf, :id, :name_lf, { label: 'Health Form Coordinators' }, multiple: true, class: 'form-control'
 
 
   %fieldset
@@ -21,10 +21,10 @@
         = f.check_box :attach_consent_form, label: 'Automatically attach consent form link to events that require ACF (recommended)'
         %br
         .indent-sub-selection
-          = f.form_group :use_consent_form, label: {text: 'Select ACF to attach'} do
+          = f.form_group :use_consent_form, label: { text: 'Select ACF to attach' } do
             %br
             = f.radio_button :use_consent_form, 1, label: 'Use current BSA Activity Consent Form', inline: true
-            %a{href: 'http://www.scouting.org/filestore/pdf/19-673.pdf'} (view BSA ACF)
+            %a{ href: 'http://www.scouting.org/filestore/pdf/19-673.pdf' } (view BSA ACF)
 
             = f.radio_button :use_consent_form, 2, label: 'Use URL (link) to a page or form'
             .indent-sub-selection= f.text_field :url_consent_form, label: 'URL of custom consent form'

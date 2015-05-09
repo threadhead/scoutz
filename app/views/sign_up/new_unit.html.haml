@@ -25,22 +25,22 @@
               = f_sub.text_field :name
             .col-md-4
               = f_sub.hidden_field :_destroy
-              = link_to "remove", '#', class: 'btn btn-warning btn-sm remove-sub-unit-button'
+              = link_to 'remove', '#', class: 'btn btn-warning btn-sm remove-sub-unit-button'
 
         .row
           .col-md-12
             .add-sub-unit
-              %span.help-block.sub-unit-type#cub-scouts.hidden ex. Den 1, Den 9, Den 11
-              %span.help-block.sub-unit-type#boy-scouts.hidden ex. Dragons, Eagles, Sea Cucumbers
-              %span.help-block.sub-unit-type#girl-scouts.hidden ex. Patrol 1, Buffalo Gals, Copperheads
-              %span.help-block.sub-unit-type#venturing-crew.hidden ex. Team Eagles, Team 1
-              %span.help-block.sub-unit-type#order-of-the-arrow.hidden ex. Patrol 1, Crouching Tigers
+              %span.help-block.sub-unit-type.hidden#cub-scouts ex. Den 1, Den 9, Den 11
+              %span.help-block.sub-unit-type.hidden#boy-scouts ex. Dragons, Eagles, Sea Cucumbers
+              %span.help-block.sub-unit-type.hidden#girl-scouts ex. Patrol 1, Buffalo Gals, Copperheads
+              %span.help-block.sub-unit-type.hidden#venturing-crew ex. Team Eagles, Team 1
+              %span.help-block.sub-unit-type.hidden#order-of-the-arrow ex. Patrol 1, Crouching Tigers
               %br
               = link_to '#', class: 'btn btn-primary add-sub-unit-button' do
                 add a
                 %span.unit-type= @unit.sub_unit_name
 
-          #new-sub-unit-fields.hidden
+          .hidden#new-sub-unit-fields
             = f.fields_for :sub_units, SubUnit.new, child_index: 'new_sub_unit' do |f_sub|
               .form-group
                 = f_sub.label :name, class: 'control-label col-md-4'
@@ -48,12 +48,12 @@
                   = f_sub.text_field :name, class: 'form-control'
                 .col-md-4
                   = f_sub.hidden_field :_destroy
-                  = link_to "remove", '#', class: 'btn btn-warning btn-sm remove-sub-unit-button'
+                  = link_to 'remove', '#', class: 'btn btn-warning btn-sm remove-sub-unit-button'
 
   .row
     .col-md-12.centered
       = link_to 'Create My Unit', '#', class: 'btn btn-primary create-my-unit'
-      = link_to t('.cancel', :default => t("helpers.links.cancel")), units_path, class: 'btn btn-default'
+      = link_to t('.cancel', default: t('helpers.links.cancel')), units_path, class: 'btn btn-default'
 
 :javascript
   window.unit_types = "#{j Unit.unit_types_sub_units.to_json}";

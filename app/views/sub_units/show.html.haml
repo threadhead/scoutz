@@ -14,13 +14,13 @@
             %i.fa.fa-edit
             Edit
 
-        %a.btn.dropdown-toggle.btn-default{href: '#', data: {toggle: 'dropdown'}, title: 'Actions'}
+        %a.btn.dropdown-toggle.btn-default{ href: '#', data: { toggle: 'dropdown' }, title: 'Actions' }
           %i.fa.fa-gear
           %span.caret
         %ul.dropdown-menu.pull-right
           - if policy(@sub_unit).destroy? && @sub_unit.scouts.count == 0
             %li
-              = link_to(unit_sub_unit_path(@unit, @sub_unit), method: :delete, data: {confirm: 'Are you sure?'}, class: '') do
+              = link_to(unit_sub_unit_path(@unit, @sub_unit), method: :delete, data: { confirm: 'Are you sure?' }, class: '') do
                 %i.fa.fa-trash-o.text-muted-more
                 Destroy #{@sub_unit.name}
 
@@ -31,7 +31,7 @@
                 New #{@sub_unit.type}
 
 
-= render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sub_unit}
+= render partial: 'layouts/flash', locals: { flash: flash, ar_object: @sub_unit }
 
 = cache ["unit-#{@unit.id}", @sub_unit] do
   .row

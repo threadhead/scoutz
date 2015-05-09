@@ -2,30 +2,30 @@
   .row
     .col-md-8
       %h2
-        %i.fa.fa-user{style: "color: #808000;"}
+        %i.fa.fa-user{ style: 'color: #808000;' }
         Scouts in #{@unit.name_unit}
 
     .col-md-4.right-aligned
       - if policy(Scout).new?
         .pull-right
-          = link_to(new_unit_scout_path(@unit), class: "btn btn-default") do
+          = link_to(new_unit_scout_path(@unit), class: 'btn btn-default') do
             %i.fa.fa-plus
             New Scout
 
 .row
   .col-md-9
-    = render partial: 'layouts/flash', locals: {flash: flash}
+    = render partial: 'layouts/flash', locals: { flash: flash }
 
-    = cache ["unit-#{@unit.id}", ":scouts_search"] do
-      = render partial: 'layouts/search', locals: {type: 'scouts', search_url: "/units/#{@unit.id}/scouts.js?search_typeahead="}
+    = cache ["unit-#{@unit.id}", ':scouts_search'] do
+      = render partial: 'layouts/search', locals: { type: 'scouts', search_url: "/units/#{@unit.id}/scouts.js?search_typeahead=" }
       %br
 
 
     #scout-index
       - if current_user.admin?
-        = render partial: 'index_admin', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+        = render partial: 'index_admin', locals: { unit: @unit, users: @users, users_count: @users_count, searching: @searching }
       - else
-        = render partial: 'index', locals: {unit: @unit, users: @users, users_count: @users_count, searching: @searching}
+        = render partial: 'index', locals: { unit: @unit, users: @users, users_count: @users_count, searching: @searching }
 
 
   .col-md-3
@@ -35,12 +35,12 @@
         .panel-body
           %ul.list-unstyled
             - @unit.ranks.each do |rank|
-              %li= "#{rank} : #{@unit.scout_rank_count[rank]}"
+              %li #{rank} : #{@unit.scout_rank_count[rank]}
 
-    = cache ["unit-#{@unit.id}", :sub_unit_count, cache_key_for_users(@users), cache_key_for_sub_units(@unit.sub_units) ] do
+    = cache ["unit-#{@unit.id}", :sub_unit_count, cache_key_for_users(@users), cache_key_for_sub_units(@unit.sub_units)] do
       .panel.panel-index-table.panel-default
         .panel-heading #{@unit.sub_unit_name} Count (all)
         .panel-body
           %ul.list-unstyled
             - @unit.scout_sub_unit_count.each do |sub_unit|
-              %li= "#{sub_unit[0] || '<none>'} : #{sub_unit[1]}"
+              %li #{sub_unit[0] || '<none>'} : #{sub_unit[1]}

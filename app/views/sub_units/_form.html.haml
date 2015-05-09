@@ -2,7 +2,7 @@
   .col-md-9
     = bootstrap_form_for [@unit, @sub_unit] do |f|
       = f.hidden_field :unit_id, value: @unit.id
-      = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @sub_unit}
+      = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @sub_unit }
 
       .row
         .col-md-4

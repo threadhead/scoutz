@@ -49,3 +49,4 @@
 .powrc
 .env
 SERVER_CONFIG.txt
+.rubocop_todo.yml

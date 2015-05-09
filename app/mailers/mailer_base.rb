@@ -14,5 +14,4 @@ class MailerBase < ActionMailer::Base
       @unit = unit
       Time.zone = unit.try(:time_zone) || 'Pacific Time (US & Canada)'
     end
-
 end

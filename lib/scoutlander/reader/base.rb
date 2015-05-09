@@ -17,12 +17,12 @@ module Scoutlander
         # @logger_io = StringIO.new
         # @logger = Logger.new(@logger_io)
         @logger = if Rails.env.test?
-          Logger.new('/dev/null')
-        else
-          FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
-          file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
-          Logger.new(file)
-        end
+                    Logger.new('/dev/null')
+                  else
+                    FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
+                    file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
+                    Logger.new(file)
+                  end
 
         @logger.formatter = proc do |_severity, datetime, _progname, msg|
           "[#{datetime.utc.strftime '%Y-%m-%d %H:%M:%SZ'}] #{msg}\n"
@@ -109,8 +109,6 @@ module Scoutlander
           end
         end
       end
-
-
     end
   end
 end

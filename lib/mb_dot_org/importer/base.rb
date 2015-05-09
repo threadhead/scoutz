@@ -14,19 +14,19 @@ module MbDotOrg
         # @logger_io = StringIO.new
         # @logger = Logger.new(@logger_io)
         @logger = if Rails.env.test?
-          Logger.new('/dev/null')
-        else
-          FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
-          file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
-          Logger.new(file)
-        end
-        @logger.formatter = proc do |severity, datetime, progname, msg|
-          "[#{datetime.utc.strftime "%Y-%m-%d %H:%M:%SZ"}] #{msg}\n"
+                    Logger.new('/dev/null')
+                  else
+                    FileUtils.mkdir_p File.join(Rails.root, 'log', 'importers')
+                    file = File.new(File.join(Rails.root, 'log', 'importers', logger_filename), 'a')
+                    Logger.new(file)
+                  end
+        @logger.formatter = proc do |_severity, datetime, _progname, msg|
+          "[#{datetime.utc.strftime '%Y-%m-%d %H:%M:%SZ'}] #{msg}\n"
         end
       end
 
       def class_name
-        self.class.name.split("::").last.downcase
+        self.class.name.split('::').last.downcase
       end
 
       def time_number
@@ -54,14 +54,12 @@ module MbDotOrg
       def find_collection_elements_with(*key_vals)
         self.collection.select do |elem|
           key_vals.all? do |kv|
-            k,v = kv.first
+            k, v = kv.first
             return unless elem.respond_to?(k.to_sym)
             elem.send(k.to_sym) == v
           end
         end
       end
-
-
     end
   end
 end

@@ -21,7 +21,7 @@ module Scoutlander
 
         events_page = nil
         scrape_months.each do |month|
-          url = "/securesite/calendarmain.aspx?UID=#{@unit.sl_uid}&CAL=#{month.strftime("%-m/%-d/%Y")}"
+          url = "/securesite/calendarmain.aspx?UID=#{@unit.sl_uid}&CAL=#{month.strftime('%-m/%-d/%Y')}"
           @logger.info "FETCH_UNIT_EVENTS(url): #{url}"
           events_page = @agent.get url
           rows = events_page.search('table#ctl00_mainContent_CalendarView_EventListView_tblEventList tr')[2..-1]
@@ -44,13 +44,13 @@ module Scoutlander
 
 
       def fetch_all_event_info_and_create
-        @logger.info "FETCH_ALL_EVENT_INFO_AND_CREATE: start"
+        @logger.info 'FETCH_ALL_EVENT_INFO_AND_CREATE: start'
         @events.each do |event|
           fetch_event_info(event)
           saver = Scoutlander::Saver::EventAndSignups.new(unit: @unit, event: event, logger: @logger)
           saver.create_or_update_event
         end
-        @logger.info "FETCH_ALL_EVENT_INFO_AND_CREATE: finish"
+        @logger.info 'FETCH_ALL_EVENT_INFO_AND_CREATE: finish'
       end
 
 
@@ -58,7 +58,7 @@ module Scoutlander
 
       def fetch_event_info(datum)
         event_page = event_info_page(datum)
-        td_id = "td#ctl00_mainContent_EventProfile_"
+        td_id = 'td#ctl00_mainContent_EventProfile_'
 
         datum.kind = event_page.search("#{td_id}txtEventType").text
         datum.kind_sub_units = event_page.search("#{td_id}txtSubUnit").text
@@ -82,7 +82,7 @@ module Scoutlander
         datum.location_city = event_page.search("#{td_id}txtCity").text
         datum.location_state = event_page.search("#{td_id}txtState").text
         datum.location_zip_code = event_page.search("#{td_id}txtZipCode").text
-        datum.location_map_url = event_page.links_with(id: "ctl00_mainContent_EventProfile_lnkLocationMapURL")
+        datum.location_map_url = event_page.links_with(id: 'ctl00_mainContent_EventProfile_lnkLocationMapURL')
         datum.location_map_url = datum.location_map_url.empty? ? nil : datum.location_map_url.first.href
 
         datum.attire = event_page.search("#{td_id}txtAttire").text
@@ -91,7 +91,7 @@ module Scoutlander
         datum.message = event_page.search("#{td_id}txtMessage").children.to_s
         datum.fees = event_page.search("#{td_id}txtFees").text
 
-        t = event_page.search("table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants>tr")
+        t = event_page.search('table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants>tr')
         t.each do |row|
           event_signup = Scoutlander::Datum::EventSignup.new
           event_signup.sl_profile = find_response_link_profile(row)
@@ -107,7 +107,6 @@ module Scoutlander
         # event_page.at("table#ctl00_mainContent_EventProfile_EventScoutParticipants_tblParticipants").each do |row|
         #   puts event_signup.sl_profile.inspect
         # end
-
       end
 
 
@@ -131,7 +130,7 @@ module Scoutlander
       end
 
       def signup_and_deadline(datum)
-        if datum.signup_required.downcase == "no signup required"
+        if datum.signup_required.downcase == 'no signup required'
           datum.signup_required = false
           datum.signup_deadline = nil
         else
@@ -146,11 +145,11 @@ module Scoutlander
 
       def sub_units_parse(datum)
         datum.kind_sub_units = if datum.kind == 'Patrol Event' || datum.kind == 'Den Event'
-          return [] if datum.kind_sub_units.blank?
-          datum.kind_sub_units.strip.split(']').map { |v| clean_string v.sub('[','') }
-        else
-          []
-        end
+                                 return [] if datum.kind_sub_units.blank?
+                                 datum.kind_sub_units.strip.split(']').map { |v| clean_string v.sub('[', '') }
+                               else
+                                 []
+                               end
       end
 
       def find_organizer(name)
@@ -172,26 +171,26 @@ module Scoutlander
         checked_sub_units = event_page.search("input[id^=ctl00_mainContent_EventEditProfile_chklstSubUnit][@checked='checked']").map { |e| e.attr('id') }
         datum.kind_sub_units = checked_sub_units.map { |su| event_page.search("label[@for='#{su}']").text }
 
-        datum.name = event_page.search("input#ctl00_mainContent_EventEditProfile_txtEventName").attr('value').value
+        datum.name = event_page.search('input#ctl00_mainContent_EventEditProfile_txtEventName').attr('value').value
         datum.organizer_profile = event_page.search("select#ctl00_mainContent_EventEditProfile_cmbOrganizer option[@selected='selected']").attr('value').value
-        datum.send_reminders = !!event_page.search("input#ctl00_mainContent_EventEditProfile_rdoERON").attr('checked')
+        datum.send_reminders = !!event_page.search('input#ctl00_mainContent_EventEditProfile_rdoERON').attr('checked')
 
-        datum.start_at = sl_time_to_datetime event_page.search("input#ctl00_mainContent_EventEditProfile_capStartDT_Picker_selecteddates").attr('value').value
-        datum.end_at = sl_time_to_datetime event_page.search("input#ctl00_mainContent_EventEditProfile_capEndDT_Picker_selecteddates").attr('value').value
+        datum.start_at = sl_time_to_datetime event_page.search('input#ctl00_mainContent_EventEditProfile_capStartDT_Picker_selecteddates').attr('value').value
+        datum.end_at = sl_time_to_datetime event_page.search('input#ctl00_mainContent_EventEditProfile_capEndDT_Picker_selecteddates').attr('value').value
 
         datum.signup_required = event_page.search("select#ctl00_mainContent_EventEditProfile_cmbRSVP option[@selected='selected']").attr('value').value == '1'
-        datum.signup_deadline = sl_time_to_datetime event_page.search("input#ctl00_mainContent_EventEditProfile_capDeadLineDT_Picker_selecteddates").attr('value').value
+        datum.signup_deadline = sl_time_to_datetime event_page.search('input#ctl00_mainContent_EventEditProfile_capDeadLineDT_Picker_selecteddates').attr('value').value
 
-        datum.location_name = event_page.search("input#ctl00_mainContent_EventEditProfile_txtLocationName").attr('value').value
-        datum.location_address1 = event_page.search("input#ctl00_mainContent_EventEditProfile_txtStreetAddress").attr('value').value
-        datum.location_city = event_page.search("input#ctl00_mainContent_EventEditProfile_txtCity").attr('value').value
-        datum.location_state = event_page.search("input#ctl00_mainContent_EventEditProfile_txtState").attr('value').value
-        datum.location_zip_code = event_page.search("input#ctl00_mainContent_EventEditProfile_txtZipCode").attr('value').value
-        datum.location_url = event_page.search("input#ctl00_mainContent_EventEditProfile_txtLocationMapURL").attr('value').value
+        datum.location_name = event_page.search('input#ctl00_mainContent_EventEditProfile_txtLocationName').attr('value').value
+        datum.location_address1 = event_page.search('input#ctl00_mainContent_EventEditProfile_txtStreetAddress').attr('value').value
+        datum.location_city = event_page.search('input#ctl00_mainContent_EventEditProfile_txtCity').attr('value').value
+        datum.location_state = event_page.search('input#ctl00_mainContent_EventEditProfile_txtState').attr('value').value
+        datum.location_zip_code = event_page.search('input#ctl00_mainContent_EventEditProfile_txtZipCode').attr('value').value
+        datum.location_url = event_page.search('input#ctl00_mainContent_EventEditProfile_txtLocationMapURL').attr('value').value
 
         datum.attire = sl_attire event_page.search("select#ctl00_mainContent_EventEditProfile_cmbAttire option[@selected='selected']").attr('value').value
-        datum.message = CGI::unescape event_page.search("textarea#ctl00_mainContent_EventEditProfile_Editor1ContentHiddenTextarea").text
-        datum.fees = event_page.search("textarea#ctl00_mainContent_EventEditProfile_txtFees").children.text
+        datum.message = CGI::unescape event_page.search('textarea#ctl00_mainContent_EventEditProfile_Editor1ContentHiddenTextarea').text
+        datum.fees = event_page.search('textarea#ctl00_mainContent_EventEditProfile_txtFees').children.text
 
         datum.inspected = true
       end
@@ -245,8 +244,6 @@ module Scoutlander
       def sl_kind(str)
         @unit.event_kinds[str.to_i]
       end
-
-
     end
   end
 end

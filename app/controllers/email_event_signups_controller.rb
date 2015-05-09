@@ -49,7 +49,6 @@ class EmailEventSignupsController < ApplicationController
     elsif @event_signup.new_record? && !@event.after_signup_deadline?
       handle_event_signup_create
     end
-
   end
 
 
@@ -126,10 +125,10 @@ class EmailEventSignupsController < ApplicationController
       @event_signup = EventSignup.where(user_id: @signup_user.id, event_id: @event.id).first
       if @event_signup.blank?
         @event_signup = if @signup_user.scout?
-          EventSignup.new(user_id: @signup_user.id, scouts_attending: 1)
-        else
-          EventSignup.new(user_id: @signup_user.id, adults_attending: 1)
-        end
+                          EventSignup.new(user_id: @signup_user.id, scouts_attending: 1)
+                        else
+                          EventSignup.new(user_id: @signup_user.id, adults_attending: 1)
+                        end
       end
       return true
     end

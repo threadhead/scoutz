@@ -70,13 +70,11 @@ RSpec.describe 'Email Event Signup' do
           it { should have_text("Change signup for #{@scout.first_name}") }
         end
       end
-
     end
 
 
 
     context 'event signup has passed' do
-
       before { @event.update_attribute(:signup_deadline, 1.day.ago) }
       context 'with existing signup' do
         before { existing_signup }
@@ -101,9 +99,7 @@ RSpec.describe 'Email Event Signup' do
           before { visit event_email_event_signups_path(@event, with_custom_options) }
           it { should have_text('The deadline for signup has passed.') }
         end
-
       end
-
     end
   end
 
@@ -118,6 +114,5 @@ RSpec.describe 'Email Event Signup' do
       page.status_code.should eq(404)
     end
   end
-
 
 end

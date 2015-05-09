@@ -1,6 +1,6 @@
 module ApplicationHelper
   def display_flash_type?(name)
-    allowed_names = ['notice', 'msg_ok', 'error', 'alert', 'info', 'warning']
+    allowed_names = %w(notice msg_ok error alert info warning)
     name && allowed_names.include?(name.to_s)
   end
 
@@ -19,15 +19,15 @@ module ApplicationHelper
 
   def flash_method_icon(name)
     case name.to_s
-      when 'notice'
-        'fa-check-circle'
-      when 'msg_ok', 'info', 'alert'
-        'fa-info-circle'
-      when 'error', 'warning'
-        'fa-exclamation-triangle'
-      else
-        ''
-      end
+    when 'notice'
+      'fa-check-circle'
+    when 'msg_ok', 'info', 'alert'
+      'fa-info-circle'
+    when 'error', 'warning'
+      'fa-exclamation-triangle'
+    else
+      ''
+    end
   end
 
   def shorten_url(url)
@@ -42,9 +42,9 @@ module ApplicationHelper
     end
   end
 
-  def table_scout_panel(unit)
-    @unit.unit_type.gsub(/\s/, '').underscore.dasherize
-  end
+  # def table_scout_panel(unit)
+  #   unit.unit_type.gsub(/\s/, '').underscore.dasherize
+  # end
 
   def production?
     Rails.env.production? || Rails.env.staging?
@@ -56,7 +56,7 @@ module ApplicationHelper
 
   def space_to_nbsp(str)
     return if str.nil?
-    str.gsub(" ", "\u00A0")
+    str.gsub(' ', "\u00A0")
   end
 
   def cache_key_for_header(unit)

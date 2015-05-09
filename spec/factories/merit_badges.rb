@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :merit_badge do
-    name            "Engineering"
+    name            'Engineering'
     eagle_required  true
   end
 end

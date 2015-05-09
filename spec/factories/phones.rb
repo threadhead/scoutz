@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :home_phone, class: Phone do
     kind     'home'
     number   '480-555-1212'

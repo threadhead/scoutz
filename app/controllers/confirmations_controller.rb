@@ -12,10 +12,10 @@ class ConfirmationsController < Devise::ConfirmationsController
 
     def after_confirmation_path_for(resource_name, resource)
       path = if signed_in?(resource_name)
-        signed_in_root_path(resource)
-      else
-        new_session_path(resource_name)
-      end
+               signed_in_root_path(resource)
+             else
+               new_session_path(resource_name)
+             end
 
       UserConfirmationsMailer.after_email_change(resource, @original_email).deliver_later
       path

@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :page do
-    title     "Hippety Page"
-    body      "<h1>MyText</h1>"
+    title     'Hippety Page'
+    body      '<h1>MyText</h1>'
     public    false
   end
 end

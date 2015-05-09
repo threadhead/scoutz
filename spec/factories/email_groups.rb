@@ -3,5 +3,4 @@ FactoryGirl.define do
     name      'My List'
     users_ids [1]
   end
-
 end

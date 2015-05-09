@@ -1,5 +1,4 @@
 namespace :event_signups do
-
   desc 'to new scout/adult individuals'
   task convert: [:environment] do
     logger = Logger.new("#{Rails.root}/log/event_signups_convert_#{Time.now.to_s(:filename)}.log")
@@ -40,5 +39,4 @@ namespace :event_signups do
     logger.info 'COMPLETED'
     logger.close
   end
-
 end

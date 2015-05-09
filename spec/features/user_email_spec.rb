@@ -2,7 +2,6 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 RSpec.describe 'User Email Change' do
-
   before(:all) do
     Capybara.default_driver = :rack_test
     Warden.test_mode!

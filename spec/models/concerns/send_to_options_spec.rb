@@ -7,7 +7,6 @@ end
 
 
 RSpec.describe SendToOptions do
-
   describe '.send_to_options' do
     context 'with a cub scout pack' do
       let(:unit) { FactoryGirl.build(:unit) }

@@ -1,5 +1,5 @@
 Metrics/LineLength:
-  Max: 120
+  Max: 240
 
 Style/EmptyLines:
   Enabled: false
@@ -12,3 +12,9 @@ Style/SingleLineMethods:
 
 Style/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
+
+Metrics/MethodLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false

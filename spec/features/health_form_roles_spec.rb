@@ -2,7 +2,6 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 RSpec.describe 'Health form viewing and roles' do
-
   before(:all) do
     Capybara.default_driver = :rack_test
     Warden.test_mode!
@@ -35,7 +34,7 @@ RSpec.describe 'Health form viewing and roles' do
     let(:tags) { %w(A B C P S FSB N) }
 
     describe 'displays the proper tags' do
-      {part_a_date: 'A', part_b_date: 'B', part_c_date: 'C', summit_tier_date: 'S', florida_sea_base_date: 'FSB', northern_tier_date: 'NT', philmont_date: 'P'}.each do |k,v|
+      { part_a_date: 'A', part_b_date: 'B', part_c_date: 'C', summit_tier_date: 'S', florida_sea_base_date: 'FSB', northern_tier_date: 'NT', philmont_date: 'P' }.each do |k, v|
         context "when a user has #{k}" do
           before do
             form.update_attribute(k, Date.today)
@@ -68,7 +67,6 @@ RSpec.describe 'Health form viewing and roles' do
             visit unit_scout_path(@unit, @tag_scout)
             expect(page).to have_css('div.label.label-warning', text: /\A#{v}\z/)
           end
-
         end
       end
 
@@ -80,7 +78,7 @@ RSpec.describe 'Health form viewing and roles' do
         end
 
         it 'when user has a health form record, but all forms are blank' do
-          form #triggers creation of empty health form
+          form # triggers creation of empty health form
           visit unit_scout_path(@unit, @tag_scout)
           expect(page).to have_content('none on file')
         end

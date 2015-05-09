@@ -2,7 +2,6 @@ require 'rails_helper'
 include Warden::Test::Helpers
 
 RSpec.describe 'Landing Page' do
-
   before(:all) do
     Capybara.default_driver = :rack_test
     Warden.test_mode!

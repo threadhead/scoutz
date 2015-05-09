@@ -6,7 +6,6 @@ module DateTimeAttributes
   end
 
   class_methods do
-
     # def date_time_attributes
     #   @date_time_attributes || []
     # end
@@ -20,16 +19,16 @@ module DateTimeAttributes
         attribute = attribute.to_sym
 
         define_method("#{attribute}_date") do
-          self.send(attribute).strftime("%b %d, %Y") if self.send(attribute).present?
+          self.send(attribute).strftime('%b %d, %Y') if self.send(attribute).present?
         end
 
         define_method("#{attribute}_time") do
-          self.send(attribute).strftime("%I:%M%P") if self.send(attribute).present?
+          self.send(attribute).strftime('%I:%M%P') if self.send(attribute).present?
         end
 
         define_method("#{attribute}_date=") do |date|
           begin
-            self.instance_variable_set("@#{attribute}_date", Date.parse(date).strftime("%Y-%m-%d"))
+            self.instance_variable_set("@#{attribute}_date", Date.parse(date).strftime('%Y-%m-%d'))
           rescue ArgumentError
             self.instance_variable_set("@#{attribute}_date", nil)
           end
@@ -38,7 +37,7 @@ module DateTimeAttributes
 
         define_method("#{attribute}_time=") do |time|
           begin
-            self.instance_variable_set("@#{attribute}_time", Time.parse(time).strftime("%H:%M:%S"))
+            self.instance_variable_set("@#{attribute}_time", Time.parse(time).strftime('%H:%M:%S'))
           rescue ArgumentError
             self.instance_variable_set("@#{attribute}_time", nil)
           end

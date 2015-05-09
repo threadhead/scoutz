@@ -15,7 +15,8 @@ module Deactivatable
     scope :active, -> { where(deactivated_at: nil) }
     scope :deactivated, -> { where.not(deactivated_at: nil) }
 
-    @deactivatable_options = options = {}
+    # @deactivatable_options = options = {}
+    @deactivatable_options = {}
     setup_autoconfigured_dependencies if @deactivatable_options[:auto_configure_dependencies]
 
     before_save :update_changed_by
@@ -26,7 +27,6 @@ module Deactivatable
 
 
   class_methods do
-
     def deactivatable_options
       @deactivatable_options || {}
     end

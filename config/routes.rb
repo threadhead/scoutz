@@ -3,7 +3,7 @@ Scoutz::Application.routes.draw do
   get "/health/#{ENV['PING_KEY']}" => 'status#health'
 
   get 'meta_search' => 'meta_search#index'
-  devise_for :users, controllers: {registrations: 'registrations', sessions: 'sessions', passwords: 'passwords', confirmations: 'confirmations'}
+  devise_for :users, controllers: { registrations: 'registrations', sessions: 'sessions', passwords: 'passwords', confirmations: 'confirmations' }
   authenticated :user do
     root to: 'page#redirect_to_dashboard', as: :authenticated_root
   end
@@ -49,7 +49,7 @@ Scoutz::Application.routes.draw do
     end
   end
 
-  get "events/index"
+  get 'events/index'
   resources :events do
     resources :event_signups
     resources :email_event_signups
@@ -66,8 +66,8 @@ Scoutz::Application.routes.draw do
 
 
   devise_scope :user do
-    get "/user/welcome/edit" => "welcome#edit"
-    put "/user/welcome" => "welcome#update"
+    get '/user/welcome/edit' => 'welcome#edit'
+    put '/user/welcome' => 'welcome#update'
   end
 
   post 'units/new' => 'units#new'
@@ -78,25 +78,25 @@ Scoutz::Application.routes.draw do
     end
   end
 
-  get "page/landing"
-  get "page/terms_of_service"
-  get "page/privacy"
-  get "page/contact"
-  get "page/about"
+  get 'page/landing'
+  get 'page/terms_of_service'
+  get 'page/privacy'
+  get 'page/contact'
+  get 'page/about'
 
-  get "sign_up/import"
-  get "sign_up/user"
+  get 'sign_up/import'
+  get 'sign_up/user'
   # post "sign_up/new_unit"
-  get "sign_up/new_unit"
-  post "sign_up/create_unit"
-  get "sign_up/new_sub_unit"
-  post "sign_up/create_sub_unit"
+  get 'sign_up/new_unit'
+  post 'sign_up/create_unit'
+  get 'sign_up/new_sub_unit'
+  post 'sign_up/create_sub_unit'
 
   get 'unsubscribe/event_reminder_email'
   get 'unsubscribe/weekly_newsletter_email'
   get 'unsubscribe/blast_email'
 
-  put "sms/send_verification"
+  put 'sms/send_verification'
   # resources :after_signup
 
 

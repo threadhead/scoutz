@@ -36,5 +36,4 @@ FactoryGirl.define do
     last_name           'Jones'
     role                'basic'
   end
-
 end

@@ -1,11 +1,10 @@
 FactoryGirl.define do
-
   sequence :sub_unit_name_cubs do |n|
-    "Den #{n+1}"
+    "Den #{n + 1}"
   end
 
   sequence :sub_unit_name_boys do |n|
-    "Patrol #{n+1}"
+    "Patrol #{n + 1}"
   end
 
   factory :sub_unit do

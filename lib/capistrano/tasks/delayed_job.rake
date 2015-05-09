@@ -1,7 +1,6 @@
 namespace :delayed_job do
-
   def args
-    fetch(:delayed_job_args, "")
+    fetch(:delayed_job_args, '')
   end
 
   def delayed_job_roles
@@ -15,7 +14,7 @@ namespace :delayed_job do
         with rails_env: fetch(:rails_env) do
           # execute :bundle, :exec, :'bin/delayed_job', :stop
           # execute :initctl, :stop, :delayed_job
-          execute "sudo initctl stop delayed_job"
+          execute 'sudo initctl stop delayed_job'
         end
       end
     end
@@ -28,7 +27,7 @@ namespace :delayed_job do
         with rails_env: fetch(:rails_env) do
           # execute :bundle, :exec, :'bin/delayed_job', args, :start
           # execute :initctl, :start, :delayed_job
-          execute "sudo initctl start delayed_job"
+          execute 'sudo initctl start delayed_job'
         end
       end
     end
@@ -41,7 +40,7 @@ namespace :delayed_job do
         with rails_env: fetch(:rails_env) do
           # execute :bundle, :exec, :'bin/delayed_job', args, :restart
           # execute :initctl, :restart, :delayed_job
-          execute "sudo initctl restart delayed_job"
+          execute 'sudo initctl restart delayed_job'
         end
       end
     end

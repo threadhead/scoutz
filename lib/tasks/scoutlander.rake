@@ -2,12 +2,12 @@ namespace :scoutlander do
   desc 'import Troop 603'
   task import_troop_603: [:environment] do
     find_or_create_unit
-    params = {
-               email: 'threadhead@gmail.com',
-               password: ENV['SCOUTLANDER_PASSWORD'],
-               unit: @unit,
-               vcr: false
-             }
+    # params = {
+    #            email: 'threadhead@gmail.com',
+    #            password: ENV['SCOUTLANDER_PASSWORD'],
+    #            unit: @unit,
+    #            vcr: false
+    #          }
     import_unit
     # set_users
   end

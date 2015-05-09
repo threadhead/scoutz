@@ -77,10 +77,10 @@ class EventSignupsController < ApplicationController
     respond_to do |format|
       if @event_signup.save
         flash.now[:info] = if @event_signup.has_activity_consent_form?
-          "#{@event_signup.user.full_name}'s activty consent form was received."
-        else
-          "#{@event_signup.user.full_name}'s activty consent form removed."
-        end
+                             "#{@event_signup.user.full_name}'s activty consent form was received."
+                           else
+                             "#{@event_signup.user.full_name}'s activty consent form removed."
+                           end
         set_event
         format.js { js_update_success }
       else

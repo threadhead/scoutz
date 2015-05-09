@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe 'User relations are touched' do
-
   context 'creating and associating users' do
     context 'adult removing scouts' do
       it 'touches users when added to relation' do
@@ -105,5 +104,4 @@ RSpec.describe 'User relations are touched' do
       end
     end
   end
-
 end

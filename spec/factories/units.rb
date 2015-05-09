@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :unit do
     unit_type     'Cub Scouts'
     unit_number   '134'

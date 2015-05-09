@@ -3,7 +3,7 @@ require 'rest-client'
 module Google
   module UrlShortenerV1
     module Base
-      BASE_URL = "https://www.googleapis.com/urlshortener/v1/url"
+      BASE_URL = 'https://www.googleapis.com/urlshortener/v1/url'
       REQUEST_HEADERS = { content_type: :json, accept: :json }
 
 
@@ -14,11 +14,11 @@ module Google
 
       def self.post_params(long_url)
         # {longUrl: long_url}.merge({key: api_key}).to_json
-        {longUrl: long_url}.to_json
+        { longUrl: long_url }.to_json
       end
 
       def self.key
-        "?key=#{self.api_key}"
+        "?key=#{ self.api_key }"
       end
 
       def self.api_key

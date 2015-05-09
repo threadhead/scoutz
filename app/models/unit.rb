@@ -135,11 +135,11 @@ class Unit < ActiveRecord::Base
     users.joins(:unit_positions).where("unit_positions.leadership ILIKE '%scoutmaster%'")
   end
 
-  def committee_members
-    adult_leadership_positions
-    committee_types_iliked = ['name1', 'name2'].map { |val| "%#{val}%" }
-    where('name ILIKE ANY ( array[?] )', myarray_with_percetage_signs)
-  end
+  # def committee_members
+  #   adult_leadership_positions
+  #   committee_types_iliked = ['name1', 'name2'].map { |val| "%#{val}%" }
+  #   where('name ILIKE ANY ( array[?] )', myarray_with_percetage_signs)
+  # end
 
 
   def self.unit_types

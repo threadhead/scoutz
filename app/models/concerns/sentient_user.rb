@@ -11,7 +11,7 @@ module SentientUser
     end
 
     def current=(user)
-      raise(ArgumentError, "Expected an object of class '#{self}', got #{user.inspect}") unless (user.is_a?(self) || user.nil?)
+      fail ArgumentError, "Expected an object of class '#{self}', got #{user.inspect}" unless (user.is_a?(self) || user.nil?)
       Thread.current[:user] = user
     end
   end

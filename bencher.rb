@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-#http://ablogaboutcode.com/2012/05/03/benchmark-your-bundle/
+# http://ablogaboutcode.com/2012/05/03/benchmark-your-bundle/
 
 require 'benchmark'
 
@@ -8,7 +8,7 @@ REGEXPS = [
   /^no such file to load -- (.+)$/i,
   /^Missing \w+ (?:file\s*)?([^\s]+.rb)$/i,
   /^Missing API definition file in (.+)$/i,
-  /^cannot load such file -- (.+)$/i,
+  /^cannot load such file -- (.+)$/i
 ]
 
 def pull(dep)

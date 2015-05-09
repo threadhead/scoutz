@@ -60,3 +60,6 @@ Metrics/CyclomaticComplexity:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/PredicateName:
+  Enabled: false

@@ -64,7 +64,7 @@ class EmailEventSignupsController < ApplicationController
       end
 
     else
-      raise ActionController::RoutingError.new('Not Found')
+      fail ActionController::RoutingError, 'Not Found'
     end
   end
 
@@ -74,7 +74,7 @@ class EmailEventSignupsController < ApplicationController
     if set_user_and_event
       handle_event_signup_create
     else
-      raise ActionController::RoutingError.new('Not Found')
+      fail ActionController::RoutingError, 'Not Found'
     end
   end
 
@@ -91,7 +91,7 @@ class EmailEventSignupsController < ApplicationController
       create_activity :destroy
       @event_signup.destroy
     else
-      raise ActionController::RoutingError.new('Not Found')
+      fail ActionController::RoutingError, 'Not Found'
     end
   end
 
@@ -100,7 +100,7 @@ class EmailEventSignupsController < ApplicationController
     if set_user_and_event
       @event_signup = EventSignup.find(params[:id])
     else
-      raise ActionController::RoutingError.new('Not Found')
+      fail ActionController::RoutingError, 'Not Found'
     end
   end
 

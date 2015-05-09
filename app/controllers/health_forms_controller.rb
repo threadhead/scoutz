@@ -95,7 +95,7 @@ class HealthFormsController < ApplicationController
       @_policy_authorized = true
       @_pundit_policy_authorized = true
       policy = HealthFormPolicy.new(current_user, @health_form, @unit)
-      raise Pundit::NotAuthorizedError.new('not allowed to edit this health form') unless policy.public_send(query)
+      fail Pundit::NotAuthorizedError, 'not allowed to edit this health form' unless policy.public_send(query)
     end
 
 end

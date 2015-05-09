@@ -22,7 +22,7 @@ class UnsubscribeController < ApplicationController
       if params.key?(:id)
         @user = User.find_by!(signup_token: params[:id])
       else
-        raise ActionController::RoutingError.new('Not Found')
+        fail ActionController::RoutingError, 'Not Found'
       end
     end
 end

@@ -64,7 +64,8 @@ class AdultsController < UsersController
 
   def send_welcome_reset_password
     super
-    redirect_to unit_adult_path(@unit, @user), notice: "Welcome email was sent to #{@user.name}. Their account has been deactivated until they confirm."
+    redirect_to unit_adult_path(@unit, @user),
+                notice: "Welcome email was sent to #{@user.name}. Their account has been deactivated until they confirm."
   end
 
   private

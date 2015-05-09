@@ -74,7 +74,7 @@ class ScoutsController < UsersController
       @_policy_authorized = true
       @_pundit_policy_authorized = true
       policy = ScoutPolicy.new(current_user, @user, @unit)
-      raise Pundit::NotAuthorizedError.new('not allowed to edit this scout') unless policy.public_send(query)
+      fail Pundit::NotAuthorizedError, 'not allowed to edit this scout' unless policy.public_send(query)
     end
 
 end

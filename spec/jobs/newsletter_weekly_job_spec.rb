@@ -46,6 +46,4 @@ RSpec.describe NewsletterWeeklyJob, type: :job do
     NewsletterWeeklyJob.perform_now
   end
 
-
-
 end

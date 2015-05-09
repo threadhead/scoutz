@@ -21,3 +21,6 @@ Style/Documentation:
 
 Style/AccessorMethodName:
   Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false

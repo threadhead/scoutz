@@ -69,16 +69,15 @@ RSpec.describe 'Scouts' do
         @edit_scout.units << @unit
         visit unit_scout_path(@unit, @edit_scout)
 
-        click_link "Edit"
+        click_link 'Edit'
       end
 
       after { @edit_scout.destroy }
 
       it 'displays the edit form page' do
         expect(page.current_path).to eq(edit_unit_scout_path(@unit, @edit_scout))
-        expect(page).to have_text("Edit Scout")
+        expect(page).to have_text('Edit Scout')
       end
-
     end
   end
 end

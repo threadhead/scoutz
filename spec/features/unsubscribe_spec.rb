@@ -42,7 +42,6 @@ RSpec.describe 'Unsubscribe' do
           it 'sets the subscription to false' do
             expect(@user.reload.send(action)).to eq(false)
           end
-
         end
 
       end

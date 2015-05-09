@@ -18,7 +18,7 @@ RSpec.describe Scoutlander::Datum::Base do
       base.attributes = [:name, :start_at, :inspected]
       base.create_setters_getters_instance_variables({})
       base.name = 'Karl'
-      base.start_at = DateTime.new(2014,1,1,23,15,00)
+      base.start_at = DateTime.new(2014, 1, 1, 23, 15, 00)
     end
 
     specify { expect(base.to_params_without).to eq(name: 'Karl', start_at: base.start_at, inspected: false) }

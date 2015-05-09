@@ -21,15 +21,15 @@ module SendToOptions
     def options_to_reject(unit)
       rejected = case unit.unit_type
                  when 'Boy Scouts'
-                   [7,6]
+                   [7, 6]
                  when 'Cub Scouts'
-                   [5,6,7]
+                   [5, 6, 7]
                  when 'Venturing Crew'
-                   [7,5,6]
+                   [7, 5, 6]
                  when 'Girl Scouts'
-                   [7,5,6]
+                   [7, 5, 6]
                  when 'Order of the Arrow'
-                   [7,5,6]
+                   [7, 5, 6]
                  end
 
       if unit.email_groups.size == 0

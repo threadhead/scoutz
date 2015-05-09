@@ -11,7 +11,7 @@ RSpec.describe Scoutlander::Reader::Events do
     before do
       VCR.use_cassette('fetch_unit_events') do
         @sl = Scoutlander::Reader::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
-        @sl.stub(:scrape_months).and_return([Date.new(2013,7,1)])
+        @sl.stub(:scrape_months).and_return([Date.new(2013, 7, 1)])
         @sl.fetch_unit_events
       end
     end
@@ -33,7 +33,7 @@ RSpec.describe Scoutlander::Reader::Events do
     before do
       VCR.use_cassette('fetch_event_info') do
         @sl = Scoutlander::Reader::Events.new(email: 'threadhead@gmail.com', password: ENV['SCOUTLANDER_PASSWORD'], unit: @unit)
-        @sl.stub(:scrape_months).and_return([Date.new(2013,7,1)])
+        @sl.stub(:scrape_months).and_return([Date.new(2013, 7, 1)])
         @sl.fetch_unit_events
         # @sl.events.each { |event| @sl.fetch_event_info(event) }
         # @sl.fetch_event_info(@sl.events[5])

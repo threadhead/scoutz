@@ -59,7 +59,6 @@ module UsStates
   end
 
   def self.states_array
-    states_hash.map { |k,v| [v,k.to_s] }
+    states_hash.map { |k, v| [v, k.to_s] }
   end
-
 end

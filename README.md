@@ -2,7 +2,8 @@
 
 A Scouting (as in [BSA](http://www.scouting.org)) Management Tool. Suitable for Cub Scouts, Boy Scouts, Venturing Crews, Girl Scouts, Service Units, Order of the Arrow, Sea Scouts Ships. Manage rosters, adults and children, group events with notifications, and more.
 
-[![Build Status](https://secure.travis-ci.org/threadhead/scoutz.png)](http://travis-ci.org/threadhead/scoutz)
+[![Build Status](https://secure.travis-ci.org/threadhead/scoutz.png)](http://travis-ci.org/threadhead/scoutz) [![Dependency Status](https://gemnasium.com/threadhead/scoutz.svg)](https://gemnasium.com/threadhead/scoutz)
+
 
 Documentation
 -------------

@@ -104,4 +104,3 @@ def set_users
     end
   end
 end
-

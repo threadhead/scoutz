@@ -1,7 +1,6 @@
 Scoutz::Application.configure do
-  if defined?(WebMock)
-    WebMock.disable!
-  end
+  WebMock.disable! if defined?(WebMock)
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -67,13 +66,13 @@ Scoutz::Application.configure do
   #   :enable_starttls_auto => true  }
 
   config.middleware.insert_before(
-      Rack::Lock, Rack::LiveReload,
-      min_delay: 500,
-      max_delay: 10000,
-      live_reload_port: 35729,
-      host: 'localhost',
-      no_swf: true,
-      ignore: [ %r{dont/modify\.html$} ]
+    Rack::Lock, Rack::LiveReload,
+    min_delay: 500,
+    max_delay: 10000,
+    live_reload_port: 35729,
+    host: 'localhost',
+    no_swf: true,
+    ignore: [%r{dont/modify\.html$}]
     )
 
   # execption notification

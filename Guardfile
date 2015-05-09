@@ -7,19 +7,19 @@ guard 'livereload' do
   watch(%r{(app|vendor)/assets/\w+/(.+\.(css|js|html)).*})  { |m| "/assets/#{m[2]}" }
 end
 
-guard 'rspec', cmd: "spring rspec --color -f d --fail-fast" do
+guard 'rspec', cmd: 'spring rspec --color -f d --fail-fast' do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})                           { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch('spec/rails_helper.rb')                        { "spec" }
+  watch('spec/rails_helper.rb')                        { 'spec' }
 
   # Rails example
   watch(%r{^app/(.+)\.rb$})                           { |m| "spec/#{m[1]}_spec.rb" }
-  watch(%r{^app/models/user.rb})                      { |m| "spec/models/user_relation_touch_spec.rb" }
+  watch(%r{^app/models/user.rb})                      { |m| 'spec/models/user_relation_touch_spec.rb' }
   watch(%r{^app/(.*)(\.erb|\.haml)$})                 { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
   watch(%r{^app/controllers/(.+)_(controller)\.rb$})  { |m| ["spec/routing/#{m[1]}_routing_spec.rb", "spec/#{m[2]}s/#{m[1]}_#{m[2]}_spec.rb", "spec/acceptance/#{m[1]}_spec.rb"] }
-  watch(%r{^spec/support/(.+)\.rb$})                  { "spec" }
-  watch('config/routes.rb')                           { "spec/routing" }
-  watch('app/controllers/application_controller.rb')  { "spec/controllers" }
+  watch(%r{^spec/support/(.+)\.rb$})                  { 'spec' }
+  watch('config/routes.rb')                           { 'spec/routing' }
+  watch('app/controllers/application_controller.rb')  { 'spec/controllers' }
 
   # Capybara request specs
   watch(%r{^app/views/(.+)/.*\.(erb|haml)$})          { |m| "spec/requests/#{m[1]}_spec.rb" }
@@ -27,4 +27,3 @@ guard 'rspec', cmd: "spring rspec --color -f d --fail-fast" do
 
   # watch(/^lib\/(.*)\.rb/)                             { |m| "spec/lib/#{m[1]}_spec.rb" }
 end
-

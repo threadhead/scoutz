@@ -17,5 +17,3 @@ module Scoutlander
     end
   end
 end
-
-

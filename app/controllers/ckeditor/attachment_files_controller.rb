@@ -19,7 +19,7 @@ class Ckeditor::AttachmentFilesController < Ckeditor::BaseController
     @attachment_file.save
     # respond_with_asset(@picture)
     body = %Q"<script type='text/javascript'>
-          window.parent.CKEDITOR.tools.callFunction(#{params[:CKEditorFuncNum]}, '#{@attachment_file.data_url}');
+          window.parent.CKEDITOR.tools.callFunction(#{ERB::Util.h params[:CKEditorFuncNum]}, '#{@attachment_file.data_url}');
         </script>"
 
     # # logger.info body

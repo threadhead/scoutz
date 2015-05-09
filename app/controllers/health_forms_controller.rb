@@ -79,7 +79,7 @@ class HealthFormsController < ApplicationController
     end
 
     def set_return
-      @return = params[:return].blank? ? nil : params[:return]
+      @return = params[:return].blank? ? nil : ERB::Util.h(params[:return])
     end
 
     # Only allow a trusted parameter "white list" through.

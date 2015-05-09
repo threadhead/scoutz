@@ -19,7 +19,7 @@ class Ckeditor::PicturesController < Ckeditor::BaseController
     @picture.save
     # respond_with_asset(@picture)
     body = %Q"<script type='text/javascript'>
-          window.parent.CKEDITOR.tools.callFunction(#{params[:CKEditorFuncNum]}, '#{@picture.data_url}');
+          window.parent.CKEDITOR.tools.callFunction(#{ERB::Util.h params[:CKEditorFuncNum]}, '#{@picture.data_url}');
         </script>"
 
     # # logger.info body

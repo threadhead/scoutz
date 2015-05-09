@@ -78,7 +78,7 @@
       %tr
         %td{ style: td_border + td_col_1 }
           %strong iCal
-        %td{ style: td_border }= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url), download: "#{event.name.parameterize}.ics"
+        %td{ style: td_border }= link_to image_tag('ical_email.png'), email_url_with_domain_and_host(event.ical.url)
 
     %tr
       %td{ style: td_border + td_col_1 + 'vertical-align: top;' }

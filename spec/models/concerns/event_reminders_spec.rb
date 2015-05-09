@@ -6,11 +6,11 @@ RSpec.describe EventReminders do
 
   describe 'Event.need_reminders' do
     before do
-      @event1 = FactoryGirl.create(:event, start_at: 1.days.from_now, end_at: 1.days.from_now+5)
-      @event2 = FactoryGirl.create(:event, start_at: 2.days.from_now, end_at: 2.days.from_now+5)
-      @event3 = FactoryGirl.create(:event, start_at: 3.days.from_now, end_at: 3.days.from_now+5)
-      @event4 = FactoryGirl.create(:event, start_at: 2.days.from_now+5, end_at: 2.days.from_now+10)
-      @event5 = FactoryGirl.create(:event, start_at: 2.days.from_now-5, end_at: 2.days.from_now)
+      @event1 = FactoryGirl.create(:event, start_at: 1.days.from_now, end_at: 1.days.from_now + 5)
+      @event2 = FactoryGirl.create(:event, start_at: 2.days.from_now, end_at: 2.days.from_now + 5)
+      @event3 = FactoryGirl.create(:event, start_at: 3.days.from_now, end_at: 3.days.from_now + 5)
+      @event4 = FactoryGirl.create(:event, start_at: 2.days.from_now + 5, end_at: 2.days.from_now + 10)
+      @event5 = FactoryGirl.create(:event, start_at: 2.days.from_now - 5, end_at: 2.days.from_now)
     end
 
     it 'returns events that start in 48 hours' do

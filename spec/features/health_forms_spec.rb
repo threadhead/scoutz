@@ -88,7 +88,7 @@ RSpec.describe 'User health forms' do
                             summit_tier_date: '2015-10-05',
                             philmont_date: '2015-10-06',
                             florida_sea_base_date: '2015-10-07'
-                            )
+                           )
           visit unit_adult_url(@unit, @user)
           within '#user-info' do
             click_link 'Edit'

@@ -104,8 +104,8 @@ Scoutz::Application.configure do
   config.middleware.use ExceptionNotification::Rack,
     email: {
       email_prefix: '[SCOUTT.IN] ',
-      sender_address: %{"scoutt.in notifier" <notifier@scoutt.in>},
-      exception_recipients: %w{threadhead@gmail.com}
+      sender_address: %("scoutt.in notifier" <notifier@scoutt.in>),
+      exception_recipients: %w(threadhead@gmail.com)
     }
 
 

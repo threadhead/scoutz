@@ -9,7 +9,7 @@ module AppConstants
       constants_paths.each do |path|
         file_name = File.basename(path, '.yml')
         class_var_name = "@@#{file_name}".to_sym
-        constants_yaml = YAML::load(File.open(path))
+        constants_yaml = YAML.load(File.open(path))
         self.class_variable_set(class_var_name, constants_yaml[file_name.to_sym])
         create_method(file_name) { self.class_variable_get(class_var_name) }
       end

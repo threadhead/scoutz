@@ -189,7 +189,7 @@ module Scoutlander
         datum.location_url = event_page.search('input#ctl00_mainContent_EventEditProfile_txtLocationMapURL').attr('value').value
 
         datum.attire = sl_attire event_page.search("select#ctl00_mainContent_EventEditProfile_cmbAttire option[@selected='selected']").attr('value').value
-        datum.message = CGI::unescape event_page.search('textarea#ctl00_mainContent_EventEditProfile_Editor1ContentHiddenTextarea').text
+        datum.message = CGI.unescape event_page.search('textarea#ctl00_mainContent_EventEditProfile_Editor1ContentHiddenTextarea').text
         datum.fees = event_page.search('textarea#ctl00_mainContent_EventEditProfile_txtFees').children.text
 
         datum.inspected = true

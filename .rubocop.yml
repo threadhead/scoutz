@@ -54,3 +54,6 @@ Style/StringLiterals:
 
 Style/NumericLiterals:
   MinDigits: 6
+
+Metrics/CyclomaticComplexity:
+  Max: 14

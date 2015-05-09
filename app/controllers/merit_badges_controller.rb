@@ -79,10 +79,10 @@ class MeritBadgesController < ApplicationController
       user_ids = params[:merit_badge].extract!(:user_ids)
 
       params[:merit_badge][:counselors_attributes] = MeritBadge.create_counselors_attributes(
-                                                                       merit_badge: merit_badge,
-                                                                       unit: @unit,
-                                                                       users_ids: user_ids['user_ids']
-                                                                       )
+        merit_badge: merit_badge,
+        unit: @unit,
+        users_ids: user_ids['user_ids']
+      )
     end
 
 end

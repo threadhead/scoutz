@@ -73,10 +73,10 @@ class AdultsController < UsersController
       return unless params[:adult].key?(:merit_badge_ids)
       merit_badge_ids = params[:adult].extract!(:merit_badge_ids)
       params[:adult][:counselors_attributes] = User.create_counselors_attributes(
-                                                                       user: user,
-                                                                       unit: @unit,
-                                                                       mb_ids: merit_badge_ids['merit_badge_ids']
-                                                                       )
+        user: user,
+        unit: @unit,
+        mb_ids: merit_badge_ids['merit_badge_ids']
+      )
     end
 
 end

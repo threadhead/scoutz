@@ -73,7 +73,7 @@ Scoutz::Application.configure do
     host: 'localhost',
     no_swf: true,
     ignore: [%r{dont/modify\.html$}]
-    )
+  )
 
   # execption notification
   # config.middleware.use ExceptionNotification::Rack,

@@ -20,7 +20,7 @@ class SubUnit < ActiveRecord::Base
 
   # find adults in sub_unit through their associated scouts
   def adults
-    Adult.joins(scouts: :sub_unit).where(sub_units: {id: self.id} )
+    Adult.joins(scouts: :sub_unit).where(sub_units: { id: self.id })
   end
 
   def users_with_emails

@@ -21,7 +21,7 @@ RSpec.describe Scoutlander::Datum::Base do
       base.start_at = DateTime.new(2014,1,1,23,15,00)
     end
 
-    specify { expect(base.to_params_without).to eq({ name: 'Karl', start_at: base.start_at, inspected: false} ) }
+    specify { expect(base.to_params_without).to eq({ name: 'Karl', start_at: base.start_at, inspected: false }) }
     specify { expect(base.to_params_without(:inspected)).to eq({ name: 'Karl', start_at: base.start_at }) }
     specify { expect(base.to_params_without(:name, :inspected)).to eq({ start_at: base.start_at }) }
     specify { expect(base.to_params_without(:name, :inspected, :start_at)).to eq({}) }

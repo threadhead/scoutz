@@ -8,13 +8,13 @@ RSpec.describe Scoutlander::Saver::EventAndSignups do
   end
 
   before do
-    @datum = Scoutlander::Datum::Event.new(name: "Flubber", sl_profile: '654321')
+    @datum = Scoutlander::Datum::Event.new(name: 'Flubber', sl_profile: '654321')
     @event = FactoryGirl.create(:event, name: 'Minnie', unit: @unit, sl_profile: '654321')
     @event_signup = FactoryGirl.create(:event_signup, event: @event, user: @scout)
   end
 
 
-  let(:event_saver) { Scoutlander::Saver::EventAndSignups.new(unit: @unit, event: @datum ) }
+  let(:event_saver) { Scoutlander::Saver::EventAndSignups.new(unit: @unit, event: @datum) }
 
 
   describe '.create_or_update_event' do

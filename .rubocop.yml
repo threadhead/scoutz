@@ -3,3 +3,12 @@ Metrics/LineLength:
 
 Style/EmptyLines:
   Enabled: false
+
+Style/RedundantSelf:
+  Enabled: false
+
+Style/SingleLineMethods:
+  Enabled: false
+
+Style/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space

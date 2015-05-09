@@ -7,8 +7,8 @@ class MeritBadge < ActiveRecord::Base
     end
   end
   accepts_nested_attributes_for :counselors,
-        reject_if: proc { |att| att['user_id'].blank? || att['user_id'] == '0' },
-        allow_destroy: true
+                                reject_if: proc { |att| att['user_id'].blank? || att['user_id'] == '0' },
+                                allow_destroy: true
 
   has_many :users, through: :counselors
 
@@ -36,11 +36,11 @@ class MeritBadge < ActiveRecord::Base
   scope :by_name, -> { order(name: :asc) }
   scope :name_contains, ->(n) { where('merit_badges.name ILIKE ?', "%#{n}%") }
   pg_search_scope :pg_meta_search,
-    against: [:name],
-    using: {
-             tsearch: { dictionary: 'english', any_word: true, prefix: true },
-             trigram: { threshold: 0.5 }
-           }
+                  against: [:name],
+                  using: {
+                    tsearch: { dictionary: 'english', any_word: true, prefix: true },
+                    trigram: { threshold: 0.5 }
+                  }
 
 
   def self.meta_search(unit_scope: nil, keywords:)

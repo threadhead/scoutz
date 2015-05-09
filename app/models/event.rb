@@ -125,13 +125,13 @@ class Event < ActiveRecord::Base
 
   def event_signup_count
     EventSignup.find_by_sql([
-          "SELECT
-           SUM(\"event_signups\".\"scouts_attending\") +
-           SUM(\"event_signups\".\"adults_attending\") +
-           SUM(\"event_signups\".\"siblings_attending\")
-           AS sum_id
-           FROM \"event_signups\"
-           WHERE \"event_signups\".\"event_id\" = ?", self.id]).first.try(:sum_id) || 0
+      "SELECT
+       SUM(\"event_signups\".\"scouts_attending\") +
+       SUM(\"event_signups\".\"adults_attending\") +
+       SUM(\"event_signups\".\"siblings_attending\")
+       AS sum_id
+       FROM \"event_signups\"
+       WHERE \"event_signups\".\"event_id\" = ?", self.id]).first.try(:sum_id) || 0
   end
 
 
@@ -298,11 +298,11 @@ class Event < ActiveRecord::Base
   # scope :contains_search, ->(n) { where("to_tsvector('english', name) @@ to_tsquery('english', ?)", n) }
 
   pg_search_scope :pg_meta_search,
-    against: { name: 'A', location_name: 'B', message: 'C' },
-    using: {
-              tsearch: { dictionary: 'english', any_word: true, prefix: true },
-              trigram: { threshold: 0.5 }
-    }
+                  against: { name: 'A', location_name: 'B', message: 'C' },
+                  using: {
+                    tsearch: { dictionary: 'english', any_word: true, prefix: true },
+                    trigram: { threshold: 0.5 }
+                  }
 
   def self.meta_search(unit_scope: nil, keywords:)
     meta_events = unit_scope.nil? ? Event.all : unit_scope.events

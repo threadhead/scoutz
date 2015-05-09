@@ -71,8 +71,8 @@ class User < ActiveRecord::Base
     end
   end
   accepts_nested_attributes_for :counselors,
-        reject_if: proc { |att| att['merit_badge_id'].blank? || att['merit_badge_id'] == '0' },
-        allow_destroy: true
+                                reject_if: proc { |att| att['merit_badge_id'].blank? || att['merit_badge_id'] == '0' },
+                                allow_destroy: true
 
 
   has_many :phones, dependent: :destroy
@@ -260,11 +260,11 @@ class User < ActiveRecord::Base
   scope :name_contains, ->(n) { where('users.first_name ILIKE ? OR users.last_name ILIKE ?', "%#{n}%", "%#{n}%") }
 
   pg_search_scope :pg_meta_search,
-    against: [:first_name, :last_name],
-    using: {
-             tsearch: { dictionary: 'english', any_word: true, prefix: true },
-             trigram: { threshold: 0.5 }
-           }
+                  against: [:first_name, :last_name],
+                  using: {
+                    tsearch: { dictionary: 'english', any_word: true, prefix: true },
+                    trigram: { threshold: 0.5 }
+                  }
 
 
 

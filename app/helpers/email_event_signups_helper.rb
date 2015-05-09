@@ -30,14 +30,14 @@ module EmailEventSignupsHelper
   def email_signup_link(options={})
     link_to email_signup_text(options),
             event_email_event_signups_url(options[:event],
-                                            {
-                                              scouts_attending: options[:scouts],
-                                              adults_attending: options[:adults],
-                                              siblings_attending: options[:siblings],
-                                              user_id: options[:scout].id,
-                                              user_token: options[:recipient].signup_token,
-                                              event_token: options[:event].signup_token
-                                            }
+                                          {
+                                            scouts_attending: options[:scouts],
+                                            adults_attending: options[:adults],
+                                            siblings_attending: options[:siblings],
+                                            user_id: options[:scout].id,
+                                            user_token: options[:recipient].signup_token,
+                                            event_token: options[:event].signup_token
+                                          }
                                          )
   end
 

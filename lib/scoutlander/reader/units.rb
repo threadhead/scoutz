@@ -35,7 +35,7 @@ module Scoutlander
         unit.city, unit.state = split_city_state(city_state)
 
         unit.time_zone = adv_settings.form('aspnetForm').field_with('ctl00$mainContent$adminconfigure$cmbTimeZone').value
-        # TODO - incomplete, not sure if even necessary, just have user enter the few basic fields
+        # TODO: incomplete, not sure if even necessary, just have user enter the few basic fields
       end
 
       def split_city_state(str)

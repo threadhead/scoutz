@@ -7,7 +7,7 @@ module MbDotOrg
       attr_accessor :logger, :collection
       attr_reader :agent
 
-      def initialize(options={})
+      def initialize
         @collection = []
         @agent = nil
 

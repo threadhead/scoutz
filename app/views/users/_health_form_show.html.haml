@@ -15,6 +15,6 @@
         - return_url = user.adult? ? unit_adult_url(unit, user) : unit_scout_url(unit, user)
 
         - if user.health_forms.unit(unit)
-          = link_to "Edit", edit_unit_health_form_path(unit, user.health_forms.unit(unit), return: return_url), class: 'btn btn-default btn-xs'
+          = link_to 'Edit', edit_unit_health_form_path(unit, user.health_forms.unit(unit), return: return_url), class: 'btn btn-default btn-xs'
         - else
-          = link_to "Add", new_unit_health_form_path(unit, user_id: user.id, return: return_url), class: 'btn btn-default btn-xs'
+          = link_to 'Add', new_unit_health_form_path(unit, user_id: user.id, return: return_url), class: 'btn btn-default btn-xs'

@@ -1,10 +1,10 @@
 !!!
-%html{style: "font-family: sans-serif;"}
+%html{ style: 'font-family: sans-serif;' }
   %head
   %body
     %p
       This is to notify you that your email address on
-      %a{href: 'https://scoutt.in'} Scoutt.in
+      %a{ href: 'https://scoutt.in' } Scoutt.in
       has been changed to
       %em= @recipient.email
 
@@ -12,18 +12,18 @@
 
     %p
       If you indended to make this change, there is nothing for you to do. You should use the new email address (#{ @recipient.email }) to
-      %a{href: 'https://scoutt.in'} sign in to Scoutt.in
+      %a{ href: 'https://scoutt.in' } sign in to Scoutt.in
       %span> .
 
     %p
       If you made this change in error, simply
-      %a{href: 'https://scoutt.in'} sign in to Scoutt.in
+      %a{ href: 'https://scoutt.in' } sign in to Scoutt.in
       using the new email address (#{ @recipient.email }) and select 'Change Email' in the menu under your name in the upper right-hand corner. Use the Change Your Email form to change it back to the original.
 
     %p
       %strong If you did not intend to make this change and you belive this change was not made by you, please reply to this email IMMEDIATELY, and the support team at Scoutt.in will investigate.
 
-    / %h2{style: "color: white; background-color: gray; padding: 4px"}= @email_message.subject
+    -# %h2{style: "color: white; background-color: gray; padding: 4px"}= @email_message.subject
     -# %div{style: "height: 12px; background-color: darkgray; margin-bottom: 8px;"}
 
-    = render partial: 'unsubscribe/email_footer', locals: {action: nil, user: @recipient}
+    = render partial: 'unsubscribe/email_footer', locals: { action: nil, user: @recipient }

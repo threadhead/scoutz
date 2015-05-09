@@ -1,26 +1,26 @@
-%div{style: "margin: 12px; border-bottom: 1px solid black;"}
+%div{ style: 'margin: 12px; border-bottom: 1px solid black;' }
 
-%div{style: "font-size: 0.7em; color: #666; line-height: 1; margin: 12px 36px; padding: 12px 24px; background-color: #eee; border-radius: 4px;"}
+%div{ style: 'font-size: 0.7em; color: #666; line-height: 1; margin: 12px 36px; padding: 12px 24px; background-color: #eee; border-radius: 4px;' }
 
-  %p{style: "line-height: 1;"}
+  %p{ style: 'line-height: 1;' }
     - unless action.nil?
-      = link_to "UNSUBSCRIBE", send("unsubscribe_#{action}_url", id: user.signup_token), style: "color: #0080ff; text-decoration: none;"
+      = link_to 'UNSUBSCRIBE', send("unsubscribe_#{action}_url", id: user.signup_token), style: 'color: #0080ff; text-decoration: none;'
       |
-    %a{href: "http://blog.scoutt.in", style: "color: #0080ff; text-decoration: none;"} Blog
+    %a{ href: 'http://blog.scoutt.in', style: 'color: #0080ff; text-decoration: none;' } Blog
 
   %p
     - unless action.nil?
       You are receiving this email because you are subscribed in your notification settings.
       To unsubscribe from these emails #{link_to "click here", send("unsubscribe_#{action}_url", id: user.signup_token), style: "color: #0080ff; text-decoration: none;"}.
     Keep messages out of spam, add
-    %a{href: "mailto:noreply@scoutt.in", style: "color: #0080ff; text-decoration: none;"} noreply@scoutt.in
+    %a{ href: 'mailto:noreply@scoutt.in', style: 'color: #0080ff; text-decoration: none;' } noreply@scoutt.in
     to you address book!
-    %a{href: "https://scoutt.in", style: "color: #0080ff; text-decoration: none;"} Scoutt.in
+    %a{ href: 'https://scoutt.in', style: 'color: #0080ff; text-decoration: none;' } Scoutt.in
     is proudly engineered by Scouters like you.
 
-  %div{style: "float: right; margin-left: 20px; color: #888"}
-    %p{style: 'font-size: 0.9em; text-align: right; line-height: 1; margin: 0;'}
-      %span{style: "line-height: 2;"} &copy; #{Time.now.year}, Desert Solitaire, LLC
+  %div{ style: 'float: right; margin-left: 20px; color: #888;' }
+    %p{ style: 'font-size: 0.9em; text-align: right; line-height: 1; margin: 0;' }
+      %span{ style: 'line-height: 2;' } &copy; #{Time.now.year}, Desert Solitaire, LLC
       %br
       Generated on #{Time.zone.now.to_s(:long_ampm)}
       %br
@@ -29,4 +29,4 @@
   %p
     %em Scoutt.in will never sell or rent your email with third parties for promotional use. Scoutt.in is not associated with the Boy Scouts of America.
 
-  %div{style: "display: table; content: ''; clear: both;"}
+  %div{ style: 'display: table; content: \'\'; clear: both;' }

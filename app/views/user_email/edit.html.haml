@@ -19,7 +19,7 @@
 
 .row
   .col-md-offset-2.col-md-6
-    = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+    = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @user }
     %h3 &nbsp;
 
 .row
@@ -45,5 +45,5 @@
           = link_to 'Cancel', :back, class: 'btn btn-default'
 
   .col-md-3.col-md-offset-3
-    = render partial: 'users/picture_panel_lg', locals: {user: @user}
+    = render partial: 'users/picture_panel_lg', locals: { user: @user }
 

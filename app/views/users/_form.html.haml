@@ -1,5 +1,5 @@
 = bootstrap_form_for [@unit, @user] do |f|
-  = render partial: 'layouts/flash', locals: {flash: flash, ar_object: @user}
+  = render partial: 'layouts/flash', locals: { flash: flash, ar_object: @user }
 
   .row
     .col-md-8
@@ -20,7 +20,7 @@
         = label_tag :role, nil, class: 'control-label col-md-3'
         .col-md-2
           = text_field_tag :role, @user.role, readonly: true
-          %span.fa-stack{data: {toggle: 'tooltip', container: 'body'}, title: 'You must have admin rights to change roles'}
+          %span.fa-stack{ data: { toggle: 'tooltip', container: 'body' }, title: 'You must have admin rights to change roles' }
             %i.fa.fa-circle.fa-stack-2x.tooltip_circle.fa-sm
             %i.fa.fa-question.fa-stack-1x.fa-inverse
 
@@ -56,7 +56,7 @@
         = ff.text_field :additional, class: 'form-control', placeholder: 'additional leadership positions', hide_label: true
 
 
-      = f.date_select :birth, {start_year: 1930, end_year: Time.now.year, include_blank: true}, label: 'Birthday'
+      = f.date_select :birth, { start_year: 1930, end_year: Time.now.year, include_blank: true }, label: 'Birthday'
 
   .fieldset-box
     %fieldset
@@ -72,7 +72,7 @@
   .fieldset-box
     %fieldset
       %legend Contact Phone Numbers
-      = render partial: 'phone_numbers', locals: {f: f}
+      = render partial: 'phone_numbers', locals: { f: f }
 
 
   .fieldset-box
@@ -95,7 +95,7 @@
       .row
         .col-md-12
           .help-block You must select a Provider if you would like to receive text messages. If you don't want to receive texts, leave blank.
-      -#= f.form_group do
+      -# = f.form_group do
       -#  %p
       -#    = link_to 'Send Verification', sms_send_verification_path, remote: true, class: 'btn btn-default'
       -#  %p
@@ -113,7 +113,7 @@
             %tr
               %th.middle Email Blasts
               %td= f.check_box :blast_email, label: 'email'
-              %td= #f.check_box :blast_sms, label: 'sms'
+              %td= # f.check_box :blast_sms, label: 'sms'
             %tr
               %th.middle Event Reminders
               %td= f.check_box :event_reminder_email, label: 'email'
@@ -128,7 +128,7 @@
               %td
             %tr
               %th.middle SMS Messages
-              %td= #f.check_box :event_reminder_email, label: 'email'
+              %td= # f.check_box :event_reminder_email, label: 'email'
               %td= f.check_box :sms_message, label: 'sms'
       .row
         .col-md-12
@@ -140,7 +140,7 @@
         -#   %td= f.check_box :signup_deadline_sms, label: 'sms'
 
           .help-block Most text messages will contain a link to a page and a few words.
-        -#.help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
+        -# .help-block If you select only SMS for a type of notificaiton, and the message can not be sent via SMS, it will automatically revert to sending via email.
 
 
   .fieldset-box
@@ -163,11 +163,11 @@
         %legend Merit Badge Counselor
         .row
           .col-md-6
-            = label_tag :adult_merit_badge_ids, "Counselor for", class: 'control-label'
+            = label_tag :adult_merit_badge_ids, 'Counselor for', class: 'control-label'
             = hidden_field_tag 'adult[merit_badge_ids][]', '0'
 
             - user_merit_badge_ids = @user.counselors.unit(@unit.id).pluck(:merit_badge_id)
-            = select_tag "adult[merit_badge_ids][]", options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'
+            = select_tag 'adult[merit_badge_ids][]', options_from_collection_for_select(MeritBadge.by_name, :id, :name, user_merit_badge_ids), multiple: true, id: 'adult_merit_badge_ids'
             .help-block counselor for merit badges in #{@unit.name_unit}
 
 
@@ -184,9 +184,9 @@
       .row
         .col-md-8
           - if @user.scout?
-            = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout'}, multiple: true
+            = f.collection_select :adult_ids, @unit.adults.by_name_lf, :id, :name_lf, { hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of this Scout' }, multiple: true
           - else
-            = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, {hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of these Scouts'}, multiple: true
+            = f.collection_select :scout_ids, @unit.scouts.by_name_lf, :id, :name_lf, { hide_label: true, help: 'parents will also be associated with the den(s)/patrol(s) of these Scouts' }, multiple: true
 
 
 

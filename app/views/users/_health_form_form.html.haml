@@ -10,9 +10,9 @@
   - if HealthFormPolicy.new(current_user, user_health_form, unit).update?
     - return_url = user.adult? ? edit_unit_adult_url(unit, user) : edit_unit_scout_url(unit, user)
     - if user.health_forms.unit(unit)
-      = link_to "Edit health forms", edit_unit_health_form_path(unit, user.health_forms.unit(unit), return: return_url)
+      = link_to 'Edit health forms', edit_unit_health_form_path(unit, user.health_forms.unit(unit), return: return_url)
     - else
-      = link_to "Edit health forms", new_unit_health_form_path(unit, user_id: user.id, return: return_url)
+      = link_to 'Edit health forms', new_unit_health_form_path(unit, user_id: user.id, return: return_url)
 
   - else
     %br

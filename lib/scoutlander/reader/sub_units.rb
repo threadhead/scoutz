@@ -21,11 +21,11 @@ module Scoutlander
         # listed in a table, with the second column the list of names
         dash_page = login
         unit_page = dash_page.link_with(text: %r{#{@unit.unit_number}}).click
-        @logger.info "CLICK : Site Setup Wizard"
-        site_setup_wizard_page = unit_page.link_with(:text => %r/Site Setup Wizard/).click
-        @logger.info "CLICK : Add Dens or Patrols"
-        add_dens_page = site_setup_wizard_page.link_with(:text => %r/Add Dens or Patrols/).click
-        sub_unit_names = add_dens_page.search("table#ctl00_mainContent_adminsubunitmgr_tblData tr td[2]").children.map(&:text)
+        @logger.info 'CLICK : Site Setup Wizard'
+        site_setup_wizard_page = unit_page.link_with(text: %r/Site Setup Wizard/).click
+        @logger.info 'CLICK : Add Dens or Patrols'
+        add_dens_page = site_setup_wizard_page.link_with(text: %r/Add Dens or Patrols/).click
+        sub_unit_names = add_dens_page.search('table#ctl00_mainContent_adminsubunitmgr_tblData tr td[2]').children.map(&:text)
         @logger.info "SUB UNIT NAMES : #{sub_unit_names.join(', ')}"
         logout
 

@@ -3,9 +3,9 @@ require 'rails_helper'
 RSpec.describe 'AttributeSanitizer Concern' do
   before(:all) do
     ActiveRecord::Migration.verbose = false
-    ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+    ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: ':memory:')
 
-    ActiveRecord::Schema.define(:version => 1) do
+    ActiveRecord::Schema.define(version: 1) do
       create_table :dirty_items do |t|
         t.text :body
         t.text :email

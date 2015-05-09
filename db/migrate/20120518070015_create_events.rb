@@ -5,11 +5,11 @@ class CreateEvents < ActiveRecord::Migration
       t.string :kind
       t.string :name
       t.integer :user_id
-      t.boolean :send_reminders, :default => true
+      t.boolean :send_reminders, default: true
       t.string :notifier_type
       t.datetime :start_at
       t.datetime :end_at
-      t.boolean :signup_required, :default => false
+      t.boolean :signup_required, default: false
       t.datetime :signup_deadline
       t.string :location_name
       t.string :location_address1

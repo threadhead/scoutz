@@ -1,6 +1,5 @@
 module MbDotOrg
   module Datum
-
     class MeritBadge < MbDotOrg::Datum::Base
       def initialize(options={})
         @attributes = [
@@ -13,9 +12,8 @@ module MbDotOrg
           :bsa_advancement_id,
           :patch_image_url,
           :eagle_required,
-          :year_created,
-
-          ]
+          :year_created
+        ]
         create_setters_getters_instance_variables(options)
       end
 
@@ -23,9 +21,7 @@ module MbDotOrg
       def to_params
         to_params_without(:inspected)
       end
-
     end
-
 
   end
 end

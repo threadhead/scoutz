@@ -4,7 +4,6 @@ module PolicyHelpers
   end
 
   module ClassMethods
-
     # def permission_granted_role_level_up(role_level, policy_class)
     def permission_granted_role_level_up(options={})
       role_level = options[:role_level]
@@ -41,7 +40,6 @@ module PolicyHelpers
         end
       end
     end
-
   end # ClassMethods
 
 
@@ -83,5 +81,4 @@ module PolicyHelpers
       expect(klass).to permit(@user, @record)
     end
   end
-
 end

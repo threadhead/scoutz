@@ -6,15 +6,13 @@ class Person
   # extend ActiveModel::Naming
 
   include SmsNumber
+
   def initialize
     @sms_number = '888-555-4444'
   end
-  def sms_number
-    @sms_number
-  end
-  def sms_number=(val)
-    @sms_number = val
-  end
+
+  attr_accessor :sms_number
+
   def sms_provider
     'T-Mobile'
   end

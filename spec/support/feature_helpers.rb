@@ -1,8 +1,7 @@
 module FeatureHelpers
-
   def sign_in_user(email, password)
     visit new_user_session_path
-    within("#new_user") do
+    within('#new_user') do
       fill_in 'Email', with: email
       fill_in 'Password', with: password
     end
@@ -44,5 +43,4 @@ module FeatureHelpers
     @user.scouts << @scout2
     @scout2.units << @unit
   end
-
 end

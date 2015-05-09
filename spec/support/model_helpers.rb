@@ -1,5 +1,4 @@
 module ModelHelpers
-
   def adult_2units_2scout_3subunits
     @unit1 = FactoryGirl.create(:unit)
     @unit2 = FactoryGirl.create(:unit, unit_type: 'Boy Scouts', unit_number: '603')
@@ -56,5 +55,4 @@ module ModelHelpers
       'Lodge Meeting'
     ]
   end
-
 end

@@ -27,3 +27,6 @@ Style/EmptyLinesAroundBlockBody:
 
 Metrics/AbcSize:
   Max: 87
+
+Style/EmptyLineBetweenDefs:
+  Enabled: false

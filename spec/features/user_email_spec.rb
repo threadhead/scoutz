@@ -13,12 +13,12 @@ RSpec.describe 'User Email Change' do
 
     @unit = FactoryGirl.create(:unit)
     @user1 = FactoryGirl.create(:adult)
-    @user1.confirm!
+    @user1.confirm
     @user1.units << @unit
     @user2 = FactoryGirl.create(:adult)
     @user2_orig_email = @user2.email
     @user2.units << @unit
-    @user2.confirm!
+    @user2.confirm
 
     login_as(@user1, scope: :user)
   end

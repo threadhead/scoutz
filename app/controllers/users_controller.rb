@@ -22,12 +22,13 @@ class UsersController < ApplicationController
 
   def send_welcome_reset_password
     authorize @user
-    @user.confirm!
+    @user.confirm
 
     token = @user.send(:set_reset_password_token)
-    @user.reset_password_sent_at = 72.hours.from_now - Devise.reset_password_within
-    @user.encrypted_password = nil
-    @user.save(validate: false)
+    @user.update_columns(
+      reset_password_sent_at: 72.hours.from_now - Devise.reset_password_within,
+      encrypted_password: nil
+    )
     AdminMailer.send_existing_user_welcome(@user, token).deliver_later
   end
 

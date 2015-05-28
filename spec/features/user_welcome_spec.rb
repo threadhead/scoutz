@@ -16,7 +16,7 @@ RSpec.describe 'User Welcome Email and Password Reset' do
   context 'when admin' do
     before do
       @adult = FactoryGirl.create(:adult)
-      @adult.confirm!
+      @adult.confirm
       @adult.units << @unit
       login_as(@user, scope: :user)
     end
@@ -63,12 +63,13 @@ RSpec.describe 'User Welcome Email and Password Reset' do
     before do
       logout
       @adult = FactoryGirl.create(:adult)
-      @adult.confirm!
+      @adult.confirm
       @adult.units << @unit
       token = @adult.send(:set_reset_password_token)
-      @adult.reset_password_sent_at = 72.hours.from_now - Devise.reset_password_within
-      @adult.encrypted_password = nil
-      @adult.save(validate: false)
+      @adult.update_columns(
+       reset_password_sent_at: 72.hours.from_now - Devise.reset_password_within,
+       encrypted_password: nil
+      )
       # puts "adult.reset_password_token: #{@adult.reset_password_token}"
       visit user_welcome_edit_url(reset_password_token: token)
     end

@@ -66,6 +66,8 @@ GEM
       sass (~> 3.0)
       terminal-table (~> 1.4)
     builder (3.2.2)
+    byebug (4.0.5)
+      columnize (= 0.9.0)
     capistrano (3.4.0)
       i18n
       rake (>= 10.0.0)
@@ -108,6 +110,7 @@ GEM
       execjs
     coffee-script-source (1.9.1.1)
     colorize (0.7.7)
+    columnize (0.9.0)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.2.2)
@@ -511,6 +514,7 @@ DEPENDENCIES
   bootstrap_form
   bourbon
   brakeman
+  byebug
   capistrano (~> 3.4.0)
   capistrano-bundler
   capistrano-rails

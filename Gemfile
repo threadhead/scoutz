@@ -68,7 +68,7 @@ gem 'whenever', require: false
 
 group :development, :test do
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
-  # gem 'byebug'
+  gem 'byebug'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   # gem 'web-console', '~> 2.0'

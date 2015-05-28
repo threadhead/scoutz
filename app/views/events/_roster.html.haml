@@ -36,21 +36,24 @@
 
 
 %table.table-condensed.table-striped.table-roster
-  %thead
-    %tr
-      %th{ colspan: '2' } Name
-      - if event.health_forms_required?
-        %th.centered HF
-      %th.centered Driving
-      %th.centered Ride
-      - if event.consent_required?
-        %th.centered ACF
-      %th{ colspan: '2' } Info
-      -# only disply the actions column if the user can edit OTHER'S signups (admins, event owners)
-      -# - if policy(EventSignup.new(event_id: event.id)).update? || policy(EventSignup.new(event_id: event.id)).activity_consent_form?
-        -# %th.right-aligned Action
   %tbody#event-signup-roster
-    = render partial: 'event_signups/event_roster', collection: event.event_signups.by_user_name_lf
+    - last_user_type = nil
+    - event.event_signups.by_user_type_name_lf.each do |event_signup|
+      - if event_signup.user.type != last_user_type
+        %tr
+          %td.centered.bottom-border{ colspan: '100%' }
+            %span.large= event_signup.user.type.pluralize
+        %tr
+          %th{ colspan: '2' } Name
+          - if event.health_forms_required?
+            %th.centered HF
+          %th.centered Driving
+          %th.centered Ride
+          - if event.consent_required?
+            %th.centered ACF
+          %th{ colspan: '2' } Info
+      = render partial: 'event_signups/event_roster', locals: { event_roster: event_signup }
+      - last_user_type = event_signup.user.type
 
 .bottom-border
 

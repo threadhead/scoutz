@@ -56,6 +56,7 @@ class EventSignup < ActiveRecord::Base
   ## scopes
   scope :for_event, -> event { where(event_id: event.id) }
   scope :by_user_name_lf, -> { joins(:user).order('"users"."last_name" ASC, "users"."first_name" ASC') }
+  scope :by_user_type_name_lf, -> { joins(:user).order('"users"."type" DESC, "users"."last_name" ASC, "users"."first_name" ASC') }
 
 
   def self.need_carpool_select_options

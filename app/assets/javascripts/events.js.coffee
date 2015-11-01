@@ -7,7 +7,7 @@ jQuery ->
   $('.date-only-picker').datepicker
     format: "M dd, yyyy"
     todayBtn: "linked"
-    orientation: "top auto"
+    orientation: "bottom auto"
     autoclose: true
     todayHighlight: true
 

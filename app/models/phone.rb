@@ -5,7 +5,7 @@ class Phone < ActiveRecord::Base
 
 
   validates :kind, presence: true, uniqueness: { scope: :user_id }
-  validates :number, presence: true, uniqueness: { scope: :user_id }
+  validates :number, presence: true, uniqueness: { scope: :user_id }, case_sensitive: false
 
 
   def number=(phonenumber)

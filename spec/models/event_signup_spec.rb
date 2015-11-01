@@ -4,9 +4,6 @@ RSpec.describe EventSignup do
   it { should belong_to(:event).touch(true) }
   it { should belong_to(:user) }
 
-  it { should validate_numericality_of(:adults_attending) }
-  it { should validate_numericality_of(:scouts_attending) }
-  it { should validate_numericality_of(:siblings_attending) }
   # it { should validate_uniqueness_of(:scout_id).scoped_to(:event_id) }
 
   # validations

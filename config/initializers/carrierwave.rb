@@ -1,3 +1,8 @@
+# NOTE: fix from, https://github.com/fog/fog/issues/3429
+require 'carrierwave/storage/abstract'
+require 'carrierwave/storage/file'
+require 'carrierwave/storage/fog'
+
 if Rails.env.production? || Rails.env.staging? # || Rails.env.development?
 
   CarrierWave.configure do |config|

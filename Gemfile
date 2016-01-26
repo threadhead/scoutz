@@ -17,7 +17,7 @@ gem 'haml'
 gem 'pundit'
 gem 'state_machine'
 gem 'carrierwave'
-gem 'fog', require: 'fog/aws/storage'
+gem "fog-aws"
 gem 'mini_magick'
 gem 'delayed_job'
 gem 'delayed_job_active_record'

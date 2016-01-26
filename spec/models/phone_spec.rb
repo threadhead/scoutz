@@ -6,7 +6,11 @@ RSpec.describe Phone do
   it { should belong_to(:user).touch(true) }
   it { should validate_presence_of(:kind) }
   it { should validate_presence_of(:number) }
-  it { should validate_uniqueness_of(:number).case_insensitive.scoped_to(:user_id) }
+
+  describe 'validations' do
+    subject { FactoryGirl.build(:home_phone, user_id: 999) }
+    it { should validate_uniqueness_of(:number).case_insensitive.scoped_to(:user_id) }
+  end
 
   it 'validates uniqueness of kind scoped to user' do
     phone.save

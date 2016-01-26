@@ -7,7 +7,11 @@ RSpec.describe SubUnit do
   it { should have_many(:adults) }
 
   it { should validate_presence_of(:name) }
-  it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:unit_id) }
+
+  describe 'validations' do
+    subject { FactoryGirl.create(:sub_unit) }
+    it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:unit_id) }
+  end
 
   # it 'validates uniqueness of name' do
   #   FactoryGirl.create(:sub_unit)

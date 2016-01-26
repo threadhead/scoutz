@@ -5,7 +5,8 @@ RSpec.describe MeritBadge do
   it { is_expected.to have_many(:counselors) }
 
 
-  describe 'validators' do
+  describe 'validations' do
+    subject { MeritBadge.create(name: 'hlab') }
     it { is_expected.to validate_uniqueness_of(:name) }
     it { is_expected.to validate_presence_of(:name) }
   end

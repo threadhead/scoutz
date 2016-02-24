@@ -3,7 +3,7 @@ class ScoutsController < UsersController
   def index
     authorize Scout
     @users = @unit.scouts.includes(:sub_unit, :adults).by_name_lf
-    @users_count = @unit.adults.count
+    @users_count = @unit.scouts.count
     if params[:search_typeahead] && !params[:search_typeahead].blank?
       @users = @users.name_contains(params[:search_typeahead])
       @searching = true

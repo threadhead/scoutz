@@ -100,6 +100,7 @@ group :development do
   gem 'airbrussh', require: false
   # gem 'capistrano-inspeqtor'
 
+  gem 'listen', '~> 3.0.8'
   gem 'guard'
   gem 'guard-rspec', '~> 4.2.9', require: false
   gem 'guard-livereload', require: false

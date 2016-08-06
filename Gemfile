@@ -12,7 +12,7 @@ gem 'dalli'
 
 # gem 'rake'
 
-gem 'devise' # , git: 'https://github.com/plataformatec/devise.git', branch: 'lm-rails-4-2'
+gem 'devise', '~> 3.5' # , git: 'https://github.com/plataformatec/devise.git', branch: 'lm-rails-4-2'
 gem 'haml'
 gem 'pundit'
 gem 'state_machine'
